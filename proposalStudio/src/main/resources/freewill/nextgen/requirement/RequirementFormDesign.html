@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:com.app.freewill.requirement" />
+</head>
+<body>
+<v-css-layout id="requirement-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+        <v-text-field caption="customid" _id="Customid" width-full />
+        <vaadin-text-area caption="description" _id="Description" width-full></vaadin-text-area>
+        <v-horizontal-layout width-full spacing>
+	        <v-combo-box caption="assignedto" _id="Assignedto" width-full null-selection-allowed=false text-input-allowed=false />
+	        <v-combo-box caption="project" _id="Project" width-full null-selection-allowed=false text-input-allowed=false />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+            <v-combo-box caption="type" _id="Type" width-full null-selection-allowed=false text-input-allowed=false />
+            <v-combo-box caption="category" _id="Category" width-full null-selection-allowed=false text-input-allowed=false />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+            <v-text-field caption="company" _id="Company" width-full />
+            <vaadin-check-box caption="resolved" _id="Resolved"></vaadin-check-box>
+        </v-horizontal-layout>
+        
+        <v-vertical-layout _id="MappingLayout" caption="Mapped To" margin spacing width-full style-name="backColorWhite">
+        	<v-horizontal-layout width-full spacing>
+        		<v-text-field caption="response" _id="Response" width-full />
+	    		<v-text-field caption="title" _id="DocTitle" width-full />
+	    		<v-text-field caption="product" _id="DocProduct" width-full />
+	    	</v-horizontal-layout> 
+	        <vaadin-text-area caption="description" _id="DocDesc" width-full></vaadin-text-area>
+	        <vaadin-text-area caption="additionalanswer" _id="Text" width-full></vaadin-text-area>
+	        <v-horizontal-layout width-full spacing>
+		    	<v-text-field caption="laboreffort" _id="Laboreffort" width-full />
+		        <v-text-field caption="laborcost" _id="Totalcost" width-full />
+		    </v-horizontal-layout>
+	    </v-vertical-layout>
+        
+        <v-css-layout :expand style-name="expander" />
+        <vaadin-check-box caption="saveAndNext" _id="saveAndNext"></vaadin-check-box>
+        <v-button style-name="primary" _id="save">Save</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancel</v-button>
+        <v-button style-name="danger" _id="delete">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

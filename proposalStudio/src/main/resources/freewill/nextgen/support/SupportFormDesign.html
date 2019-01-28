@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:com.app.freewill.project" />
+</head>
+<body>
+<v-css-layout id="support-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+    	<v-horizontal-layout width-full spacing>
+	        <vaadin-label size-auto plain-text _id="Id">ID</vaadin-label>
+	        <vaadin-check-box caption="resolved" _id="Resolved"></vaadin-check-box>
+        </v-horizontal-layout>
+    	
+        <vaadin-text-area caption="details" _id="Details" width-full></vaadin-text-area>
+	    
+	    <v-horizontal-layout width-full spacing>
+	        <v-combo-box caption="severity" _id="Severity" width-full null-selection-allowed=false text-input-allowed=false />
+	   		<vaadin-popup-date-field caption="created" _id="Created" width-full></vaadin-popup-date-field>
+        </v-horizontal-layout>
+	    <vaadin-text-area caption="comments" _id="Comments" width-full></vaadin-text-area>
+	    
+	    <v-text-field caption="user" _id="User" width-full />
+        
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary" _id="save">Save</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancel</v-button>
+        <v-button style-name="danger" _id="delete">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

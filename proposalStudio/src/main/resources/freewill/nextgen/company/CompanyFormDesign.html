@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:com.app.freewill.company" />
+</head>
+<body>
+<v-css-layout id="company-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+        <v-text-field caption="name" _id="Name" width-full />
+        <v-horizontal-layout _id="imageLayout" width-full spacing>
+        	<v-vertical-layout _id="imageLayout2" spacing width-full :right>
+        		<v-button style-name="friendly" _id="Add">Add Image</v-button>
+        		<v-button style-name="danger" _id="Del">Remove</v-button>
+        	</v-vertical-layout>
+        	<vaadin-image _id="image" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-combo-box caption="plan" _id="Plan" width-full null-selection-allowed=false text-input-allowed=false />
+        	<v-date-field caption="expirationdate" _id="Expirationdate" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-text-field caption="lastinvoice" _id="lastinvoice" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-text-field caption="userscount" _id="userscount" width-full />
+        	<v-text-field caption="nextinvoice" _id="nextinvoice" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-button style-name="friendly" _id="Styles">Styles</v-button>
+        	<v-button style-name="friendly" _id="Docx">Docx template</v-button>
+        	<v-button style-name="friendly" _id="Xlsx">Xlsx template</v-button>
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-text-field caption="laborcostrate" _id="laborcostrate" width-full />
+        	<vaadin-check-box :middle caption="active" _id="Active"></vaadin-check-box>
+        </v-horizontal-layout>
+        
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary" _id="save">Save</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancel</v-button>
+        <v-button style-name="danger" _id="delete">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:com.app.freewill.mapping" />
+</head>
+<body>
+<v-css-layout id="mapping-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+	    <v-horizontal-layout width-full spacing>
+	    	<v-text-field caption="customid" _id="Customid" width-full />
+		    <v-text-field caption="reqid" _id="Req" />
+	    </v-horizontal-layout>
+	    <vaadin-text-area caption="reqdesc" _id="ReqDesc" width-full></vaadin-text-area>
+        
+	    <v-vertical-layout _id="SearchLayout" caption="Mapped To" margin spacing width-full style-name="backColorWhite">   
+	        <v-horizontal-layout _id="SearchLayout2" width-full spacing >
+	        	<v-text-field caption="search" _id="Search" width-full />
+	        	<v-horizontal-layout width-full >
+	        		<v-button _id="prev" :bottom :right ></v-button>
+	        		<v-text-field caption="docid" _id="Doc" width-full />
+	        		<v-button _id="next" :bottom :left ></v-button>
+	        	</v-horizontal-layout>
+	        	<v-button style-name="friendly" _id="find" width-full :center :bottom >Advanced</v-button>
+	        </v-horizontal-layout>
+	        <v-horizontal-layout width-full spacing>
+	        	<v-text-field caption="title" _id="DocTitle" width-full />
+	        	<v-text-field caption="product" _id="DocProduct" width-full />
+	        </v-horizontal-layout>	
+	        <vaadin-text-area caption="description" _id="DocDesc" width-full></vaadin-text-area>
+	    </v-vertical-layout>
+        
+        <v-horizontal-layout width-full spacing>
+        	<v-combo-box caption="response" _id="Response" width-full null-selection-allowed=false text-input-allowed=false />
+	    	<v-combo-box caption="deliverable" _id="deliverable" width-full null-selection-allowed=false text-input-allowed=false />
+	    </v-horizontal-layout>
+	    <vaadin-text-area caption="additionalanswer" _id="Text" width-full></vaadin-text-area>
+	    <v-horizontal-layout _id="imageLayout" width-full spacing>
+        	<v-vertical-layout _id="imageLayout2" spacing width-full :right>
+        		<v-button style-name="friendly" _id="Add">Add Image</v-button>
+        		<v-button style-name="danger" _id="Del">Remove</v-button>
+        	</v-vertical-layout>
+        	<vaadin-image _id="image" width-full />
+        </v-horizontal-layout>
+        
+	    <v-horizontal-layout width-full spacing>
+	    	<v-text-field caption="laboreffort" _id="Laboreffort" width-full />
+	        <v-text-field caption="laborcost" _id="Totalcost" width-full />
+	    </v-horizontal-layout>
+	    <vaadin-text-area caption="notes" _id="notes" width-full></vaadin-text-area>
+	    
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary" _id="save">Save</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancel</v-button>
+        <v-button style-name="danger" _id="delete">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

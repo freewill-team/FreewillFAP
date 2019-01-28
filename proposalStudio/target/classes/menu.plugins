@@ -1,0 +1,4 @@
+# Example file
+# The right one will be in the same folder with rest of Jars
+groupalarms = 
+alarms = adms.nextgen.alarmMonitor.AlarmMonitor
