@@ -1,0 +1,18 @@
+2018-10-10 22:43:55 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-10 22:43:55 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-12 19:50:17 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-12 19:50:17 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-13 16:23:48 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-13 16:23:48 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-17 22:14:52 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-17 22:14:52 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-18 22:28:05 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-18 22:28:05 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-19 23:16:37 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-19 23:16:37 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-10-19 23:17:14 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2018-10-19 23:17:14 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier
+2018-11-08 23:00:15 ERROR MonitoredProcess:115 - Redis server response timeout (3000 ms) occured for command: (LINDEX) with params: [ServerEntity, 0] channel: [id: 0x5fa82f8b, L:/127.0.0.1:57983 - R:/127.0.0.1:6379]
+2018-11-08 23:00:15 ERROR MonitoredProcess:228 - Fail searching record in ServerEntity>No-System:KYLOREN
+2018-12-11 03:40:07 ERROR MonitoredProcess:115 - Redis server response timeout (3000 ms) occured for command: (LINDEX) with params: [processesList, 0] channel: [id: 0x03f77e45, L:/127.0.0.1:64649 - R:/127.0.0.1:6379]
+2018-12-11 03:40:10 ERROR MonitoredProcess:316 - Fail searching record in processesList - No-System:KYLOREN:Realtime:BusinessLogicTier

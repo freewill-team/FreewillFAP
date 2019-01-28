@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:org.vaadin.ui" />
+</head>
+<body>
+<v-css-layout id="company-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+	    <v-horizontal-layout width-full spacing>
+	        <v-text-field caption="nombre" _id="nombre" width-full />
+	        <v-text-field caption="apellidos" _id="apellidos" width-full />
+	    </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-date-field caption="fechaNacimiento" _id="fechaNacimiento" width-full />
+        	<v-text-field caption="genero" _id="genero" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-text-field caption="clubStr" _id="clubStr" width-full />
+        	<v-text-field caption="fichaFederativa" _id="fichaFederativa" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="speedLayout" width-full spacing>
+        	<v-check-box :middle caption="speed" _id="speed"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id="catSpeed" width-full :expand style-name="small"/> -->
+        	<v-combo-box caption="categoria" _id="idCatSpeed" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="saltoLayout" width-full spacing>
+        	<v-check-box :middle caption="salto" _id="salto"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id="catSalto" width-full :expand style-name="small"/> -->
+        	<v-combo-box caption="categoria" _id="idCatSalto" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="derrapesLayout" width-full spacing>
+        	<v-check-box :middle caption="derrapes" _id="derrapes"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id="catDerrapes" width-full :expand style-name="small"/> -->
+        	<v-combo-box caption="categoria" _id="idCatDerrapes" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="classicLayout" width-full spacing>
+        	<v-check-box :middle caption="classic" _id="classic"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id="catClassic" width-full :expand style-name="small"/> -->
+        	<v-combo-box caption="categoria" _id="idCatClassic" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="battleLayout" width-full spacing>
+        	<v-check-box :middle caption="battle" _id="battle"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id=catBattle" width-full :expand style-name="small"/> -->
+        	<v-combo-box caption="categoria" _id="idCatBattle" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="jamLayout" width-full spacing>
+        	<v-check-box :middle caption="jam" _id="jam"></v-check-box>
+        	<!-- <v-text-field caption="categoria" _id="catJam" width-full :expand style-name="small" /> -->
+        	<v-combo-box caption="categoria" _id="idCatJam" width-full null-selection-allowed=true text-input-allowed=true />
+        </v-horizontal-layout>
+        <v-horizontal-layout _id="parejaLayout" caption="Pareja Jam" width-full spacing>
+        	<v-button _id="parejaBtn" :bottom :left width="120px" >Pareja Jam</v-button>
+        	<v-text-field caption="patinadorPareja" _id="idPareja" width-full />
+        	<v-text-field caption="nombrePareja" _id="nombrePareja" width-full />
+        	<v-text-field caption="apellidosPareja" _id="apellidosPareja" width-full />
+        </v-horizontal-layout>
+        
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary" _id="save">Salvar</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Salir</v-button>
+        
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

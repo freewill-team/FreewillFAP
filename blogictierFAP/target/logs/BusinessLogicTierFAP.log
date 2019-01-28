@@ -1,0 +1,26 @@
+2019-01-03 23:58:04 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-03 23:58:04 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-04 00:21:23 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-04 00:21:23 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-04 01:00:27 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-04 01:00:27 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-04 01:08:32 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-04 01:08:32 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-05 01:02:00 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-05 01:02:00 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-12 12:48:19 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-12 12:48:19 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-13 04:12:23 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-13 04:12:23 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-13 21:20:46 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-13 21:20:46 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-14 00:28:52 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-14 00:28:52 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-14 23:42:31 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-14 23:42:31 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-15 18:50:40 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-15 18:50:40 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-15 19:33:10 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-01-15 19:33:10 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:KYLOREN:RealtimeFAP:BusinessLogicTierFAP
+2019-01-24 18:01:26 ERROR MonitoredProcess:115 - Redis server response timeout (3000 ms) occured for command: (LINDEX) with params: [ServerEntity, 0] channel: [id: 0x4e5921fb, L:/127.0.0.1:59869 - R:/127.0.0.1:6379]
+2019-01-24 18:01:26 ERROR MonitoredProcess:228 - Fail searching record in ServerEntity>No-System:KYLOREN
