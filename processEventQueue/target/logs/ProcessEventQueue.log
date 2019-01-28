@@ -1,0 +1,391 @@
+2018-02-28 03:14:31 ERROR MonitoredProcess:124 - 404 
+2018-02-28 03:14:31 ERROR MonitoredProcess:124 - 404 
+2018-02-28 03:14:31 ERROR MonitoredProcess:124 - 404 
+2018-02-28 23:14:39 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]
+2018-02-28 23:14:39 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]
+2018-02-28 23:14:39 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]
+2018-03-04 00:34:53 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]
+2018-03-04 00:34:53 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]
+2018-03-04 00:34:53 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]
+2018-03-08 23:46:57 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@15779e4; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@15779e4; line: 1, column: 1]
+2018-03-08 23:46:57 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]
+2018-03-08 23:46:57 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-03-11 17:27:16 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@15779e4; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@15779e4; line: 1, column: 1]
+2018-03-11 17:27:16 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-03-11 17:27:16 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-03-12 08:31:58 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1fd0d10; line: 1, column: 1]
+2018-03-12 08:31:59 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1cb4f5f; line: 1, column: 1]
+2018-03-12 08:31:59 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ce702d; line: 1, column: 1]
+2018-03-12 22:22:37 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]
+2018-03-12 22:22:38 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@194089b; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@194089b; line: 1, column: 1]
+2018-03-12 22:22:38 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]
+2018-04-06 13:07:42 ERROR MonitoredProcess:124 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect
+2018-04-06 13:07:50 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@13f02ee; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@13f02ee; line: 1, column: 1]
+2018-04-06 13:07:50 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-06 13:07:50 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-04-06 15:59:17 ERROR MonitoredProcess:124 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect
+2018-04-06 15:59:30 ERROR MonitoredProcess:124 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%17, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%15, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8] failed: Connection refused: connect
+2018-04-06 15:59:38 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]
+2018-04-06 15:59:38 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]
+2018-04-06 15:59:38 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1868a0; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1868a0; line: 1, column: 1]
+2018-04-06 23:09:43 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@111ef1; line: 1, column: 1]
+2018-04-06 23:09:43 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-04-06 23:09:43 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@194089b; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@194089b; line: 1, column: 1]
+2018-04-06 23:31:47 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-06 23:31:47 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@7f9738; line: 1, column: 1]
+2018-04-06 23:31:47 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]
+2018-04-07 11:18:07 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]
+2018-04-07 11:18:07 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-07 11:18:07 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-04-07 11:27:19 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-07 11:27:19 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-07 11:27:19 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-07 11:28:30 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-07 11:28:30 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-07 11:28:30 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-07 11:30:37 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-07 11:30:37 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-07 11:30:37 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-07 11:33:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-07 11:33:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-07 11:33:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-07 11:49:14 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@fdd473; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@fdd473; line: 1, column: 1]
+2018-04-07 11:49:14 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@55299e; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@55299e; line: 1, column: 1]
+2018-04-07 11:49:15 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@b386df; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@b386df; line: 1, column: 1]
+2018-04-07 11:52:52 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@238dd0; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@238dd0; line: 1, column: 1]
+2018-04-07 11:52:52 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1acdf2e; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1acdf2e; line: 1, column: 1]
+2018-04-07 11:52:53 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@11de2d6; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@11de2d6; line: 1, column: 1]
+2018-04-07 12:07:10 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@5ecce3; line: 1, column: 1]
+2018-04-07 12:07:10 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1a21c64; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1a21c64; line: 1, column: 1]
+2018-04-07 12:07:11 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-07 12:13:55 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]
+2018-04-07 12:13:55 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-07 12:13:55 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-04-08 19:50:51 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]
+2018-04-08 19:50:51 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-08 19:50:51 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-04-09 00:46:52 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:46:52 ERROR MonitoredProcess:287 - Fail searching record in processesList - No-System:KYLOREN:Realtime:ProcessEventQueue
+2018-04-09 00:46:52 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:46:52 ERROR MonitoredProcess:483 - Fail searching record in processesList - No-System:KYLOREN:Realtime:ProcessEventQueue
+2018-04-09 00:46:52 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:46:52 ERROR MonitoredProcess:483 - Fail searching record in processesList - No-System:KYLOREN:Realtime:ProcessEventQueue
+2018-04-09 00:46:52 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:46:52 ERROR MonitoredProcess:314 - Fail searching record in processesList - No-System:KYLOREN:Realtime:ProcessEventQueue
+2018-04-09 00:46:58 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:46:58 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:04 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:04 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:10 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:10 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:16 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:16 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:22 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:22 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:28 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:28 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:35 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:35 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 00:47:41 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 00:47:41 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 03:47:44 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 03:47:44 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:26:38 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:26:38 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:26:44 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:26:44 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:26:50 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:26:50 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:26:57 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:26:57 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:03 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:03 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:09 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:09 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:15 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:15 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:21 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:21 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:27 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:27 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:33 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:33 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:39 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:39 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:45 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:45 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:51 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:51 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:27:57 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:27:57 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:03 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:03 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:09 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:09 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:15 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:15 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:21 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:21 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:27 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:27 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:33 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:33 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:39 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:39 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:45 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:45 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:51 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:51 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:28:57 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:28:57 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:05 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:05 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:13 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:13 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:19 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:19 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:26 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:26 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:32 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:32 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:38 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:38 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:44 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:44 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:50 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:50 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:29:56 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:29:56 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:30:02 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:30:02 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:30:08 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:30:08 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:30:14 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:30:14 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:30:20 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-04-09 09:30:20 ERROR MonitoredProcess:124 - Fail retrieving ServiceEntity
+2018-04-09 09:30:26 ERROR MonitoredProcess:124 - bound must be positive
+2018-04-09 09:33:45 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-09 09:33:45 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-09 09:33:46 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-09 09:57:46 ERROR MonitoredProcess:124 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%18, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%16, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8, KyloRen/fe80:0:0:0:24df:19f9:a554:ee01%4, KyloRen/2001:0:9d38:953c:24df:19f9:a554:ee01] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.105, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%18, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%16, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%8, KyloRen/fe80:0:0:0:24df:19f9:a554:ee01%4, KyloRen/2001:0:9d38:953c:24df:19f9:a554:ee01] failed: Connection refused: connect
+2018-04-09 09:57:56 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@11f4093; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@11f4093; line: 1, column: 1]
+2018-04-09 09:57:56 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-09 09:57:56 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ebd80; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ebd80; line: 1, column: 1]
+2018-04-09 10:00:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@a6e30c; line: 1, column: 1]
+2018-04-09 10:00:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@bc14c1; line: 1, column: 1]
+2018-04-09 10:00:42 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@ef27a8; line: 1, column: 1]
+2018-04-09 11:38:08 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@d9d86; line: 1, column: 1]
+2018-04-09 11:38:08 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1de5d22; line: 1, column: 1]
+2018-04-09 11:38:08 ERROR MonitoredProcess:124 - Could not read document: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]; nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not deserialize instance of adms.nextgen.common.entities.telemetry.AnalogEntity out of START_ARRAY token
+ at [Source: java.io.PushbackInputStream@1812481; line: 1, column: 1]
+2018-08-31 18:20:14 ERROR MonitoredProcess:125 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.107, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%21, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%20, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.107, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%21, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%20, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect
+2018-08-31 18:20:26 ERROR MonitoredProcess:125 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.107, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%21, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%20, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KyloRen/192.168.106.1, KyloRen/192.168.23.1, KyloRen/192.168.1.107, KyloRen/fe80:0:0:0:20f7:ecb4:130e:637e%21, KyloRen/fe80:0:0:0:889a:cb85:dc74:11ef%20, KyloRen/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect
+2018-08-31 18:20:38 ERROR MonitoredProcess:125 - I/O error on POST request for "https://KYLOREN:8445/oauth/token": Connect to KYLOREN:8445 [KYLOREN/192.168.106.1, KYLOREN/192.168.23.1, KYLOREN/192.168.1.107, KYLOREN/fe80:0:0:0:20f7:ecb4:130e:637e%21, KYLOREN/fe80:0:0:0:889a:cb85:dc74:11ef%20, KYLOREN/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to KYLOREN:8445 [KYLOREN/192.168.106.1, KYLOREN/192.168.23.1, KYLOREN/192.168.1.107, KYLOREN/fe80:0:0:0:20f7:ecb4:130e:637e%21, KYLOREN/fe80:0:0:0:889a:cb85:dc74:11ef%20, KYLOREN/fe80:0:0:0:4dfb:816c:9f6f:2baa%11] failed: Connection refused: connect
+2018-08-31 18:27:39 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:27:39 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:27:44 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:27:44 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:27:49 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:27:49 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:27:55 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:27:55 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:00 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:00 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:05 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:05 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:10 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:10 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:15 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:15 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:20 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:20 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:26 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:26 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:31 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:31 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:36 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:36 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:41 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:41 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:46 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:46 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:28:51 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:51 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:50 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:28:57 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:28:57 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:29:02 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:29:02 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:27:34 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:26 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:26 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:31 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:31 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:36 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:36 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:41 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:41 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:46 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:46 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:52 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:52 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:37:57 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:37:57 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:38:02 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:38:02 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:38:07 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:38:07 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:37:21 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:50:37 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:50:37 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:29 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:50:42 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:50:42 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:34 CEST 2018 Unsuccessuful login yoda to ProposalStudio yoda ProposalStudio High User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:50:47 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:50:47 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:29 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
+2018-08-31 18:50:53 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:50:53 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:39 CEST 2018 Successuful login yoda to ProposalStudio yoda ProposalStudio None User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:50:58 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:50:58 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:34 CEST 2018 Unsuccessuful login yoda to ProposalStudio yoda ProposalStudio High User Action [HMI] yoda,0:0:0:0:0:0:0:1
+2018-08-31 18:51:03 ERROR MonitoredProcess:125 - 401 
+2018-08-31 18:51:03 ERROR MonitoredProcess:107 - Fail creating new record in EventEntity>Fri Aug 31 18:50:29 CEST 2018 Process No-System:KYLOREN:Realtime:BusinessLogicTier started No-System:KYLOREN:Realtime:BusinessLogicTier Processes None System [KYLOREN] SystemUser,No-Console
