@@ -20,7 +20,7 @@
   	<module>../systemMonitorViewer</module>
   	<module>../jobScheduler</module>
   	<module>../proposalStudio</module>
-  	<module>../extraEscolares</module>
+  	<!-- <module>../extraEscolares</module> -->
   </modules>
   
 </project>
