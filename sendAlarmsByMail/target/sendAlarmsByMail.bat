@@ -1,0 +1,1 @@
+java -jar sendAlarmsByMail-0.0.1.jar
