@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="my:freewill.nextgen.hmi.common" />
+</head>
+<body>
+<v-css-layout id="server-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+    	<v-horizontal-layout width-full spacing>
+    		<v-vertical-layout height-full spacing >
+				<v-text-field caption="name" _id="name" width-full />
+				<v-text-field caption="timestamp" _id="timestamp" width-full />
+			</v-vertical-layout>
+			<v-vertical-layout _id="statebox" height-full spacing style-name="card">
+				<!-- <my-status-panel caption="status" _id="status" width-full /> -->
+				<v-label :center :middle _id="state" width-full /> 
+			</v-vertical-layout>
+		</v-horizontal-layout>
+    	<v-horizontal-layout width-full spacing>
+    		<v-text-field caption="site" _id="site" width-full />
+			<v-text-field caption="server" _id="server" width-full />
+		</v-horizontal-layout>
+		<v-text-field caption="port" _id="port" />
+        
+        <v-button :right width-full style-name="primary" _id="start">Start</v-button>
+        <v-button :right width-full style-name="danger" _id="stop">Stop</v-button>
+        <v-label _id="space" width-full />
+        <v-css-layout :expand style-name="expander" />
+	    <v-button :right width-full style-name="cancel" _id="close" click-shortcut="escape">Close</v-button>
+	    
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

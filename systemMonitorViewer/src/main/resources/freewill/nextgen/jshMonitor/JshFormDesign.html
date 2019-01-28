@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:freewill.nextgen.jshMonitor" />
+</head>
+<body>
+<v-css-layout id="jsh-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+        <v-text-field caption="label" _id="Label" width-full />
+        <v-text-field caption="description" _id="Description" width-full />
+        <v-horizontal-layout width-full spacing>
+        	 <v-text-field caption="cron" _id="Cron" width-full />
+        	 <vaadin-check-box caption="active" _id="Active"></vaadin-check-box>
+	    </v-horizontal-layout>
+	    <v-text-field caption="command" _id="Command" width-full />
+        <v-text-field caption="params" _id="Params" width-full />
+         
+        <v-css-layout :expand style-name="expander" />
+	    <v-button :right width-full style-name="primary" _id="save">Save</v-button>
+	    <v-button :right width-full style-name="cancel" _id="cancel" click-shortcut="escape">Cancel</v-button>
+	    <v-button :right width-full style-name="danger" _id="delete">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

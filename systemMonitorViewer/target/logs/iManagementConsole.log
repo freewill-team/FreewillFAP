@@ -1,0 +1,28 @@
+2018-07-09 14:19:29 ERROR MonitoredProcess:422 - createConfigReader error:C:\Users\ueben\Documents\Proyectos\freewill.nextgen\systemMonitorViewer\target\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2018-07-09 14:19:35 ERROR MonitoredProcess:114 - Unable to connect to Redis server: /127.0.0.1:6379
+2018-07-09 14:20:41 ERROR MonitoredProcess:422 - createConfigReader error:C:\Users\ueben\Documents\Proyectos\freewill.nextgen\systemMonitorViewer\target\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2018-07-09 14:21:42 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:42 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:21:43 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:43 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:21:50 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:50 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:21:50 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:50 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:21:56 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:56 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:21:56 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:21:56 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:22:02 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:02 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:22:02 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:02 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:22:08 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:08 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:22:08 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:08 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:22:14 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:14 ERROR DashboardView:119 - Fail retrieving processesList
+2018-07-09 14:22:14 ERROR MonitoredProcess:114 - Unexpected exception while processing command
+2018-07-09 14:22:14 ERROR ProcessMonitor:145 - Fail retrieving processesList
+2018-07-09 14:35:40 ERROR MonitoredProcess:423 - createConfigReader error:C:\Users\ueben\Documents\Proyectos\freewill.nextgen\systemMonitorViewer\target\properties\config.properties (El sistema no puede encontrar la ruta especificada)
