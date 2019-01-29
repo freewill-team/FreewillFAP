@@ -17,9 +17,11 @@ import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-
+import freewill.nextgen.appwebFAP.EntryPoint;
+import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.JamShowEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
+import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
@@ -122,17 +124,41 @@ public class JamFinal extends VerticalLayout {
             }
         });
 		nextButton.setEnabled(true);
+		
+		Button delete = new Button("");
+		delete.addStyleName(ValoTheme.BUTTON_DANGER);
+		delete.setIcon(FontAwesome.REMOVE);
+		delete.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	ConfirmDialog cd = new ConfirmDialog("Realmente desea eliminar TODOS los datos?");
+            	cd.setOKAction(new ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+            			cd.close();
+            			if(viewLogic!=null){
+            				viewLogic.deleteAll(competicion, categoria);
+            				parent.showSaveNotification("Datos borrados.");
+            				setEnabled(false);
+            			}
+                    }
+                });
+            	getUI().addWindow(cd);
+            }
+        });
         
         Label competicionLabel = new Label(competicionStr + " / " + categoriaStr);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
-
+        
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
         topLayout.setMargin(true);
         topLayout.setWidth("100%");
+        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);

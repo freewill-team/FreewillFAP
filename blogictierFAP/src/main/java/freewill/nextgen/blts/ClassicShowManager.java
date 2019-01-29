@@ -1,7 +1,7 @@
 package freewill.nextgen.blts;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PuntuacionesRepository;
 import freewill.nextgen.blts.daos.RankingRepository;
+import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.ClassicShowRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
-import freewill.nextgen.blts.data.RankingEntity;
+import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.entities.UserEntity;
@@ -51,6 +52,9 @@ public class ClassicShowManager {
 	
 	@Autowired
 	CompeticionRepository competirepo;
+	
+	@Autowired
+	CircuitoRepository circuitorepo;
 	
 	@Autowired
 	UserRepository userrepo;
@@ -129,16 +133,19 @@ public class ClassicShowManager {
 		return repository.findById(recId);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<ClassicShowEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
 		
-		Random numRandom = new Random();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		long userCompany = user.getCompany();
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		List<ClassicShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
 				competicion, categoria);
@@ -163,13 +170,9 @@ public class ClassicShowManager {
 					//rec.setClasificacionFinal(0);
 					rec.setCompany(userCompany);
 					
-					RankingEntity ranking = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
-							inscripcion.getPatinador(), competi.getCircuito(), categoria);
-					if(ranking!=null)
-						rec.setOrden1(10000 - ranking.getPuntuacion()); // Fija orden temporal
-					else
-						rec.setOrden1(20000 - numRandom.nextInt(500)); // Fija orden temporal random
-					
+					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+							competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+					System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 					
 					repository.save(rec);
 				}
@@ -397,6 +400,21 @@ public class ClassicShowManager {
 			repository.save(rec);
 			nextRanking++;
 		}
+	}
+	
+	@RequestMapping("/deleteByCompeticionAndCategoria/{competicion}/{categoria}")
+	public boolean deleteByCompeticionAndCategoria(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Deleting ClassicShow By competicion y categoria..."
+			+competicion+","+categoria);
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		List<ClassicShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
+				competicion, categoria);
+		for(ClassicShowEntity rec:recs){
+			repository.delete(rec);
+		}
+		return true;
 	}
 	
 }
