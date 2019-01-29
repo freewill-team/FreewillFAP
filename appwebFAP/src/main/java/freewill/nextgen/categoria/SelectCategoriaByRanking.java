@@ -55,12 +55,14 @@ public class SelectCategoriaByRanking extends VerticalLayout {
 	        		RankingEntity rec = (RankingEntity) BltClient.get().executeCommand(
 		        		"/countByCircuitoAndCategoria/"+circuito+"/"+categoria.getId(), 
 		        		RankingEntity.class, EntryPoint.get().getAccessControl().getTokenKey());
-	        	
-	        		Sparkline layout = new Sparkline(
-	        			categoria.getNombre(), rec.getId(),
-	            		FontAwesome.PAPERCLIP, categoria.getId());
-		        	layout.addClickListener(action);
-		        	sparks.addComponent(layout);
+	        		
+	        		if(rec.getId()>0){
+		        		Sparkline layout = new Sparkline(
+		        			categoria.getNombre(), rec.getId(),
+		            		FontAwesome.PAPERCLIP, categoria.getId());
+			        	layout.addClickListener(action);
+			        	sparks.addComponent(layout);
+	        		}
 	        	}
 	        	else{
 	        		Sparkline layout = new Sparkline(

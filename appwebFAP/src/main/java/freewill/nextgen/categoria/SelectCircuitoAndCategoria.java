@@ -10,7 +10,10 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Responsive;
 
 import freewill.nextgen.circuito.SelectCircuito;
+import freewill.nextgen.common.bltclient.BltClient;
+import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.categoria.SelectModalidad;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 
 @SuppressWarnings("serial")
@@ -23,6 +26,7 @@ public class SelectCircuitoAndCategoria extends Panel {
     private VerticalLayout selectionarea = new VerticalLayout();
     private SelectModalidad selectmodalidad = null;
     private SelectCategoriaByRanking selectcategoria = null;
+    private SelectCategoriaByParticipante selectcategoriabyp = null;
     private ClickListener action;
     
     public SelectCircuitoAndCategoria(ClickListener action) {
@@ -75,8 +79,26 @@ public class SelectCircuitoAndCategoria extends Panel {
             	modalidadenum = ModalidadEnum.values()[modalidad];
             	if(selectcategoria!=null)
             		selectionarea.removeComponent(selectcategoria);
-            	selectcategoria = new SelectCategoriaByRanking(getCircuito(), modalidadenum, action);
-            	selectionarea.addComponent(selectcategoria);
+            	if(selectcategoriabyp!=null)
+            		selectionarea.removeComponent(selectcategoriabyp);
+            	if(selectcircuito.isVisible()){
+            		selectcategoria = new SelectCategoriaByRanking(getCircuito(), modalidadenum, action);
+            		selectionarea.addComponent(selectcategoria);
+            	}
+            	else{
+            		try{
+            			CompeticionEntity competi = (CompeticionEntity) BltClient.get().executeCommand(
+                    			"/getLastCompeticion", CompeticionEntity.class,
+                    			EntryPoint.get().getAccessControl().getTokenKey());
+            			if(competi!=null){
+            				selectcategoriabyp = new SelectCategoriaByParticipante(competi.getId(), modalidadenum, action);
+            				selectionarea.addComponent(selectcategoriabyp);
+                        }
+                	}
+            		catch(Exception e){
+            			e.printStackTrace();
+            		}
+            	}
             }
         });
 	}

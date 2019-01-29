@@ -51,8 +51,7 @@ public class ResultadosActaFinal extends VerticalLayout {
 		
 		switch(category.getModalidad()){
 		case SLIDE:
-		case BATTLE:
-		case JAM:
+		case BATTLE:	
 		case CLASSIC:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
 					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
@@ -61,6 +60,11 @@ public class ResultadosActaFinal extends VerticalLayout {
 		case SPEED:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
 					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
+			break;
+		case JAM:
+			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
+					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
+					"dorsalPareja", "nombrePareja", "apellidosPareja", "clubStr");
 			break;
 		}
         
@@ -104,11 +108,34 @@ public class ResultadosActaFinal extends VerticalLayout {
 		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
-    		File file = Export2Xls.get().createXLS(
-    				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
-    				ParticipanteEntity.class,
-    				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
-    				/*"dorsal",*/ "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+    		File file = null;
+    		switch(category.getModalidad()){
+    		case SLIDE:
+    		case BATTLE:	
+    		case CLASSIC:
+    			file = Export2Xls.get().createXLS(
+        				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
+        				ParticipanteEntity.class,
+        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+    					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
+    			break;
+    		case JUMP:
+    		case SPEED:
+    			file = Export2Xls.get().createXLS(
+        				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
+        				ParticipanteEntity.class,
+        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+    					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
+    			break;
+    		case JAM:
+    			file = Export2Xls.get().createXLS(
+        				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
+        				ParticipanteEntity.class,
+        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+    					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
+    					"dorsalPareja", "nombrePareja", "apellidosPareja", "clubStr");
+    			break;
+    		}
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
