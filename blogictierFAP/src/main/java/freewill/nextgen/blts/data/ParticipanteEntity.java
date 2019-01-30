@@ -48,7 +48,7 @@ public class ParticipanteEntity implements Serializable, Cloneable {
     	clubStr = "";
     	dorsal = 0;
     	dorsalPareja = 0;
-    	clasificacion = 0;
+    	clasificacion = 999;
     	mejorMarca = 0;
     	puntuacion = 0;
     	//company = null;

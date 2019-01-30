@@ -160,9 +160,6 @@ public class GenericGrid<T> extends Grid {
 				else if(paramType.equals("int") && field.toLowerCase().contains("tiempo")){
 					col.setConverter(timeConverter).setRenderer(new HtmlRenderer());
 				}
-				else if(paramType.equals("int") && field.toLowerCase().contains("tiempo")){
-					col.setConverter(timeConverter).setRenderer(new HtmlRenderer());
-				}
 				else if(paramType.contains("integer") && field.toLowerCase().contains("dorsal")){
 					col.setConverter(dorsalConverter).setRenderer(new HtmlRenderer());
 				}

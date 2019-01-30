@@ -191,7 +191,8 @@ public class SpeedTimeTrial extends VerticalLayout {
     				(List<SpeedTimeTrialEntity>)grid.getContainerDataSource().getItemIds(),
     				SpeedTimeTrialEntity.class,
     				("Resultados Time-Trial"+competicionStr+" / "+categoriaStr).toUpperCase(),
-    				"dorsal", "clasificacion", "nombre", "apellidos", "tiempoAjustado1", "valido1", "tiempoAjustado2", "valido2", "mejorTiempo");
+    				"dorsal", "clasificacion", "nombre", "apellidos", "tiempoAjustado1", /*"valido1",*/ 
+    				"tiempoAjustado2", /*"valido2",*/ "mejorTiempo");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);

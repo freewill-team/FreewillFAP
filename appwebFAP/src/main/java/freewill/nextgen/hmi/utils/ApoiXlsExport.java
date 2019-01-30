@@ -53,6 +53,10 @@ public class ApoiXlsExport {
 		worksheet.getHeader().setCenter(title);
 	}
 	
+	public void setFooter(String title){
+		worksheet.getFooter().setCenter(title);
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void addRow(int row, Object[] data, boolean ishead, boolean isbold){
 		if(document==null || worksheet==null) return;

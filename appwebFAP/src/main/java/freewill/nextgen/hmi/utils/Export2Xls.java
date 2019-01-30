@@ -68,9 +68,30 @@ public class Export2Xls {
 	    			String getMethod = "get"+ fields[i].substring(0, 1).toUpperCase()+fields[i].substring(1);
 	    	    	Method method = entity.getMethod(getMethod);
 	    			data[i] = method.invoke(rec);
+	    			// Applica converters si aplica
+	    			String paramType = data[i].getClass().getTypeName().toLowerCase();
+	    			if((paramType.contains("integer") && fields[i].toLowerCase().contains("tiempo"))
+	    					|| (paramType.equals("int") && fields[i].toLowerCase().contains("tiempo"))){
+	    				int value = (Integer) data[i];
+	    				if(value>99999)
+	    					data[i] = "Nulo";
+					}
+					else if((paramType.contains("integer") && fields[i].toLowerCase().contains("dorsal"))
+							|| (paramType.equals("int") && fields[i].toLowerCase().contains("dorsal"))){
+						if(data[i]==null)
+	    					data[i] = "No Presentado";
+						else{
+							int value = (Integer) data[i];
+							if(value==0)
+								data[i] = "No Presentado";
+						}
+					}
     			}
     		   	doc.addRow(fila++, data, false, false);
     		}
+    		// Específico FAP, imprime texto "Firma Juez Principal / Comité"
+    		doc.setFooter("Firma Juez Principal / Comité");
+    		
     		// Close the Word Document
     		int widths[] = new int[fields.length];
     		for(int i = 0; i<widths.length; i++){
