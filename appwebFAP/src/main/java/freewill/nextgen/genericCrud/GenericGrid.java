@@ -151,7 +151,7 @@ public class GenericGrid<T> extends Grid {
 	        			|| field.contains("orden") || field.contains("clasificacion"))
 	        		col.setWidth(120);
 	        	if(field.contains("timestamp") || field.contains("dorsal"))
-	        		col.setWidth(150);
+	        		col.setWidth(140);
 				
 	        	if(paramType.contains("boolean")){
 					col.setConverter(pointtypeConverter).setRenderer(new HtmlRenderer());

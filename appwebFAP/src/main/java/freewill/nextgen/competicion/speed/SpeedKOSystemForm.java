@@ -1,5 +1,7 @@
 package freewill.nextgen.competicion.speed;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -40,7 +42,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         this.setHeight("100%");
         
         save.setEnabled(false);
-        ganador.setRequired(true);
+        //ganador.setRequired(true);
         patina1.setCaption(Messages.get().getKey("patina1"));
         patina2.setCaption(Messages.get().getKey("patina2"));
         
@@ -61,16 +63,17 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         fieldGroup.bind(pat2tiempo3, "pat2tiempo3");
         
         // perform validation and enable/disable buttons while editing
-        /*ValueChangeListener valueListener = new ValueChangeListener() {
+        ValueChangeListener valueListener = new ValueChangeListener() {
             @Override
             public void valueChange(ValueChangeEvent event) {
                 formHasChanged();
             }
-        };*/
+        };
         for (Field f : fieldGroup.getFields()) {
-            //f.addValueChangeListener(valueListener);
+            f.addValueChangeListener(valueListener);
             f.setCaption(Messages.get().getKey(f.getCaption())); // Translations
         }
+        /* Ahora esta logica está en BlogicTier
         pat1gana1.addValueChangeListener(e -> {
         		pat2gana1.setValue(!pat1gana1.getValue());
         		CheckGanador();
@@ -100,7 +103,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         pat1gana3.setImmediate(true);
         pat2gana1.setImmediate(true);
         pat2gana2.setImmediate(true);
-        pat2gana3.setImmediate(true);
+        pat2gana3.setImmediate(true);*/
 
         fieldGroup.addCommitHandler(new CommitHandler() {
 
@@ -169,7 +172,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         ganador.setItemCaption(rec.getPatinador1(), rec.getNombre1()+" "+rec.getApellidos1());
         ganador.addItem(rec.getPatinador2());
         ganador.setItemCaption(rec.getPatinador2(), rec.getNombre2()+" "+rec.getApellidos2());
-        //ganador.setValue(rec.getGanador());
+        ganador.setValue(rec.getGanador());
         patina1.setValue(rec.getNombre1()+" "+rec.getApellidos1());
         patina2.setValue(rec.getNombre2()+" "+rec.getApellidos2());
         
@@ -183,13 +186,14 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         BeanItem<SpeedKOSystemEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
         	//SpeedKOSystemEntity rec = item.getBean();
-        	CheckGanador();
+        	//CheckGanador();
         }
         patina1.setEnabled(false);
         patina2.setEnabled(false);
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
 
+    /* Ahora esta logica está en BlogicTier
 	@SuppressWarnings("deprecation")
 	private void CheckGanador() {
 		SpeedKOSystemEntity rec = fieldGroup.getItemDataSource().getBean();
@@ -208,6 +212,6 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
 		else
 			ganador.setValue(null);
 		System.out.println("Gana = "+ganador.getValue()+" "+ganador.getItemCaption(ganador.getValue()));
-	}
+	}*/
     		
 }

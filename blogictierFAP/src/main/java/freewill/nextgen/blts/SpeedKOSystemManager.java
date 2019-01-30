@@ -73,7 +73,29 @@ public class SpeedKOSystemManager {
 	@RequestMapping("/update")
 	public SpeedKOSystemEntity update(@RequestBody SpeedKOSystemEntity rec) throws Exception {
 		if(rec!=null){
-			System.out.println("Updating SpeedKOSystem..."+rec);
+			System.out.println("Updating SpeedKOSystem..."+rec);	
+			int gana1=0, gana2=0;
+			if(rec.getPat1gana1()) gana1++;
+			if(rec.getPat1gana2()) gana1++;
+			if(rec.getPat1gana3()) gana1++;
+			if(rec.getPat2gana1()) gana2++;
+			if(rec.getPat2gana2()) gana2++;
+			if(rec.getPat2gana3()) gana2++;
+			if(gana1>gana2){
+				rec.setGanador(rec.getPatinador1());
+				rec.setGanadorStr(rec.getNombre1()+" "+rec.getApellidos1());
+			}
+			else if(gana2>gana1){
+				rec.setGanador(rec.getPatinador2());
+				rec.setGanadorStr(rec.getNombre2()+" "+rec.getApellidos2());
+			}
+			else{
+				rec.setGanador(null);
+				rec.setGanadorStr("");
+			}
+			if(rec.getGanador()==null)
+				throw new IllegalArgumentException("Debe rellenar el resultado de las carreras.");
+			
 			SpeedKOSystemEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			

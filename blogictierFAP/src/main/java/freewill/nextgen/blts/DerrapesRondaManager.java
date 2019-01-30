@@ -119,9 +119,10 @@ public class DerrapesRondaManager {
 	@RequestMapping("/findByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<DerrapesRondaEntity> findByCompeticionAndCategoriaAndRonda(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
-		int posicion[] = {1,2};
+		int posicion[] = null;
 		int posFinal[] = {1,2,3,4};
 		int posSemis[] = {1,8,4,5, 3,6,2,7};
+		int posSemisFD[] = {1,2,7,8, 3,4,5,6};
 		int posCuartos[] = {1,16,8,9, 5,12,4,13, 3,14,6,11, 7,10,2,15};
 		System.out.println("Getting DerrapesRondas List By competicion y categoria..."
 			+competicion+","+categoria);
@@ -139,7 +140,7 @@ public class DerrapesRondaManager {
 					competicion, categoria).size();
 			if(numpatines<6)
 				ronda = EliminatoriaEnum.FINAL;
-			else if(numpatines<11)
+			else if(numpatines<11) // TODO con 9 patinadores, hacer 3 grupos de 3
 				ronda = EliminatoriaEnum.SEMIS;
 			// Si hay 17 o mas, entonces debe haber una pre-clasificatoria
 			
@@ -150,6 +151,8 @@ public class DerrapesRondaManager {
 				posicion = posSemis;
 			else if(ronda==EliminatoriaEnum.CUARTOS)
 				posicion = posCuartos;
+			if(numpatines==5)
+				posicion = posSemisFD;
 			
 			for(int i=0;i<numLevels;i++){ // Cada i es una eliminatoria: final, semis, cuartos, ...
 				int n = (int)(Math.pow(2.0, i));

@@ -219,14 +219,19 @@ public class SpeedCrudLogic implements Serializable {
 	        	res = (SpeedKOSystemEntity) BltClient.get().updateEntity(rec, SpeedKOSystemEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());	
 		    
-	    	if(koView!=null)
+	    	if(koView!=null){
 	    		koView.showRecords(this.initKO(rec.getCompeticion(), rec.getCategoria(), rec.getEliminatoria()));
-	    	
+	    		koView.showSaveNotification("Record (" + res.getId() + ") updated");
+	    		koView.clearSelection();
+	    		koView.editRecord(res);
+	    	}
 	    	return res;
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
 			e.printStackTrace();
+			if(koView!=null)
+				koView.showError(e.getMessage());
 		}
     	return null;
 	}
@@ -276,7 +281,8 @@ public class SpeedCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
     	return null;
     }
@@ -291,7 +297,8 @@ public class SpeedCrudLogic implements Serializable {
 		}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
 		return null;
 	}
@@ -304,8 +311,9 @@ public class SpeedCrudLogic implements Serializable {
 	        		EntryPoint.get().getAccessControl().getTokenKey());
     	}
 		catch(Exception e){
-			//log.error(e.getMessage());
-			//view.showError(e.getMessage());
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
@@ -325,5 +333,15 @@ public class SpeedCrudLogic implements Serializable {
 		}
 		return false;
 	}
+	
+	public void editRecordKO(SpeedKOSystemEntity rec) {
+        if (rec == null) {
+            setFragmentParameter("");
+        } else {
+            setFragmentParameter(rec.getId() + "");
+        }
+        if(koView!=null)
+        	koView.editRecord(rec);
+    }
 	
 }

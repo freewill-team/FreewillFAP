@@ -17,7 +17,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.data.SpeedKOSystemEntity.EliminatoriaEnum;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.SpeedKOSystemEntity;
-import freewill.nextgen.data.SpeedTimeTrialEntity;
 import freewill.nextgen.data.SpeedTimeTrialEntity.RondaEnum;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.hmi.utils.Messages;
@@ -151,16 +150,17 @@ public class SpeedKOsystem extends VerticalLayout {
     	}
     }
 
-    public void selectRow(SpeedTimeTrialEntity row) {
+    public void selectRow(SpeedKOSystemEntity row) {
         //((SelectionModel.Single) grid.getSelectionModel()).select(row);
     }
 
-    public SpeedTimeTrialEntity getSelectedRow() {
-        return null;//grid.getSelectedRow();
+    public SpeedKOSystemEntity getSelectedRow() {
+        //grid.getSelectedRow();
+    	return null;
     }
 
-    public void editRecord(SpeedTimeTrialEntity rec) {
-        //form.editRecord(rec);
+    public void editRecord(SpeedKOSystemEntity rec) {
+        form.editRecord(rec);
     }
 
     public void showRecords(List<SpeedKOSystemEntity> records) {
@@ -168,7 +168,7 @@ public class SpeedKOsystem extends VerticalLayout {
         	grid.setRecords(records);
     }
 
-    public void refreshRecord(SpeedTimeTrialEntity rec) {
+    public void refreshRecord(SpeedKOSystemEntity rec) {
         //grid.refresh(rec);
         //grid.scrollTo(rec);
     }
