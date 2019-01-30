@@ -201,9 +201,10 @@ public class DerrapesCrudLogic implements Serializable {
 	        	res = (DerrapesRondaEntity) BltClient.get().updateEntity(rec, DerrapesRondaEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());	
 		    
-	    	if(koView!=null)
+	    	if(koView!=null){
 	    		koView.showRecords(this.initKO(rec.getCompeticion(), rec.getCategoria()));
-	    	
+	    		koView.showSaveNotification("Record (" + res.getId() + ") updated");
+	    	}
 	    	return res;
     	}
 		catch(Exception e){

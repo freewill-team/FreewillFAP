@@ -166,10 +166,11 @@ public class BattleRondaManager {
 					rec.setCompany(user.getCompany());
 					if(i==numLevels-1){ // en el último nivel asignamos los primeros enfrentamientos
 						for(int l=0, ll=0;l<4;l++){ // Hay 4 patinadores en cada caja
+							
 							BattleEntity resultado =
-									//battlerepo.findByCompeticionAndCategoriaAndClasificacion(
 									battlerepo.findByCompeticionAndCategoriaAndOrden(
 											competicion, categoria, posicion[k++]);
+							
 							if(resultado==null) continue;
 							switch(ll++){
 								case 0:

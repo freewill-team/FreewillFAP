@@ -138,7 +138,8 @@ public class DerrapesRondaManager {
 			EliminatoriaEnum ronda = EliminatoriaEnum.CUARTOS;
 			int numpatines = derrapesrepo.findByCompeticionAndCategoriaOrderByOrdenAsc(
 					competicion, categoria).size();
-			if(numpatines<6)
+			System.out.println("Número Patinadores = "+numpatines);
+			if(numpatines<5)
 				ronda = EliminatoriaEnum.FINAL;
 			else if(numpatines<11) // TODO con 9 patinadores, hacer 3 grupos de 3
 				ronda = EliminatoriaEnum.SEMIS;
@@ -153,6 +154,7 @@ public class DerrapesRondaManager {
 				posicion = posCuartos;
 			if(numpatines==5)
 				posicion = posSemisFD;
+			System.out.println("Ronda = "+ronda);
 			
 			for(int i=0;i<numLevels;i++){ // Cada i es una eliminatoria: final, semis, cuartos, ...
 				int n = (int)(Math.pow(2.0, i));
@@ -166,10 +168,12 @@ public class DerrapesRondaManager {
 					rec.setCompany(user.getCompany());
 					if(i==numLevels-1){ // en el último nivel asignamos los primeros enfrentamientos
 						for(int l=0, ll=0;l<4;l++){ // Hay 4 patinadores en cada caja
+							System.out.println("Retrieving k,pos = "+k+","+posicion[k]);
 							DerrapesEntity resultado =
 									//derrapesrepo.findByCompeticionAndCategoriaAndClasificacion(
 									derrapesrepo.findByCompeticionAndCategoriaAndOrden(
 											competicion, categoria, posicion[k++]);
+							System.out.println("Retrieving Resultado = "+resultado);
 							if(resultado==null) continue;
 							switch(ll++){
 								case 0:

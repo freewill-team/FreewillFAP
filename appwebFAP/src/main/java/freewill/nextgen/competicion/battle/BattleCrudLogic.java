@@ -201,9 +201,10 @@ public class BattleCrudLogic implements Serializable {
 	        	res = (BattleRondaEntity) BltClient.get().updateEntity(rec, BattleRondaEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());	
 		    
-	    	if(koView!=null)
+	    	if(koView!=null){
 	    		koView.showRecords(this.initKO(rec.getCompeticion(), rec.getCategoria()));
-	    	
+	    		koView.showSaveNotification("Record (" + res.getId() + ") updated");
+	    	}
 	    	return res;
     	}
 		catch(Exception e){
