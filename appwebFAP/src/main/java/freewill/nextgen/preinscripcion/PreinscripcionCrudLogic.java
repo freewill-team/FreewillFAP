@@ -229,35 +229,6 @@ public class PreinscripcionCrudLogic implements Serializable {
 		return false;
 	}
 	
-	/*public ParticipanteEntity saveJam(ParticipanteEntity rec) {
-    	try{
-	    	if(view!=null){
-	    		System.out.println("Saving = "+rec.toString());
-	    		// Salva los datos adicionales de la pareja de Jam 
-	    		ParticipanteEntity res = (ParticipanteEntity) BltClient.get().createEntity(
-	    				rec, ParticipanteEntity.class,
-	        				EntryPoint.get().getAccessControl().getTokenKey());
-	    		
-		        view.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");   
-		        // Actualiza los datos de la pareja en el Grid
-		        PatinadorEntity pat = (PatinadorEntity) BltClient.get().executeCommand(
-		        		"/getInscripcion/"+rec.getPatinadorPareja()+"/"+rec.getCompeticion(),
-		        		PatinadorEntity.class,
-        				EntryPoint.get().getAccessControl().getTokenKey());
-		        view.refreshRecord(pat);
-		        
-		        return res;
-	    	}
-	        //setFragmentParameter("");
-    	}
-		catch(Exception e){
-			log.error(e.getMessage());
-			if(view!=null)
-				view.showError(e.getMessage());
-		}
-    	return null;
-    }*/
-	
 	public List<PatinadorEntity> getPatinadores() {
 		try{
 	        return BltClient.get().getEntities(PatinadorEntity.class,

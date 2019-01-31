@@ -34,6 +34,7 @@ public class DorsalForm extends DorsalFormDesign {
     private DorsalCrudLogic viewLogic;
     private Long competicion = null;
     private CompeticionEntity competi = null;
+    private boolean checkinAbierto = false;
     
     @SuppressWarnings("rawtypes")
     public DorsalForm(DorsalCrudLogic sampleCrudLogic) {
@@ -107,8 +108,9 @@ public class DorsalForm extends DorsalFormDesign {
         
     }
     
-	public void editRecord(PatinadorEntity rec, Long competicion) {
+	public void editRecord(PatinadorEntity rec, Long competicion, boolean abierto) {
 		this.competicion = competicion;
+		this.checkinAbierto = abierto;
         if (rec == null) {
             rec = new PatinadorEntity();
             fieldGroup.setItemDataSource(new BeanItem<PatinadorEntity>(rec));
@@ -131,7 +133,7 @@ public class DorsalForm extends DorsalFormDesign {
             		""+competicion, CompeticionEntity.class,
     				EntryPoint.get().getAccessControl().getTokenKey());
     		if(competi!=null) {
-    			save.setEnabled(competi.getActive());
+    			save.setEnabled(competi.getActive() && checkinAbierto);
     			dorsal.setEnabled(competi.getActive());
     		}
     	}

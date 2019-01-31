@@ -2,6 +2,7 @@ package freewill.nextgen.dorsal;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import com.vaadin.server.Page;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 
@@ -36,8 +38,17 @@ public class DorsalCrudLogic implements Serializable {
 
     public void init(Long competicion) {
     	try{
-	        editRecord(null, null);
+	        editRecord(null, null, false);
 	        if(view!=null){
+	        	// Primero comprueba que el checkin está abierto
+	        	Date now = new Date();
+	        	CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
+	        			""+competicion, CompeticionEntity.class,
+	        			EntryPoint.get().getAccessControl().getTokenKey());
+	        	if(competi==null || competi.getFechaFin().before(now)){
+	        		view.showError("El Checkin ya está cerrado.");
+	        		view.setCheckinAbierto(false);
+	        	}
 	        	view.showRecords(//BltClient.get().getEntities(
 	        			BltClient.get().executeQuery("/getInscripciones/"+competicion+"/false",
 	        			PatinadorEntity.class,
@@ -54,7 +65,7 @@ public class DorsalCrudLogic implements Serializable {
         setFragmentParameter("");
         if(view!=null){
 	        view.clearSelection();
-	        view.editRecord(null, null);
+	        view.editRecord(null, null, false);
         }
     }
 
@@ -192,18 +203,18 @@ public class DorsalCrudLogic implements Serializable {
 		return null;
     }
 
-    public void editRecord(PatinadorEntity rec, Long competicion) {
+    public void editRecord(PatinadorEntity rec, Long competicion, boolean checkinAbierto) {
         if (rec == null) {
             setFragmentParameter("");
         } else {
             setFragmentParameter(rec.getId() + "");
         }
         if(view!=null)
-        	view.editRecord(rec, competicion);
+        	view.editRecord(rec, competicion, checkinAbierto);
     }
 
-    public void rowSelected(PatinadorEntity rec, Long competicion) {
-    	view.editRecord(rec, competicion);
+    public void rowSelected(PatinadorEntity rec, Long competicion, boolean checkinAbierto) {
+    	view.editRecord(rec, competicion, checkinAbierto);
     }
     
     public Collection<CategoriaEntity> getCategorias() {
@@ -238,7 +249,7 @@ public class DorsalCrudLogic implements Serializable {
 	    		
 		        view.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
 		        view.clearSelection();
-		        view.editRecord(null, null);
+		        view.editRecord(null, null, false);
 		        view.refreshRecord(res);
 		        return true;
 	    	}

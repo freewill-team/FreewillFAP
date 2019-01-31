@@ -57,6 +57,7 @@ public class DorsalCrudView extends CssLayout implements View {
     private VerticalLayout selectionarea = new VerticalLayout();
     private SelectCompeticion selectcampeonato = null;
     private DorsalForm form;
+    private boolean checkinAbierto = true;
     
     public DorsalCrudView() {
         setSizeFull();
@@ -69,7 +70,7 @@ public class DorsalCrudView extends CssLayout implements View {
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
-                viewLogic.rowSelected(grid.getSelectedRow(), competicion);
+                viewLogic.rowSelected(grid.getSelectedRow(), competicion, checkinAbierto);
             }
         });
         
@@ -143,7 +144,7 @@ public class DorsalCrudView extends CssLayout implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
-    	
+    	checkinAbierto = true;
     	viewLogic.enter(event.getParameters());
     	
     	selectcircuito = new SelectCircuito();
@@ -191,7 +192,7 @@ public class DorsalCrudView extends CssLayout implements View {
         return grid.getSelectedRow();
     }
 
-    public void editRecord(PatinadorEntity rec, Long competicion) {    
+    public void editRecord(PatinadorEntity rec, Long competicion, boolean checkinAbierto) {
         if (rec != null) {
             form.addStyleName("visible");
             form.setEnabled(true);
@@ -199,7 +200,7 @@ public class DorsalCrudView extends CssLayout implements View {
             form.removeStyleName("visible");
             form.setEnabled(false);
         }
-        form.editRecord(rec, competicion);
+        form.editRecord(rec, competicion, checkinAbierto);
     }
 
     public void showRecords(Collection<PatinadorEntity> records) {
@@ -228,6 +229,10 @@ public class DorsalCrudView extends CssLayout implements View {
             	        viewLogic.init(competicion);
                     }
               	});
+	}
+	
+	public void setCheckinAbierto(boolean b) {
+		checkinAbierto = b;
 	}
 	
 }
