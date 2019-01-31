@@ -21,6 +21,8 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.competicion.classic.ClassicShowForm;
 import freewill.nextgen.data.ClassicShowEntity;
+import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
@@ -37,6 +39,7 @@ public class ClassicFinal extends VerticalLayout {
 	private ClassicShowForm form;
 	private ClassicCrudLogic viewLogic;
 	private ClassicCrudView parent = null;
+	private boolean competiClosed = false;
 	
 	public ClassicFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, ClassicCrudView parent){
@@ -85,6 +88,12 @@ public class ClassicFinal extends VerticalLayout {
 	    setStyleName("crud-main-layout");
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
+	    
+	    GenericCrudLogic<CompeticionEntity> competiLogic = 
+	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
+	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
+	    competiClosed = competi.getActive();
+	    form.setEnabled(competiClosed);
 	}
 	
 	public HorizontalLayout createTopBar() {

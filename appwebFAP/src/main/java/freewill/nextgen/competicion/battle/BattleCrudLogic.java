@@ -50,8 +50,11 @@ public class BattleCrudLogic implements Serializable {
 	        }
     	}
 		catch(Exception e){
-			//log.error(e.getMessage());
-			view.showError(e.getMessage());
+			log.error(e.getMessage());
+			if(view!=null){
+				view.showError(e.getMessage());
+				view.setEnabled(false);
+			}
 		}
     }
 
@@ -107,7 +110,8 @@ public class BattleCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
     	return null;
     }
@@ -135,7 +139,8 @@ public class BattleCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
     	return null;
     }
@@ -156,7 +161,8 @@ public class BattleCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
     }
 
@@ -185,6 +191,8 @@ public class BattleCrudLogic implements Serializable {
 		catch(Exception e){
 			log.error(e.getMessage());
 			e.printStackTrace();
+			if(koView!=null)
+				koView.showError(e.getMessage());
 		}
 		return null;
 	}
@@ -210,6 +218,8 @@ public class BattleCrudLogic implements Serializable {
 		catch(Exception e){
 			log.error(e.getMessage());
 			e.printStackTrace();
+			if(koView!=null)
+				koView.showError(e.getMessage());
 		}
     	return null;
 	}
@@ -224,6 +234,8 @@ public class BattleCrudLogic implements Serializable {
 		catch(Exception e){
 			log.error(e.getMessage());
 			e.printStackTrace();
+			if(koView!=null)
+				koView.showError(e.getMessage());
 		}
     	return null;
 	}
@@ -238,7 +250,8 @@ public class BattleCrudLogic implements Serializable {
 		}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
 		return null;
 	}
@@ -251,9 +264,10 @@ public class BattleCrudLogic implements Serializable {
 	        		EntryPoint.get().getAccessControl().getTokenKey());
     	}
 		catch(Exception e){
-			//log.error(e.getMessage());
-			//view.showError(e.getMessage());
+			log.error(e.getMessage());
 			e.printStackTrace();
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
 		return null;
 	}
@@ -271,8 +285,9 @@ public class BattleCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
 			e.printStackTrace();
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
 		return null;
 	}
@@ -290,8 +305,9 @@ public class BattleCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			view.showError(e.getMessage());
 			e.printStackTrace();
+			if(view!=null)
+				view.showError(e.getMessage());
 		}
 		return null;
 	}

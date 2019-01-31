@@ -39,7 +39,7 @@ public class DorsalCrudLogic implements Serializable {
 	        editRecord(null, null);
 	        if(view!=null){
 	        	view.showRecords(//BltClient.get().getEntities(
-	        			BltClient.get().executeQuery("/getInscripciones/"+competicion,
+	        			BltClient.get().executeQuery("/getInscripciones/"+competicion+"/false",
 	        			PatinadorEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey()));
 	        }

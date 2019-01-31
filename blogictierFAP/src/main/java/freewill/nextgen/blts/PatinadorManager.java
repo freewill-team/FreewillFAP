@@ -1,5 +1,6 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -142,18 +143,22 @@ public class PatinadorManager {
 		return rec;
 	}
 	
-	@RequestMapping("/getInscripciones/{competicion}")
+	@RequestMapping("/getInscripciones/{competicion}/{all}")
 	public List<PatinadorEntity> getInscripcionesByPatinadorAndCompeticion(
-			@PathVariable Long competicion) throws Exception {
+			@PathVariable Long competicion, @PathVariable boolean all) throws Exception {
 		System.out.println("Getting Inscripciones List By competicion..."+competicion);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
+		List<PatinadorEntity> output = new ArrayList<PatinadorEntity>();
 		List<PatinadorEntity> recs =
 				repository.findByCompanyOrderByNombreAsc(user.getCompany());
 		for(PatinadorEntity rec:recs){
 			enrichPatinadorData(rec, competicion);
+			if(all || rec.getSalto() || rec.getSpeed() || rec.getClassic() 
+					|| rec.getJam() || rec.getDerrapes() || rec.getBattle())
+				output.add(rec);
 		}
-		return recs;
+		return output;
 	}
 	
 	@RequestMapping("/updateDorsal/{patId}/{competicion}/{dorsal}")
@@ -162,7 +167,7 @@ public class PatinadorManager {
 		System.out.println("Updating updateDorsal..."+patId+","+competicion+","+dorsal);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	//UserEntity user = userrepo.findByLoginname(auth.getName());
-		if(dorsal<0)
+		if(dorsal<0 || dorsal>9999)
 			throw new IllegalArgumentException("Número de dorsal no válido.");
 		
 		PatinadorEntity rec = repository.findById(patId);

@@ -64,7 +64,7 @@ public class PreinscripcionCrudLogic implements Serializable {
 	        	else{
 	        		// Devuelve todos los patinadores
 	        		view.showRecords(
-		        		BltClient.get().executeQuery("/getInscripciones/"+competicion,
+		        		BltClient.get().executeQuery("/getInscripciones/"+competicion+"/true",
 		        		PatinadorEntity.class,
 		        		EntryPoint.get().getAccessControl().getTokenKey()));
 	        	}

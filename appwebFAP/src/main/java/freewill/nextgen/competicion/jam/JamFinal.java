@@ -19,7 +19,9 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.JamShowEntity;
+import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
@@ -36,6 +38,7 @@ public class JamFinal extends VerticalLayout {
 	private JamShowForm form;
 	private JamCrudLogic viewLogic;
 	private JamCrudView parent = null;
+	private boolean competiClosed = false;
 	
 	public JamFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, JamCrudView parent){
@@ -84,6 +87,12 @@ public class JamFinal extends VerticalLayout {
 	    setStyleName("crud-main-layout");
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
+	    
+	    GenericCrudLogic<CompeticionEntity> competiLogic = 
+	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
+	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
+	    competiClosed = competi.getActive();
+	    form.setEnabled(competiClosed);
 	}
 	
 	public HorizontalLayout createTopBar() {

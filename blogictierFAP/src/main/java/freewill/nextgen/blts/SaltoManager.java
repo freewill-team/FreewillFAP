@@ -225,6 +225,11 @@ public class SaltoManager {
 		ultimoAnno.setYear(ultimoAnno.getYear()-1);
 		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
+		// Verifica si la competición puede empezar
+		Date now = new Date();
+		if(competi.getFechaFin().after(now))
+			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		
 		List<SaltoEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0){

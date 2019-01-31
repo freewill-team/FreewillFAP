@@ -68,8 +68,11 @@ public class SpeedCrudLogic implements Serializable {
 	        }
     	}
 		catch(Exception e){
-			//log.error(e.getMessage());
-			view.showError(e.getMessage());
+			log.error(e.getMessage());
+			if(view!=null){
+				view.showError(e.getMessage());
+				view.setEnabled(false);
+			}
 		}
     }
 

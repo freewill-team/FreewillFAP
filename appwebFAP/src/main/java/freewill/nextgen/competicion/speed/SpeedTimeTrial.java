@@ -25,8 +25,10 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.data.SpeedKOSystemEntity.EliminatoriaEnum;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.SpeedTimeTrialEntity;
 import freewill.nextgen.data.SpeedTimeTrialEntity.RondaEnum;
+import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Export2Xls;
@@ -47,6 +49,7 @@ public class SpeedTimeTrial extends VerticalLayout {
 	private RondaEnum ronda = RondaEnum.PRIMERA;
 	private SpeedCrudView parent = null;
 	private EliminatoriaEnum eliminatoria = EliminatoriaEnum.CUARTOS;
+	private boolean competiClosed = false;
 
 	public SpeedTimeTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, RondaEnum ronda, SpeedCrudView parent){
@@ -107,6 +110,13 @@ public class SpeedTimeTrial extends VerticalLayout {
 	    setStyleName("crud-main-layout");
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria, this.ronda);
+	    
+	    GenericCrudLogic<CompeticionEntity> competiLogic = 
+	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
+	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
+	    competiClosed = competi.getActive();
+	    form1.setEnabled(competiClosed);
+	    form2.setEnabled(competiClosed);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })

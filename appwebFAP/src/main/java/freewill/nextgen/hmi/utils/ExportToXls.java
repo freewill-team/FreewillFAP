@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
  * 
  */
 
+// Used in MailServerCrudView
 public class ExportToXls {
 	
 	private static ExportToXls INSTANCE;

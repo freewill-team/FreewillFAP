@@ -123,6 +123,7 @@ public class SpeedTimeTrialForm1 extends SpeedTimeTrialFormDesign1 {
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
+        tiempoAjustado1.setValue(""+rec.getTiempoAjustado1());
         formHasChanged();
     }
 

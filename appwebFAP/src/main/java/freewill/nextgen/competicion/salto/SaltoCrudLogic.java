@@ -56,8 +56,10 @@ public class SaltoCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			if(view!=null)
+			if(view!=null){
 				view.showError(e.getMessage());
+				view.setEnabled(false);
+			}
 		}
     }
 
