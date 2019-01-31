@@ -233,6 +233,11 @@ public class SaltoManager {
 					inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 			int orden = 1;
 			for(ParticipanteEntity inscripcion:inscripciones){
+				// Inicializa valores (just in case)
+				inscripcion.setClasificacion(999);
+				inscripcion.setPuntuacion(0);
+				inscripcion.setMejorMarca(0);
+				inscripcionesrepo.save(inscripcion);
 				if(inscripcion.getDorsal()==0) continue;
 				// Create individual record
 				SaltoEntity rec = new SaltoEntity();

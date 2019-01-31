@@ -155,6 +155,11 @@ public class JamShowManager {
 					inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 			int orden = 1;
 			for(ParticipanteEntity inscripcion:inscripciones){
+				// Inicializa valores (just in case)
+				inscripcion.setClasificacion(999);
+				inscripcion.setPuntuacion(0);
+				inscripcion.setMejorMarca(0);
+				inscripcionesrepo.save(inscripcion);
 				if (inscripcion.getDorsal() !=0){
 					// Create individual record
 					JamShowEntity rec = new JamShowEntity();
