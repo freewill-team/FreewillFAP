@@ -41,7 +41,6 @@ public class BattleRondaForm extends BattleRondaFormDesign {
         this.setSpacing(true);
         this.setHeight("100%");
         
-        save.setEnabled(false);
         ganador1.setRequired(true);
         ganador2.setRequired(true);
         //ganador3.setRequired(true);
@@ -133,11 +132,9 @@ public class BattleRondaForm extends BattleRondaFormDesign {
             patina2.setValue("");
             patina3.setValue("");
             patina4.setValue("");*/
-            this.setEnabled(false);
             return;
         }
         
-        this.setEnabled(true);
         fieldGroup.setItemDataSource(new BeanItem<BattleRondaEntity>(rec));
 
         // before the user makes any changes, disable validation error indicator
@@ -189,15 +186,10 @@ public class BattleRondaForm extends BattleRondaFormDesign {
         ganador4.addItem(rec.getPatinador4());
         ganador4.setItemCaption(rec.getPatinador4(), rec.getNombre4()+" "+rec.getApellidos4());
         
-        /*patina1.setValue(rec.getNombre1()+" "+rec.getApellidos1());
-        patina2.setValue(rec.getNombre2()+" "+rec.getApellidos2());
-        patina3.setValue(rec.getNombre3()+" "+rec.getApellidos3());
-        patina4.setValue(rec.getNombre4()+" "+rec.getApellidos4());*/
         ganador1.setValue(rec.getGanador1());
 		ganador2.setValue(rec.getGanador2());
 		ganador3.setValue(rec.getGanador3());
 		ganador4.setValue(rec.getGanador4());
-        
         formHasChanged();
     }
 

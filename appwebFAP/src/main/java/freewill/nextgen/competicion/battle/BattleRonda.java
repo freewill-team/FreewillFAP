@@ -32,7 +32,7 @@ public class BattleRonda extends VerticalLayout {
 	private BattleRondaForm form;
 	private BattleCrudLogic viewLogic;
 	private BattleCrudView parent = null;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 
 	public BattleRonda(Long categoria, String labelcategoria, Long competicion, 
 			String label, EliminatoriaEnum ronda, BattleCrudView parent){
@@ -40,7 +40,6 @@ public class BattleRonda extends VerticalLayout {
 		this.competicionStr = label;
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
-		//this.ronda = ronda;
 		this.parent = parent;
 		
 		viewLogic = new BattleCrudLogic(null, this);
@@ -86,8 +85,8 @@ public class BattleRonda extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {

@@ -47,8 +47,6 @@ public class JamShowForm extends JamShowFormDesign {
         artisticaJuez2.setRequired(true);
         tecnicaJuez3.setRequired(true);
         artisticaJuez3.setRequired(true);
-   
-        save.setEnabled(false);
         
         fieldGroup = new BeanFieldGroup<JamShowEntity>(JamShowEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -137,7 +135,6 @@ public class JamShowForm extends JamShowFormDesign {
         	}
         }
         */
-        
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		

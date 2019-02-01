@@ -41,8 +41,6 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         this.setSpacing(true);
         this.setHeight("100%");
         
-        save.setEnabled(false);
-        //ganador.setRequired(true);
         patina1.setCaption(Messages.get().getKey("patina1"));
         patina2.setCaption(Messages.get().getKey("patina2"));
         
@@ -73,37 +71,30 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
             f.addValueChangeListener(valueListener);
             f.setCaption(Messages.get().getKey(f.getCaption())); // Translations
         }
-        /* Ahora esta logica está en BlogicTier
         pat1gana1.addValueChangeListener(e -> {
         		pat2gana1.setValue(!pat1gana1.getValue());
-        		CheckGanador();
         	});
         pat1gana2.addValueChangeListener(e -> {
 	    		pat2gana2.setValue(!pat1gana2.getValue());
-	    		CheckGanador();
 	    	});
         pat1gana3.addValueChangeListener(e -> {
 	    		pat2gana3.setValue(!pat1gana3.getValue());
-	    		CheckGanador();
 	    	});
         pat2gana1.addValueChangeListener(e -> {
 	    		pat1gana1.setValue(!pat2gana1.getValue());
-	    		CheckGanador();
 	    	});
         pat2gana2.addValueChangeListener(e -> {
 	    		pat1gana2.setValue(!pat2gana2.getValue());
-	    		CheckGanador();
 	    	});
         pat2gana3.addValueChangeListener(e -> {
 	    		pat1gana3.setValue(!pat2gana3.getValue());
-	    		CheckGanador();
 	    	});
         pat1gana1.setImmediate(true);
         pat1gana2.setImmediate(true);
         pat1gana3.setImmediate(true);
         pat2gana1.setImmediate(true);
         pat2gana2.setImmediate(true);
-        pat2gana3.setImmediate(true);*/
+        pat2gana3.setImmediate(true);
 
         fieldGroup.addCommitHandler(new CommitHandler() {
 
@@ -151,11 +142,9 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
             ganador.removeAllItems();
             patina1.setValue("");
             patina2.setValue("");
-            this.setEnabled(false);
             return;
         }
         
-        this.setEnabled(true);
         fieldGroup.setItemDataSource(new BeanItem<SpeedKOSystemEntity>(rec));
 
         // before the user makes any changes, disable validation error indicator
@@ -192,26 +181,5 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         patina2.setEnabled(false);
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
-
-    /* Ahora esta logica está en BlogicTier
-	@SuppressWarnings("deprecation")
-	private void CheckGanador() {
-		SpeedKOSystemEntity rec = fieldGroup.getItemDataSource().getBean();
-		if(rec==null) return;
-		int gana1=0, gana2=0;
-		if(pat1gana1.booleanValue()) gana1++;
-		if(pat1gana2.booleanValue()) gana1++;
-		if(pat1gana2.booleanValue()) gana1++;
-		if(pat2gana1.booleanValue()) gana2++;
-		if(pat2gana2.booleanValue()) gana2++;
-		if(pat2gana2.booleanValue()) gana2++;
-		if(gana1>gana2)
-			ganador.setValue(rec.getPatinador1());
-		else if(gana2>gana1)
-			ganador.setValue(rec.getPatinador2());
-		else
-			ganador.setValue(null);
-		System.out.println("Gana = "+ganador.getValue()+" "+ganador.getItemCaption(ganador.getValue()));
-	}*/
     		
 }

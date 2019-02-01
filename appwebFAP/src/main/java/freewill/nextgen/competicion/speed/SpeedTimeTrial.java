@@ -49,7 +49,7 @@ public class SpeedTimeTrial extends VerticalLayout {
 	private RondaEnum ronda = RondaEnum.PRIMERA;
 	private SpeedCrudView parent = null;
 	private EliminatoriaEnum eliminatoria = EliminatoriaEnum.CUARTOS;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 
 	public SpeedTimeTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, RondaEnum ronda, SpeedCrudView parent){
@@ -81,10 +81,10 @@ public class SpeedTimeTrial extends VerticalLayout {
         form1 = new SpeedTimeTrialForm1(viewLogic);
         form2 = new SpeedTimeTrialForm2(viewLogic);
         eliminatoria = viewLogic.existeKO(competicion, categoria);
-        if(eliminatoria!=null){
+        /*if(eliminatoria!=null){
         	form1.setEnabled(false);
         	form2.setEnabled(false);
-        }
+        }*/
         
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
@@ -114,9 +114,9 @@ public class SpeedTimeTrial extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form1.setEnabled(competiClosed);
-	    form2.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form1.setEnabled(eliminatoria==null && competiOpen);
+    	form2.setEnabled(eliminatoria==null && competiOpen);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -284,8 +284,8 @@ public class SpeedTimeTrial extends VerticalLayout {
     }
 
     public void editRecord(SpeedTimeTrialEntity rec) {
-    	form1.setEnabled(eliminatoria==null && rec!=null);
-    	form2.setEnabled(eliminatoria==null && rec!=null);
+    	form1.setEnabled(eliminatoria==null && rec!=null && competiOpen);
+    	form2.setEnabled(eliminatoria==null && rec!=null && competiOpen);
     	if(ronda==RondaEnum.PRIMERA)
     		form1.editRecord(rec);
     	else if(ronda==RondaEnum.SEGUNDA)

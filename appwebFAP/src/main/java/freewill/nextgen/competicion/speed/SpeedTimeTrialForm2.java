@@ -46,7 +46,6 @@ public class SpeedTimeTrialForm2 extends SpeedTimeTrialFormDesign2 {
         tiempo2B.setRequired(true);
         conos2.setRequired(true);
         tiempoAjustado2.setRequired(false);
-        save.setEnabled(false);
         
         int numConos = EntryPoint.get().getConfigInt(ConfigItemEnum.MAXNUMCONOSDERRIBADOS);
         for(int i=0;i<=numConos;i++)

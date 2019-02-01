@@ -28,12 +28,11 @@ public class DerrapesRonda extends VerticalLayout {
 	private String competicionStr = "";
 	private Long categoria = null;
 	private String categoriaStr = "";
-	//private EliminatoriaEnum ronda = EliminatoriaEnum.FINAL;
 	private ArbolDerrapes grid;
 	private DerrapesRondaForm form;
 	private DerrapesCrudLogic viewLogic;
 	private DerrapesCrudView parent = null;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 
 	public DerrapesRonda(Long categoria, String labelcategoria, Long competicion, 
 			String label, EliminatoriaEnum ronda, DerrapesCrudView parent){
@@ -41,7 +40,6 @@ public class DerrapesRonda extends VerticalLayout {
 		this.competicionStr = label;
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
-		//this.ronda = ronda;
 		this.parent = parent;
 		
 		viewLogic = new DerrapesCrudLogic(null, this);
@@ -87,8 +85,8 @@ public class DerrapesRonda extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {

@@ -34,7 +34,7 @@ public class SpeedKOsystem extends VerticalLayout {
 	private SpeedKOSystemForm form;
 	private SpeedCrudLogic viewLogic;
 	private SpeedCrudView parent = null;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 
 	public SpeedKOsystem(Long categoria, String labelcategoria, Long competicion, 
 			String label, EliminatoriaEnum ronda, SpeedCrudView parent){
@@ -55,6 +55,7 @@ public class SpeedKOsystem extends VerticalLayout {
             	if(recId!=null){
             		rec = viewLogic.findRecordKO(recId);
             	}
+            	form.setEnabled(competiOpen);
             	form.editRecord(rec);
             }
         });
@@ -84,8 +85,8 @@ public class SpeedKOsystem extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {

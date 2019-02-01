@@ -45,7 +45,7 @@ public class SaltoTrial extends VerticalLayout {
 	private SaltoCrudView parent = null;
 	private TextField newAltura;
 	private boolean showOnly2Jumps = false;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 
 	public SaltoTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, int ronda, SaltoCrudView parent){
@@ -86,8 +86,8 @@ public class SaltoTrial extends VerticalLayout {
         }
         
         alturaNextRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda+1);
-        if(alturaNextRonda!=0)
-        	form.setEnabled(false);
+        /*if(alturaNextRonda!=0)
+        	form.setEnabled(false);*/
         	
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -102,8 +102,8 @@ public class SaltoTrial extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form.setEnabled(alturaNextRonda==0 && competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
@@ -252,7 +252,7 @@ public class SaltoTrial extends VerticalLayout {
     }
 
     public void editRecord(SaltoEntity rec) {
-    	form.setEnabled(alturaNextRonda==0 && rec!=null);
+    	form.setEnabled(alturaNextRonda==0 && rec!=null && competiOpen);
     	form.editRecord(rec, showOnly2Jumps);
     }
 

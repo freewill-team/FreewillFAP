@@ -45,8 +45,9 @@ public class DorsalCrudLogic implements Serializable {
 	        	CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
 	        			""+competicion, CompeticionEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());
-	        	if(competi==null || competi.getFechaFin().before(now)){
-	        		view.showError("El Checkin ya está cerrado.");
+	        	if(competi==null || competi.getFechaFinInscripcion().after(now)
+	        			|| competi.getFechaFin().before(now)){
+	        		view.showError("El Checkin está cerrado.");
 	        		view.setCheckinAbierto(false);
 	        	}
 	        	view.showRecords(//BltClient.get().getEntities(

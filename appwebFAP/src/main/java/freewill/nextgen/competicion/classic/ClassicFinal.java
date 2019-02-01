@@ -39,7 +39,7 @@ public class ClassicFinal extends VerticalLayout {
 	private ClassicShowForm form;
 	private ClassicCrudLogic viewLogic;
 	private ClassicCrudView parent = null;
-	private boolean competiClosed = false;
+	private boolean competiOpen = false;
 	
 	public ClassicFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, ClassicCrudView parent){
@@ -92,8 +92,8 @@ public class ClassicFinal extends VerticalLayout {
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
-	    competiClosed = competi.getActive();
-	    form.setEnabled(competiClosed);
+	    competiOpen = competi.getActive();
+	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {

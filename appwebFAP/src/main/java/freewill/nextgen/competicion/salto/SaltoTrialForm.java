@@ -49,7 +49,6 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
             salto2.addItem(s);
             salto3.addItem(s);
         }
-        save.setEnabled(false);
         
         fieldGroup = new BeanFieldGroup<SaltoEntity>(SaltoEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -122,7 +121,6 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
         salto3.setVisible(!showOnly2Jumps);
-        
         formHasChanged();
     }
 
@@ -137,7 +135,6 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
         		//
         	}
         }
-        
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     	

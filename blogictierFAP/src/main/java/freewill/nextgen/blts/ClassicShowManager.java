@@ -149,7 +149,7 @@ public class ClassicShowManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaFin().after(now))
+		if(competi.getFechaInicio().after(now))
 			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
 		
 		List<ClassicShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(

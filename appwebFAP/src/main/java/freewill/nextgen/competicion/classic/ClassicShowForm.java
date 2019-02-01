@@ -47,8 +47,6 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         artisticaJuez2.setRequired(true);
         tecnicaJuez3.setRequired(true);
         artisticaJuez3.setRequired(true);
-   
-        save.setEnabled(false);
         
         fieldGroup = new BeanFieldGroup<ClassicShowEntity>(ClassicShowEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -137,7 +135,6 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         	}
         }
         */
-        
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
