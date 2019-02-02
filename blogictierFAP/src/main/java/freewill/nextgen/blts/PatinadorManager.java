@@ -350,6 +350,8 @@ public class PatinadorManager {
 	    	List<CategoriaEntity> categorias = categorepo.findByModalidadAndCompanyAndActive(
 	    			modalidad, user.getCompany(), true);
 	    	for(CategoriaEntity cat:categorias){
+	    		//System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
+	    		//		cat.getEdadMinima()+"-"+cat.getEdadMaxima());
 	    		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() &&
 	    				(rec.getGenero()==cat.getGenero() || cat.getGenero()==GenderEnum.MIXTO) ){
 	    			inscripcion.setCategoria(cat.getId());

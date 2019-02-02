@@ -23,6 +23,10 @@ public class DerrapesRondaEntity implements Serializable, Cloneable {
 	private Long patinador2;
 	private Long patinador3;
 	private Long patinador4;
+	private Integer dorsal1;
+	private Integer dorsal2;
+	private Integer dorsal3;
+	private Integer dorsal4;
 	private Long competicion;
 	private Long categoria;
 	private EliminatoriaEnum eliminatoria;
@@ -313,5 +317,37 @@ public class DerrapesRondaEntity implements Serializable, Cloneable {
 	public void setGanadorStr4(String ganadorStr4) {
 		this.ganadorStr4 = ganadorStr4;
 	}
-    	
+    
+	public Integer getDorsal1() {
+		return dorsal1;
+	}
+
+	public void setDorsal1(Integer dorsal1) {
+		this.dorsal1 = dorsal1;
+	}
+
+	public Integer getDorsal2() {
+		return dorsal2;
+	}
+
+	public void setDorsal2(Integer dorsal2) {
+		this.dorsal2 = dorsal2;
+	}
+
+	public Integer getDorsal3() {
+		return dorsal3;
+	}
+
+	public void setDorsal3(Integer dorsal3) {
+		this.dorsal3 = dorsal3;
+	}
+
+	public Integer getDorsal4() {
+		return dorsal4;
+	}
+
+	public void setDorsal4(Integer dorsal4) {
+		this.dorsal4 = dorsal4;
+	}
+	
 }

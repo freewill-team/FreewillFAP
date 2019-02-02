@@ -65,17 +65,40 @@ public class BattleRondaManager {
 				BattleRondaEntity parent = repository.findByCompeticionAndCategoriaAndEliminatoriaAndGrupo(
 					rec.getCompeticion(), rec.getCategoria(), parentElim, parentGrupo);
 				if(parent!=null){
+					int dorsalGan1 = 0, dorsalGan2 = 0;
+					if(rec.getGanador1().compareTo(rec.getPatinador1())==0)
+						dorsalGan1 = rec.getDorsal1();
+					else if(rec.getGanador1().compareTo(rec.getPatinador2())==0)
+						dorsalGan1 = rec.getDorsal2();
+					else if(rec.getGanador1().compareTo(rec.getPatinador3())==0)
+						dorsalGan1 = rec.getDorsal3();
+					else if(rec.getGanador1().compareTo(rec.getPatinador4())==0)
+						dorsalGan1 = rec.getDorsal4();
+					
+					if(rec.getGanador2().compareTo(rec.getPatinador1())==0)
+						dorsalGan2 = rec.getDorsal1();
+					else if(rec.getGanador2().compareTo(rec.getPatinador2())==0)
+						dorsalGan2 = rec.getDorsal2();
+					else if(rec.getGanador2().compareTo(rec.getPatinador3())==0)
+						dorsalGan2 = rec.getDorsal3();
+					else if(rec.getGanador2().compareTo(rec.getPatinador4())==0)
+						dorsalGan2 = rec.getDorsal4();
+					
 					if(rec.getGrupo()%2==0){
 						parent.setPatinador1(rec.getGanador1());
 						parent.setNombre1(rec.getGanadorStr1());
+						parent.setDorsal1(dorsalGan1);
 						parent.setPatinador2(rec.getGanador2());
 						parent.setNombre2(rec.getGanadorStr2());
+						parent.setDorsal2(dorsalGan2);
 					}
 					else{
 						parent.setPatinador3(rec.getGanador1());
 						parent.setNombre3(rec.getGanadorStr1());
+						parent.setDorsal3(dorsalGan1);
 						parent.setPatinador4(rec.getGanador2());
 						parent.setNombre4(rec.getGanadorStr2());
+						parent.setDorsal4(dorsalGan2);
 					}
 					repository.save(parent);
 					System.out.println("Saved Parent = "+parent.getId());
@@ -177,21 +200,25 @@ public class BattleRondaManager {
 									rec.setApellidos1(resultado.getApellidos());
 									rec.setNombre1(resultado.getNombre());
 									rec.setPatinador1(resultado.getPatinador());
+									rec.setDorsal1(resultado.getDorsal());
 									break;
 								case 1:
 									rec.setApellidos2(resultado.getApellidos());
 									rec.setNombre2(resultado.getNombre());
 									rec.setPatinador2(resultado.getPatinador());
+									rec.setDorsal2(resultado.getDorsal());
 									break;
 								case 2:
 									rec.setApellidos3(resultado.getApellidos());
 									rec.setNombre3(resultado.getNombre());
 									rec.setPatinador3(resultado.getPatinador());
+									rec.setDorsal3(resultado.getDorsal());
 									break;
 								case 3:
 									rec.setApellidos4(resultado.getApellidos());
 									rec.setNombre4(resultado.getNombre());
 									rec.setPatinador4(resultado.getPatinador());
+									rec.setDorsal4(resultado.getDorsal());
 									break;
 							}
 						}
@@ -233,4 +260,5 @@ public class BattleRondaManager {
 		battlerepo.deleteByCompeticionAndCategoria(competicion, categoria);
 		return true;
 	}
+	
 }

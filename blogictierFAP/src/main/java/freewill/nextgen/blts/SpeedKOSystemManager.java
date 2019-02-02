@@ -74,7 +74,7 @@ public class SpeedKOSystemManager {
 	public SpeedKOSystemEntity update(@RequestBody SpeedKOSystemEntity rec) throws Exception {
 		if(rec!=null){
 			System.out.println("Updating SpeedKOSystem..."+rec);	
-			int gana1=0, gana2=0;
+			int gana1=0, gana2=0, ganadorDorsal=0;
 			if(rec.getPat1gana1()) gana1++;
 			if(rec.getPat1gana2()) gana1++;
 			if(rec.getPat1gana3()) gana1++;
@@ -84,14 +84,17 @@ public class SpeedKOSystemManager {
 			if(gana1>gana2){
 				rec.setGanador(rec.getPatinador1());
 				rec.setGanadorStr(rec.getNombre1()+" "+rec.getApellidos1());
+				ganadorDorsal = rec.getDorsal1();
 			}
 			else if(gana2>gana1){
 				rec.setGanador(rec.getPatinador2());
 				rec.setGanadorStr(rec.getNombre2()+" "+rec.getApellidos2());
+				ganadorDorsal = rec.getDorsal2();
 			}
 			else{
 				rec.setGanador(null);
 				rec.setGanadorStr("");
+				ganadorDorsal = 0;
 			}
 			if(rec.getGanador()==null)
 				throw new IllegalArgumentException("Debe rellenar el resultado de las carreras.");
@@ -115,10 +118,12 @@ public class SpeedKOSystemManager {
 					if(rec.getGrupo()%2==0){
 						parent.setPatinador1(rec.getGanador());
 						parent.setNombre1(rec.getGanadorStr());
+						parent.setDorsal1(ganadorDorsal);
 					}
 					else{
 						parent.setPatinador2(rec.getGanador());
 						parent.setNombre2(rec.getGanadorStr());
+						parent.setDorsal2(ganadorDorsal);
 					}
 					repository.save(parent);
 					System.out.println("Saved Parent = "+parent.getId());
@@ -130,13 +135,16 @@ public class SpeedKOSystemManager {
 					if(parent!=null){
 						Long perdedor = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
 						String perdedorStr = (rec.getGanador()==rec.getPatinador1()?rec.getNombre2():rec.getNombre1());
+						int perdedorDorsal = (rec.getGanador()==rec.getPatinador1()?rec.getDorsal2():rec.getDorsal1());
 						if(rec.getGrupo()%2==0){
 							parent.setPatinador1(perdedor);
 							parent.setNombre1(perdedorStr);
+							parent.setDorsal1(perdedorDorsal);
 						}
 						else{
 							parent.setPatinador2(perdedor);
 							parent.setNombre2(perdedorStr);
+							parent.setDorsal2(perdedorDorsal);
 						}
 						repository.save(parent);
 						System.out.println("Saved Parent (consolacion)= "+parent.getId());
@@ -242,6 +250,7 @@ public class SpeedKOSystemManager {
 							rec.setApellidos1(resultado.getApellidos());
 							rec.setNombre1(resultado.getNombre());
 							rec.setPatinador1(resultado.getPatinador());
+							rec.setDorsal1(resultado.getDorsal());
 						}
 						resultado = timetrialrepo.findByCompeticionAndCategoriaAndClasificacion(
 										competicion, categoria, posicion[k++]);
@@ -249,6 +258,7 @@ public class SpeedKOSystemManager {
 							rec.setApellidos2(resultado.getApellidos());
 							rec.setNombre2(resultado.getNombre());
 							rec.setPatinador2(resultado.getPatinador());
+							rec.setDorsal2(resultado.getDorsal());
 						}
 					}
 					repository.save(rec);

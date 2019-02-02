@@ -66,7 +66,7 @@ public class DorsalCrudView extends CssLayout implements View {
         
         grid = new GenericGrid<PatinadorEntity>(PatinadorEntity.class,
             	"id", "dorsal", "nombre", "apellidos", "clubStr", 
-            	"speed", "classic", "battle", "jam", "derrapes", "salto");	
+        		"speed", "salto", "derrapes", "classic", "battle", "jam" );	
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {

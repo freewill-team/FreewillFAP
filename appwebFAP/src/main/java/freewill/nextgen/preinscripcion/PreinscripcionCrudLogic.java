@@ -213,7 +213,7 @@ public class PreinscripcionCrudLogic implements Serializable {
 	    		rec.setCatSpeed(res.getCatSpeed());
 	    		
 		        view.showSaveNotification(res.getNombre() + " (" + res.getId() + ") updated");
-		        view.clearSelection();
+		        //view.clearSelection();
 		        //view.editRecord(null, null, false);
 		        view.editRecord(res, competicion, preinscripcionAbierta); // refresca datos en el Form, pero no lo cierra
 		        view.refreshRecord(res);

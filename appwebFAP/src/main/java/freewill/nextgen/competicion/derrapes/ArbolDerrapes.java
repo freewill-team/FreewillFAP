@@ -114,7 +114,7 @@ public class ArbolDerrapes extends Panel {
         	Label label4 = (Label) container4[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	Button button = (Button) containerBtn[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	if(label1!=null){
-        		label1.setValue(rec.getNombre1()+" "+rec.getApellidos1());
+        		label1.setValue(rec.getDorsal1()+" "+rec.getNombre1()+" "+rec.getApellidos1());
         		label1.setDescription(rec.getNombre1()+" "+rec.getApellidos1());
         		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador1()){
         			label1.setStyleName(ValoTheme.LABEL_SUCCESS);
@@ -137,7 +137,7 @@ public class ArbolDerrapes extends Panel {
         		}
         	}
         	if(label2!=null){
-        		label2.setValue(rec.getNombre2()+" "+rec.getApellidos2());
+        		label2.setValue(rec.getDorsal2()+" "+rec.getNombre2()+" "+rec.getApellidos2());
         		label2.setDescription(rec.getNombre2()+" "+rec.getApellidos2());
         		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador2()){
         			label2.setStyleName(ValoTheme.LABEL_SUCCESS);
@@ -161,7 +161,7 @@ public class ArbolDerrapes extends Panel {
         	}
         	
         	if(label3!=null){
-        		label3.setValue(rec.getNombre3()+" "+rec.getApellidos3());
+        		label3.setValue(rec.getDorsal3()+" "+rec.getNombre3()+" "+rec.getApellidos3());
         		label3.setDescription(rec.getNombre3()+" "+rec.getApellidos3());
         		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador3()){
         			label3.setStyleName(ValoTheme.LABEL_SUCCESS);
@@ -184,7 +184,7 @@ public class ArbolDerrapes extends Panel {
         		}
         	}
         	if(label4!=null){
-        		label4.setValue(rec.getNombre4()+" "+rec.getApellidos4());
+        		label4.setValue(rec.getDorsal4()+" "+rec.getNombre4()+" "+rec.getApellidos4());
         		label4.setDescription(rec.getNombre4()+" "+rec.getApellidos4());
         		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador4()){
         			label4.setStyleName(ValoTheme.LABEL_SUCCESS);

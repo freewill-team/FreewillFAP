@@ -140,13 +140,13 @@ public class ArbolKOSystem extends Panel {
         	Label label2 = (Label) container2[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	Button button = (Button) containerBtn[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	if(label1!=null){
-        		label1.setValue(rec.getNombre1()+" "+rec.getApellidos1());
+        		label1.setValue(rec.getDorsal1()+" "+rec.getNombre1()+" "+rec.getApellidos1());
         		if(rec.getGanador()!=null && rec.getGanador()==rec.getPatinador1()){
         			label1.setStyleName(ValoTheme.LABEL_SUCCESS);
         		}
         	}
         	if(label2!=null){
-        		label2.setValue(rec.getNombre2()+" "+rec.getApellidos2());
+        		label2.setValue(rec.getDorsal2()+" "+rec.getNombre2()+" "+rec.getApellidos2());
         		if(rec.getGanador()!=null && rec.getGanador()==rec.getPatinador2()){
         			label2.setStyleName(ValoTheme.LABEL_SUCCESS);
         		}

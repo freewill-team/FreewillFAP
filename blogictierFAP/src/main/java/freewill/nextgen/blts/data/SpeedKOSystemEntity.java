@@ -25,6 +25,8 @@ public class SpeedKOSystemEntity implements Serializable, Cloneable {
 	private int grupo;				// Para identificar emparejamientos sucesivos
 	private Long patinador1;
 	private Long patinador2;
+	private Integer dorsal1;
+	private Integer dorsal2;
 	private Long competicion;
 	private Long categoria;
 	private EliminatoriaEnum eliminatoria;
@@ -326,6 +328,22 @@ public class SpeedKOSystemEntity implements Serializable, Cloneable {
 
 	public void setPat2tiempo3(int pat2tiempo3) {
 		this.pat2tiempo3 = pat2tiempo3;
+	}
+
+	public Integer getDorsal1() {
+		return dorsal1;
+	}
+
+	public void setDorsal1(Integer dorsal1) {
+		this.dorsal1 = dorsal1;
+	}
+
+	public Integer getDorsal2() {
+		return dorsal2;
+	}
+
+	public void setDorsal2(Integer dorsal2) {
+		this.dorsal2 = dorsal2;
 	}
     	
 }
