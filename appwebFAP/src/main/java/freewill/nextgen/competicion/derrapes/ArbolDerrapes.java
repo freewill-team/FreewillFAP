@@ -113,25 +113,27 @@ public class ArbolDerrapes extends Panel {
         	Label label3 = (Label) container3[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	Label label4 = (Label) container4[rec.getEliminatoria().ordinal()][rec.getGrupo()];
         	Button button = (Button) containerBtn[rec.getEliminatoria().ordinal()][rec.getGrupo()];
+        	
         	if(label1!=null){
         		label1.setValue(rec.getDorsal1()+" "+rec.getNombre1()+" "+rec.getApellidos1());
         		label1.setDescription(rec.getNombre1()+" "+rec.getApellidos1());
-        		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador1()){
+        		
+        		if(rec.getGanador1()!=null && rec.getGanador1().compareTo(rec.getPatinador1())==0){
         			label1.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label1.setValue(label1.getValue()+" (1)");
         		}
-        		else if(rec.getGanador2()!=null && rec.getGanador2()==rec.getPatinador1()){
+        		else if(rec.getGanador2()!=null && rec.getGanador2().compareTo(rec.getPatinador1())==0){
         			label1.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label1.setValue(label1.getValue()+" (2)");
         		}
-        		else if(rec.getGanador3()!=null && rec.getGanador3()==rec.getPatinador1()){
+        		else if(rec.getGanador3()!=null && rec.getGanador3().compareTo(rec.getPatinador1())==0){
         			if(rec.getEliminatoria()==EliminatoriaEnum.FINAL)
         				label1.setStyleName(ValoTheme.LABEL_SUCCESS);
         			else
         				label1.setStyleName(ValoTheme.LABEL_FAILURE);
         			label1.setValue(label1.getValue()+" (3)");
         		}
-        		else if(rec.getGanador4()!=null && rec.getGanador4()==rec.getPatinador1()){	
+        		else if(rec.getGanador4()!=null && rec.getGanador4().compareTo(rec.getPatinador1())==0){
         			label1.setStyleName(ValoTheme.LABEL_FAILURE);
         			label1.setValue(label1.getValue()+" (4)");
         		}
@@ -139,22 +141,23 @@ public class ArbolDerrapes extends Panel {
         	if(label2!=null){
         		label2.setValue(rec.getDorsal2()+" "+rec.getNombre2()+" "+rec.getApellidos2());
         		label2.setDescription(rec.getNombre2()+" "+rec.getApellidos2());
-        		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador2()){
+        		
+        		if(rec.getGanador1()!=null && rec.getGanador1().compareTo(rec.getPatinador2())==0){
         			label2.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label2.setValue(label2.getValue()+" (1)");
         		}
-        		else if(rec.getGanador2()!=null && rec.getGanador2()==rec.getPatinador2()){
+        		else if(rec.getGanador2()!=null && rec.getGanador2().compareTo(rec.getPatinador2())==0){
         			label2.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label2.setValue(label2.getValue()+" (2)");
         		}
-        		else if(rec.getGanador3()!=null && rec.getGanador3()==rec.getPatinador2()){
+        		else if(rec.getGanador3()!=null && rec.getGanador3().compareTo(rec.getPatinador2())==0){
         			if(rec.getEliminatoria()==EliminatoriaEnum.FINAL)
         				label2.setStyleName(ValoTheme.LABEL_SUCCESS);
         			else
         				label2.setStyleName(ValoTheme.LABEL_FAILURE);
         			label2.setValue(label2.getValue()+" (3)");
         		}
-        		else if(rec.getGanador4()!=null && rec.getGanador4()==rec.getPatinador2()){	
+        		else if(rec.getGanador4()!=null && rec.getGanador4().compareTo(rec.getPatinador2())==0){
         			label2.setStyleName(ValoTheme.LABEL_FAILURE);
         			label2.setValue(label2.getValue()+" (4)");
         		}
@@ -163,22 +166,23 @@ public class ArbolDerrapes extends Panel {
         	if(label3!=null){
         		label3.setValue(rec.getDorsal3()+" "+rec.getNombre3()+" "+rec.getApellidos3());
         		label3.setDescription(rec.getNombre3()+" "+rec.getApellidos3());
-        		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador3()){
+        		
+        		if(rec.getGanador1()!=null && rec.getGanador1().compareTo(rec.getPatinador3())==0){
         			label3.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label3.setValue(label3.getValue()+" (1)");
         		}
-        		else if(rec.getGanador2()!=null && rec.getGanador2()==rec.getPatinador3()){
+        		else if(rec.getGanador2()!=null && rec.getGanador2().compareTo(rec.getPatinador3())==0){
         			label3.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label3.setValue(label3.getValue()+" (2)");
         		}
-        		else if(rec.getGanador3()!=null && rec.getGanador3()==rec.getPatinador3()){
+        		else if(rec.getGanador3()!=null && rec.getGanador3().compareTo(rec.getPatinador3())==0){
         			if(rec.getEliminatoria()==EliminatoriaEnum.FINAL)
         				label3.setStyleName(ValoTheme.LABEL_SUCCESS);
         			else
         				label3.setStyleName(ValoTheme.LABEL_FAILURE);
         			label3.setValue(label3.getValue()+" (3)");
         		}
-        		else if(rec.getGanador4()!=null && rec.getGanador4()==rec.getPatinador3()){	
+        		else if(rec.getGanador4()!=null && rec.getGanador4().compareTo(rec.getPatinador3())==0){
         			label3.setStyleName(ValoTheme.LABEL_FAILURE);
         			label3.setValue(label3.getValue()+" (4)");
         		}
@@ -186,22 +190,23 @@ public class ArbolDerrapes extends Panel {
         	if(label4!=null){
         		label4.setValue(rec.getDorsal4()+" "+rec.getNombre4()+" "+rec.getApellidos4());
         		label4.setDescription(rec.getNombre4()+" "+rec.getApellidos4());
-        		if(rec.getGanador1()!=null && rec.getGanador1()==rec.getPatinador4()){
+        		
+        		if(rec.getGanador1()!=null && rec.getGanador1().compareTo(rec.getPatinador4())==0){
         			label4.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label4.setValue(label4.getValue()+" (1)");
         		}
-        		else if(rec.getGanador2()!=null && rec.getGanador2()==rec.getPatinador4()){
+        		else if(rec.getGanador2()!=null && rec.getGanador2().compareTo(rec.getPatinador4())==0){
         			label4.setStyleName(ValoTheme.LABEL_SUCCESS);
         			label4.setValue(label4.getValue()+" (2)");
         		}
-        		else if(rec.getGanador3()!=null && rec.getGanador3()==rec.getPatinador4()){
+        		else if(rec.getGanador3()!=null && rec.getGanador3().compareTo(rec.getPatinador4())==0){
         			if(rec.getEliminatoria()==EliminatoriaEnum.FINAL)
         				label4.setStyleName(ValoTheme.LABEL_SUCCESS);
         			else
         				label4.setStyleName(ValoTheme.LABEL_FAILURE);
         			label4.setValue(label4.getValue()+" (3)");
         		}
-        		else if(rec.getGanador4()!=null && rec.getGanador4()==rec.getPatinador4()){	
+        		else if(rec.getGanador4()!=null && rec.getGanador4().compareTo(rec.getPatinador4())==0){	
         			label4.setStyleName(ValoTheme.LABEL_FAILURE);
         			label4.setValue(label4.getValue()+" (4)");
         		}
