@@ -50,6 +50,7 @@ public class SelectCategoriaByParticipante extends VerticalLayout {
 	        		"/getByModalidad/"+modalidad.name(), CategoriaEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
 	        
+	        int numSparks = 0;
 	        for(CategoriaEntity categoria:categorias){
 	        	if(competicion!=null){
 	        		ParticipanteEntity rec = (ParticipanteEntity) BltClient.get().executeCommand(
@@ -62,6 +63,7 @@ public class SelectCategoriaByParticipante extends VerticalLayout {
 		            		FontAwesome.PAPERCLIP, categoria.getId());
 			        	layout.addClickListener(action);
 			        	sparks.addComponent(layout);
+			        	numSparks++;
 	        		}
 	        	}
 	        	else{
@@ -70,8 +72,11 @@ public class SelectCategoriaByParticipante extends VerticalLayout {
 		            		FontAwesome.CHILD, categoria.getId());
 		        	layout.addClickListener(action);
 		        	sparks.addComponent(layout);
+		        	numSparks++;
 	        	}
 	        }
+	        if(numSparks==0)
+	        	title.setValue("No hay categorias con patinadores para mostrar.");
     	}
 		catch(Exception e){
 			//log.error(e.getMessage());
