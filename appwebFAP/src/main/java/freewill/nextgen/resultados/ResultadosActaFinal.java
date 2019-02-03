@@ -40,7 +40,10 @@ public class ResultadosActaFinal extends VerticalLayout {
 	private ResultadosCrudView parent = null;
 	private CategoriaEntity category = null;
 
-	public ResultadosActaFinal(Long categoria, String labelcategoria, ResultadosCrudView parent){
+	public ResultadosActaFinal(Long categoria, String labelcategoria, 
+			Long competicion, String labelcompeticion, ResultadosCrudView parent){
+		this.competicion = competicion;
+		this.competicionStr = labelcompeticion;
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
@@ -54,12 +57,14 @@ public class ResultadosActaFinal extends VerticalLayout {
 		case BATTLE:	
 		case CLASSIC:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
-					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
+					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
+					"clubStr", "puntuacion");
 			break;
 		case JUMP:
 		case SPEED:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
-					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
+					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
+					"clubStr", "puntuacion", "mejorMarca");
 			break;
 		case JAM:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
@@ -74,13 +79,6 @@ public class ResultadosActaFinal extends VerticalLayout {
         gridLayout.setSpacing(true);
         gridLayout.addComponent(grid);
         
-        CompeticionEntity competi = viewLogic.findLastCompeticion();
-        if(competi!=null){
-		    competicion = competi.getId();
-		    competicionStr = competi.getNombre();
-		    viewLogic.initGrid(this.competicion, this.categoria);
-        }
-        
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
 	    addComponent(topLayout);
@@ -88,6 +86,8 @@ public class ResultadosActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
+	    
+	    viewLogic.initGrid(this.competicion, this.categoria);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -144,7 +144,7 @@ public class ResultadosActaFinal extends VerticalLayout {
     		}
         });
         
-        Label competicionLabel = new Label("<h3><b>Resultados "+competicionStr+" / "+categoriaStr+"</b></h3>", 
+        Label competicionLabel = new Label("<h4><b>"+competicionStr+" / "+categoriaStr+"</b></h4>", 
         		ContentMode.HTML);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
@@ -162,6 +162,7 @@ public class ResultadosActaFinal extends VerticalLayout {
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");
+        topLayout.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
         return topLayout;
     }
 	

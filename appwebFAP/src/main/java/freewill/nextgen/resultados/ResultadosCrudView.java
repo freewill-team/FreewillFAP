@@ -8,7 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import freewill.nextgen.categoria.SelectCircuitoAndCategoria;
+import freewill.nextgen.categoria.SelectCompeticionAndCategoria;
 import freewill.nextgen.hmi.utils.Messages;
 
 /**
@@ -24,9 +24,11 @@ public class ResultadosCrudView extends VerticalLayout implements View {
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
     public final String VIEW_NAME = Messages.get().getKey("resultados");
+    private Long competicion = null;
+    private String competicionStr = "";
     private Long categoria = null;
     private String categoriaStr = "";
-    SelectCircuitoAndCategoria selectCircuitoAndCategoria = null;
+    SelectCompeticionAndCategoria selectCompeticionAndCategoria = null;
     
     public ResultadosCrudView() {
         setSizeFull();
@@ -38,18 +40,19 @@ public class ResultadosCrudView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
     	
-    	selectCircuitoAndCategoria = new SelectCircuitoAndCategoria(
+    	selectCompeticionAndCategoria = new SelectCompeticionAndCategoria(
     			new ClickListener() {
     	            @Override
     	            public void buttonClick(final ClickEvent event) {
+    	            	competicionStr = selectCompeticionAndCategoria.getCompeticionStr();
+    	                competicion = selectCompeticionAndCategoria.getCompeticion();
     	                categoriaStr = event.getButton().getDescription();
     	                categoria = Long.parseLong(event.getButton().getId());
     	                gotoResultados();
     	            }
     	        });
-    	selectCircuitoAndCategoria.showCircuito(false);
         removeAllComponents();
-        addComponent(selectCircuitoAndCategoria);
+        addComponent(selectCompeticionAndCategoria);
     }
 
 	public void showError(String msg) {
@@ -64,6 +67,7 @@ public class ResultadosCrudView extends VerticalLayout implements View {
 		removeAllComponents();
 		addComponent(new ResultadosActaFinal(
 				categoria, categoriaStr,
+				competicion, competicionStr, 
     			ResultadosCrudView.this));
 	}
 		
