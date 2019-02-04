@@ -117,4 +117,19 @@ public class ResultadosCrudLogic implements Serializable {
 		return null;
 	}
     
+	public CompeticionEntity findCompeticion(String recId) {
+    	try{
+    		CompeticionEntity rec = (CompeticionEntity) BltClient.get().getEntityById(
+    				recId, CompeticionEntity.class,
+    				EntryPoint.get().getAccessControl().getTokenKey());
+    		return rec;
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
+		}
+    	return null;
+    }
+	
 }

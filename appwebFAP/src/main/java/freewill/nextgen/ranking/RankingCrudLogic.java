@@ -9,7 +9,9 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
+import freewill.nextgen.common.entities.UserEntity;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingEntity;
 
 /**
@@ -175,5 +177,17 @@ public class RankingCrudLogic implements Serializable {
             view.editRecord(rec);
         }
     }
+
+	public List<PatinadorEntity> getPatinadores() {
+		try{
+	        return BltClient.get().getEntities(PatinadorEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
     
 }

@@ -21,11 +21,13 @@ public class AnonymousLogin extends CssLayout {
 
     //private AccessControl accessControl;
     VerticalLayout centeringLayout = null;
+    Label loginInfoText = null;
 
     public AnonymousLogin(AccessControl accessControl) {
         //this.accessControl = accessControl;       
         if (accessControl.signIn("anonimo", "Anonimo9!", VaadinService.getCurrentRequest().getRemoteHost())) {      	
         	ResultadosCrudView results = new ResultadosCrudView();
+        	results.setInfoPanel(this);
         	results.enter(null);
         	results.addStyleName("login-screen");
         	buildUI(results);
@@ -60,18 +62,23 @@ public class AnonymousLogin extends CssLayout {
     private CssLayout buildLoginInformation() {
         CssLayout loginInformation = new CssLayout();
         loginInformation.setStyleName("login-information");
-        String competicionStr = "";
+        /*String competicionStr = "";
         
         ResultadosCrudLogic viewLogic = new ResultadosCrudLogic(null);
     	CompeticionEntity competi = viewLogic.findLastCompeticion();
         if(competi!=null)
-        	competicionStr = "<h1> Resultados <b>" + competi.getNombre()+"</b></h1>";
+        	competicionStr = "<h1> Resultados <b>" + competi.getNombre()+"</b></h1>";*/
     	
-        Label loginInfoText = new Label(
-                "<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +competicionStr,
+        loginInfoText = new Label(
+                "<h1>"+ Messages.get().getKey("apptitle") +"</h1>" /*+competicionStr*/,
                 ContentMode.HTML);
         loginInformation.addComponent(loginInfoText);
         return loginInformation;
+    }
+    
+    public void setCompeticion(String competicionStr){
+    	loginInfoText.setValue( 
+    			"<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +competicionStr);
     }
     
 }

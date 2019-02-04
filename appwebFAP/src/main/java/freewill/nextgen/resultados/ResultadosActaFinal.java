@@ -1,6 +1,7 @@
 package freewill.nextgen.resultados;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.vaadin.server.FileResource;
@@ -77,7 +78,7 @@ public class ResultadosActaFinal extends VerticalLayout {
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
+        gridLayout.setSpacing(false); // true
         gridLayout.addComponent(grid);
         
 		HorizontalLayout topLayout = createTopBar();
@@ -85,6 +86,8 @@ public class ResultadosActaFinal extends VerticalLayout {
 	    addComponent(topLayout);
 	    addComponent(gridLayout);
 	    setSizeFull();
+	    setMargin(false);
+        setSpacing(false);
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
 	    
@@ -93,6 +96,16 @@ public class ResultadosActaFinal extends VerticalLayout {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public HorizontalLayout createTopBar() {
+		
+		CompeticionEntity competi = viewLogic.findCompeticion(""+competicion);
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		String fecha = " "+format.format(competi.getFechaInicio());
+		
+		Label competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr
+				+ fecha + "</b>", ContentMode.HTML);
+        competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
+        competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
+        competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
 		
 		Button prevButton = new Button(Messages.get().getKey("prev"));
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -117,7 +130,7 @@ public class ResultadosActaFinal extends VerticalLayout {
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
     					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
     			break;
     		case JUMP:
@@ -125,14 +138,14 @@ public class ResultadosActaFinal extends VerticalLayout {
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
     					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
     			break;
     		case JAM:
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
+        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
     					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
     					"dorsalPareja", "nombrePareja", "apellidosPareja", "clubStr");
     			break;
@@ -144,26 +157,24 @@ public class ResultadosActaFinal extends VerticalLayout {
     		    // file.delete();
     		}
         });
-        
-        Label competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr+"</b>", 
-        		ContentMode.HTML);
-        competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
-        competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
-        competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
+		
+		Label expander = new Label("");
         
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(false); // true
         topLayout.setWidth("100%");
         //topLayout.addComponent(competicionLabel);
+        topLayout.addComponent(expander);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);
         //topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         //topLayout.setExpandRatio(competicionLabel, 1);
+        topLayout.setComponentAlignment(expander, Alignment.MIDDLE_LEFT);
+        topLayout.setExpandRatio(expander, 1);
         topLayout.setStyleName("top-bar");
-        //topLayout.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
         return topLayout;
     }
 	

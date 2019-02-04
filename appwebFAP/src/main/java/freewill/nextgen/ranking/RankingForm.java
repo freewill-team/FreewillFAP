@@ -1,5 +1,7 @@
 package freewill.nextgen.ranking;
 
+import java.util.List;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -16,9 +18,11 @@ import com.vaadin.ui.Notification.Type;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
  * A form for editing a single record.
@@ -118,6 +122,31 @@ public class RankingForm extends RankingFormDesign {
             }
         });
         
+        patinBtn.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+				// Abre la ventana de seleccion de patinador
+				List<PatinadorEntity> students = viewLogic.getPatinadores();
+				
+				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
+            	cd.setOKAction(new ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+            			cd.close();
+            			PatinadorEntity user = cd.getSelected();
+            			if(user!=null){
+            				patinador.setValue(""+user.getId());
+                    		nombre.setValue(user.getNombre());
+                    		apellidos.setValue(user.getApellidos());
+                    		club.setValue(""+user.getClub());
+                    		clubStr.setValue(""+user.getClubStr());
+            			}
+                    }
+                });
+            	getUI().addWindow(cd);
+			}
+        });
+        
     }
     
 	public void editRecord(RankingEntity rec) {
@@ -145,19 +174,22 @@ public class RankingForm extends RankingFormDesign {
 		nombre.setValidationVisible(true);
 
         // only products that have been saved should be removable
-        boolean canRemoveRecord = false;
+        boolean canEditRecord = false;
         BeanItem<RankingEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
         	RankingEntity rec = item.getBean();
         	if(rec!=null){
-        		canRemoveRecord = (rec.getId() != null);
+        		canEditRecord = (rec.getId() == null);
         	}
         }
-        nombre.setEnabled(false);
-        apellidos.setEnabled(false);
-        clubStr.setEnabled(false);
-        orden.setEnabled(false);
-        delete.setEnabled(canRemoveRecord);
+        patinBtn.setEnabled(canEditRecord);
+        patinador.setVisible(false);
+        nombre.setEnabled(canEditRecord);
+        apellidos.setEnabled(canEditRecord);
+        club.setVisible(false);
+        clubStr.setEnabled(canEditRecord);
+        orden.setEnabled(canEditRecord);
+        delete.setEnabled(!canEditRecord);
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }
     
