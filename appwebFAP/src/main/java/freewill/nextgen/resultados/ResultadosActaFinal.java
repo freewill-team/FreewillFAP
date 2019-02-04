@@ -24,6 +24,7 @@ import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
+import freewill.nextgen.hmi.common.GenericHeader;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -80,7 +81,7 @@ public class ResultadosActaFinal extends VerticalLayout {
         gridLayout.addComponent(grid);
         
 		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
+	    addComponent(new GenericHeader(competicionStr+" / "+categoriaStr, FontAwesome.TROPHY));
 	    addComponent(topLayout);
 	    addComponent(gridLayout);
 	    setSizeFull();
@@ -144,7 +145,7 @@ public class ResultadosActaFinal extends VerticalLayout {
     		}
         });
         
-        Label competicionLabel = new Label("<h4><b>"+competicionStr+" / "+categoriaStr+"</b></h4>", 
+        Label competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr+"</b>", 
         		ContentMode.HTML);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
@@ -155,14 +156,14 @@ public class ResultadosActaFinal extends VerticalLayout {
         topLayout.setSpacing(true);
         topLayout.setMargin(true);
         topLayout.setWidth("100%");
-        topLayout.addComponent(competicionLabel);
+        //topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);
-        topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
-        topLayout.setExpandRatio(competicionLabel, 1);
+        //topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
+        //topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");
-        topLayout.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+        //topLayout.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
         return topLayout;
     }
 	
