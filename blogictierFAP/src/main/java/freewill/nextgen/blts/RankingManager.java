@@ -57,10 +57,21 @@ public class RankingManager {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		UserEntity user = userrepo.findByLoginname(auth.getName());
     		rec.setCompany(user.getCompany());
-    		
+    		rec.setPuntuacion(getBest3Of4(rec));
     		RankingEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
-			return res;
+			
+			// Actualiza orden
+			List<RankingEntity> recs = repository.findByCircuitoAndCategoriaOrderByPuntuacionDesc(
+					rec.getCircuito(), rec.getCategoria());
+			int orden = 1;
+			for(RankingEntity item:recs){
+				item.setOrden(orden++);
+				repository.save(item);
+			}
+						
+			// Devuelve registro actualizado
+			return repository.findById(res.getId());
 		}
 		return null;
 	}

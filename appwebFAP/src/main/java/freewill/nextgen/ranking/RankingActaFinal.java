@@ -23,6 +23,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
@@ -40,6 +42,7 @@ public class RankingActaFinal extends CssLayout {
 	private RankingCrudLogic viewLogic;
 	private RankingCrudView parent = null;
 	private RankingForm form;
+	private CategoriaEntity category = null;
 
 	public RankingActaFinal(Long categoria, String labelcategoria, Long circuito, 
 			String circuitolabel, RankingCrudView parent){
@@ -54,8 +57,24 @@ public class RankingActaFinal extends CssLayout {
 		
 		viewLogic = new RankingCrudLogic(this);
 		
-		grid = new GenericGrid<RankingEntity>(RankingEntity.class,
-		       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+		category = viewLogic.findCategoria(""+categoria);
+		
+		switch(category.getModalidad()){
+		case SLIDE:
+		case BATTLE:	
+		case CLASSIC:
+		case JUMP:
+		case SPEED:
+			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
+				       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+			break;
+		case JAM:
+			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
+				       "id", "orden", "nombre", "apellidos", "nombrePareja", "apellidosPareja", 
+				       "clubStr", "puntuacion");
+			break;
+		}
+		
 		grid.addSelectionListener(new SelectionListener() {
 	        @Override
 	        public void select(SelectionEvent event) {

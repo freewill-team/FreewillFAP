@@ -88,7 +88,7 @@ public class ResultadosCrudLogic implements Serializable {
         }
     }
     
-    public CategoriaEntity findRecord(String recId) {
+    public CategoriaEntity findCategoria(String recId) {
     	try{
     		CategoriaEntity rec = (CategoriaEntity) BltClient.get().getEntityById(
     				recId, CategoriaEntity.class,

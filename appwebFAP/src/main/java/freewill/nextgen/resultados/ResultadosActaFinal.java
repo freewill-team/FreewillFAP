@@ -52,7 +52,7 @@ public class ResultadosActaFinal extends VerticalLayout {
 		
 		viewLogic = new ResultadosCrudLogic(this);
 		
-		category = viewLogic.findRecord(""+categoria);
+		category = viewLogic.findCategoria(""+categoria);
 		
 		switch(category.getModalidad()){
 		case SLIDE:

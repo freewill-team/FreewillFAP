@@ -11,6 +11,7 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.common.entities.UserEntity;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingEntity;
 
@@ -190,4 +191,19 @@ public class RankingCrudLogic implements Serializable {
 		return null;
 	}
     
+	public CategoriaEntity findCategoria(String recId) {
+    	try{
+    		CategoriaEntity rec = (CategoriaEntity) BltClient.get().getEntityById(
+    				recId, CategoriaEntity.class,
+    				EntryPoint.get().getAccessControl().getTokenKey());
+    		return rec;
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
+		}
+    	return null;
+    }
+	
 }
