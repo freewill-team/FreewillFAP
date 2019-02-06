@@ -77,8 +77,9 @@ public class AnonymousLogin extends CssLayout {
     }
     
     public void setCompeticion(String competicionStr){
+    	String competicion = "<h1> Resultados <b>" + competicionStr +"</b></h1>";
     	loginInfoText.setValue( 
-    			"<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +competicionStr);
+    			"<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +competicion);
     }
     
 }
