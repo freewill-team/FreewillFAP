@@ -88,6 +88,7 @@ public class Export2Xls {
 									data[i] = "No Presentado";
 							}
 						}
+		    			// TODO tipo Date (fechas)
 	    			}
 	    			catch(Exception e){
 	    				e.printStackTrace();

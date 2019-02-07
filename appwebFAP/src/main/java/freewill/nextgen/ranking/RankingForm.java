@@ -9,12 +9,14 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
@@ -122,6 +124,9 @@ public class RankingForm extends RankingFormDesign {
             }
         });
         
+        patinBtn.setCaption(Messages.get().getKey("patinador"));
+        patinBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        patinBtn.setIcon(FontAwesome.SEARCH);
         patinBtn.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {

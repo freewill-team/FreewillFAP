@@ -1,5 +1,7 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,18 +160,34 @@ public class ParticipanteManager {
 		return recs;
 	}
 	
-	/*@RequestMapping("/getByPatinadorAndCompeticionAndCategoria/{patinador}/{competicion}/{categoria}")
-	public List<ParticipanteEntity> getByPatinadorAndCompeticionAndCategoria(
-			@PathVariable Long patinador, @PathVariable Long competicion, 
-			@PathVariable Long categoria) throws Exception {
-		System.out.println("Getting Participantes List By patinador, competicion y categoria..."
-			+patinador+","+competicion+","+categoria);
+	@RequestMapping("/getByPatinador/{patinador}")
+	public List<ParticipanteEntity> getByPatinador(
+			@PathVariable Long patinador) throws Exception {
+		System.out.println("Getting Participantes List By patinador..."+patinador);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
-		List<ParticipanteEntity> recs = repository.findByPatinadorAndCompeticionAndCategoria(
-				patinador, competicion, categoria);
-		return recs;
-	}*/
+		List<ParticipanteEntity> output = new ArrayList<ParticipanteEntity>();
+		List<ParticipanteEntity> recs = repository.findByPatinador(patinador);
+		List<ParticipanteEntity> recs2 = repository.findByPatinadorPareja(patinador);
+		recs.addAll(recs2);
+		Date now = new Date();
+		for(ParticipanteEntity rec:recs){
+			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
+			if(competi!=null){
+				if(rec.getClasificacion()==0 || rec.getClasificacion()==999
+						|| competi.getFechaInicio().after(now))
+					continue;
+				rec.setCompeticionStr(competi.getNombre());
+				rec.setFecha(competi.getFechaInicio());
+				CategoriaEntity catego = categoriarepo.findById(rec.getCategoria());
+				if(catego!=null){
+					rec.setCategoriaStr(catego.getNombre());
+					output.add(rec);
+				}
+			}
+		}
+		return output;
+	}
 	
 	@RequestMapping("/getByPatinadorAndCompeticionAndCategoria/{patinador}/{competicion}/{categoria}")
 	public ParticipanteEntity getByPatinadorAndCompeticionAndCategoria(

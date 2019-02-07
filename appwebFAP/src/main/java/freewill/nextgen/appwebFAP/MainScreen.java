@@ -32,6 +32,7 @@ import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.participante.ParticipanteCrudView;
 import freewill.nextgen.patinador.PatinadorForm;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
@@ -119,10 +120,6 @@ public class MainScreen extends HorizontalLayout {
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
 		    
-		    // Just for debugging
-		    // ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
-		    // menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.COMMENT);
-		    
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
@@ -208,6 +205,10 @@ public class MainScreen extends HorizontalLayout {
         	PreinscripcionCrudView preinscripcionView = new PreinscripcionCrudView(InscripcionEnum.PREINSCRIPCION);
         	menu.addView(preinscripcionView , Messages.get().getKey("preinscripciones"), FontAwesome.PAPERCLIP);
 	    
+        	// Palmares
+		    ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
+		    menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.TROPHY);
+        	
         // Section About
         //menu.addTitle(Messages.get().getKey("aboutview.viewname"));
         

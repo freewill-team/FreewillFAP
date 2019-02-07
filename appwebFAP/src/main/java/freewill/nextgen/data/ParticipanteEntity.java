@@ -1,6 +1,7 @@
 package freewill.nextgen.data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Session Bean implementation class ParticipanteEntity
@@ -26,6 +27,9 @@ public class ParticipanteEntity implements Serializable, Cloneable {
 	private int clasificacion;		// Puesto en el que quedó el patinador
 	private int mejorMarca;			// Aplica a Classic, Derrapes, Battle y Jam; tiempo o altura saltada
 	private int puntuacion;			// Puntuacion obtenida en esta prueba; para calculo ranking
+	private String competicionStr;
+	private String categoriaStr;
+	private Date fecha;
 	
     /**
      * Default constructor. 
@@ -43,6 +47,9 @@ public class ParticipanteEntity implements Serializable, Cloneable {
     	clasificacion = 999;
     	mejorMarca = 0;
     	puntuacion = 0;
+    	competicionStr = "";
+    	categoriaStr = "";
+    	fecha= new Date(0);
     	//company = null;
     }
     
@@ -227,4 +234,28 @@ public class ParticipanteEntity implements Serializable, Cloneable {
 		this.dorsalPareja = dorsalPareja;
 	}
     
+	public String getCompeticionStr() {
+		return competicionStr;
+	}
+
+	public void setCompeticionStr(String competicionStr) {
+		this.competicionStr = competicionStr;
+	}
+	
+	public String getCategoriaStr() {
+		return categoriaStr;
+	}
+
+	public void setCategoriaStr(String categoriaStr) {
+		this.categoriaStr = categoriaStr;
+	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	
 }

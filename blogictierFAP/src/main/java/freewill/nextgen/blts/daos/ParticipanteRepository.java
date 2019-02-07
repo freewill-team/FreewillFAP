@@ -34,5 +34,6 @@ public interface ParticipanteRepository extends CrudRepository<ParticipanteEntit
 	List<ParticipanteEntity> findByDorsalParejaAndCompeticion(int dorsal, Long competicion);
 	ParticipanteEntity findByPatinadorParejaAndCategoriaAndCompeticion(Long patId, Long categoria, Long competicion);
 	List<ParticipanteEntity> findByCompeticion(Long competicion);
+	List<ParticipanteEntity> findByPatinadorPareja(Long patinador);
 	
 }
