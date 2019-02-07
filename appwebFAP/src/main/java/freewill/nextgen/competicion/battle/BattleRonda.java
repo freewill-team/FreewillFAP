@@ -18,6 +18,7 @@ import freewill.nextgen.data.BattleRondaEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.BattleRondaEntity.EliminatoriaEnum;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
+import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
@@ -110,7 +111,17 @@ public class BattleRonda extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 // Next screen
-            	parent.gotoActaFinal();
+            	ConfirmDialog cd = new ConfirmDialog(
+            			"Esta acción publicará los resultados en la web pública.\n" +
+            			"¿ Desea continuar ?");
+                cd.setOKAction(new ClickListener() {
+                	@Override
+                    public void buttonClick(final ClickEvent event) {
+                    	cd.close();
+                    	parent.gotoActaFinal();
+                	}
+                });
+                getUI().addWindow(cd);
             }
         });
 		nextButton.setEnabled(true);

@@ -137,9 +137,9 @@ public class SaltoTrial extends VerticalLayout {
             public void buttonClick(ClickEvent event) {
                 // Next screen
             	if(ronda>0 && allPatinadoresOut((List<SaltoEntity>)grid.getContainerDataSource().getItemIds()))
-            		parent.gotoActaFinal(ronda+1);
+            		gotoActaFinal(ronda+1);
             	else if(ronda>0 && grid.getContainerDataSource().size()==1)
-            		parent.gotoActaFinal(ronda+1);
+            		gotoActaFinal(ronda+1);
             	else if(alturaNextRonda==0){
 	            	try{
 	            		int alturaThisRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda);
@@ -216,6 +216,21 @@ public class SaltoTrial extends VerticalLayout {
         return topLayout;
     }
 	
+	protected void gotoActaFinal(int i) {
+		// Next screen
+    	ConfirmDialog cd = new ConfirmDialog(
+    			"Esta acción publicará los resultados en la web pública.\n" +
+    			"¿ Desea continuar ?");
+        cd.setOKAction(new ClickListener() {
+        	@Override
+            public void buttonClick(final ClickEvent event) {
+            	cd.close();
+            	parent.gotoActaFinal(i);
+        	}
+        });
+        getUI().addWindow(cd);
+	}
+
 	private boolean allPatinadoresOut(List<SaltoEntity> recs) {
 		for(SaltoEntity rec:recs){
 			if( rec.getSalto1()==ResultEnum.OK || rec.getSalto1()==ResultEnum.PASA ||
