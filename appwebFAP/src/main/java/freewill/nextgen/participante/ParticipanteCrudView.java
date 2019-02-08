@@ -84,6 +84,7 @@ public class ParticipanteCrudView extends CssLayout implements View {
         addComponent(barAndGridLayout);
     }
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public HorizontalLayout createTopBar() {
         
         patinadorLabel = new Label("");
