@@ -366,11 +366,6 @@ public class SpeedTimeTrialManager {
 	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
 	public List<SpeedTimeTrialEntity> getResultadosFinal(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
-		/*int posicion[] = {1, 2};
-		int posSemis[] = {3, 4};
-		int posCuartos[] = {5, 6, 7, 8};
-		int posOctavos[] = {9, 10, 11, 12, 13, 14, 15, 16};
-		int posDieciseis[] = {17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32};*/
 		System.out.println("Getting SpeedTimeTrials Results Final By competicion y categoria..."
 			+competicion+","+categoria);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -381,15 +376,6 @@ public class SpeedTimeTrialManager {
 		for(EliminatoriaEnum eliminatoria:EliminatoriaEnum.values()){
 			List<SpeedKOSystemEntity> recs = 
 					korepo.findByCompeticionAndCategoriaAndEliminatoria(competicion, categoria, eliminatoria);
-			
-			/*if(eliminatoria==EliminatoriaEnum.SEMIS)
-				posicion = posSemis;
-			else if(eliminatoria==EliminatoriaEnum.CUARTOS)
-				posicion = posCuartos;
-			else if(eliminatoria==EliminatoriaEnum.OCTAVOS)
-				posicion = posOctavos;
-			else if(eliminatoria==EliminatoriaEnum.DIECISEIS)
-				posicion = posDieciseis;*/
 			
 			for(SpeedKOSystemEntity rec:recs){
 				if(eliminatoria==EliminatoriaEnum.FINAL){
@@ -404,7 +390,8 @@ public class SpeedTimeTrialManager {
 							System.out.println("Setting "+rec.getGanador()+" to "+1);
 						}
 						// segundo clasificado
-						Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+						Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+								rec.getPatinador2():rec.getPatinador1());
 						patin = (SpeedTimeTrialEntity) 
 								repository.findByPatinadorAndCompeticion(
 								segundo, rec.getCompeticion());
@@ -425,7 +412,8 @@ public class SpeedTimeTrialManager {
 							System.out.println("Setting "+rec.getGanador()+" to "+3);
 						}
 						// cuarto clasificado
-						Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+						Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+								rec.getPatinador2():rec.getPatinador1());
 						patin = (SpeedTimeTrialEntity) 
 								repository.findByPatinadorAndCompeticion(
 								segundo, rec.getCompeticion());
@@ -441,7 +429,8 @@ public class SpeedTimeTrialManager {
 				}
 				else{
 					// Resto de Eliminatorias
-					Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+					Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+							rec.getPatinador2():rec.getPatinador1());
 					SpeedTimeTrialEntity patin = (SpeedTimeTrialEntity) 
 							repository.findByPatinadorAndCompeticion(
 							segundo, rec.getCompeticion());
@@ -457,7 +446,8 @@ public class SpeedTimeTrialManager {
 		}
 		
 		// Obtiene lista con la clasificacion final
-		List<SpeedTimeTrialEntity> output = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
+		List<SpeedTimeTrialEntity> output = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
 				competicion, categoria);
 		int orden = 1;
 		for(SpeedTimeTrialEntity rec:output){

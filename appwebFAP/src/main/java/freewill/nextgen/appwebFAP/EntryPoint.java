@@ -214,12 +214,11 @@ public class EntryPoint extends UI {
         
         // Unregister user from Logins table
         heartbeat.interrupt();
+        VaadinSession.getCurrent().getSession().invalidate();
+        Page.getCurrent().reload();
         RtdbDataService.get().userCheckout(username, 
         		VaadinService.getCurrentRequest().getRemoteHost(),
         		"AppwebFAP");
-        
-        VaadinSession.getCurrent().getSession().invalidate();
-        Page.getCurrent().reload();
 	}
 	
     public static EntryPoint get() {
