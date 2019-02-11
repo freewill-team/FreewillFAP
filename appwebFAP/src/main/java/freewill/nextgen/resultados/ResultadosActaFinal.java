@@ -2,8 +2,11 @@ package freewill.nextgen.resultados;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.List;
 
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -13,9 +16,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -28,9 +33,10 @@ import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.GenericHeader;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.ranking.RankingForm;
 
 @SuppressWarnings("serial")
-public class ResultadosActaFinal extends VerticalLayout {
+public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 	
 	public final String VIEW_NAME = Messages.get().getKey("resultadosacta");
 	private Long competicion = null;
@@ -40,6 +46,7 @@ public class ResultadosActaFinal extends VerticalLayout {
 	private GenericGrid<ParticipanteEntity> grid;
 	private ResultadosCrudLogic viewLogic;
 	private ResultadosCrudView parent = null;
+	private ParticipanteForm form = null;
 	private CategoriaEntity category = null;
 
 	public ResultadosActaFinal(Long categoria, String labelcategoria, 
@@ -49,8 +56,11 @@ public class ResultadosActaFinal extends VerticalLayout {
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
-		
-		viewLogic = new ResultadosCrudLogic(this);
+		setSizeFull();
+        addStyleName("crud-view");
+        viewLogic = new ResultadosCrudLogic(this);
+        
+        HorizontalLayout topLayout = createTopBar();
 		
 		category = viewLogic.findCategoria(""+categoria);
 		
@@ -75,7 +85,29 @@ public class ResultadosActaFinal extends VerticalLayout {
 			break;
 		}
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
+		grid.addSelectionListener(new SelectionListener() {
+	        @Override
+	        public void select(SelectionEvent event) {
+	            viewLogic.rowSelected(grid.getSelectedRow());
+	        }
+	    });
+		
+		form = new ParticipanteForm(viewLogic);
+		
+		VerticalLayout barAndGridLayout = new VerticalLayout();
+		addComponent(new GenericHeader(competicionStr+" / "+categoriaStr, FontAwesome.TROPHY));
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
+	    
+	    addComponent(barAndGridLayout);
+	    addComponent(form);
+		
+        /*HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
         gridLayout.setSpacing(false); // true
@@ -89,7 +121,7 @@ public class ResultadosActaFinal extends VerticalLayout {
 	    setMargin(false);
         setSpacing(false);
 	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
+	    setStyleName("crud-main-layout");*/
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
 	}
@@ -188,6 +220,47 @@ public class ResultadosActaFinal extends VerticalLayout {
 
     public void showRecords(List<ParticipanteEntity> records) {
         grid.setRecords(records);
+    }
+    
+    public void clearSelection() {
+    	try{
+    		grid.getSelectionModel().reset();
+    	}
+    	catch(Exception e){
+    		System.out.println("clearSelection: "+e.getMessage());
+    	}
+    }
+
+    public void selectRow(ParticipanteEntity row) {
+        ((SelectionModel.Single) grid.getSelectionModel()).select(row);
+    }
+
+    public ParticipanteEntity getSelectedRow() {
+        return grid.getSelectedRow();
+    }
+    
+    public void editRecord(ParticipanteEntity rec) {    
+        if (rec != null) {
+            form.addStyleName("visible");
+            form.setEnabled(true);
+        } else {
+            form.removeStyleName("visible");
+            form.setEnabled(false);
+        }
+        form.editRecord(rec);
+    }
+
+    public void showRecords(Collection<ParticipanteEntity> records) {
+        grid.setRecords(records);
+    }
+
+    public void refreshRecord(ParticipanteEntity rec) {
+        grid.refresh(rec);
+        grid.scrollTo(rec);
+    }
+
+    public void removeRecord(ParticipanteEntity rec) {
+        grid.remove(rec);
     }
     
 }

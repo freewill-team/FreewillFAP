@@ -9,9 +9,12 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
+import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
+import freewill.nextgen.data.PatinadorEntity;
+import freewill.nextgen.data.RankingEntity;
 
 /**
  * This class provides an interface for the logical operations between the CRUD
@@ -88,6 +91,18 @@ public class ResultadosCrudLogic implements Serializable {
         }
     }
     
+    public List<PatinadorEntity> getPatinadores() {
+		try{
+	        return BltClient.get().getEntities(PatinadorEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+    
     public CategoriaEntity findCategoria(String recId) {
     	try{
     		CategoriaEntity rec = (CategoriaEntity) BltClient.get().getEntityById(
@@ -132,4 +147,74 @@ public class ResultadosCrudLogic implements Serializable {
     	return null;
     }
 	
+	public void cancelRecord() {
+        setFragmentParameter("");
+        if(view!=null){
+	        view.clearSelection();
+	        view.editRecord(null);
+        }
+    }
+	
+	public ParticipanteEntity saveRecord(ParticipanteEntity rec) {
+    	try{
+	    	if(view!=null){
+	    		ParticipanteEntity res = null;
+	    		System.out.println("Saving = "+rec.toString());
+	    		
+	    		if(rec.getId()==null)
+	        		res = (ParticipanteEntity) BltClient.get().createEntity(rec, ParticipanteEntity.class,
+	        				EntryPoint.get().getAccessControl().getTokenKey());
+	        	else
+	        		res = (ParticipanteEntity) BltClient.get().updateEntity(rec, ParticipanteEntity.class,
+	        				EntryPoint.get().getAccessControl().getTokenKey());
+	    		
+		        view.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
+		        view.clearSelection();
+		        view.editRecord(null);
+		        view.refreshRecord(res);
+		        return res;
+	    	}
+	        //setFragmentParameter("");
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+    	return null;
+    }
+	
+	public void deleteRecord(ParticipanteEntity rec) {
+    	try{
+	    	if(view!=null){
+		    	System.out.println("Deleting = "+rec.toString());
+		    	BltClient.get().deleteEntity(""+rec.getId(), ParticipanteEntity.class,
+		    			EntryPoint.get().getAccessControl().getTokenKey());
+		        view.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") removed");
+		        view.clearSelection();
+		        view.editRecord(null);
+	        }
+	        setFragmentParameter("");
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+    }
+	
+	public void editRecord(ParticipanteEntity rec) {
+        if (rec == null) {
+            setFragmentParameter("");
+        } else {
+            setFragmentParameter(rec.getId() + "");
+        }
+        if(view!=null)
+        	view.editRecord(rec);
+    }
+	
+    public void rowSelected(ParticipanteEntity rec) {
+        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+            view.editRecord(rec);
+        }
+    }
+    
 }

@@ -1,4 +1,4 @@
-package freewill.nextgen.participante;
+package freewill.nextgen.resultados;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +27,7 @@ import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.participante.ParticipanteCrudLogic;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
@@ -40,10 +41,10 @@ import freewill.nextgen.patinador.SelectPatinadorDialog;
 public class ParticipanteForm extends ParticipanteFormDesign {
 
     private BeanFieldGroup<ParticipanteEntity> fieldGroup;
-    private ParticipanteCrudLogic viewLogic;
+    private ResultadosCrudLogic viewLogic;
     
     @SuppressWarnings("rawtypes")
-    public ParticipanteForm(ParticipanteCrudLogic logic) {
+    public ParticipanteForm(ResultadosCrudLogic logic) {
     	super();
         addStyleName("product-form");
         this.viewLogic = logic;
@@ -194,7 +195,6 @@ public class ParticipanteForm extends ParticipanteFormDesign {
                     		nombre.setValue(user.getNombre());
                     		apellidos.setValue(user.getApellidos());
                     		club.setValue(user.getClub());
-                    		// TODO clubStr.setValue(user.getClubStr());
             			}
                     }
                 });

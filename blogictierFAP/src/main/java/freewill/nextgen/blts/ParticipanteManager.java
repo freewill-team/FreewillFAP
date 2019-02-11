@@ -17,12 +17,14 @@ import freewill.nextgen.blts.daos.CategoriaRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PatinadorRepository;
+import freewill.nextgen.blts.daos.PuntuacionesRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
+import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
@@ -45,6 +47,9 @@ public class ParticipanteManager {
 	
 	@Autowired
 	CompeticionRepository competirepo;
+	
+	@Autowired
+	PuntuacionesRepository puntosrepo;
 	
 	@Autowired
 	PatinadorRepository patinrepo;
@@ -110,7 +115,28 @@ public class ParticipanteManager {
 	public ParticipanteEntity update(@RequestBody ParticipanteEntity rec) throws Exception {
 		if(rec!=null){
 			// Usar mejor el método "create" si se quiere actualizar un registro
+			// Este metodo es solo para el Administrador
 			System.out.println("Updating Participante..."+rec);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		UserEntity user = userrepo.findByLoginname(auth.getName());
+    		CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
+    		if(competi!=null){
+				PuntuacionesEntity puntos = puntosrepo.findByClasificacionAndCompany(
+						rec.getClasificacion(), user.getCompany());
+				if(puntos!=null){
+					switch(competi.getTipo()){
+					case A:
+						rec.setPuntuacion(puntos.getPuntosCampeonato());
+						break;
+					case B:
+						rec.setPuntuacion(puntos.getPuntosCopa());
+						break;
+					case C:
+						rec.setPuntuacion(puntos.getPuntosTrofeo());
+						break;
+					}
+				}
+    		}
 			ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			return res;
