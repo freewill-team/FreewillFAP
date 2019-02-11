@@ -29,6 +29,7 @@ import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
+import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.GenericHeader;
 import freewill.nextgen.hmi.utils.Export2Xls;
@@ -106,22 +107,6 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 	    
 	    addComponent(barAndGridLayout);
 	    addComponent(form);
-		
-        /*HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(false); // true
-        gridLayout.addComponent(grid);
-        
-		HorizontalLayout topLayout = createTopBar();
-	    addComponent(new GenericHeader(competicionStr+" / "+categoriaStr, FontAwesome.TROPHY));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setMargin(false);
-        setSpacing(false);
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");*/
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
 	}
@@ -190,18 +175,38 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
     		}
         });
 		
+		Button newRecord = new Button(Messages.get().getKey("new"));
+        newRecord.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        newRecord.setIcon(FontAwesome.PLUS_CIRCLE);
+        newRecord.addClickListener(new ClickListener() {
+			@Override
+            public void buttonClick(ClickEvent event) {
+            	try{
+            		ParticipanteEntity rec = new ParticipanteEntity();
+            		rec.setCategoria(categoria);
+    	        	rec.setCompeticion(competicion);
+    	        	editRecord(rec);
+            	}
+            	catch(Exception e){
+            		showError(e.getMessage());
+            	};
+            }
+        });
+		
 		Label expander = new Label("");
         
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        //topLayout.setMargin(false); // true
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         //topLayout.addComponent(competicionLabel);
         topLayout.addComponent(expander);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);
+        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        	topLayout.addComponent(newRecord);
         //topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         //topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setComponentAlignment(expander, Alignment.MIDDLE_LEFT);

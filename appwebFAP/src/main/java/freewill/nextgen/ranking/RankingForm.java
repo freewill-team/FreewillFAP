@@ -194,6 +194,7 @@ public class RankingForm extends RankingFormDesign {
         club.setVisible(false);
         clubStr.setEnabled(canEditRecord);
         orden.setEnabled(canEditRecord);
+        
         delete.setEnabled(!canEditRecord);
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }

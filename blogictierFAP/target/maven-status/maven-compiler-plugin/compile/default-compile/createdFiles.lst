@@ -94,6 +94,7 @@ freewill\nextgen\blts\data\BattleRondaEntity$EliminatoriaEnum.class
 freewill\nextgen\blts\daos\ClassicShowRepository.class
 freewill\nextgen\blts\DerrapesManager.class
 freewill\nextgen\blts\daos\CompeticionRepository.class
+freewill\nextgen\blts\ParticipanteManager$1.class
 freewill\nextgen\blts\CompeticionManager$1.class
 freewill\nextgen\blts\JamShowManager$1.class
 freewill\nextgen\blts\daos\JobSchedulerRepository.class

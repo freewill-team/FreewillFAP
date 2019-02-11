@@ -136,6 +136,8 @@ public class ParticipanteManager {
 						break;
 					}
 				}
+				// relleno tambien el circuito
+	    		rec.setCircuito(competi.getCircuito());
     		}
 			ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
