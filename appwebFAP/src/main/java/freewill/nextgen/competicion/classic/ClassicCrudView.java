@@ -69,14 +69,6 @@ public class ClassicCrudView extends VerticalLayout implements View {
 		return competicion;
 	}
 
-	public void gotoTrial() {
-		removeAllComponents();
-    	addComponent(new ClassicClasificacion(
-    			categoria, categoriaStr,
-    			competicion, competicionStr, 
-    			ClassicCrudView.this));
-	}
-
 	public void gotoClassicFinal() {
 		removeAllComponents();
 		addComponent(new ClassicFinal(

@@ -52,11 +52,12 @@ public class ClassicFinal extends VerticalLayout {
 		viewLogic = new ClassicCrudLogic(this);
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
-        		"id", "orden1", "dorsal", "nombre", "apellidos",
+        		"id", "dorsal", "nombre", "apellidos",
         		"penalizaciones",
-        		"tecnicaJuez1", "artisticaJuez1",
-        		"tecnicaJuez2", "artisticaJuez2",
-        		"tecnicaJuez3", "artisticaJuez3");
+        		"tecnicaJuez1", "artisticaJuez1", "totalJuez1","rankingJuez1",
+        		"tecnicaJuez2", "artisticaJuez2", "totalJuez2","rankingJuez2",
+        		"tecnicaJuez3", "artisticaJuez3", "totalJuez3","rankingJuez3");
+		//grid.getColumn("penalizaciones").setWidth(60);
 		
 		grid.addSelectionListener(new SelectionListener() {
             @Override
@@ -73,11 +74,9 @@ public class ClassicFinal extends VerticalLayout {
         gridLayout.setMargin(true);
         gridLayout.setSpacing(true);
         gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 2);
-        
+        gridLayout.setExpandRatio(grid, 3);    
         gridLayout.addComponent(form);
-	    gridLayout.setExpandRatio(form, 1);
-       
+	    gridLayout.setExpandRatio(form, 1);     
         
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -109,7 +108,7 @@ public class ClassicFinal extends VerticalLayout {
         }
         else
         	selectRonda.setValue(EliminatoriaEnum.CUARTOS);
-		*/
+		
 		
 		Button prevButton = new Button(Messages.get().getKey("prev"));
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -122,15 +121,14 @@ public class ClassicFinal extends VerticalLayout {
             }
         });
 		prevButton.setEnabled(false);
-		
+		*/
 		Button nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                // Next screen
-            	parent.gotoActaFinal();
+                 parent.gotoActaFinal();	
             }
         });
 		nextButton.setEnabled(true);
@@ -170,7 +168,7 @@ public class ClassicFinal extends VerticalLayout {
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        topLayout.addComponent(prevButton);
+        //topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
