@@ -88,7 +88,8 @@ public class EntryPoint extends UI {
             setContent( new LoginScreen(accessControl, new LoginListener(){
             	@Override
                 public void loginSuccessful() {
-            		if(getAccessControl().isUserInRole(IMC_PERMISSION))
+            		if(getAccessControl().isUserInRole(IMC_PERMISSION)
+            				&& !getAccessControl().getPrincipalName().equals("anonimo"))
             			showMainView();
             		else{
             			setContent(new NoPermissionView());
@@ -97,7 +98,8 @@ public class EntryPoint extends UI {
                 }
             }));
         } else {
-        	if(getAccessControl().isUserInRole(IMC_PERMISSION))
+        	if(getAccessControl().isUserInRole(IMC_PERMISSION)
+        			&& !getAccessControl().getPrincipalName().equals("anonimo"))
     			showMainView();
     		else{
     			setContent(new NoPermissionView());

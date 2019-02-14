@@ -33,7 +33,7 @@ public class NoPermissionView extends VerticalLayout implements View {
         addComponent(header);
         addComponent(explanation = new Label());
         
-        final Button logout = new Button("Vuelve a la ventana de login...", 
+        final Button logout = new Button("Return to the login form...", 
         		new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
