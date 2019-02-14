@@ -277,20 +277,19 @@ public class ClassicShowManager {
 									{
 										PV[i][j]++;
 									}
-									/* prueba para que salga el excel
+									/* prueba para que salga el excel */
 									else
 									{
 										PV[i][j]+=0.5; //Empate segun juez k
 									}
-									*/
 									
 								}
 							}
 						}
 					}
-					//System.out.print(PV[i][j] + "| ");
+					System.out.print(PV[i][j] + "| ");
 				}
-				//System.out.println();
+				System.out.println();
 			}
 			else
 			{
@@ -303,6 +302,7 @@ public class ClassicShowManager {
 		for (int i = 0; i< numParticipantes; i++)
 		{
 			float sumaPV = 0;
+			float sumaEmpates = 0;
 			float totalPV = 0;
 			ClassicShowEntity recI = recs.get(i);
 			
@@ -315,12 +315,12 @@ public class ClassicShowManager {
 				/* prueba para que salga el excel nunca pasara por aqui*/
 				else if (PV[i][j] == 1.5)
 				{
-					sumaPV+=0.5;
+					sumaEmpates++;
 				}
 				
 				totalPV+=PV[i][j];
 			}
-			recI.setSumaPV(sumaPV);
+			recI.setSumaPV(sumaPV + sumaEmpates/2);
 		    recI.setPVTotal(totalPV);
 		    repository.save(recI);
 		}
