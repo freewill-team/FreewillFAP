@@ -277,10 +277,9 @@ public class ClassicShowManager {
 									{
 										PV[i][j]++;
 									}
-									/* prueba para que salga el excel */
-									else
+									else if (TecnicaI[k] == TecnicaJ[k])
 									{
-										PV[i][j]+=0.5; //Empate segun juez k
+										PV[i][j]+=0.5; //Empate total segun juez k
 									}
 									
 								}
@@ -312,7 +311,6 @@ public class ClassicShowManager {
 				{
 					sumaPV++;
 				}
-				/* prueba para que salga el excel nunca pasara por aqui*/
 				else if (PV[i][j] == 1.5)
 				{
 					sumaEmpates++;
