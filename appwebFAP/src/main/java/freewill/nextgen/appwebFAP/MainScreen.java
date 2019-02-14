@@ -85,7 +85,7 @@ public class MainScreen extends HorizontalLayout {
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN)){
         	
-        	// Section Datos Maestros - Perfil ADMIN
+        	// Section Datos Maestros - Perfil Administrador
             menu.addTitle(Messages.get().getKey("maestros"), FontAwesome.ARCHIVE);
         	
 	        UserCrudView userView = new UserCrudView();
@@ -124,7 +124,7 @@ public class MainScreen extends HorizontalLayout {
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
         	
-        	// Section Inscripciones - Perfil COORD
+        	// Section Inscripciones - Perfil Federacion
             menu.addTitle(Messages.get().getKey("inscripciones"), FontAwesome.CLIPBOARD);
         	
         	String clubes = Messages.get().getKey("clubes");
@@ -155,7 +155,7 @@ public class MainScreen extends HorizontalLayout {
 		    
         }
         
-        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER)){
         	
         	// Section Pruebas - Jueces
         	menu.addTitle(Messages.get().getKey("pruebas"), FontAwesome.GAMEPAD);

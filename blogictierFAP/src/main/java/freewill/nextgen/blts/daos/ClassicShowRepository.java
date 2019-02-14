@@ -37,6 +37,7 @@ public interface ClassicShowRepository extends CrudRepository<ClassicShowEntity,
 			Long competicion, Long categoria);
 	List<ClassicShowEntity> findByCompeticionAndCategoriaOrderByTotalJuez3Desc(
 			Long competicion, Long categoria);
-	List<ClassicShowEntity> findByCompeticionAndCategoriaOrderBySumaPonderadaAsc(Long competicion, Long categoria);
+	List<ClassicShowEntity> findByCompeticionAndCategoriaOrderBySumaPVDesc(Long competicion, Long categoria);
+	List<ClassicShowEntity> findByCompeticionAndCategoriaOrderBySumaPonderadaDesc(Long competicion, Long categoria);
 		
 }

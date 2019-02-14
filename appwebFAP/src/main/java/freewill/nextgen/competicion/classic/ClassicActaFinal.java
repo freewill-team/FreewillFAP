@@ -45,7 +45,11 @@ public class ClassicActaFinal extends VerticalLayout {
 		viewLogic = new ClassicCrudLogic();
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
-		       "id", "clasificacionFinal", "dorsal", "nombre", "apellidos");
+		       "id", "clasificacionFinal", "dorsal", "nombre", "apellidos", 
+		       //"rankingJuez1","rankingJuez2", "rankingJuez3",
+		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
+		       //,"orden1"
+		       );
         
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
@@ -60,8 +64,10 @@ public class ClassicActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
-	    
-	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
+	    if (viewLogic.initGridResults(this.competicion, this.categoria)== null)
+    		showError("No se pueden mostrar los resultados");
+	    else
+	    	showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })

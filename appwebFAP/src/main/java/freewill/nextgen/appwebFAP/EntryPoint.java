@@ -54,7 +54,7 @@ import freewill.nextgen.resultados.AnonymousLogin;
 public class EntryPoint extends UI {
 	
 	private AccessControl accessControl = new BasicAccessControl();
-	private static UserRoleEnum IMC_PERMISSION = UserRoleEnum.USER;
+	private static UserRoleEnum IMC_PERMISSION = UserRoleEnum.READONLY;
 	private FeederThread heartbeat = null;
 	
     @Override

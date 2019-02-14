@@ -33,21 +33,17 @@ public class ClassicShowEntity implements Serializable, Cloneable {
 	private int artisticaJuez1=0;
 	private int artisticaJuez2=0;
 	private int artisticaJuez3=0;
-	//poner a @transient si no queremos guardarlo y rellenar el valor en el getter
 	private float totalJuez1=0;
 	private float totalJuez2=0;
 	private float totalJuez3=0;
-	@JsonIgnore
 	private int rankingJuez1=0;
-	@JsonIgnore
 	private int rankingJuez2=0;
-	@JsonIgnore
 	private int rankingJuez3=0;
 	private float penalizaciones=0;
-	private int sumaPV=0;
-	private int PVLocales=0;
+	private float sumaPV=0;
+	private float PVLocales=0;
 	private int totalTecnica=0;
-    private int PVTotal=0;
+    private float PVTotal=0;
     private float puntuacionTotal=0;
 	private int clasificacionFinal=0; //Puesto en el que quedó el patinador en resultado final
 	private float sumaPonderada = 0;
@@ -280,19 +276,19 @@ public class ClassicShowEntity implements Serializable, Cloneable {
 		this.dorsal = dorsal;
 	}
 
-	public int getSumaPV() {
+	public float getSumaPV() {
 		return sumaPV;
 	}
 
-	public void setSumaPV(int sumaPV) {
+	public void setSumaPV(float sumaPV) {
 		this.sumaPV = sumaPV;
 	}
 
-	public int getPVLocales() {
+	public float getPVLocales() {
 		return PVLocales;
 	}
 
-	public void setPVLocales(int pVLocales) {
+	public void setPVLocales(float pVLocales) {
 		PVLocales = pVLocales;
 	}
 
@@ -304,12 +300,12 @@ public class ClassicShowEntity implements Serializable, Cloneable {
 		this.totalTecnica = totalTecnica;
 	}
 
-	public int getPVTotal() {
+	public float getPVTotal() {
 		return PVTotal;
 	}
 
-	public void setPVTotal(int pVTotal) {
-		PVTotal = pVTotal;
+	public void setPVTotal(float totalPV) {
+		PVTotal = totalPV;
 	}
 
 	public float getPuntuacionTotal() {
