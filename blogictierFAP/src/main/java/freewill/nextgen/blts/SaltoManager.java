@@ -1,6 +1,8 @@
 package freewill.nextgen.blts;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -227,8 +229,10 @@ public class SaltoManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<SaltoEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(
 				competicion, categoria);
@@ -275,6 +279,54 @@ public class SaltoManager {
 			// retrieve and return new created records
 			recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(competicion, categoria);
 		}
+		return recs;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private List<SaltoEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<SaltoEntity> recs = new ArrayList<SaltoEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			SaltoEntity rec = new SaltoEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden());
+			
+			rec.setClasificacion(rec.getOrden());
+			rec.setPatinador(inscripcion.getPatinador());
+			//rec.setCompany(user.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<SaltoEntity>() {
+			@Override
+			public int compare(SaltoEntity o1, SaltoEntity o2) {
+				return o2.getOrden()-o1.getOrden();
+			}
+		});
+		int orden = 1;
+		for(SaltoEntity rec:recs){
+			rec.setOrden(orden++);
+			rec.setId(rec.getOrden());
+		}
+		
 		return recs;
 	}
 	

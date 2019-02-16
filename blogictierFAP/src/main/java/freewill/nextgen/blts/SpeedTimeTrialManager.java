@@ -1,5 +1,8 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -177,8 +180,10 @@ public class SpeedTimeTrialManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<SpeedTimeTrialEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
 				competicion, categoria);
@@ -231,6 +236,56 @@ public class SpeedTimeTrialManager {
 		return recs;
 	}
 	
+	@SuppressWarnings("deprecation")
+	private List<SpeedTimeTrialEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<SpeedTimeTrialEntity> recs = new ArrayList<SpeedTimeTrialEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			SpeedTimeTrialEntity rec = new SpeedTimeTrialEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
+			
+			rec.setOrden2(rec.getOrden1());
+			rec.setClasificacion(rec.getOrden1());
+			rec.setClasificacionFinal(rec.getOrden1());
+			rec.setPatinador(inscripcion.getPatinador());
+			//rec.setCompany(user.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<SpeedTimeTrialEntity>() {
+			@Override
+			public int compare(SpeedTimeTrialEntity o1, SpeedTimeTrialEntity o2) {
+				return o2.getOrden1()-o1.getOrden1();
+			}
+		});
+		int orden = 1;
+		for(SpeedTimeTrialEntity rec:recs){
+			rec.setOrden1(orden++);
+			rec.setId(rec.getOrden1());
+		}
+		
+		return recs;
+	}
+
 	@RequestMapping("/getByCompeticionAndCategoriaOrden2/{competicion}/{categoria}")
 	public List<SpeedTimeTrialEntity> getByCompeticionAndCategoriaOrden2(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {

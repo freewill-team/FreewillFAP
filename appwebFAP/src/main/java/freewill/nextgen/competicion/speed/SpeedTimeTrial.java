@@ -1,6 +1,7 @@
 package freewill.nextgen.competicion.speed;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.SelectionEvent;
@@ -50,6 +51,7 @@ public class SpeedTimeTrial extends VerticalLayout {
 	private SpeedCrudView parent = null;
 	private EliminatoriaEnum eliminatoria = EliminatoriaEnum.CUARTOS;
 	private boolean competiOpen = false;
+	private Button nextButton = null;
 
 	public SpeedTimeTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, RondaEnum ronda, SpeedCrudView parent){
@@ -81,10 +83,6 @@ public class SpeedTimeTrial extends VerticalLayout {
         form1 = new SpeedTimeTrialForm1(viewLogic);
         form2 = new SpeedTimeTrialForm2(viewLogic);
         eliminatoria = viewLogic.existeKO(competicion, categoria);
-        /*if(eliminatoria!=null){
-        	form1.setEnabled(false);
-        	form2.setEnabled(false);
-        }*/
         
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
@@ -115,7 +113,12 @@ public class SpeedTimeTrial extends VerticalLayout {
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
 	    competiOpen = competi.getActive();
-	    form1.setEnabled(eliminatoria==null && competiOpen);
+    	if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
+    	form1.setEnabled(eliminatoria==null && competiOpen);
     	form2.setEnabled(eliminatoria==null && competiOpen);
 	}
 	
@@ -151,7 +154,7 @@ public class SpeedTimeTrial extends VerticalLayout {
         });
 		//prevButton.setEnabled(ronda!=RondaEnum.PRIMERA);
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {

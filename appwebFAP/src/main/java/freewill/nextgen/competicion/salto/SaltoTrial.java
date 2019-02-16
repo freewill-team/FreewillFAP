@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.salto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.SelectionEvent;
@@ -46,6 +47,7 @@ public class SaltoTrial extends VerticalLayout {
 	private TextField newAltura;
 	private boolean showOnly2Jumps = false;
 	private boolean competiOpen = false;
+	private Button nextButton = null;
 
 	public SaltoTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, int ronda, SaltoCrudView parent){
@@ -103,6 +105,11 @@ public class SaltoTrial extends VerticalLayout {
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
 	    competiOpen = competi.getActive();
+	    if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
 	    form.setEnabled(alturaNextRonda==0 && competiOpen);
 	}
 	
@@ -128,7 +135,7 @@ public class SaltoTrial extends VerticalLayout {
         });
 		//prevButton.setEnabled(ronda>0);
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {

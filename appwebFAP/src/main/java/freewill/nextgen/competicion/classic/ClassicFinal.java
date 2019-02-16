@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.classic;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.SelectionEvent;
@@ -40,6 +41,7 @@ public class ClassicFinal extends VerticalLayout {
 	private ClassicCrudLogic viewLogic;
 	private ClassicCrudView parent = null;
 	private boolean competiOpen = false;
+	private Button nextButton = null;
 	
 	public ClassicFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, ClassicCrudView parent){
@@ -92,23 +94,15 @@ public class ClassicFinal extends VerticalLayout {
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
 	    competiOpen = competi.getActive();
+	    if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
 	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
-		/*
-		ComboBox selectRonda = new ComboBox();
-		selectRonda.setNullSelectionAllowed(false);
-        for (EliminatoriaEnum s : EliminatoriaEnum.values()) {
-        	selectRonda.addItem(s);
-        }
-        if(eliminatoria!=null){
-        	selectRonda.setValue(eliminatoria);
-        	selectRonda.setEnabled(false);
-        }
-        else
-        	selectRonda.setValue(EliminatoriaEnum.CUARTOS);
-		
 		
 		Button prevButton = new Button(Messages.get().getKey("prev"));
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -117,12 +111,12 @@ public class ClassicFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
             	// Previous screen
-            	parent.gotoTrial();
+            	parent.enter(null);
             }
         });
-		prevButton.setEnabled(false);
-		*/
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		prevButton.setEnabled(true);
+		
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
@@ -168,7 +162,7 @@ public class ClassicFinal extends VerticalLayout {
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        //topLayout.addComponent(prevButton);
+        topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);

@@ -26,12 +26,15 @@ freewill\nextgen\blts\SpeedTimeTrialManager$1.class
 freewill\nextgen\blts\CircuitoManager.class
 freewill\nextgen\blts\RankingManager.class
 freewill\nextgen\blts\BltLoader$ControlThread.class
+freewill\nextgen\blts\DerrapesManager$2.class
 freewill\nextgen\blts\SpeedKOSystemManager.class
 freewill\nextgen\blts\daos\ParticipanteRepository.class
 freewill\nextgen\blts\SaltoManager.class
 freewill\nextgen\blts\daos\RankingRepository.class
 freewill\nextgen\blts\JamShowManager.class
 freewill\nextgen\blts\ClassicShowManager$1.class
+freewill\nextgen\blts\SaltoManager$2.class
+freewill\nextgen\blts\SpeedTimeTrialManager$2.class
 freewill\nextgen\blts\entities\EventEntity.class
 freewill\nextgen\blts\BltAuditingEntityListener.class
 freewill\nextgen\blts\BltAuthenticationProvider.class
@@ -52,6 +55,7 @@ freewill\nextgen\blts\data\CompanyEntity$PlanEnum.class
 freewill\nextgen\blts\data\DerrapesRondaEntity.class
 freewill\nextgen\blts\data\SpeedKOSystemEntity$EliminatoriaEnum.class
 freewill\nextgen\blts\data\SpeedKOSystemEntity.class
+freewill\nextgen\blts\ClassicShowManager$2.class
 freewill\nextgen\blts\entities\MailServerEntity.class
 freewill\nextgen\blts\data\CompeticionEntity.class
 freewill\nextgen\blts\data\SaltoIntentoEntity$ResultEnum.class
@@ -99,5 +103,6 @@ freewill\nextgen\blts\CompeticionManager$1.class
 freewill\nextgen\blts\JamShowManager$1.class
 freewill\nextgen\blts\daos\JobSchedulerRepository.class
 freewill\nextgen\blts\AlarmBLT.class
+freewill\nextgen\blts\BattleManager$2.class
 freewill\nextgen\blts\data\ConfigEntity$ConfigItemEnum.class
 freewill\nextgen\blts\ConfigManager.class
