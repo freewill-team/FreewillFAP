@@ -29,7 +29,6 @@ import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
-import freewill.nextgen.participante.ParticipanteCrudLogic;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
@@ -254,6 +253,7 @@ public class ParticipanteForm extends ParticipanteFormDesign {
         club.setValue(rec.getClub());
         competicion.setValue(rec.getCompeticion());
         categoria.setValue(rec.getCategoria());
+        puntuacion.setValue(""+rec.getPuntuacion()); // por algun motivo no lo rellena
         
         formHasChanged();
     }

@@ -63,6 +63,13 @@ public class ParticipanteManager {
 	@RequestMapping("/create")
 	public ParticipanteEntity add(@RequestBody ParticipanteEntity rec) throws Exception {
 		if(rec!=null){
+			// Injects the new record
+			System.out.println("Saving Participante..."+rec.toString());
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			UserEntity user = userrepo.findByLoginname(auth.getName());
+			rec.setCompany(user.getCompany());
+			
+			// Verificaciones previas	
 			if(rec.getPatinador()==null)
 				throw new IllegalArgumentException("La inscripcion debe contener un Patinador.");
 			if(rec.getCompeticion()==null || rec.getCategoria()==null)
@@ -70,7 +77,8 @@ public class ParticipanteManager {
 			ParticipanteEntity old = repository.findByPatinadorAndCategoriaAndCompeticion(
 					rec.getPatinador(), rec.getCategoria(), rec.getCompeticion());
 			if(old!=null){
-				rec.setId(old.getId()); // Para evitar duplicados - realmente hará un update
+				// rec.setId(old.getId()); // Para evitar duplicados - realmente hará un update
+				throw new IllegalArgumentException("Error: El registro ya existe.");
 			}
 			
 			CategoriaEntity cat = categoriarepo.findById(rec.getCategoria());
@@ -94,15 +102,29 @@ public class ParticipanteManager {
 				rec.setNombrePareja("");
 				rec.setApellidosPareja("");
 			}
-			
-			// Injects the new record
-			System.out.println("Saving Participante..."+rec.toString());
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		UserEntity user = userrepo.findByLoginname(auth.getName());
-    		rec.setCompany(user.getCompany());
-    		// relleno tambien el circuito
+    		// relleno puntuacion y circuito
     		CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
-    		rec.setCircuito(competi.getCircuito());
+    		if(competi!=null){
+				PuntuacionesEntity puntos = puntosrepo.findByClasificacionAndCompany(
+						rec.getClasificacion(), user.getCompany());
+				if(puntos!=null){
+					switch(competi.getTipo()){
+					case A:
+						rec.setPuntuacion(puntos.getPuntosCampeonato());
+						break;
+					case B:
+						rec.setPuntuacion(puntos.getPuntosCopa());
+						break;
+					case C:
+						rec.setPuntuacion(puntos.getPuntosTrofeo());
+						break;
+					}
+				}
+				// relleno tambien el circuito
+	    		rec.setCircuito(competi.getCircuito());
+    		}
+    		else
+    			throw new IllegalArgumentException("Error: El circuito indicado no existe");
     		
     		ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
@@ -139,6 +161,9 @@ public class ParticipanteManager {
 				// relleno tambien el circuito
 	    		rec.setCircuito(competi.getCircuito());
     		}
+    		else
+    			throw new IllegalArgumentException("Error: El circuito indicado no existe");
+    			
 			ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			return res;
