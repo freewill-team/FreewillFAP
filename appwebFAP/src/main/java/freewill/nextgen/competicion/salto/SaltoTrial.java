@@ -249,7 +249,7 @@ public class SaltoTrial extends VerticalLayout {
 	}
 
 	public void showError(String msg) {
-        Notification.show(msg, Type.ERROR_MESSAGE);
+		Notification.show(msg, Type.WARNING_MESSAGE); //ERROR_MESSAGE);
     }
 
     public void showSaveNotification(String msg) {

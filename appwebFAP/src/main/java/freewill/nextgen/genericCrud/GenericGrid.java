@@ -147,11 +147,10 @@ public class GenericGrid<T> extends Grid {
 	            if(member==null) continue;
 				String paramType = member.getType().toGenericString().toLowerCase();
 				//System.out.println("Grid ParamType="+paramType);
-	        	if(field.contains("label") || field.contains("label") 
-	        			|| field.contains("orden") || field.contains("clasificacion"))
+	        	if(field.contains("orden") || field.contains("clasificacion"))
+	        		col.setWidth(110);
+	        	if(field.contains("timestamp"))
 	        		col.setWidth(120);
-	        	if(field.contains("timestamp") || field.contains("dorsal"))
-	        		col.setWidth(140);
 				
 	        	if(paramType.contains("boolean")){
 					col.setConverter(pointtypeConverter).setRenderer(new HtmlRenderer());
@@ -159,12 +158,15 @@ public class GenericGrid<T> extends Grid {
 				}
 				else if(paramType.equals("int") && field.toLowerCase().contains("tiempo")){
 					col.setConverter(timeConverter).setRenderer(new HtmlRenderer());
+					col.setWidth(120);
 				}
 				else if(paramType.contains("integer") && field.toLowerCase().contains("dorsal")){
 					col.setConverter(dorsalConverter).setRenderer(new HtmlRenderer());
+					col.setWidth(120);
 				}
 				else if(paramType.equals("int") && field.toLowerCase().contains("dorsal")){
 					col.setConverter(dorsalConverter).setRenderer(new HtmlRenderer());
+					col.setWidth(120);
 				}
 				else if(paramType.contains("date")){
 					col.setRenderer(new DateRenderer("%1$td/%1$tm/%1$tY"));
