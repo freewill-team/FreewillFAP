@@ -239,7 +239,7 @@ public class DerrapesManager {
 			@PathVariable Long categoria) throws Exception {
 		int posicion[] = {1, 2, 3, 4};
 		//int posSemis[] = {5, 6, 7, 8};
-		int posSemis[] = {5, 7, 5, 7};
+		int posSemis[] = {5, 5, 7, 7};
 		//int posCuartos[] = {9, 10, 13, 14, 11, 12, 15, 16};
 		int posCuartos[] = {9, 9, 13, 13, 9, 9, 13, 13};
 		//int posOctavos[] = {17, 19, 21, 23, 25, 27, 29, 31};
@@ -329,11 +329,12 @@ public class DerrapesManager {
 		// Obtiene lista con la clasificacion final
 		List<DerrapesEntity> recs = repository.findByCompeticionAndCategoriaOrderByClasificacionAsc(
 				competicion, categoria);
+		/* En derrapes el orden no es consecutivo
 		int orden = 1;
 		for(DerrapesEntity rec:recs){
 			rec.setClasificacion(orden++);
 			repository.save(rec);
-		}
+		}*/
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);

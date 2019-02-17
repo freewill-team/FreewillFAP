@@ -467,7 +467,8 @@ public class SpeedTimeTrialManager {
 							System.out.println("Setting "+rec.getGanador()+" to "+3);
 						}
 						// cuarto clasificado
-						Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+						Long segundo = (rec.getGanador()!=null && rec.getPatinador1()!=null &&
+								rec.getGanador().longValue()==rec.getPatinador1().longValue()?
 								rec.getPatinador2():rec.getPatinador1());
 						patin = (SpeedTimeTrialEntity) 
 								repository.findByPatinadorAndCompeticion(
@@ -484,7 +485,8 @@ public class SpeedTimeTrialManager {
 				}
 				else{
 					// Resto de Eliminatorias
-					Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+					Long segundo = (rec.getGanador()!=null && rec.getPatinador1()!=null &&
+							rec.getGanador().longValue()==rec.getPatinador1().longValue()?
 							rec.getPatinador2():rec.getPatinador1());
 					SpeedTimeTrialEntity patin = (SpeedTimeTrialEntity) 
 							repository.findByPatinadorAndCompeticion(
@@ -507,6 +509,7 @@ public class SpeedTimeTrialManager {
 		int orden = 1;
 		for(SpeedTimeTrialEntity rec:output){
 			rec.setClasificacionFinal(orden++);
+			repository.save(rec);
 		}
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
