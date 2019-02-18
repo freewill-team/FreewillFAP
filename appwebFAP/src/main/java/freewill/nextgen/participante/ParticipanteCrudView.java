@@ -63,7 +63,7 @@ public class ParticipanteCrudView extends CssLayout implements View {
         
         grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
             	"id", "fecha", "competicionStr", "categoriaStr", "clasificacion", 
-            	"nombre", "apellidos", "clubStr");
+            	"mejorMarca", "clubStr");
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
@@ -108,7 +108,9 @@ public class ParticipanteCrudView extends CssLayout implements View {
             			cd.close();
             			PatinadorEntity user = cd.getSelected();
             			if(user!=null){
-            				patinadorLabel.setValue(user.getNombre()+" "+user.getApellidos());
+            				patinadorLabel.setValue(
+            						user.getNombre()+" "+user.getApellidos()+
+            						" (F.Fed.: "+user.getFichaFederativa()+")");
                     		viewLogic.findRecords(user.getId());
             			}
                     }
@@ -125,7 +127,8 @@ public class ParticipanteCrudView extends CssLayout implements View {
     				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
     				ParticipanteEntity.class,
     				("Palmarés "+patinadorLabel.getValue()).toUpperCase(),
-    				"fecha", "competicionStr", "categoriaStr", "clasificacion", "clubStr");
+    				"fecha", "competicionStr", "categoriaStr", "clasificacion",
+    				"mejorMarca", "clubStr");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
