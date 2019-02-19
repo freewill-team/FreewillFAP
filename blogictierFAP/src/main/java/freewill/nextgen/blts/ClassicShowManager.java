@@ -168,6 +168,8 @@ public class ClassicShowManager {
 				competicion, categoria);
 		if(recs==null || recs.size()==0)
 		{
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
 			System.out.println("Creating ClassicShow List By competicion and categoria..." + competicion + "," + categoria);
 			
 			// Needs to create records

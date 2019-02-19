@@ -122,7 +122,18 @@ public class ClassicFinal extends VerticalLayout {
 		nextButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                 parent.gotoActaFinal();	
+            	// Next screen
+             	ConfirmDialog cd = new ConfirmDialog(
+             			"Esta acción publicará los resultados en la web pública.\n" +
+             			"¿ Desea continuar ?");
+                 cd.setOKAction(new ClickListener() {
+                 	@Override
+                     public void buttonClick(final ClickEvent event) {
+                     	cd.close();
+                     	parent.gotoActaFinal();
+                 	}
+                 });
+                 getUI().addWindow(cd);
             }
         });
 		nextButton.setEnabled(true);

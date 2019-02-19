@@ -142,6 +142,8 @@ public class BattleManager {
 		List<BattleEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0){
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
 			// Needs to create records
 			List<ParticipanteEntity> inscripciones = 
 					inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
