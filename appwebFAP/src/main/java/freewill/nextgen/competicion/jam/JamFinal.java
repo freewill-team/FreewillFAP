@@ -1,6 +1,7 @@
 package freewill.nextgen.competicion.jam;
 
 import java.util.List;
+import java.util.Date;
 
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
@@ -19,8 +20,9 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.competicion.jam.JamShowForm;
 import freewill.nextgen.data.JamShowEntity;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.ConfirmDialog;
@@ -39,6 +41,7 @@ public class JamFinal extends VerticalLayout {
 	private JamCrudLogic viewLogic;
 	private JamCrudView parent = null;
 	private boolean competiOpen = false;
+	private Button nextButton = null;
 	
 	public JamFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, JamCrudView parent){
@@ -51,11 +54,12 @@ public class JamFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic(this);
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-        		"id", "orden1", "dorsal", "nombre", "apellidos", 
+        		"id", "dorsal", "nombre", "apellidos", "dorsalPareja", "nombrePareja", "apellidosPareja",
         		"penalizaciones",
-        		"tecnicaJuez1", "artisticaJuez1",
-        		"tecnicaJuez2", "artisticaJuez2",
-        		"tecnicaJuez3", "artisticaJuez3");
+        		"tecnicaJuez1", "artisticaJuez1", "totalJuez1", "rankingJuez1", "sincronizacionJuez1",
+        		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2", "sincronizacionJuez2",
+        		"tecnicaJuez3", "artisticaJuez3", "totalJuez3", "rankingJuez3", "sincronizacionJuez3");
+		//grid.getColumn("penalizaciones").setWidth(60);
 		
 		grid.addSelectionListener(new SelectionListener() {
             @Override
@@ -65,18 +69,15 @@ public class JamFinal extends VerticalLayout {
         });
         
         form = new JamShowForm(viewLogic);
-       
-        
+          
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setWidth("100%");
         gridLayout.setMargin(true);
         gridLayout.setSpacing(true);
         gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 2);
-        
+        gridLayout.setExpandRatio(grid, 3);    
         gridLayout.addComponent(form);
-	    gridLayout.setExpandRatio(form, 1);
-       
+	    gridLayout.setExpandRatio(form, 1);     
         
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -92,23 +93,15 @@ public class JamFinal extends VerticalLayout {
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
 	    competiOpen = competi.getActive();
+	    if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
 	    form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
-		/*
-		ComboBox selectRonda = new ComboBox();
-		selectRonda.setNullSelectionAllowed(false);
-        for (EliminatoriaEnum s : EliminatoriaEnum.values()) {
-        	selectRonda.addItem(s);
-        }
-        if(eliminatoria!=null){
-        	selectRonda.setValue(eliminatoria);
-        	selectRonda.setEnabled(false);
-        }
-        else
-        	selectRonda.setValue(EliminatoriaEnum.CUARTOS);
-		*/
 		
 		Button prevButton = new Button(Messages.get().getKey("prev"));
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -117,19 +110,18 @@ public class JamFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
             	// Previous screen
-            	parent.gotoJamFinal();
+            	parent.enter(null);
             }
         });
 		prevButton.setEnabled(false);
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                // Next screen
-            	parent.gotoActaFinal();
+                 parent.gotoActaFinal();	
             }
         });
 		nextButton.setEnabled(true);
@@ -160,7 +152,7 @@ public class JamFinal extends VerticalLayout {
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
-        
+
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
@@ -169,7 +161,7 @@ public class JamFinal extends VerticalLayout {
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        topLayout.addComponent(prevButton);
+        //topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);

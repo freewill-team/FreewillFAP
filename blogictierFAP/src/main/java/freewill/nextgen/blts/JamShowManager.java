@@ -89,9 +89,9 @@ public class JamShowManager {
 	@RequestMapping("/update")
 	public JamShowEntity update(@RequestBody JamShowEntity rec) throws Exception {
 		if(rec!=null){
-			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() - rec.getPenalizaciones());
-			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() - rec.getPenalizaciones());
-			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() - rec.getPenalizaciones());
+			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() + rec.getSincronizacionJuez1()- rec.getPenalizaciones());
+			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() + rec.getSincronizacionJuez2()- rec.getPenalizaciones());
+			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() + rec.getSincronizacionJuez3()- rec.getPenalizaciones());
 			
 			JamShowEntity res = repository.save(rec);
 

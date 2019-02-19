@@ -2,7 +2,6 @@ package freewill.nextgen.blts.data;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import freewill.nextgen.blts.BltAuditingEntityListener;
 
@@ -36,18 +35,23 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private int artisticaJuez1=0;
 	private int artisticaJuez2=0;
 	private int artisticaJuez3=0;
-	//poner a @transient si no queremos guardarlo y rellenar el valor en el getter
-	private int totalJuez1=0;
-	private int totalJuez2=0;
-	private int totalJuez3=0;
-	@JsonIgnore
+	private int sincronizacionJuez1=0;
+	private int sincronizacionJuez2=0;
+	private int sincronizacionJuez3=0;
+	private float totalJuez1=0;
+	private float totalJuez2=0;
+	private float totalJuez3=0;
 	private int rankingJuez1=0;
-	@JsonIgnore
 	private int rankingJuez2=0;
-	@JsonIgnore
 	private int rankingJuez3=0;
-	private int penalizaciones=0;
+	private float penalizaciones=0;
+	private float sumaPV=0;
+	private float PVLocales=0;
+	private int totalTecnica=0;
+    private float PVTotal=0;
+    private float puntuacionTotal=0;
 	private int clasificacionFinal=0; //Puesto en el que quedó el patinador en resultado final
+	private float sumaPonderada = 0;
 	
     /**
      * Default constructor. 
@@ -207,11 +211,11 @@ public class JamShowEntity implements Serializable, Cloneable {
 		artisticaJuez3 = puntuacion;
 	}
 
-	public int getPenalizaciones() {
+	public float getPenalizaciones() {
 		return penalizaciones;
 	}
 
-	public void setPenalizaciones(int puntuacion) {
+	public void setPenalizaciones(float puntuacion) {
 		penalizaciones = puntuacion;
 	}
 	
@@ -223,25 +227,25 @@ public class JamShowEntity implements Serializable, Cloneable {
 		this.clasificacionFinal = clasificacionFinal;
 	}
 
-	public int getTotalJuez1() {
+	public float getTotalJuez1() {
 		return totalJuez1;
 	}
 
-	public void setTotalJuez1(int total) {
+	public void setTotalJuez1(float total) {
 		totalJuez1 = total;
 	}
-	public int getTotalJuez2() {
+	public float getTotalJuez2() {
 		return totalJuez2;
 	}
 
-	public void setTotalJuez2(int total) {
+	public void setTotalJuez2(float total) {
 		totalJuez2 = total;
 	}
-	public int getTotalJuez3() {
+	public float getTotalJuez3() {
 		return totalJuez3;
 	}
 
-	public void setTotalJuez3(int total) {
+	public void setTotalJuez3(float total) {
 		totalJuez3 = total;
 	}
 
@@ -277,6 +281,62 @@ public class JamShowEntity implements Serializable, Cloneable {
 		this.dorsal = dorsal;
 	}
 
+	public float getSumaPV() {
+		return sumaPV;
+	}
+
+	public void setSumaPV(float sumaPV) {
+		this.sumaPV = sumaPV;
+	}
+
+	public float getPVLocales() {
+		return PVLocales;
+	}
+
+	public void setPVLocales(float pVLocales) {
+		PVLocales = pVLocales;
+	}
+
+	public int getTotalTecnica() {
+		return totalTecnica;
+	}
+
+	public void setTotalTecnica(int totalTecnica) {
+		this.totalTecnica = totalTecnica;
+	}
+
+	public float getPVTotal() {
+		return PVTotal;
+	}
+
+	public void setPVTotal(float totalPV) {
+		PVTotal = totalPV;
+	}
+
+	public float getPuntuacionTotal() {
+		return puntuacionTotal;
+	}
+
+	public void setPuntuacionTotal(float puntuacionTotal) {
+		this.puntuacionTotal = puntuacionTotal;
+	}
+
+	public float getSumaPonderada() {
+		return sumaPonderada;
+	}
+
+	public void setSumaPonderada(float sumaPonderada) {
+		this.sumaPonderada = sumaPonderada;
+	}
+
+	public Long getPatinadorPareja() {
+		return patinadorPareja;
+	}
+
+	public void setPatinadorPareja(Long patinadorPareja) {
+		this.patinadorPareja = patinadorPareja;
+	}
+
 	public String getNombrePareja() {
 		return nombrePareja;
 	}
@@ -301,11 +361,28 @@ public class JamShowEntity implements Serializable, Cloneable {
 		this.dorsalPareja = dorsalPareja;
 	}
 
-	public Long getPatinadorPareja() {
-		return patinadorPareja;
+	public int getSincronizacionJuez1() {
+		return sincronizacionJuez1;
 	}
 
-	public void setPatinadorPareja(Long patinadorPareja) {
-		this.patinadorPareja = patinadorPareja;
+	public void setSincronizacionJuez1(int sincronizacionJuez1) {
+		this.sincronizacionJuez1 = sincronizacionJuez1;
 	}
+
+	public int getSincronizacionJuez2() {
+		return sincronizacionJuez2;
+	}
+
+	public void setSincronizacionJuez2(int sincronizacionJuez2) {
+		this.sincronizacionJuez2 = sincronizacionJuez2;
+	}
+
+	public int getSincronizacionJuez3() {
+		return sincronizacionJuez3;
+	}
+
+	public void setSincronizacionJuez3(int sincronizacionJuez3) {
+		this.sincronizacionJuez3 = sincronizacionJuez3;
+	}
+	
 }

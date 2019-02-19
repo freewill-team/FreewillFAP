@@ -49,7 +49,7 @@ public class JamCrudView extends VerticalLayout implements View {
     	                competicion = selectCampeonatoAndCategoria.getCompeticion();
     	                categoriaStr = event.getButton().getDescription();
     	                categoria = Long.parseLong(event.getButton().getId());
-    	                gotoTrial();
+    	                gotoJamFinal();     
     	            }
     	        });
         
@@ -67,14 +67,6 @@ public class JamCrudView extends VerticalLayout implements View {
 
 	public Long getCompeticion() {
 		return competicion;
-	}
-
-	public void gotoTrial() {
-		removeAllComponents();
-    	addComponent(new JamClasificacion(
-    			categoria, categoriaStr,
-    			competicion, competicionStr, 
-    			JamCrudView.this));
 	}
 
 	public void gotoJamFinal() {

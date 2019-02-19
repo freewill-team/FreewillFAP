@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.vaadin.server.Page;
-import com.vaadin.ui.VerticalLayout;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
@@ -24,18 +23,11 @@ import freewill.nextgen.data.JamShowEntity;
 @SuppressWarnings("serial")
 public class JamCrudLogic implements Serializable {
 
-    private JamClasificacion clasificacionView;
-    private JamFinal finalView;
-    private VerticalLayout activeView;
+    private JamFinal activeView;
     private Logger log = null;
 
-    public JamCrudLogic(JamClasificacion simpleCrudView) {
-    	clasificacionView = simpleCrudView;
-    	activeView = simpleCrudView;
-    	setLogger();
-    }
+    
     public JamCrudLogic(JamFinal simpleCrudView) {
-    	finalView = simpleCrudView;
     	activeView = simpleCrudView;
     	setLogger();
     }
@@ -56,35 +48,23 @@ public class JamCrudLogic implements Serializable {
 	        		"/getByCompeticionAndCategoria/"+competicion+"/"+categoria,
 	        		JamShowEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
-	        if(clasificacionView!=null){
-	        	clasificacionView.showRecords(records);
-	        }
-	        else if(finalView!=null){
-	        	finalView.showRecords(records);
-	        }
+	        
+	       	activeView.showRecords(records);  
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			if(clasificacionView!=null){
-				clasificacionView.showError(e.getMessage());
-				clasificacionView.setEnabled(false);
-			}
-			else if(finalView!=null){
-		        finalView.showError(e.getMessage());
-		        finalView.setEnabled(false);
+			if(activeView!=null){
+				activeView.showError(e.getMessage());
+				activeView.setEnabled(false);
 			}
 		}
     }
 
     public void cancelRecord() {
         setFragmentParameter("");
-        if(clasificacionView!=null){
-	        clasificacionView.clearSelection();
-	        clasificacionView.editRecord(null);
-        }
-        else if(finalView!=null){
-        	finalView.clearSelection();
- 	        finalView.editRecord(null);
+        if(activeView!=null){
+        	activeView.clearSelection();
+        	activeView.editRecord(null);
         }
     }
 
@@ -100,8 +80,8 @@ public class JamCrudLogic implements Serializable {
         }
 
         Page page = EntryPoint.get().getPage();
-        if(clasificacionView!=null)
-        	page.setUriFragment("!" + clasificacionView.VIEW_NAME + "/" + fragmentParameter, false);
+        if(activeView!=null)
+        	page.setUriFragment("!" + activeView.VIEW_NAME + "/" + fragmentParameter, false);
     }
 
     public void enter(String recId) {
@@ -113,10 +93,8 @@ public class JamCrudLogic implements Serializable {
                 // login
                 try {
                     JamShowEntity rec = findRecord(recId);
-                    if(clasificacionView!=null)
-                    	clasificacionView.selectRow(rec);
-                    else if(finalView != null)
-                    	finalView.selectRow(rec);;
+                    if(activeView!=null)
+                    	activeView.selectRow(rec);
                 } catch (NumberFormatException e) {
                 	log.error(e.getMessage());
                 }
@@ -133,15 +111,16 @@ public class JamCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			if(clasificacionView!=null)
-				clasificacionView.showError(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
 		}
     	return null;
     }
 
     public JamShowEntity saveRecord(JamShowEntity rec) {
     	try{
-    		if(rec==null) return rec;
+    		if(rec==null) 
+    			return rec;
     		JamShowEntity res = null;
     		System.out.println("Saving = "+rec.toString());
     		//TODO MMFL por aqui no deberia pasar nunca porque el save esta inactivo en deseleccion
@@ -152,28 +131,20 @@ public class JamCrudLogic implements Serializable {
         		res = (JamShowEntity) BltClient.get().updateEntity(rec, JamShowEntity.class,
         				EntryPoint.get().getAccessControl().getTokenKey());
     		
-	    	if(clasificacionView!=null){
-		        clasificacionView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
+	    	if(activeView!=null){
+	    		activeView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
 		        //view.clearSelection();
-		        clasificacionView.editRecord(res);
-		        clasificacionView.refreshRecord(res);
-		        return res;
-	    	}
-	    	else if(finalView!=null){
-	    		finalView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
-	    		finalView.clearSelection();
-	    		finalView.editRecord(res);
-	    		finalView.refreshRecord(res);
+	    		activeView.editRecord(res);
+	    		//activeView.refreshRecord(res);
+	    		initGrid(res.getCompeticion(), res.getCategoria());
 		        return res;
 	    	}
 	        setFragmentParameter("");
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			if(clasificacionView!=null)
-				clasificacionView.showError(e.getMessage());
-	    	else if(finalView!=null)
-	    		finalView.showError(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
 		}
     	return null;
     }
@@ -181,20 +152,20 @@ public class JamCrudLogic implements Serializable {
     public void deleteRecord(JamShowEntity rec) {
     	// Actually Not used
     	try{
-	    	if(clasificacionView!=null){
+	    	if(activeView!=null){
 		    	System.out.println("Deleting = "+rec.toString());
 		    	BltClient.get().deleteEntity(""+rec.getId(), JamShowEntity.class,
 		    			EntryPoint.get().getAccessControl().getTokenKey());
-		        clasificacionView.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") removed");
-		        clasificacionView.clearSelection();
-		        clasificacionView.removeRecord(rec);
-		        clasificacionView.editRecord(null);
+		    	activeView.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") removed");
+		    	activeView.clearSelection();
+		    	activeView.removeRecord(rec);
+		    	activeView.editRecord(null);
 	        }
 	        setFragmentParameter("");
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			clasificacionView.showError(e.getMessage());
+			activeView.showError(e.getMessage());
 		}
     }
 
@@ -204,36 +175,14 @@ public class JamCrudLogic implements Serializable {
         } else {
             setFragmentParameter(rec.getId() + "");
         }
-        if(clasificacionView!=null)
-        	clasificacionView.editRecord(rec);
-        else if(finalView!=null)
-        	finalView.editRecord(rec);
+        if(activeView!=null)
+        	activeView.editRecord(rec);
     }
 
     public void rowSelected(JamShowEntity rec) {
-    	if(clasificacionView!=null)
-    		clasificacionView.editRecord(rec);
-    	else if(finalView!=null)
-    		finalView.editRecord(rec);
+    	if(activeView!=null)
+    		activeView.editRecord(rec);
     }
-
-	public boolean existeKO(Long competicion, Long categoria) {
-		try{
-			JamShowEntity rec = (JamShowEntity) BltClient.get().executeCommand(
-		    		"/existByCompeticionAndCategoria/"+competicion+"/"+categoria,
-		    		JamShowEntity.class,
-		    		EntryPoint.get().getAccessControl().getTokenKey());
-			// TODO implementar criterio para distinguir si la final ya comenzó 
-			// y por lo tanto la Preclasificacion no puede ser ya modificada
-			return false;
-		}
-		catch(Exception e){
-			log.error(e.getMessage());
-			if(clasificacionView!=null)
-				clasificacionView.showError(e.getMessage());
-		}
-		return false;
-	}
 
 	public List<JamShowEntity> initGridResults(Long competicion, Long categoria) {
 		try{
@@ -243,51 +192,14 @@ public class JamCrudLogic implements Serializable {
 	        		EntryPoint.get().getAccessControl().getTokenKey());
     	}
 		catch(Exception e){
-			//log.error(e.getMessage());
-			//view.showError(e.getMessage());
-			e.printStackTrace();
-		}
-		return null;
-	}
-/*
-	public JamShowEntity moveRecordUp(JamShowEntity rec) {
-		if(rec==null) return null;
-		try{
-			JamShowEntity res = (JamShowEntity) BltClient.get().executeCommand(
-	        		"/moveRecordUp/"+rec.getId(), JamShowEntity.class,
-	        		EntryPoint.get().getAccessControl().getTokenKey());
-	        if(clasificacionView!=null){
-		        clasificacionView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
-	        }
-	        return res;
-    	}
-		catch(Exception e){
 			log.error(e.getMessage());
-			clasificacionView.showError(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public JamShowEntity moveRecordDown(JamShowEntity rec) {
-		if(rec==null) return null;
-		try{
-			JamShowEntity res = (JamShowEntity) BltClient.get().executeCommand(
-	        		"/moveRecordDown/"+rec.getId(), JamShowEntity.class,
-	        		EntryPoint.get().getAccessControl().getTokenKey());
-	        if(clasificacionview!=null){
-		        clasificacionview.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
-	        }
-	        return res;
-    	}
-		catch(Exception e){
-			log.error(e.getMessage());
-			clasificacionview.showError(e.getMessage());
-			e.printStackTrace();
-		}
-		return null;
-	}
-	*/
+
 	public boolean deleteAll(Long competicion, Long categoria) {
 		try{
 	        return BltClient.get().executeCommand(
@@ -297,10 +209,10 @@ public class JamCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			e.printStackTrace();
-			if(clasificacionView!=null)
-				clasificacionView.showError(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
 		}
 		return false;
 	}
-	
+		
 }
