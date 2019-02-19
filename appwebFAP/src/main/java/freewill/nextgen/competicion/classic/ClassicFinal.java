@@ -56,9 +56,9 @@ public class ClassicFinal extends VerticalLayout {
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
         		"id", "dorsal", "nombre", "apellidos",
         		"penalizaciones",
-        		"tecnicaJuez1", "artisticaJuez1", "totalJuez1","rankingJuez1",
-        		"tecnicaJuez2", "artisticaJuez2", "totalJuez2","rankingJuez2",
-        		"tecnicaJuez3", "artisticaJuez3", "totalJuez3","rankingJuez3");
+        		"tecnicaJuez1", "artisticaJuez1", "totalJuez1", "rankingJuez1",
+        		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",
+        		"tecnicaJuez3", "artisticaJuez3", "totalJuez3", "rankingJuez3");
 		// grid.getColumn("penalizaciones").setWidth(60);
 		
 		grid.addSelectionListener(new SelectionListener() {

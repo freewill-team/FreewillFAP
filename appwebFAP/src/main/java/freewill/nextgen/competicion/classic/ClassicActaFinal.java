@@ -64,10 +64,7 @@ public class ClassicActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
-	    if (viewLogic.initGridResults(this.competicion, this.categoria)== null)
-    		showError("No se pueden mostrar los resultados");
-	    else
-	    	showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
+	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -92,7 +89,8 @@ public class ClassicActaFinal extends VerticalLayout {
     				(List<ClassicShowEntity>)grid.getContainerDataSource().getItemIds(),
     				ClassicShowEntity.class,
     				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
-    				"dorsal", "clasificacion", "nombre", "apellidos");
+    				"clasificacionFinal", "dorsal", "nombre", "apellidos", 
+    			    "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);

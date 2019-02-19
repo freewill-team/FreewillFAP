@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.vaadin.server.Page;
-import com.vaadin.ui.VerticalLayout;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
@@ -194,8 +193,10 @@ public class ClassicCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			//view.showError(e.getMessage());
-			//e.printStackTrace();
+			if(activeView!=null){
+				activeView.showError(e.getMessage());
+			}
+			e.printStackTrace();
 		}
 		return null;
 	}

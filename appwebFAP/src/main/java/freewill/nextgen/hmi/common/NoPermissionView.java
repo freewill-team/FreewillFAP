@@ -3,6 +3,7 @@ package freewill.nextgen.hmi.common;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -37,7 +38,8 @@ public class NoPermissionView extends VerticalLayout implements View {
         		new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
-            	EntryPoint.get().userLogout();
+            	//EntryPoint.get().userLogout();
+            	Page.getCurrent().reload();
             }
         });
         logout.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
