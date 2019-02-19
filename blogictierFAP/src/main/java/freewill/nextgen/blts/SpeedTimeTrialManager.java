@@ -268,7 +268,7 @@ public class SpeedTimeTrialManager {
 			rec.setClasificacion(rec.getOrden1());
 			rec.setClasificacionFinal(rec.getOrden1());
 			rec.setPatinador(inscripcion.getPatinador());
-			//rec.setCompany(user.getCompany());
+			rec.setCompany(inscripcion.getCompany());
 			recs.add(rec);
 		}
 		
@@ -319,7 +319,6 @@ public class SpeedTimeTrialManager {
 			+competicion+","+categoria);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
-		//int numConos = configrepo.getConfigInteger(ConfigItemEnum.MAXNUMCONOSDERRIBADOS, user.getCompany());
 		
 		// Obtiene lista con la clasificacion del timetrial por tiempos
 		List<SpeedTimeTrialEntity> recs = repository.findByCompeticionAndCategoriaOrderByMejorTiempoAsc(

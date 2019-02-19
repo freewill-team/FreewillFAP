@@ -312,7 +312,7 @@ public class SaltoManager {
 			
 			rec.setClasificacion(rec.getOrden());
 			rec.setPatinador(inscripcion.getPatinador());
-			//rec.setCompany(user.getCompany());
+			rec.setCompany(inscripcion.getCompany());
 			recs.add(rec);
 		}
 		
