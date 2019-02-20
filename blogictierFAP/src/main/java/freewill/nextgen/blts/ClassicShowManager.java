@@ -245,7 +245,7 @@ public class ClassicShowManager {
 			
 			rec.setClasificacionFinal(rec.getOrden1());
 			rec.setPatinador(inscripcion.getPatinador());
-			//rec.setCompany(user.getCompany());
+			rec.setCompany(inscripcion.getCompany());
 			recs.add(rec);
 		}
 		
