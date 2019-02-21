@@ -20,11 +20,14 @@ import com.vaadin.ui.declarative.Design;
 @SuppressWarnings("serial")
 public class JamShowFormDesign extends FormLayout /*CssLayout*/ {
 	protected TextField tecnicaJuez1;				
-	protected TextField artisticaJuez1;	
-	protected TextField tecnicaJuez2;				
-	protected TextField artisticaJuez2;	
-	protected TextField tecnicaJuez3;				
-	protected TextField artisticaJuez3;	
+	protected TextField artisticaJuez1;
+	protected TextField sincronizacionJuez1;
+	protected TextField tecnicaJuez2;
+	protected TextField artisticaJuez2;
+	protected TextField sincronizacionJuez2;
+	protected TextField tecnicaJuez3;
+	protected TextField artisticaJuez3;
+	protected TextField sincronizacionJuez3;
 	protected TextField penalizaciones;
 	
     protected Button save;

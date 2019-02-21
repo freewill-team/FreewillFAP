@@ -37,5 +37,7 @@ public interface JamShowRepository extends CrudRepository<JamShowEntity, Long> {
 			Long competicion, Long categoria);
 	List<JamShowEntity> findByCompeticionAndCategoriaOrderByTotalJuez3Desc(
 			Long competicion, Long categoria);
+	List<JamShowEntity> findByCompeticionAndCategoriaOrderBySumaPVDesc(Long competicion, Long categoria);
+	List<JamShowEntity> findByCompeticionAndCategoriaOrderBySumaPonderadaDesc(Long competicion, Long categoria);
 		
 }
