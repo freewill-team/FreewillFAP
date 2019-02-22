@@ -4,7 +4,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickListener;
@@ -44,9 +46,17 @@ public class SelectModalidad extends VerticalLayout {
         
         try{
         	for(ModalidadEnum modalidad:ModalidadEnum.values()){
+        		Resource icon =null;
+        		switch(modalidad){
+        		case SPEED: icon = new ThemeResource("img/speed.png"); break;
+        		case JUMP: icon = new ThemeResource("img/salto.png"); break;
+        		case SLIDE: icon = new ThemeResource("img/derrapes.png"); break;
+        		case CLASSIC: icon = new ThemeResource("img/classic.png"); break;
+        		case BATTLE: icon = new ThemeResource("img/battle.png"); break;
+        		case JAM: icon = new ThemeResource("img/jam.png"); break;
+        		}
 	        	Sparkline layout = new Sparkline(
-	        			modalidad.toString(), 
-	            		FontAwesome.TROPHY, (long)modalidad.ordinal());
+	        			modalidad.toString(), icon, (long)modalidad.ordinal());
 	        	layout.addClickListener(action);
 	        	sparks.addComponent(layout);
 	        }

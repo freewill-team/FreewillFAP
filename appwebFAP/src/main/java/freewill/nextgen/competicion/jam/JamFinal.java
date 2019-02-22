@@ -54,7 +54,8 @@ public class JamFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic(this);
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-        		"id", "dorsal", "nombre", "apellidos", "dorsalPareja", "nombrePareja", "apellidosPareja",
+        		//"id", "dorsal", "nombre", "apellidos", "dorsalPareja", "nombrePareja", "apellidosPareja",
+				"id", "dorsalDuo", "nombreDuo",
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "sincronizacionJuez1", "totalJuez1", "rankingJuez1", 
         		"tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
@@ -121,7 +122,18 @@ public class JamFinal extends VerticalLayout {
 		nextButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                 parent.gotoActaFinal();	
+            	// Next screen
+             	ConfirmDialog cd = new ConfirmDialog(
+             			"Esta acción publicará los resultados en la web pública.\n" +
+             			"¿ Desea continuar ?");
+                 cd.setOKAction(new ClickListener() {
+                 	@Override
+                     public void buttonClick(final ClickEvent event) {
+                     	cd.close();
+                     	parent.gotoActaFinal();
+                 	}
+                 });
+                 getUI().addWindow(cd);
             }
         });
 		nextButton.setEnabled(true);

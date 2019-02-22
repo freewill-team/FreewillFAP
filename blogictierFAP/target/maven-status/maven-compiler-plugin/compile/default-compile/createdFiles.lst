@@ -16,6 +16,7 @@ freewill\nextgen\blts\UserManager.class
 freewill\nextgen\blts\data\CategoriaEntity.class
 freewill\nextgen\blts\daos\DerrapesRondaRepository.class
 freewill\nextgen\blts\daos\CircuitoRepository.class
+freewill\nextgen\blts\JamShowManager$2.class
 freewill\nextgen\blts\SaltoManager$1.class
 freewill\nextgen\blts\data\ParticipanteEntity.class
 freewill\nextgen\blts\PatinadorManager.class
