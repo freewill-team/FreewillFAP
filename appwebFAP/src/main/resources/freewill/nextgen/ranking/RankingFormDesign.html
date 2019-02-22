@@ -29,6 +29,10 @@
         <!-- <v-horizontal-layout width-full spacing> -->
 	        <v-text-field caption="puntuacion" _id="puntuacion" width-full />
 	    <!-- </v-horizontal-layout> -->
+	    <v-horizontal-layout width-full spacing>
+        	<v-combo-box caption="competicion" _id="competicion" width-full null-selection-allowed=false text-input-allowed=false />
+        	<v-combo-box caption="categoria" _id="categoria" width-full null-selection-allowed=false text-input-allowed=true />
+        </v-horizontal-layout>
         
         <v-css-layout :expand style-name="expander" />
         <v-button style-name="primary" _id="save">Salvar</v-button>

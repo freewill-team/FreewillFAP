@@ -3,6 +3,7 @@ package freewill.nextgen.appwebFAP;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -166,7 +167,7 @@ public class MainScreen extends HorizontalLayout {
 		    
 	        // Competicion Speed
 		    SpeedCrudView speedView = new SpeedCrudView();
-		    menu.addView(speedView, speedView.VIEW_NAME, FontAwesome.TROPHY);
+		    menu.addView(speedView, speedView.VIEW_NAME, new ThemeResource("img/speed.png"));
 	        
 		    // Competicion Salto
 		    SaltoCrudView saltoView = new SaltoCrudView();

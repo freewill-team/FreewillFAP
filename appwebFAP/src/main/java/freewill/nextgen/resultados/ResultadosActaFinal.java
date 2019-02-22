@@ -49,6 +49,11 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 	private ResultadosCrudView parent = null;
 	private ParticipanteForm form = null;
 	private CategoriaEntity category = null;
+	private Label competicionLabel = null;
+	
+	public void setLabelVisible(boolean visible){
+		competicionLabel.setVisible(visible);
+	}
 
 	public ResultadosActaFinal(Long categoria, String labelcategoria, 
 			Long competicion, String labelcompeticion, ResultadosCrudView parent){
@@ -96,7 +101,7 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 		form = new ParticipanteForm(viewLogic);
 		
 		VerticalLayout barAndGridLayout = new VerticalLayout();
-		addComponent(new GenericHeader(competicionStr+" / "+categoriaStr, FontAwesome.TROPHY));
+		//addComponent(new GenericHeader(competicionStr+" / "+categoriaStr, FontAwesome.TROPHY));
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
         barAndGridLayout.setMargin(true);
@@ -118,7 +123,7 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		String fecha = " "+format.format(competi.getFechaInicio());
 		
-		Label competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr
+		competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr
 				+ fecha + "</b>", ContentMode.HTML);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
@@ -200,15 +205,15 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
         topLayout.setSpacing(true);
         //topLayout.setMargin(true);
         topLayout.setWidth("100%");
-        //topLayout.addComponent(competicionLabel);
+        topLayout.addComponent(competicionLabel);
         topLayout.addComponent(expander);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(newRecord);
-        //topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
-        //topLayout.setExpandRatio(competicionLabel, 1);
+        topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
+        topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setComponentAlignment(expander, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(expander, 1);
         topLayout.setStyleName("top-bar");

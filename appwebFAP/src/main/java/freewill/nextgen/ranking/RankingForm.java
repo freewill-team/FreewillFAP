@@ -1,5 +1,6 @@
 package freewill.nextgen.ranking;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -19,7 +20,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
+import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
@@ -124,6 +128,38 @@ public class RankingForm extends RankingFormDesign {
             }
         });
         
+        try{
+        	// Rellenar ComboBox Competicion
+        	competicion.removeAllItems();
+            Collection<CompeticionEntity> recs = BltClient.get().getEntities(CompeticionEntity.class,
+    				EntryPoint.get().getAccessControl().getTokenKey());
+    		for (CompeticionEntity s : recs) {
+    			competicion.addItem(s.getId());
+    			competicion.setItemCaption(s.getId(), s.getNombre());
+    	    }
+    		competicion.setRequired(true);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
+        }
+        
+        try{
+        	// Rellenar ComboBox Categoria
+        	categoria.removeAllItems();
+            Collection<CategoriaEntity> recs = BltClient.get().getEntities(CategoriaEntity.class,
+    				EntryPoint.get().getAccessControl().getTokenKey());
+    		for (CategoriaEntity s : recs) {
+    			categoria.addItem(s.getId());
+    			categoria.setItemCaption(s.getId(), s.getNombre());
+    	    }
+    		categoria.setRequired(true);
+        }
+        catch(Exception e){
+        	e.printStackTrace();
+        	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
+        }
+        
         patinBtn.setCaption(Messages.get().getKey("patinador"));
         patinBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
         patinBtn.setIcon(FontAwesome.SEARCH);
@@ -171,6 +207,8 @@ public class RankingForm extends RankingFormDesign {
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
+        competicion.setValue(rec.getCompeticion());
+        categoria.setValue(rec.getCategoria());
         formHasChanged();
     }
 	

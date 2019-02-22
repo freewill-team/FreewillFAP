@@ -66,12 +66,15 @@ public class ResultadosCrudView extends VerticalLayout implements View {
 
 	public void gotoResultados() {
 		removeAllComponents();
-		addComponent(new ResultadosActaFinal(
+		ResultadosActaFinal resultados = new ResultadosActaFinal(
 				categoria, categoriaStr,
 				competicion, competicionStr, 
-    			ResultadosCrudView.this));
-		if(parentPanel!=null)
+    			ResultadosCrudView.this);
+    	addComponent(resultados);
+		if(parentPanel!=null){
 			parentPanel.setCompeticion(competicionStr+" / "+categoriaStr);
+			resultados.setLabelVisible(false);
+		}
 	}
 	
 	public void setInfoPanel(AnonymousLogin parentPanel){

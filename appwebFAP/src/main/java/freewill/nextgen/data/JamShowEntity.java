@@ -382,6 +382,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	}
 
 	public String getNombreDuo() {
+
         String[] arrOfStr = this.apellidos.split(" ", 2); 
 		String primerApellido = arrOfStr[0];
 		
