@@ -10,12 +10,11 @@ public class GenericHeader extends HorizontalLayout {
 
 	public GenericHeader(String title, Resource icon){
 		 Button topHeader = new Button(title);
-	     //topHeader.setWidth("100%");
 	     topHeader.setIcon(icon);
 	     topHeader.setStyleName(ValoTheme.BUTTON_BORDERLESS);
-	     //topHeader.addStyleName(ValoTheme.BUTTON_LARGE);
+	     topHeader.addStyleName(ValoTheme.BUTTON_LARGE);
 	     this.addComponent(topHeader);
-	     this.addStyleName("backColorBlue");
+	     //this.addStyleName("backColorBlue");
 	     this.setWidth("100%");
 	     this.setMargin(false);
 	     this.setSpacing(true);

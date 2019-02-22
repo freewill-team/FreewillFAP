@@ -1,4 +1,4 @@
-package freewill.nextgen.participante;
+package freewill.nextgen.resultados;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,12 +10,14 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
@@ -40,10 +42,10 @@ import freewill.nextgen.patinador.SelectPatinadorDialog;
 public class ParticipanteForm extends ParticipanteFormDesign {
 
     private BeanFieldGroup<ParticipanteEntity> fieldGroup;
-    private ParticipanteCrudLogic viewLogic;
+    private ResultadosCrudLogic viewLogic;
     
     @SuppressWarnings("rawtypes")
-    public ParticipanteForm(ParticipanteCrudLogic logic) {
+    public ParticipanteForm(ResultadosCrudLogic logic) {
     	super();
         addStyleName("product-form");
         this.viewLogic = logic;
@@ -176,11 +178,13 @@ public class ParticipanteForm extends ParticipanteFormDesign {
         	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
         }
         
+        patinBtn.setCaption(Messages.get().getKey("patinador"));
+        patinBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        patinBtn.setIcon(FontAwesome.SEARCH);
         patinBtn.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
 				// Abre la ventana de seleccion de patinador
-            	//PreinscripcionCrudLogic logic = new PreinscripcionCrudLogic(null);
 				List<PatinadorEntity> students = viewLogic.getPatinadores();
 				
 				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
@@ -194,7 +198,6 @@ public class ParticipanteForm extends ParticipanteFormDesign {
                     		nombre.setValue(user.getNombre());
                     		apellidos.setValue(user.getApellidos());
                     		club.setValue(user.getClub());
-                    		// TODO clubStr.setValue(user.getClubStr());
             			}
                     }
                 });
@@ -202,11 +205,13 @@ public class ParticipanteForm extends ParticipanteFormDesign {
 			}
         });
         
+        parejaBtn.setCaption(Messages.get().getKey("patinador"));
+        parejaBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        parejaBtn.setIcon(FontAwesome.SEARCH);
         parejaBtn.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
 				// Abre la ventana de seleccion de patinador Pareja
-            	//PreinscripcionCrudLogic logic = new PreinscripcionCrudLogic(null);
 				List<PatinadorEntity> students = viewLogic.getPatinadores();
 				
 				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
@@ -248,6 +253,7 @@ public class ParticipanteForm extends ParticipanteFormDesign {
         club.setValue(rec.getClub());
         competicion.setValue(rec.getCompeticion());
         categoria.setValue(rec.getCategoria());
+        puntuacion.setValue(""+rec.getPuntuacion()); // por algun motivo no lo rellena
         
         formHasChanged();
     }
@@ -265,6 +271,12 @@ public class ParticipanteForm extends ParticipanteFormDesign {
         		canRemoveRecord = (rec.getId() != null);
         	}
         }
+        patinBtn.setEnabled(!canRemoveRecord);
+        patinador.setVisible(false);
+        nombre.setEnabled(!canRemoveRecord);
+        apellidos.setEnabled(!canRemoveRecord);
+        patinadorPareja.setVisible(false);
+        
         delete.setEnabled(canRemoveRecord);
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }

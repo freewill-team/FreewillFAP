@@ -1,5 +1,7 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,14 @@ import freewill.nextgen.blts.daos.CategoriaRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PatinadorRepository;
+import freewill.nextgen.blts.daos.PuntuacionesRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
+import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
@@ -45,6 +49,9 @@ public class ParticipanteManager {
 	CompeticionRepository competirepo;
 	
 	@Autowired
+	PuntuacionesRepository puntosrepo;
+	
+	@Autowired
 	PatinadorRepository patinrepo;
 	
 	@Autowired
@@ -56,6 +63,13 @@ public class ParticipanteManager {
 	@RequestMapping("/create")
 	public ParticipanteEntity add(@RequestBody ParticipanteEntity rec) throws Exception {
 		if(rec!=null){
+			// Injects the new record
+			System.out.println("Saving Participante..."+rec.toString());
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			UserEntity user = userrepo.findByLoginname(auth.getName());
+			rec.setCompany(user.getCompany());
+			
+			// Verificaciones previas	
 			if(rec.getPatinador()==null)
 				throw new IllegalArgumentException("La inscripcion debe contener un Patinador.");
 			if(rec.getCompeticion()==null || rec.getCategoria()==null)
@@ -63,7 +77,8 @@ public class ParticipanteManager {
 			ParticipanteEntity old = repository.findByPatinadorAndCategoriaAndCompeticion(
 					rec.getPatinador(), rec.getCategoria(), rec.getCompeticion());
 			if(old!=null){
-				rec.setId(old.getId()); // Para evitar duplicados - realmente hará un update
+				// rec.setId(old.getId()); // Para evitar duplicados - realmente hará un update
+				throw new IllegalArgumentException("Error: El registro ya existe.");
 			}
 			
 			CategoriaEntity cat = categoriarepo.findById(rec.getCategoria());
@@ -87,15 +102,29 @@ public class ParticipanteManager {
 				rec.setNombrePareja("");
 				rec.setApellidosPareja("");
 			}
-			
-			// Injects the new record
-			System.out.println("Saving Participante..."+rec.toString());
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		UserEntity user = userrepo.findByLoginname(auth.getName());
-    		rec.setCompany(user.getCompany());
-    		// relleno tambien el circuito
+    		// relleno puntuacion y circuito
     		CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
-    		rec.setCircuito(competi.getCircuito());
+    		if(competi!=null){
+				PuntuacionesEntity puntos = puntosrepo.findByClasificacionAndCompany(
+						rec.getClasificacion(), user.getCompany());
+				if(puntos!=null){
+					switch(competi.getTipo()){
+					case A:
+						rec.setPuntuacion(puntos.getPuntosCampeonato());
+						break;
+					case B:
+						rec.setPuntuacion(puntos.getPuntosCopa());
+						break;
+					case C:
+						rec.setPuntuacion(puntos.getPuntosTrofeo());
+						break;
+					}
+				}
+				// relleno tambien el circuito
+	    		rec.setCircuito(competi.getCircuito());
+    		}
+    		else
+    			throw new IllegalArgumentException("Error: El circuito indicado no existe");
     		
     		ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
@@ -108,7 +137,33 @@ public class ParticipanteManager {
 	public ParticipanteEntity update(@RequestBody ParticipanteEntity rec) throws Exception {
 		if(rec!=null){
 			// Usar mejor el método "create" si se quiere actualizar un registro
+			// Este metodo es solo para el Administrador
 			System.out.println("Updating Participante..."+rec);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		UserEntity user = userrepo.findByLoginname(auth.getName());
+    		CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
+    		if(competi!=null){
+				PuntuacionesEntity puntos = puntosrepo.findByClasificacionAndCompany(
+						rec.getClasificacion(), user.getCompany());
+				if(puntos!=null){
+					switch(competi.getTipo()){
+					case A:
+						rec.setPuntuacion(puntos.getPuntosCampeonato());
+						break;
+					case B:
+						rec.setPuntuacion(puntos.getPuntosCopa());
+						break;
+					case C:
+						rec.setPuntuacion(puntos.getPuntosTrofeo());
+						break;
+					}
+				}
+				// relleno tambien el circuito
+	    		rec.setCircuito(competi.getCircuito());
+    		}
+    		else
+    			throw new IllegalArgumentException("Error: El circuito indicado no existe");
+    			
 			ParticipanteEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			return res;
@@ -158,18 +213,34 @@ public class ParticipanteManager {
 		return recs;
 	}
 	
-	/*@RequestMapping("/getByPatinadorAndCompeticionAndCategoria/{patinador}/{competicion}/{categoria}")
-	public List<ParticipanteEntity> getByPatinadorAndCompeticionAndCategoria(
-			@PathVariable Long patinador, @PathVariable Long competicion, 
-			@PathVariable Long categoria) throws Exception {
-		System.out.println("Getting Participantes List By patinador, competicion y categoria..."
-			+patinador+","+competicion+","+categoria);
+	@RequestMapping("/getByPatinador/{patinador}")
+	public List<ParticipanteEntity> getByPatinador(
+			@PathVariable Long patinador) throws Exception {
+		System.out.println("Getting Participantes List By patinador..."+patinador);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
-		List<ParticipanteEntity> recs = repository.findByPatinadorAndCompeticionAndCategoria(
-				patinador, competicion, categoria);
-		return recs;
-	}*/
+		List<ParticipanteEntity> output = new ArrayList<ParticipanteEntity>();
+		List<ParticipanteEntity> recs = repository.findByPatinador(patinador);
+		List<ParticipanteEntity> recs2 = repository.findByPatinadorPareja(patinador);
+		recs.addAll(recs2);
+		Date now = new Date();
+		for(ParticipanteEntity rec:recs){
+			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
+			if(competi!=null){
+				if(rec.getClasificacion()==0 || rec.getClasificacion()==999
+						|| competi.getFechaInicio().after(now))
+					continue;
+				rec.setCompeticionStr(competi.getNombre());
+				rec.setFecha(competi.getFechaInicio());
+				CategoriaEntity catego = categoriarepo.findById(rec.getCategoria());
+				if(catego!=null){
+					rec.setCategoriaStr(catego.getNombre());
+					output.add(rec);
+				}
+			}
+		}
+		return output;
+	}
 	
 	@RequestMapping("/getByPatinadorAndCompeticionAndCategoria/{patinador}/{competicion}/{categoria}")
 	public ParticipanteEntity getByPatinadorAndCompeticionAndCategoria(

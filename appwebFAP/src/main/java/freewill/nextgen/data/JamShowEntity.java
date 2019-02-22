@@ -20,6 +20,8 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private String nombrePareja;
 	private String apellidosPareja;
 	private Integer dorsalPareja;
+	private final String nombreDuo;
+	private final String dorsalDuo;
 	private int orden1=0;			// Puesto de salida del patinador 1a ronda
 	private int tecnicaJuez1=0;
 	private int tecnicaJuez2=0;
@@ -52,6 +54,8 @@ public class JamShowEntity implements Serializable, Cloneable {
     	// Void with no-args as requested for non-enhanced JPA entities
     	nombre = "";
     	apellidos = "";
+    	nombreDuo = "";
+    	dorsalDuo = "";
     	orden1 = 0;
     	clasificacionFinal = 0;
     }
@@ -375,6 +379,20 @@ public class JamShowEntity implements Serializable, Cloneable {
 
 	public void setSincronizacionJuez3(int sincronizacionJuez3) {
 		this.sincronizacionJuez3 = sincronizacionJuez3;
+	}
+
+	public String getNombreDuo() {
+        String[] arrOfStr = this.apellidos.split(" ", 2); 
+		String primerApellido = arrOfStr[0];
+		
+		String[] arrOfStPareja = this.apellidosPareja.split(" ", 2); 
+		String primerApellidoPareja = arrOfStPareja[0];
+	
+		return (this.nombre + " " + primerApellido + '-' + this.nombrePareja + " " + primerApellidoPareja);
+	}
+
+	public String getDorsalDuo() {
+		return (this.dorsal.toString() + '-' + this.dorsalPareja.toString());
 	}
 	
 }

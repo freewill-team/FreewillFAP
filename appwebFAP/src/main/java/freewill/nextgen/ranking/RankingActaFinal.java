@@ -23,13 +23,15 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
+public class RankingActaFinal extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("rankingacta");
 	private Long circuito = null;
@@ -40,6 +42,7 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
 	private RankingCrudLogic viewLogic;
 	private RankingCrudView parent = null;
 	private RankingForm form;
+	private CategoriaEntity category = null;
 
 	public RankingActaFinal(Long categoria, String labelcategoria, Long circuito, 
 			String circuitolabel, RankingCrudView parent){
@@ -54,8 +57,24 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
 		
 		viewLogic = new RankingCrudLogic(this);
 		
-		grid = new GenericGrid<RankingEntity>(RankingEntity.class,
-		       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+		category = viewLogic.findCategoria(""+categoria);
+		
+		switch(category.getModalidad()){
+		case SLIDE:
+		case BATTLE:	
+		case CLASSIC:
+		case JUMP:
+		case SPEED:
+			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
+				       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+			break;
+		case JAM:
+			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
+				       "id", "orden", "nombre", "apellidos", "nombrePareja", "apellidosPareja", 
+				       "clubStr", "puntuacion");
+			break;
+		}
+		
 		grid.addSelectionListener(new SelectionListener() {
 	        @Override
 	        public void select(SelectionEvent event) {
@@ -73,17 +92,6 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
-        
-        /*HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
-        gridLayout.addComponent(grid);
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");*/
 	    
 	    addComponent(barAndGridLayout);
 	    addComponent(form);
@@ -121,6 +129,24 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
     		    // file.delete();
     		}
         });
+		
+		Button newRecord = new Button(Messages.get().getKey("new"));
+        newRecord.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        newRecord.setIcon(FontAwesome.PLUS_CIRCLE);
+        newRecord.addClickListener(new ClickListener() {
+			@Override
+            public void buttonClick(ClickEvent event) {
+            	try{
+            		RankingEntity rec = new RankingEntity();
+            		rec.setCategoria(categoria);
+    	        	rec.setCircuito(circuito);
+    	        	editRecord(rec);
+            	}
+            	catch(Exception e){
+            		showError(e.getMessage());
+            	};
+            }
+        });
         
         Label competicionLabel = new Label("Ranking "+circuitoStr+" / "+categoriaStr);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
@@ -130,12 +156,14 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);
+        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        	topLayout.addComponent(newRecord);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");
@@ -167,7 +195,7 @@ public class RankingActaFinal extends CssLayout /*VerticalLayout*/ {
         return grid.getSelectedRow();
     }
 
-    public void editRecord(RankingEntity rec) {
+	public void editRecord(RankingEntity rec) {
         if (rec != null) {
             form.addStyleName("visible");
             form.setEnabled(true);

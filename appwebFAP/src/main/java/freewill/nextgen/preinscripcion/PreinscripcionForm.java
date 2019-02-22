@@ -17,6 +17,8 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 
+import freewill.nextgen.appwebFAP.EntryPoint;
+import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
@@ -159,7 +161,8 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         idCatBattle.removeAllItems();
         Collection<CategoriaEntity> categorias = viewLogic.getCategorias();
         for(CategoriaEntity cat:categorias){
-        	if(cat.getActive()==false) continue;
+        	if(!EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN) 
+        			&& cat.getActive()==false) continue;
         	switch(cat.getModalidad()){
 			case SPEED: 
 				idCatSpeed.addItem(cat.getId());
@@ -248,13 +251,13 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         	if(rec!=null){
         		//canRemoveRecord = (rec.getId() != null);
         		jam.setEnabled(true);
-        		parejaLayout.setVisible(jam.getValue()); //rec.getJam());
-        		idCatSpeed.setEnabled(speed.getValue()); //rec.getSpeed());
-        		idCatSalto.setEnabled(salto.getValue()); //rec.getSalto());
-        		idCatDerrapes.setEnabled(derrapes.getValue()); //rec.getDerrapes());
-        		idCatJam.setEnabled(jam.getValue()); //rec.getJam());
-        		idCatClassic.setEnabled(classic.getValue()); //rec.getClassic());
-        		idCatBattle.setEnabled(battle.getValue()); //rec.getBattle());
+        		parejaLayout.setVisible(jam.getValue());
+        		idCatSpeed.setEnabled(speed.getValue());
+        		idCatSalto.setEnabled(salto.getValue());
+        		idCatDerrapes.setEnabled(derrapes.getValue());
+        		idCatJam.setEnabled(jam.getValue());
+        		idCatClassic.setEnabled(classic.getValue());
+        		idCatBattle.setEnabled(battle.getValue());
         		if(rec.getJam() && rec.getIdPareja()==null){
 		            parejaBtn.setEnabled(false);
 			        jam.setEnabled(false);

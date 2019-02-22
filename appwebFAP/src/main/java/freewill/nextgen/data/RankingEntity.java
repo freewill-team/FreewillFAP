@@ -11,6 +11,8 @@ public class RankingEntity implements Serializable, Cloneable {
 	private Long id;				// ID
 	private String nombre;			// Nombre del Patinador
     private String apellidos;		// Apellidos
+    private String nombrePareja;	// Nombre del Patinador
+    private String apellidosPareja;	// Apellidos
     private Long club;				// Id del Club al que pertenece
     private String clubStr;			// Club al que pertenece
 	private Long company;			// Company the project belongs to
@@ -33,6 +35,8 @@ public class RankingEntity implements Serializable, Cloneable {
     	//id = 0;
 		nombre = "";
     	apellidos = "";
+    	nombrePareja = "";
+    	apellidosPareja = "";
     	clubStr = "";
     	puntuacion = 0;
     	orden = 0;
@@ -206,6 +210,22 @@ public class RankingEntity implements Serializable, Cloneable {
 
 	public void setPuntos4(int puntos4) {
 		this.puntos4 = puntos4;
+	}
+
+	public String getNombrePareja() {
+		return nombrePareja;
+	}
+
+	public void setNombrePareja(String nombrePareja) {
+		this.nombrePareja = nombrePareja;
+	}
+
+	public String getApellidosPareja() {
+		return apellidosPareja;
+	}
+
+	public void setApellidosPareja(String apellidosPareja) {
+		this.apellidosPareja = apellidosPareja;
 	}
 		
 }

@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.derrapes;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.SelectionEvent;
@@ -19,8 +20,10 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.DerrapesEntity;
 import freewill.nextgen.data.DerrapesRondaEntity.EliminatoriaEnum;
+import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
@@ -39,6 +42,8 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 	private DerrapesCrudView parent = null;
 	private EliminatoriaEnum eliminatoria = EliminatoriaEnum.SEMIS;
 	private DerrapesEntity selectedRec = null;
+	private boolean competiOpen = false;
+	private Button nextButton = null;
 
 	public DerrapesPreclasificacion(Long categoria, String labelcategoria, Long competicion, 
 			String label, DerrapesCrudView parent){
@@ -84,6 +89,17 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 	    setStyleName("crud-main-layout");
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
+	    
+	    GenericCrudLogic<CompeticionEntity> competiLogic = 
+	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
+	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
+	    competiOpen = competi.getActive();
+	    if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
+	    form.setEnabled(competiOpen);
 	}
 	
 	private VerticalLayout createUpDownButtons() {
@@ -139,7 +155,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
         });
 		//prevButton.setEnabled(false);
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {

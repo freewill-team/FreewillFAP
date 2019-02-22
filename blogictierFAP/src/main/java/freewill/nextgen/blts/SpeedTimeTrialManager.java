@@ -1,5 +1,8 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -177,12 +180,16 @@ public class SpeedTimeTrialManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<SpeedTimeTrialEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0){
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
 			// Needs to create records
 			List<ParticipanteEntity> inscripciones = 
 					inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
@@ -231,6 +238,56 @@ public class SpeedTimeTrialManager {
 		return recs;
 	}
 	
+	@SuppressWarnings("deprecation")
+	private List<SpeedTimeTrialEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<SpeedTimeTrialEntity> recs = new ArrayList<SpeedTimeTrialEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			SpeedTimeTrialEntity rec = new SpeedTimeTrialEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
+			
+			rec.setOrden2(rec.getOrden1());
+			rec.setClasificacion(rec.getOrden1());
+			rec.setClasificacionFinal(rec.getOrden1());
+			rec.setPatinador(inscripcion.getPatinador());
+			rec.setCompany(inscripcion.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<SpeedTimeTrialEntity>() {
+			@Override
+			public int compare(SpeedTimeTrialEntity o1, SpeedTimeTrialEntity o2) {
+				return o2.getOrden1()-o1.getOrden1();
+			}
+		});
+		int orden = 1;
+		for(SpeedTimeTrialEntity rec:recs){
+			rec.setOrden1(orden++);
+			rec.setId(rec.getOrden1());
+		}
+		
+		return recs;
+	}
+
 	@RequestMapping("/getByCompeticionAndCategoriaOrden2/{competicion}/{categoria}")
 	public List<SpeedTimeTrialEntity> getByCompeticionAndCategoriaOrden2(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -262,7 +319,6 @@ public class SpeedTimeTrialManager {
 			+competicion+","+categoria);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
-		//int numConos = configrepo.getConfigInteger(ConfigItemEnum.MAXNUMCONOSDERRIBADOS, user.getCompany());
 		
 		// Obtiene lista con la clasificacion del timetrial por tiempos
 		List<SpeedTimeTrialEntity> recs = repository.findByCompeticionAndCategoriaOrderByMejorTiempoAsc(
@@ -366,11 +422,6 @@ public class SpeedTimeTrialManager {
 	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
 	public List<SpeedTimeTrialEntity> getResultadosFinal(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
-		/*int posicion[] = {1, 2};
-		int posSemis[] = {3, 4};
-		int posCuartos[] = {5, 6, 7, 8};
-		int posOctavos[] = {9, 10, 11, 12, 13, 14, 15, 16};
-		int posDieciseis[] = {17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32};*/
 		System.out.println("Getting SpeedTimeTrials Results Final By competicion y categoria..."
 			+competicion+","+categoria);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -381,15 +432,6 @@ public class SpeedTimeTrialManager {
 		for(EliminatoriaEnum eliminatoria:EliminatoriaEnum.values()){
 			List<SpeedKOSystemEntity> recs = 
 					korepo.findByCompeticionAndCategoriaAndEliminatoria(competicion, categoria, eliminatoria);
-			
-			/*if(eliminatoria==EliminatoriaEnum.SEMIS)
-				posicion = posSemis;
-			else if(eliminatoria==EliminatoriaEnum.CUARTOS)
-				posicion = posCuartos;
-			else if(eliminatoria==EliminatoriaEnum.OCTAVOS)
-				posicion = posOctavos;
-			else if(eliminatoria==EliminatoriaEnum.DIECISEIS)
-				posicion = posDieciseis;*/
 			
 			for(SpeedKOSystemEntity rec:recs){
 				if(eliminatoria==EliminatoriaEnum.FINAL){
@@ -404,7 +446,8 @@ public class SpeedTimeTrialManager {
 							System.out.println("Setting "+rec.getGanador()+" to "+1);
 						}
 						// segundo clasificado
-						Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+						Long segundo = (rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+								rec.getPatinador2():rec.getPatinador1());
 						patin = (SpeedTimeTrialEntity) 
 								repository.findByPatinadorAndCompeticion(
 								segundo, rec.getCompeticion());
@@ -425,7 +468,9 @@ public class SpeedTimeTrialManager {
 							System.out.println("Setting "+rec.getGanador()+" to "+3);
 						}
 						// cuarto clasificado
-						Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+						Long segundo = (rec.getGanador()!=null && rec.getPatinador1()!=null &&
+								rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+								rec.getPatinador2():rec.getPatinador1());
 						patin = (SpeedTimeTrialEntity) 
 								repository.findByPatinadorAndCompeticion(
 								segundo, rec.getCompeticion());
@@ -441,7 +486,9 @@ public class SpeedTimeTrialManager {
 				}
 				else{
 					// Resto de Eliminatorias
-					Long segundo = (rec.getGanador()==rec.getPatinador1()?rec.getPatinador2():rec.getPatinador1());
+					Long segundo = (rec.getGanador()!=null && rec.getPatinador1()!=null &&
+							rec.getGanador().longValue()==rec.getPatinador1().longValue()?
+							rec.getPatinador2():rec.getPatinador1());
 					SpeedTimeTrialEntity patin = (SpeedTimeTrialEntity) 
 							repository.findByPatinadorAndCompeticion(
 							segundo, rec.getCompeticion());
@@ -457,11 +504,13 @@ public class SpeedTimeTrialManager {
 		}
 		
 		// Obtiene lista con la clasificacion final
-		List<SpeedTimeTrialEntity> output = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
+		List<SpeedTimeTrialEntity> output = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
 				competicion, categoria);
 		int orden = 1;
 		for(SpeedTimeTrialEntity rec:output){
 			rec.setClasificacionFinal(orden++);
+			repository.save(rec);
 		}
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity

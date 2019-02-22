@@ -1,5 +1,8 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -156,13 +159,18 @@ public class ClassicShowManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<ClassicShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0)
 		{
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
+			
 			System.out.println("Creating ClassicShow List By competicion and categoria..." + competicion + "," + categoria);
 			
 			// Needs to create records
@@ -184,7 +192,6 @@ public class ClassicShowManager {
 					rec.setCategoria(inscripcion.getCategoria());
 					rec.setCompeticion(inscripcion.getCompeticion());
 					rec.setDorsal(inscripcion.getDorsal());
-					//rec.setClasificacionFinal(0);
 					rec.setCompany(userCompany);
 					
 					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
@@ -209,7 +216,53 @@ public class ClassicShowManager {
 		return recs;
 	}
 	
-	
+	@SuppressWarnings("deprecation")
+	private List<ClassicShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<ClassicShowEntity> recs = new ArrayList<ClassicShowEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			ClassicShowEntity rec = new ClassicShowEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
+			
+			rec.setClasificacionFinal(rec.getOrden1());
+			rec.setPatinador(inscripcion.getPatinador());
+			rec.setCompany(inscripcion.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<ClassicShowEntity>() {
+		    @Override
+		    public int compare(ClassicShowEntity o1, ClassicShowEntity o2) {
+		        return o2.getOrden1()-o1.getOrden1();
+		    }
+		});
+		int orden = 1;
+		for(ClassicShowEntity rec:recs){
+			rec.setOrden1(orden++);
+			rec.setId(rec.getOrden1());
+		}
+		
+		return recs;
+	}
 	
 	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
 	public List<ClassicShowEntity> getResultadosFinal(@PathVariable Long competicion,

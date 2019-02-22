@@ -1,5 +1,8 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -131,12 +134,17 @@ public class BattleManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<BattleEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0){
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
+			
 			// Needs to create records
 			List<ParticipanteEntity> inscripciones = 
 					inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
@@ -181,12 +189,62 @@ public class BattleManager {
 		return recs;
 	}
 	
+	@SuppressWarnings("deprecation")
+	private List<BattleEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<BattleEntity> recs = new ArrayList<BattleEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			BattleEntity rec = new BattleEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden());
+			
+			rec.setClasificacion(rec.getOrden());
+			rec.setPatinador(inscripcion.getPatinador());
+			//rec.setCompany(user.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<BattleEntity>() {
+			@Override
+			public int compare(BattleEntity o1, BattleEntity o2) {
+				return o2.getOrden()-o1.getOrden();
+			}
+		});
+		int orden = 1;
+		for(BattleEntity rec:recs){
+			rec.setOrden(orden++);
+			rec.setId(rec.getOrden());
+		}
+		
+		return recs;
+	}
+		
 	@RequestMapping("/getResultados/{competicion}/{categoria}")
 	public List<BattleEntity> getResultados(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
 		int posicion[] = {1, 2, 3, 4};
-		int posSemis[] = {5, 6, 7, 8};
-		int posCuartos[] = {9, 10, 13, 14, 11, 12, 15, 16};
+		//int posSemis[] = {5, 6, 7, 8};
+		int posSemis[] = {5, 5, 7, 7};
+		//int posCuartos[] = {9, 10, 13, 14, 11, 12, 15, 16};
+		int posCuartos[] = {9, 9, 13, 13, 9, 9, 13, 13};
 		//int posOctavos[] = {17, 19, 21, 23, 25, 27, 29, 31};
 		System.out.println("Getting Battles Results By competicion y categoria..."
 			+competicion+","+categoria);
@@ -274,11 +332,12 @@ public class BattleManager {
 		// Obtiene lista con la clasificacion final
 		List<BattleEntity> recs = repository.findByCompeticionAndCategoriaOrderByClasificacionAsc(
 				competicion, categoria);
+		/* En battle el orden no es consecutivo
 		int orden = 1;
 		for(BattleEntity rec:recs){
 			rec.setClasificacion(orden++);
 			repository.save(rec);
-		}
+		}*/
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);

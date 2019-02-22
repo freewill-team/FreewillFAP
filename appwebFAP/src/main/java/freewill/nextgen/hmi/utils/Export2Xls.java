@@ -2,6 +2,8 @@ package freewill.nextgen.hmi.utils;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -46,16 +48,7 @@ public class Export2Xls {
     		doc.setHeader(title); //entity.getSimpleName());
     		int fila = 0;
     		
-    		// Set the Title
     		Object data[] = new Object[fields.length];
-    		for(int i = 0; i<fields.length; i++){
-    			data[i] = "";
-    		}
-    		/*data[1] = title;
-    		doc.addRow(fila++, data, false, true);
-    		data[1] = "";
-    		doc.addRow(fila++, data, false, false);*/
-    		
     		// Set the headings
     		for(int i = 0; i<fields.length; i++){
     			data[i] = Messages.get().getKey(fields[i]).toUpperCase();
@@ -70,7 +63,7 @@ public class Export2Xls {
     					String getMethod = "get"+ fields[i].substring(0, 1).toUpperCase()+fields[i].substring(1);
     					Method method = entity.getMethod(getMethod);
     					data[i] = method.invoke(rec);
-		    			// Applica converters si aplica
+		    			// Aplica converters
 		    			String paramType = data[i].getClass().getTypeName().toLowerCase();
 		    			if((paramType.contains("integer") && fields[i].toLowerCase().contains("tiempo"))
 		    					|| (paramType.equals("int") && fields[i].toLowerCase().contains("tiempo"))){
@@ -86,6 +79,15 @@ public class Export2Xls {
 								int value = (Integer) data[i];
 								if(value==0)
 									data[i] = "No Presentado";
+							}
+						}
+						else if(paramType.contains("date") && fields[i].toLowerCase().contains("fecha")){
+							if(data[i]==null)
+		    					data[i] = "";
+							else{
+								Date value = (Date) data[i];
+								SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+								data[i] = dt.format(value);
 							}
 						}
 	    			}

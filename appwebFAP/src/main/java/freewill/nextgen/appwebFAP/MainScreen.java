@@ -32,6 +32,7 @@ import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.participante.ParticipanteCrudView;
 import freewill.nextgen.patinador.PatinadorForm;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
@@ -84,7 +85,7 @@ public class MainScreen extends HorizontalLayout {
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN)){
         	
-        	// Section Datos Maestros - Perfil ADMIN
+        	// Section Datos Maestros - Perfil Administrador
             menu.addTitle(Messages.get().getKey("maestros"), FontAwesome.ARCHIVE);
         	
 	        UserCrudView userView = new UserCrudView();
@@ -119,15 +120,11 @@ public class MainScreen extends HorizontalLayout {
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
 		    
-		    // Just for debugging
-		    // ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
-		    // menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.COMMENT);
-		    
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
         	
-        	// Section Inscripciones - Perfil COORD
+        	// Section Inscripciones - Perfil Federacion
             menu.addTitle(Messages.get().getKey("inscripciones"), FontAwesome.CLIPBOARD);
         	
         	String clubes = Messages.get().getKey("clubes");
@@ -158,7 +155,7 @@ public class MainScreen extends HorizontalLayout {
 		    
         }
         
-        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER)){
         	
         	// Section Pruebas - Jueces
         	menu.addTitle(Messages.get().getKey("pruebas"), FontAwesome.GAMEPAD);
@@ -208,6 +205,10 @@ public class MainScreen extends HorizontalLayout {
         	PreinscripcionCrudView preinscripcionView = new PreinscripcionCrudView(InscripcionEnum.PREINSCRIPCION);
         	menu.addView(preinscripcionView , Messages.get().getKey("preinscripciones"), FontAwesome.PAPERCLIP);
 	    
+        	// Palmares
+		    ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
+		    menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.TROPHY);
+        	
         // Section About
         //menu.addTitle(Messages.get().getKey("aboutview.viewname"));
         

@@ -44,10 +44,10 @@ public class BasicAccessControl implements AccessControl {
 	        // Injects successful login event
 	        RtdbDataService.get().pushEvent(new EventEntity(
     				new Date(), 
-    				String.format(AlarmDic.ALM0021.toString(), username, "ProposalStudio"),
+    				String.format(AlarmDic.ALM0021.toString(), username, "AppwebFAP"),
     				username,
     				ADMSservice.HMI.toString(), // ParentPoint
-    				"ProposalStudio", // PointType
+    				"AppwebFAP", // PointType
     				AlarmDic.ALM0021.getSeverity(),
     				AlarmDic.ALM0021.getCategory(),
     				username,
@@ -68,10 +68,10 @@ public class BasicAccessControl implements AccessControl {
         	// Injects unsuccessful login event
     		RtdbDataService.get().pushEvent(new EventEntity(
     				new Date(), 
-    				String.format(AlarmDic.ALM0022.toString(), username, "ProposalStudio"),
+    				String.format(AlarmDic.ALM0022.toString(), username, "AppwebFAP"),
     				username,
     				ADMSservice.HMI.toString(), // ParentPoint
-    				"ProposalStudio", // PointType
+    				"AppwebFAP", // PointType
     				AlarmDic.ALM0022.getSeverity(),
     				AlarmDic.ALM0022.getCategory(),
     				username,

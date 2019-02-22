@@ -199,5 +199,20 @@ public class ParticipanteCrudLogic implements Serializable {
         rec.setCompeticion(competicion);
         view.editRecord(rec);
     }
+
+	public void findRecords(Long id) {
+	    try{
+		    if(view!=null){
+		        view.showRecords(
+		        		BltClient.get().executeQuery("/getByPatinador/"+id,
+		        		ParticipanteEntity.class,
+		        		EntryPoint.get().getAccessControl().getTokenKey()));
+		    }
+	    }
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+	}
 	
 }

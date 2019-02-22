@@ -1,6 +1,8 @@
 package freewill.nextgen.participante;
 
+import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -9,7 +11,9 @@ import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -27,8 +31,12 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.circuito.SelectCircuito;
 import freewill.nextgen.competicion.SelectCompeticion;
 import freewill.nextgen.data.ParticipanteEntity;
+import freewill.nextgen.data.PatinadorEntity;
+import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
+import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
  * A view for performing create-read-update-delete operations on records.
@@ -42,16 +50,11 @@ public class ParticipanteCrudView extends CssLayout implements View {
 
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
-    public final String VIEW_NAME = Messages.get().getKey("participantes");
+    public final String VIEW_NAME = Messages.get().getKey("palmares");
     private GenericGrid<ParticipanteEntity> grid;
     private ParticipanteCrudLogic viewLogic = new ParticipanteCrudLogic(this);
-    private Long competicion = null;
-    private Label competicionLabel = null;
+    private Label patinadorLabel = null;
     private VerticalLayout barAndGridLayout = null;
-    private SelectCircuito selectcircuito = null;
-    private VerticalLayout selectionarea = new VerticalLayout();
-    private SelectCompeticion selectcampeonato = null;
-    private ParticipanteForm form;
     
     public ParticipanteCrudView() {
         setSizeFull();
@@ -59,16 +62,14 @@ public class ParticipanteCrudView extends CssLayout implements View {
         HorizontalLayout topLayout = createTopBar();
         
         grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
-            	"id", "dorsal", "nombre", "apellidos", "clubStr", 
-            	"categoria", "dorsalPareja", "nombrePareja", "apellidosPareja");
+            	"id", "fecha", "competicionStr", "categoriaStr", "clasificacion", 
+            	"mejorMarca", "clubStr");
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
                 viewLogic.rowSelected(grid.getSelectedRow());
             }
         });
-        
-        form = new ParticipanteForm(viewLogic);
 
         barAndGridLayout = new VerticalLayout();
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -80,76 +81,81 @@ public class ParticipanteCrudView extends CssLayout implements View {
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
         
-        //addComponent(barAndGridLayout);
-        //addComponent(form);
+        addComponent(barAndGridLayout);
     }
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public HorizontalLayout createTopBar() {
-		
-        TextField filter = new TextField();
-        filter.setStyleName("filter-textfield");
-        filter.setInputPrompt("Filter");
         
-        filter.setImmediate(true);
-        filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-            @Override
-            public void textChange(FieldEvents.TextChangeEvent event) {
-                grid.setFilter(event.getText());
-            }
-        });
+        patinadorLabel = new Label("");
+        patinadorLabel.setStyleName(ValoTheme.LABEL_LARGE);
+        patinadorLabel.addStyleName(ValoTheme.LABEL_COLORED);
+        patinadorLabel.addStyleName(ValoTheme.LABEL_BOLD);
         
-        competicionLabel = new Label("");
-        competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
-        competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
-        competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
-        
-        Button newRecord = new Button(Messages.get().getKey("new"));
-        newRecord.addStyleName(ValoTheme.BUTTON_PRIMARY);
-        newRecord.setIcon(FontAwesome.PLUS_CIRCLE);
-        newRecord.addClickListener(new ClickListener() {
+        Button findRecord = new Button(Messages.get().getKey("patinador"));
+        findRecord.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        findRecord.setIcon(FontAwesome.SEARCH);
+        findRecord.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                viewLogic.newRecord(competicion);
+            	// Abre la ventana de seleccion de patinador
+				List<PatinadorEntity> students = viewLogic.getPatinadores();
+				
+				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
+            	cd.setOKAction(new ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+            			cd.close();
+            			PatinadorEntity user = cd.getSelected();
+            			if(user!=null){
+            				patinadorLabel.setValue(
+            						user.getNombre()+" "+user.getApellidos()+
+            						" (F.Fed.: "+user.getFichaFederativa()+")");
+                    		viewLogic.findRecords(user.getId());
+            			}
+                    }
+                });
+            	getUI().addWindow(cd);
             }
         });
 
+        Button printButton = new Button(Messages.get().getKey("acta"));
+		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		printButton.setIcon(FontAwesome.DOWNLOAD);
+		printButton.addClickListener(e -> {
+    		File file = Export2Xls.get().createXLS(
+    				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
+    				ParticipanteEntity.class,
+    				("Palmarés "+patinadorLabel.getValue()).toUpperCase(),
+    				"fecha", "competicionStr", "categoriaStr", "clasificacion",
+    				"mejorMarca", "clubStr");
+    		if(file!=null){
+    			FileResource resource = new FileResource(file);
+    			Page.getCurrent().open(resource, "Export File", false);
+    		    // Finally, removes the temporal file
+    		    // file.delete();
+    		}
+        });
+        
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
         topLayout.setMargin(true);
         topLayout.setWidth("100%");
-        topLayout.addComponent(competicionLabel);
-        topLayout.addComponent(filter);
-        topLayout.addComponent(newRecord);
-        topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
-        topLayout.setExpandRatio(competicionLabel, 1);
+        topLayout.addComponent(findRecord);
+        topLayout.addComponent(patinadorLabel);
+        topLayout.addComponent(printButton);
+        //topLayout.setComponentAlignment(patinadorLabel, Alignment.MIDDLE_LEFT);
+        topLayout.setExpandRatio(patinadorLabel, 1);
         topLayout.setStyleName("top-bar");
         return topLayout;
     }
 
     @Override
     public void enter(ViewChangeEvent event) {
-    	
     	viewLogic.enter(event.getParameters());
-    	
-    	selectcircuito = new SelectCircuito();
-    	selectcircuito.addAction(
-    		new ValueChangeListener() {
-	            public void valueChange(ValueChangeEvent event) {
-	            	selectionarea.removeAllComponents();
-	            	selectcampeonato = createSelectCampeonato(selectcircuito.getValue());
-	                selectionarea.addComponent(selectcampeonato);
-	            }
-    		});
-    	
-    	selectcampeonato = createSelectCampeonato(selectcircuito.getValue());
-        
-        removeAllComponents();
-        addComponent(selectcircuito);
-        addComponent(selectionarea);
-        selectionarea.removeAllComponents();
-        selectionarea.addComponent(selectcampeonato);
-        //this.setExpandRatio(selectionarea, 1);
+    	patinadorLabel.setValue("... Seleccione un patinador");
+    	grid.setRecords(null);
     }
 
     public void showError(String msg) {
@@ -178,14 +184,14 @@ public class ParticipanteCrudView extends CssLayout implements View {
     }
 
     public void editRecord(ParticipanteEntity rec) {    
-        if (rec != null) {
+        /*if (rec != null) {
             form.addStyleName("visible");
             form.setEnabled(true);
         } else {
             form.removeStyleName("visible");
             form.setEnabled(false);
         }
-        form.editRecord(rec);
+        form.editRecord(rec);*/
     }
 
     public void showRecords(Collection<ParticipanteEntity> records) {
@@ -200,20 +206,5 @@ public class ParticipanteCrudView extends CssLayout implements View {
     public void removeRecord(ParticipanteEntity rec) {
         grid.remove(rec);
     }
-
-	private SelectCompeticion createSelectCampeonato(Long circuito){
-		return new SelectCompeticion(circuito,
-        		new ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                    	competicionLabel.setValue("Inscripciones "+event.getButton().getDescription());
-                    	competicion = Long.parseLong(event.getButton().getId());
-            	        removeAllComponents();
-            			addComponent(barAndGridLayout);
-            			addComponent(form);
-            	        viewLogic.init(competicion);
-                    }
-              	});
-	}
 	
 }

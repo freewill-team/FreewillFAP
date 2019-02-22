@@ -35,7 +35,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 //import freewill.nextgen.hmi.common.GenericHeader;
-import freewill.nextgen.hmi.utils.ExportToXls;
+import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.ImportFromXls;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -175,9 +175,9 @@ public class GenericCrudView<T> extends CssLayout implements View {
 			@SuppressWarnings("unchecked")
 			@Override
             public void buttonClick(ClickEvent event) {
-				File file = ExportToXls.get().createXLS(
-						(List<Object>)grid.getContainerDataSource().getItemIds(),
-						entity, idfield, fields);
+				File file = Export2Xls.get().createXLS(
+						(List<T>)grid.getContainerDataSource().getItemIds(),
+						entity, entity.getSimpleName(), fields);
 				if(file!=null){
 					FileResource resource = new FileResource(file);
 					Page.getCurrent().open(resource, "Export File", false);

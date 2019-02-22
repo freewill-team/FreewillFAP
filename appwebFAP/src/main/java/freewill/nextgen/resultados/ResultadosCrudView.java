@@ -28,7 +28,8 @@ public class ResultadosCrudView extends VerticalLayout implements View {
     private String competicionStr = "";
     private Long categoria = null;
     private String categoriaStr = "";
-    SelectCompeticionAndCategoria selectCompeticionAndCategoria = null;
+    private SelectCompeticionAndCategoria selectCompeticionAndCategoria = null;
+    private AnonymousLogin parentPanel = null;
     
     public ResultadosCrudView() {
         setSizeFull();
@@ -69,6 +70,12 @@ public class ResultadosCrudView extends VerticalLayout implements View {
 				categoria, categoriaStr,
 				competicion, competicionStr, 
     			ResultadosCrudView.this));
+		if(parentPanel!=null)
+			parentPanel.setCompeticion(competicionStr+" / "+categoriaStr);
 	}
-		
+	
+	public void setInfoPanel(AnonymousLogin parentPanel){
+    	this.parentPanel = parentPanel;
+    }
+	
 }

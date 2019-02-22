@@ -1,5 +1,8 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.JamShowEntity;
 import freewill.nextgen.blts.data.CircuitoEntity;
+import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
@@ -92,9 +96,18 @@ public class JamShowManager {
 			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() + rec.getSincronizacionJuez1()- rec.getPenalizaciones());
 			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() + rec.getSincronizacionJuez2()- rec.getPenalizaciones());
 			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() + rec.getSincronizacionJuez3()- rec.getPenalizaciones());
+			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
+			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
 			
 			JamShowEntity res = repository.save(rec);
+			
+			// Calcular los rankings
+			setRankingJuez1(rec.getCompeticion(), rec.getCategoria());
+			setRankingJuez2(rec.getCompeticion(), rec.getCategoria());
+			setRankingJuez3(rec.getCompeticion(), rec.getCategoria());
 
+			res = repository.findById(res.getId());
+			
 			System.out.println("Updating JamShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
 			return res;
 		}
@@ -146,13 +159,18 @@ public class JamShowManager {
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
-		if(competi.getFechaInicio().after(now))
-			throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+		if(competi.getFechaInicio().after(now)){
+			//throw new IllegalArgumentException("Esta Competición aun no puede comenzar.");
+			return mockByCompeticionAndCategoria(competicion, categoria);
+		}
 		
 		List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
 				competicion, categoria);
 		if(recs==null || recs.size()==0)
 		{
+			if(competi.getActive()==false) 
+				return recs; // evita modificar datos introducidos manualmente
+			
 			System.out.println("Creating JamShow List By competicion and categoria..." + competicion + "," + categoria);
 			
 			// Needs to create records
@@ -178,7 +196,6 @@ public class JamShowManager {
 					rec.setCompeticion(inscripcion.getCompeticion());
 					rec.setDorsal(inscripcion.getDorsal());
 					rec.setDorsalPareja(inscripcion.getDorsalPareja()); // BVM
-					//rec.setClasificacionFinal(0);
 					rec.setCompany(userCompany);
 					
 					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
@@ -194,7 +211,6 @@ public class JamShowManager {
 			recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
 			for(JamShowEntity rec:recs){
 				rec.setOrden1(orden++);
-				//rec.setClasificacionFinal(rec.getOrden1());
 				repository.save(rec);
 			}
 									
@@ -204,7 +220,53 @@ public class JamShowManager {
 		return recs;
 	}
 	
-	
+	@SuppressWarnings("deprecation")
+	private List<JamShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
+		// Simula la ordenacion por Ranking, pero no la persiste
+		List<JamShowEntity> recs = new ArrayList<JamShowEntity>();
+		
+		CompeticionEntity competi = competirepo.findById(competicion);
+		Date ultimoAnno = new Date();
+		ultimoAnno.setYear(ultimoAnno.getYear()-1);
+		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
+		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
+		
+		for(ParticipanteEntity inscripcion:inscripciones){
+			// Create individual record
+			JamShowEntity rec = new JamShowEntity();
+			rec.setApellidos(inscripcion.getApellidos());
+			rec.setCategoria(inscripcion.getCategoria());
+			rec.setCompeticion(inscripcion.getCompeticion());
+			rec.setNombre(inscripcion.getNombre());
+			rec.setDorsal(inscripcion.getDorsal());
+			
+			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
+					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
+			
+			rec.setClasificacionFinal(rec.getOrden1());
+			rec.setPatinador(inscripcion.getPatinador());
+			rec.setCompany(inscripcion.getCompany());
+			recs.add(rec);
+		}
+		
+		// ordena los registros por el ranking absoluto
+		Collections.sort(recs, new Comparator<JamShowEntity>() {
+		    @Override
+		    public int compare(JamShowEntity o1, JamShowEntity o2) {
+		        return o2.getOrden1()-o1.getOrden1();
+		    }
+		});
+		int orden = 1;
+		for(JamShowEntity rec:recs){
+			rec.setOrden1(orden++);
+			rec.setId(rec.getOrden1());
+		}
+		
+		return recs;
+	}
 	
 	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
 	public List<JamShowEntity> getResultadosFinal(@PathVariable Long competicion,
@@ -216,59 +278,116 @@ public class JamShowManager {
 		Long userCompany = user.getCompany();
 		
 		
-		// Asignar Ranking de jueces
+		System.out.println("Calculando Clasificacion Jam");
 		
-		setRankingJuez1(competicion, categoria);
-		setRankingJuez2(competicion, categoria);
-		setRankingJuez3(competicion, categoria);
-		
-		// Paso 2: crear tabla puntos victoria
+		// Paso 1: crear tabla puntos victoria
 		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
 		int numParticipantes = recs.size();
-		int[][] PV = new int[numParticipantes][numParticipantes];
 		
-		JamShowEntity recI, recJ;
+		float[][] PV = new float[numParticipantes][numParticipantes];
+		int[] RankingI = new int[3];
+		int[] TecnicaI = new int[3];
+		int[] RankingJ = new int[3];
+		int[] TecnicaJ = new int[3];
+		
 		for (int i = 0; i< numParticipantes; i++)
 		{
-			int sumaPV = 0;
-			int totalPV = 0;
-			recI = recs.get(i);
-			//comparar con todos
+			JamShowEntity recI = recs.get(i);
+
+			System.out.print(recI.getNombre()+ ": ");
+			if(recI.getPuntuacionTotal() > 0)
+			{
+				RankingI[0] = recI.getRankingJuez1();
+				RankingI[1] = recI.getRankingJuez2();
+				RankingI[2] = recI.getRankingJuez3();
+				TecnicaI[0] = recI.getTecnicaJuez1();
+				TecnicaI[1] = recI.getTecnicaJuez2();
+				TecnicaI[2] = recI.getTecnicaJuez3();
+				
+				//comparar con todos los otros
+				for (int j=0; j< numParticipantes; j++)
+				{
+					PV[i][j]=0;
+					
+					if(i!=j)
+					{
+						JamShowEntity recJ = recs.get(j);
+						
+						RankingJ[0] = recJ.getRankingJuez1();
+						RankingJ[1] = recJ.getRankingJuez2();
+						RankingJ[2] = recJ.getRankingJuez3();
+						TecnicaJ[0] = recJ.getTecnicaJuez1();
+						TecnicaJ[1] = recJ.getTecnicaJuez2();
+						TecnicaJ[2] = recJ.getTecnicaJuez3();
+						
+						// Para todos los jueces
+						for (int k=0; k<3;k++)
+						{
+							if(RankingI[k] < RankingJ[k])
+							{
+								PV[i][j]++;
+							}
+							else
+							{
+								if(RankingI[k] == RankingJ[k])
+								{
+									if(TecnicaI[k] > TecnicaJ[k])
+									{
+										PV[i][j]++;
+									}
+									else if (TecnicaI[k] == TecnicaJ[k])
+									{
+										PV[i][j]+=0.5; //Empate total segun juez k
+									}
+									
+								}
+							}
+						}
+					}
+					System.out.print(PV[i][j] + "| ");
+				}
+				System.out.println();
+			}
+			else
+			{
+				//System.out.println("No tiene puntos");
+			}
+		}
+		
+		// Paso 2: Calcular Puntos	
+
+		for (int i = 0; i< numParticipantes; i++)
+		{
+			float sumaPV = 0;
+			float sumaEmpates = 0;
+			float totalPV = 0;
+			JamShowEntity recI = recs.get(i);
+			
 			for (int j=0; j< numParticipantes; j++)
 			{
-				PV[i][j]=0;
-				
-				recJ = recs.get(j);
-				if(recI.getRankingJuez1() > recJ.getRankingJuez1())
-					PV[i][j] ++;
-				if(recI.getRankingJuez2() > recJ.getRankingJuez2())
-					PV[i][j] ++;
-				if(recI.getRankingJuez3() > recJ.getRankingJuez3())
-					PV[i][j] ++;
-				
-				// si la mayoria de jueces estan de acuerdo, tenemos un punto de victoria para el patinador i
-				if (PV[i][j]>=2)
+				if(PV[i][j] > 1.5)
+				{
 					sumaPV++;
-				// sumo todos los puntos por si hay que desempatar	
-				totalPV += PV[i][j];
+				}
+				else if (PV[i][j] == 1.5)
+				{
+					sumaEmpates++;
+				}
+				
+				totalPV+=PV[i][j];
 			}
-			//Guarda sumas de puntos del patinador
-			//recI.setSumaPV(sumPV);
-			//recI.setTotalPV(totalPV);
-			//recI.sumaPonderada = sumPV*100000+totalPV + xxx;
-			//repository.save(recI)
+			recI.setSumaPV(sumaPV + sumaEmpates/2);
+		    recI.setPVTotal(totalPV);
+		    repository.save(recI);
 		}
 		
+		// Ya tengo todos los datos y la tabla para calcular puntos locales
+		// Paso 3: Calcular clasificacion final 
 		
-		// Calcular clasificacion final segun puntos ponderados
+		CalculaClasificacionFinal(competicion, categoria, PV);
 		
-		recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
-		// Obtiene lista con la clasificacion final	
-		int orden = 1;
-		for(JamShowEntity rec:recs){
-			rec.setClasificacionFinal(orden++);
-			repository.save(rec);
-		}
+		recs = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+
 			
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
@@ -301,69 +420,235 @@ public class JamShowManager {
 		return recs;
 	}
 	
+	@RequestMapping("/moveRecordUp/{recId}")
+	public JamShowEntity moveRecordUp(@PathVariable Long recId) throws Exception {
+		if(recId!=null){
+			System.out.println("Moving ClassicShow Up..."+recId);
+			JamShowEntity rec = repository.findById(recId);
+			if(rec!=null){
+				if(rec.getOrden1()==1) return rec;
+				JamShowEntity prev = repository.findByCompeticionAndCategoriaAndOrden1(
+						rec.getCompeticion(), rec.getCategoria(), rec.getOrden1()-1);
+				prev.setOrden1(rec.getOrden1());
+				repository.save(prev);
+				rec.setOrden1(rec.getOrden1()-1);
+				return repository.save(rec);
+			}
+		}
+		return null;	
+	}
 	
+	@RequestMapping("/moveRecordDown/{recId}")
+	public JamShowEntity moveRecordDown(@PathVariable Long recId) throws Exception {
+		if(recId!=null){
+			System.out.println("Moving ClassicShow Down..."+recId);
+			JamShowEntity rec = repository.findById(recId);
+			if(rec!=null){
+				List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
+						rec.getCompeticion(), rec.getCategoria());
+				if(rec.getOrden1()==recs.size()) return rec;
+				JamShowEntity post = repository.findByCompeticionAndCategoriaAndOrden1(
+						rec.getCompeticion(), rec.getCategoria(), rec.getOrden1()+1);
+				post.setOrden1(rec.getOrden1());
+				repository.save(post);
+				rec.setOrden1(rec.getOrden1()+1);
+				return repository.save(rec);
+			}
+		}
+		return null;	
+	}
 	
 	private void setRankingJuez1(Long competicion, Long categoria)
 	{
-		int nextRanking = 1;
-		int currentRanking = 1;
-		int lastTotal = 0;
+		int posicion = 0;
+		int contador = 0;
+		float lastTotal = 100000; //Mejor participante posible
+		float currentTotal = 0;
+		
+		// Ordeno a los participantes de mejor a peor
 		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByTotalJuez1Desc(competicion, categoria);
 		
-		for(JamShowEntity rec:recs){
-			if (lastTotal == rec.getTotalJuez1())
+		// Solo tengo en cuenta la puntuacion total
+		for(JamShowEntity rec:recs)
+		{
+			currentTotal = rec.getTotalJuez1();
+			if (currentTotal != 0)
 			{
-				rec.setRankingJuez1(currentRanking);
+				//Si un participante es peor que el anterior, se le asigna una posicion mas alta
+				if (lastTotal > currentTotal)
+				{
+					posicion = contador + 1;
+					lastTotal = currentTotal;					
+				}
+				else
+				{
+					// Empate
+				}
+				rec.setRankingJuez1(posicion);
+				contador++;
+				//System.out.println("ranking asignado..."+rec.getNombre() + ":" + posicion + ":" + currentTotal );
 			}
 			else
 			{
-				rec.setRankingJuez1(nextRanking);
-				currentRanking=nextRanking;
+				//Si no tiene puntos es peor que el último que tuvo puntos
+				//System.out.println("LOS ULTIMOS..."+rec.getNombre() + ":" + posicion + ":" + currentTotal );
+				rec.setRankingJuez1(contador+1);
 			}
 			repository.save(rec);
-			nextRanking++;
 		}
 	}
 	private void setRankingJuez2(Long competicion, Long categoria)
 	{
-		int nextRanking = 1;
-		int currentRanking = 1;
-		int lastTotal = 0;
+		int posicion = 0;
+		int contador = 0;
+		float lastTotal = 100000; //Mejor participante posible
+		float currentTotal = 0;
+		
+		// Ordeno a los participantes de mejor a peor
 		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByTotalJuez2Desc(competicion, categoria);
 		
-		for(JamShowEntity rec:recs){
-			if (lastTotal == rec.getTotalJuez2())
+		for(JamShowEntity rec:recs)
+		{
+			currentTotal = rec.getTotalJuez2();
+			if (currentTotal != 0)
 			{
-				rec.setRankingJuez2(currentRanking);
+				//Si un participante es peor que el anterior, se le asigna una posicion mas alta
+				if (lastTotal > currentTotal)
+				{
+					posicion = contador + 1;
+					lastTotal = currentTotal;
+				}
+				else
+				{
+					// Empate
+				}
+				rec.setRankingJuez2(posicion);
+				contador++;
 			}
 			else
 			{
-				rec.setRankingJuez2(nextRanking);
-				currentRanking=nextRanking;
+				//Si no tiene puntos es peor que el último que tuvo puntos
+				//System.out.println("LOS ULTIMOS..."+rec.getNombre() + ":" + posicion + ":" + currentTotal );
+				rec.setRankingJuez2(contador+1);
 			}
 			repository.save(rec);
-			nextRanking++;
 		}
 	}
 	private void setRankingJuez3(Long competicion, Long categoria)
 	{
-		int nextRanking = 1;
-		int currentRanking = 1;
-		int lastTotal = 0;
+		int posicion = 0;
+		int contador = 0;
+		float lastTotal = 100000; //Mejor participante posible
+		float currentTotal = 0;
+		
+		// Ordeno a los participantes de mejor a peor
 		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByTotalJuez3Desc(competicion, categoria);
 		
-		for(JamShowEntity rec:recs){
-			if (lastTotal == rec.getTotalJuez3())
+		for(JamShowEntity rec:recs)
+		{
+			currentTotal = rec.getTotalJuez3();
+			if (currentTotal != 0)
 			{
-				rec.setRankingJuez3(currentRanking);
+				//Si un participante es peor que el anterior, se le asigna una posicion mas alta
+				if (lastTotal > currentTotal)
+				{
+					posicion = contador + 1;
+					lastTotal = currentTotal;
+				}
+				else
+				{
+					// Empate
+				}
+				rec.setRankingJuez3(posicion);
+				contador++;
 			}
 			else
 			{
-				rec.setRankingJuez3(nextRanking);
-				currentRanking=nextRanking;
+				//Si no tiene puntos es peor que el último que tuvo puntos
+				//System.out.println("LOS ULTIMOS..."+rec.getNombre() + ":" + posicion + ":" + currentTotal + ":" + currentTecnica);
+				rec.setRankingJuez3(contador+1);
 			}
 			repository.save(rec);
-			nextRanking++;
+		}
+	}
+	private void CalculaClasificacionFinal(Long competicion, Long categoria,  float[][]PV)
+	{
+
+		//System.out.println("Calculando Puntos Locales");
+		
+		// Tengo que seguir el orden de la tabla PV[i][j]
+		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
+		int numParticipantes = recs.size();
+
+		float currentPV = 0;
+
+		int puntosLocales = 0;
+		
+		for(int i=0; i< numParticipantes;i++)
+		{
+			JamShowEntity recI = recs.get(i);
+			currentPV = recI.getSumaPV();
+			puntosLocales= 0;
+			
+			if(currentPV !=0)
+			{
+				for (int j= 0; j<numParticipantes; j++)
+				{
+					if (i!=j)
+					{
+						JamShowEntity recJ = recs.get(j);
+						if(currentPV == recJ.getSumaPV())
+						{
+							puntosLocales += PV[i][j];
+						}
+					}
+				}
+				recI.setPVLocales(puntosLocales);
+			}
+			
+			
+			// Criterio1 : numero de victorias totales (sumaPV)
+			// Criterio2 : numero de victorias locales 
+			// Criterio3 : suma puntuaciones tecnicas  (recI.getTotalTecnica)
+			// Criterio4 : suma de puntos de la victoria (totalPV)
+			// Criterio5 : suma de puntuacion total (recI.getPuntuacionTotal)
+			
+			recI.setSumaPonderada(  recI.getSumaPV()           * 100000000000F +
+					puntosLocales       * 1000000000 + 
+					recI.getTotalTecnica() * 1000000 + 
+					recI.getPVTotal()         * 1000 +
+					recI.getPuntuacionTotal());	
+			
+			repository.save(recI);
+			//System.out.println(recI.getNombre() + " " + recI.getSumaPonderada());
+		}
+		//System.out.println();
+		//System.out.println("Calculando Clasificacion");
+		
+		//Calcular clasificacion final en funcion de suma ponderada
+		int posicion = 0; 
+		float lastTotal = Float.MAX_VALUE;
+		float currentTotal = 0;
+		
+		// Ordeno a los participantes de mejor a peor
+		recs = repository.findByCompeticionAndCategoriaOrderBySumaPonderadaDesc(competicion, categoria);
+		
+		for(JamShowEntity rec:recs)
+		{
+			currentTotal = rec.getSumaPonderada();
+			
+			//Si un participante es peor que el anterior, se le asigna una posicion mas alta
+			if (lastTotal > currentTotal)
+			{
+				posicion = posicion + 1;
+				lastTotal = currentTotal;
+			}
+			else
+			{
+				// Empate
+			}
+			rec.setClasificacionFinal(posicion);
+			repository.save(rec);
 		}
 	}
 	
@@ -372,6 +657,22 @@ public class JamShowManager {
 			@PathVariable Long categoria) throws Exception {
 		System.out.println("Deleting JamShow By competicion y categoria..."
 			+competicion+","+categoria);
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
+				competicion, categoria);
+		for(JamShowEntity rec:recs){
+			repository.delete(rec);
+		}
+		return true;
+	}
+	
+	@RequestMapping("/rankingValido/{competicion}/{categoria}")
+	public boolean rankingValido(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Checking rankings By competicion y categoria..."
+			+competicion+","+categoria);
+
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
 		List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(

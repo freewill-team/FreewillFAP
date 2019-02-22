@@ -174,7 +174,8 @@ public class CompeticionManager {
             	CircuitoEntity circuito = circuitorepo.findById(circuitoId);
             	List<CategoriaEntity> categorias = categorepo.findByCompany(user.getCompany());
             	for(CategoriaEntity categoria:categorias){
-            		getByCircuitoAndCategoria(circuito, categoria, user);
+            		if(categoria.getActive())
+            			getByCircuitoAndCategoria(circuito, categoria, user);
             	}
             	System.out.println("CalculateRankingThread thread finished.");
             } catch (Exception e) {

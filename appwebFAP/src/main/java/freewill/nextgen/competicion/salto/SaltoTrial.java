@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.salto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.SelectionEvent;
@@ -46,6 +47,7 @@ public class SaltoTrial extends VerticalLayout {
 	private TextField newAltura;
 	private boolean showOnly2Jumps = false;
 	private boolean competiOpen = false;
+	private Button nextButton = null;
 
 	public SaltoTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, int ronda, SaltoCrudView parent){
@@ -103,6 +105,11 @@ public class SaltoTrial extends VerticalLayout {
 	    		new GenericCrudLogic<CompeticionEntity>(null, CompeticionEntity.class, "id");
 	    CompeticionEntity competi = competiLogic.findRecord(""+competicion);
 	    competiOpen = competi.getActive();
+	    if(competi.getFechaInicio().after(new Date())){
+    		this.showError("Esta Competición aun no puede comenzar.");
+    		competiOpen = false;
+    		nextButton.setEnabled(false);
+    	}
 	    form.setEnabled(alturaNextRonda==0 && competiOpen);
 	}
 	
@@ -128,7 +135,7 @@ public class SaltoTrial extends VerticalLayout {
         });
 		//prevButton.setEnabled(ronda>0);
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
@@ -137,9 +144,9 @@ public class SaltoTrial extends VerticalLayout {
             public void buttonClick(ClickEvent event) {
                 // Next screen
             	if(ronda>0 && allPatinadoresOut((List<SaltoEntity>)grid.getContainerDataSource().getItemIds()))
-            		parent.gotoActaFinal(ronda+1);
+            		gotoActaFinal(ronda+1);
             	else if(ronda>0 && grid.getContainerDataSource().size()==1)
-            		parent.gotoActaFinal(ronda+1);
+            		gotoActaFinal(ronda+1);
             	else if(alturaNextRonda==0){
 	            	try{
 	            		int alturaThisRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda);
@@ -216,6 +223,21 @@ public class SaltoTrial extends VerticalLayout {
         return topLayout;
     }
 	
+	protected void gotoActaFinal(int i) {
+		// Next screen
+    	ConfirmDialog cd = new ConfirmDialog(
+    			"Esta acción publicará los resultados en la web pública.\n" +
+    			"¿ Desea continuar ?");
+        cd.setOKAction(new ClickListener() {
+        	@Override
+            public void buttonClick(final ClickEvent event) {
+            	cd.close();
+            	parent.gotoActaFinal(i);
+        	}
+        });
+        getUI().addWindow(cd);
+	}
+
 	private boolean allPatinadoresOut(List<SaltoEntity> recs) {
 		for(SaltoEntity rec:recs){
 			if( rec.getSalto1()==ResultEnum.OK || rec.getSalto1()==ResultEnum.PASA ||
@@ -227,7 +249,7 @@ public class SaltoTrial extends VerticalLayout {
 	}
 
 	public void showError(String msg) {
-        Notification.show(msg, Type.ERROR_MESSAGE);
+		Notification.show(msg, Type.WARNING_MESSAGE); //ERROR_MESSAGE);
     }
 
     public void showSaveNotification(String msg) {

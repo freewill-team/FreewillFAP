@@ -193,8 +193,10 @@ public class ClassicCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
-			//view.showError(e.getMessage());
-			//e.printStackTrace();
+			if(activeView!=null){
+				activeView.showError(e.getMessage());
+			}
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -19,6 +19,7 @@ import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.SpeedKOSystemEntity;
 import freewill.nextgen.data.SpeedTimeTrialEntity.RondaEnum;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
+import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
@@ -109,8 +110,18 @@ public class SpeedKOsystem extends VerticalLayout {
 		nextButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                // Next screen
-            	parent.gotoActaFinal();
+            	// Next screen
+            	ConfirmDialog cd = new ConfirmDialog(
+            			"Esta acción publicará los resultados en la web pública.\n" +
+            			"¿ Desea continuar ?");
+                cd.setOKAction(new ClickListener() {
+                	@Override
+                    public void buttonClick(final ClickEvent event) {
+                    	cd.close();
+                    	parent.gotoActaFinal();
+                	}
+                });
+                getUI().addWindow(cd);
             }
         });
 		nextButton.setEnabled(true);

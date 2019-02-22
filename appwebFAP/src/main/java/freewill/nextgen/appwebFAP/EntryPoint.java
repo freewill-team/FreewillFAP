@@ -54,7 +54,7 @@ import freewill.nextgen.resultados.AnonymousLogin;
 public class EntryPoint extends UI {
 	
 	private AccessControl accessControl = new BasicAccessControl();
-	private static UserRoleEnum IMC_PERMISSION = UserRoleEnum.USER;
+	private static UserRoleEnum IMC_PERMISSION = UserRoleEnum.READONLY;
 	private FeederThread heartbeat = null;
 	
     @Override
@@ -88,7 +88,8 @@ public class EntryPoint extends UI {
             setContent( new LoginScreen(accessControl, new LoginListener(){
             	@Override
                 public void loginSuccessful() {
-            		if(getAccessControl().isUserInRole(IMC_PERMISSION))
+            		if(getAccessControl().isUserInRole(IMC_PERMISSION)
+            				&& !getAccessControl().getPrincipalName().equals("anonimo"))
             			showMainView();
             		else{
             			setContent(new NoPermissionView());
@@ -97,7 +98,8 @@ public class EntryPoint extends UI {
                 }
             }));
         } else {
-        	if(getAccessControl().isUserInRole(IMC_PERMISSION))
+        	if(getAccessControl().isUserInRole(IMC_PERMISSION)
+        			&& !getAccessControl().getPrincipalName().equals("anonimo"))
     			showMainView();
     		else{
     			setContent(new NoPermissionView());
@@ -214,12 +216,11 @@ public class EntryPoint extends UI {
         
         // Unregister user from Logins table
         heartbeat.interrupt();
+        VaadinSession.getCurrent().getSession().invalidate();
+        Page.getCurrent().reload();
         RtdbDataService.get().userCheckout(username, 
         		VaadinService.getCurrentRequest().getRemoteHost(),
         		"AppwebFAP");
-        
-        VaadinSession.getCurrent().getSession().invalidate();
-        Page.getCurrent().reload();
 	}
 	
     public static EntryPoint get() {
