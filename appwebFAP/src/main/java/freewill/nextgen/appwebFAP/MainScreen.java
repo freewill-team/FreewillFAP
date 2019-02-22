@@ -167,7 +167,7 @@ public class MainScreen extends HorizontalLayout {
 		    
 	        // Competicion Speed
 		    SpeedCrudView speedView = new SpeedCrudView();
-		    menu.addView(speedView, speedView.VIEW_NAME, new ThemeResource("img/speed.png"));
+		    menu.addView(speedView, speedView.VIEW_NAME, FontAwesome.TROPHY);
 	        
 		    // Competicion Salto
 		    SaltoCrudView saltoView = new SaltoCrudView();

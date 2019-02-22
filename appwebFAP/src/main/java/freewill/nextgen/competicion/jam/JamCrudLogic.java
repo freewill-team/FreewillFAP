@@ -53,6 +53,7 @@ public class JamCrudLogic implements Serializable {
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
+			e.printStackTrace();
 			if(activeView!=null){
 				activeView.showError(e.getMessage());
 				activeView.setEnabled(false);

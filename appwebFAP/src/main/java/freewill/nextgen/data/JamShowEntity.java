@@ -382,11 +382,11 @@ public class JamShowEntity implements Serializable, Cloneable {
 	}
 
 	public String getNombreDuo() {
-		return (this.nombre + " " + this.apellidos + '-' + this.nombrePareja + " " + this.apellidosPareja);
+		return (this.nombre + " " + this.apellidos + '/' + this.nombrePareja + " " + this.apellidosPareja);
 	}
 
 	public String getDorsalDuo() {
-		return (this.dorsal.toString() + '-' + this.dorsalPareja.toString());
+		return (this.dorsal.toString() + '/' + this.dorsalPareja.toString());
 	}
 	
 }
