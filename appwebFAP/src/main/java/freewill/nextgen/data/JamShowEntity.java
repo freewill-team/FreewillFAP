@@ -383,6 +383,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	}
 
 	public String getNombreDuo() {
+<<<<<<< HEAD
 
         String[] arrOfStr = this.apellidos.split(" ", 2); 
 		String primerApellido = arrOfStr[0];
@@ -391,10 +392,13 @@ public class JamShowEntity implements Serializable, Cloneable {
 		String primerApellidoPareja = arrOfStPareja[0];
 	
 		return (this.nombre + " " + primerApellido + '-' + this.nombrePareja + " " + primerApellidoPareja);
+=======
+		return (this.nombre + " " + this.apellidos + '/' + this.nombrePareja + " " + this.apellidosPareja);
+>>>>>>> branch 'master' of https://github.com/freewill-team/FreewillFAP.git
 	}
 
 	public String getDorsalDuo() {
-		return (this.dorsal.toString() + '-' + this.dorsalPareja.toString());
+		return (this.dorsal.toString() + '/' + this.dorsalPareja.toString());
 	}
 
 	public String getNombreApellidosDuo() {

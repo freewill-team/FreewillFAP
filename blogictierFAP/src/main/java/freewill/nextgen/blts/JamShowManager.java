@@ -147,6 +147,7 @@ public class JamShowManager {
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<JamShowEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
+		System.out.println("JamShow List By competicion and categoria..." + competicion + "," + categoria);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
