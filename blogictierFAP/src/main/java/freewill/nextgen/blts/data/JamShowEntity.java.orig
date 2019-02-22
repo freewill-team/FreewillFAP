@@ -1,13 +1,23 @@
-package freewill.nextgen.data;
+package freewill.nextgen.blts.data;
 
 import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import freewill.nextgen.blts.BltAuditingEntityListener;
 
 /**
  * Session Bean implementation class JamShowEntity
  */
 @SuppressWarnings("serial")
+@Entity
+@Table(name = "JAMSHOWENTITY")
+@EntityListeners(BltAuditingEntityListener.class)
 public class JamShowEntity implements Serializable, Cloneable {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;				// ID
 	private String nombre;			// Nombre del Patinador
     private String apellidos;		// Apellidos
@@ -20,9 +30,6 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private String nombrePareja;
 	private String apellidosPareja;
 	private Integer dorsalPareja;
-	private final String nombreDuo;
-	private final String dorsalDuo;
-	private final String nombreApellidosDuo;
 	private int orden1=0;			// Puesto de salida del patinador 1a ronda
 	private int tecnicaJuez1=0;
 	private int tecnicaJuez2=0;
@@ -30,9 +37,6 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private int artisticaJuez1=0;
 	private int artisticaJuez2=0;
 	private int artisticaJuez3=0;
-	private int sincronizacionJuez1=0;
-	private int sincronizacionJuez2=0;
-	private int sincronizacionJuez3=0;
 	private float totalJuez1=0;
 	private float totalJuez2=0;
 	private float totalJuez3=0;
@@ -55,8 +59,6 @@ public class JamShowEntity implements Serializable, Cloneable {
     	// Void with no-args as requested for non-enhanced JPA entities
     	nombre = "";
     	apellidos = "";
-    	nombreDuo = "";
-    	dorsalDuo = "";
     	orden1 = 0;
     	clasificacionFinal = 0;
     }
@@ -306,8 +308,8 @@ public class JamShowEntity implements Serializable, Cloneable {
 		return PVTotal;
 	}
 
-	public void setPVTotal(float pVTotal) {
-		PVTotal = pVTotal;
+	public void setPVTotal(float totalPV) {
+		PVTotal = totalPV;
 	}
 
 	public float getPuntuacionTotal() {
@@ -325,84 +327,4 @@ public class JamShowEntity implements Serializable, Cloneable {
 	public void setSumaPonderada(float sumaPonderada) {
 		this.sumaPonderada = sumaPonderada;
 	}
-	
-	public Long getPatinadorPareja() {
-		return patinadorPareja;
-	}
-
-	public void setPatinadorPareja(Long patinadorPareja) {
-		this.patinadorPareja = patinadorPareja;
-	}
-
-	public String getNombrePareja() {
-		return nombrePareja;
-	}
-
-	public void setNombrePareja(String nombrePareja) {
-		this.nombrePareja = nombrePareja;
-	}
-
-	public String getApellidosPareja() {
-		return apellidosPareja;
-	}
-
-	public void setApellidosPareja(String apellidosPareja) {
-		this.apellidosPareja = apellidosPareja;
-	}
-
-	public Integer getDorsalPareja() {
-		return dorsalPareja;
-	}
-
-	public void setDorsalPareja(Integer dorsalPareja) {
-		this.dorsalPareja = dorsalPareja;
-	}
-
-	public int getSincronizacionJuez1() {
-		return sincronizacionJuez1;
-	}
-
-	public void setSincronizacionJuez1(int sincronizacionJuez1) {
-		this.sincronizacionJuez1 = sincronizacionJuez1;
-	}
-
-	public int getSincronizacionJuez2() {
-		return sincronizacionJuez2;
-	}
-
-	public void setSincronizacionJuez2(int sincronizacionJuez2) {
-		this.sincronizacionJuez2 = sincronizacionJuez2;
-	}
-
-	public int getSincronizacionJuez3() {
-		return sincronizacionJuez3;
-	}
-
-	public void setSincronizacionJuez3(int sincronizacionJuez3) {
-		this.sincronizacionJuez3 = sincronizacionJuez3;
-	}
-
-	public String getNombreDuo() {
-<<<<<<< HEAD
-
-        String[] arrOfStr = this.apellidos.split(" ", 2); 
-		String primerApellido = arrOfStr[0];
-		
-		String[] arrOfStPareja = this.apellidosPareja.split(" ", 2); 
-		String primerApellidoPareja = arrOfStPareja[0];
-	
-		return (this.nombre + " " + primerApellido + '-' + this.nombrePareja + " " + primerApellidoPareja);
-=======
-		return (this.nombre + " " + this.apellidos + '/' + this.nombrePareja + " " + this.apellidosPareja);
->>>>>>> branch 'master' of https://github.com/freewill-team/FreewillFAP.git
-	}
-
-	public String getDorsalDuo() {
-		return (this.dorsal.toString() + '/' + this.dorsalPareja.toString());
-	}
-
-	public String getNombreApellidosDuo() {
-		return this.nombre + " " + this.apellidos + '-' + this.nombrePareja + ' ' + this.apellidosPareja;
-	}
-	
 }

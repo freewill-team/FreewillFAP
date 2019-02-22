@@ -192,7 +192,6 @@ public class ClassicShowManager {
 					rec.setCategoria(inscripcion.getCategoria());
 					rec.setCompeticion(inscripcion.getCompeticion());
 					rec.setDorsal(inscripcion.getDorsal());
-					//rec.setClasificacionFinal(0);
 					rec.setCompany(userCompany);
 					
 					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
