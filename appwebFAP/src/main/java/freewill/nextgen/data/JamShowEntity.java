@@ -22,6 +22,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private Integer dorsalPareja;
 	private final String nombreDuo;
 	private final String dorsalDuo;
+	private final String nombreApellidosDuo;
 	private int orden1=0;			// Puesto de salida del patinador 1a ronda
 	private int tecnicaJuez1=0;
 	private int tecnicaJuez2=0;
@@ -394,6 +395,10 @@ public class JamShowEntity implements Serializable, Cloneable {
 
 	public String getDorsalDuo() {
 		return (this.dorsal.toString() + '-' + this.dorsalPareja.toString());
+	}
+
+	public String getNombreApellidosDuo() {
+		return this.nombre + " " + this.apellidos + '-' + this.nombrePareja + ' ' + this.apellidosPareja;
 	}
 	
 }
