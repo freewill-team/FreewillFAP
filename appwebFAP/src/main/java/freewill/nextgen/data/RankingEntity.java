@@ -25,6 +25,10 @@ public class RankingEntity implements Serializable, Cloneable {
 	private int puntos2;
 	private int puntos3;
 	private int puntos4;
+	private String competicion1;
+	private String competicion2;
+	private String competicion3;
+	private String competicion4;
 	private int orden;
 	
     /**
@@ -51,7 +55,7 @@ public class RankingEntity implements Serializable, Cloneable {
     {
     	return  id + ","+
     			nombre + " " + apellidos + "," +
-    			puntuacion;
+    			puntuacion + "," + circuito;
     }
     
     @Override
@@ -211,7 +215,7 @@ public class RankingEntity implements Serializable, Cloneable {
 	public void setPuntos4(int puntos4) {
 		this.puntos4 = puntos4;
 	}
-
+	
 	public String getNombrePareja() {
 		return nombrePareja;
 	}
@@ -227,5 +231,37 @@ public class RankingEntity implements Serializable, Cloneable {
 	public void setApellidosPareja(String apellidosPareja) {
 		this.apellidosPareja = apellidosPareja;
 	}
-		
+
+	public String getCompeticion1() {
+		return competicion1;
+	}
+
+	public void setCompeticion1(String competicion1) {
+		this.competicion1 = competicion1;
+	}
+
+	public String getCompeticion2() {
+		return competicion2;
+	}
+
+	public void setCompeticion2(String competicion2) {
+		this.competicion2 = competicion2;
+	}
+
+	public String getCompeticion3() {
+		return competicion3;
+	}
+
+	public void setCompeticion3(String competicion3) {
+		this.competicion3 = competicion3;
+	}
+
+	public String getCompeticion4() {
+		return competicion4;
+	}
+
+	public void setCompeticion4(String competicion4) {
+		this.competicion4 = competicion4;
+	}
+	
 }

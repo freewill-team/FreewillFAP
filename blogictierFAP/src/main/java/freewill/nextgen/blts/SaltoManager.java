@@ -19,7 +19,7 @@ import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PuntuacionesRepository;
-import freewill.nextgen.blts.daos.RankingRepository;
+import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.SaltoIntentoRepository;
 import freewill.nextgen.blts.daos.SaltoRepository;
 import freewill.nextgen.blts.daos.UserRepository;
@@ -29,6 +29,7 @@ import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.SaltoEntity;
 import freewill.nextgen.blts.data.SaltoIntentoEntity;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.SaltoIntentoEntity.ResultEnum;
 import freewill.nextgen.blts.entities.UserEntity;
 
@@ -69,7 +70,7 @@ public class SaltoManager {
 	SaltoIntentoRepository saltosrepo;
 	
 	@Autowired
-	RankingRepository rankingrepo;
+	RankingAbsRepository rankingrepo;
 
 	@RequestMapping("/create")
 	public SaltoEntity add(@RequestBody SaltoEntity rec) throws Exception {
@@ -259,7 +260,7 @@ public class SaltoManager {
 				rec.setDorsal(inscripcion.getDorsal());
 				
 				rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-						competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+						ModalidadEnum.JUMP));
 				System.out.println("Creating "+rec+" Orden "+rec.getOrden());
 				
 				rec.setClasificacion(rec.getOrden());
@@ -307,7 +308,7 @@ public class SaltoManager {
 			rec.setDorsal(inscripcion.getDorsal());
 			
 			rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+					ModalidadEnum.JUMP));
 			System.out.println("Mocking "+rec+" Orden "+rec.getOrden());
 			
 			rec.setClasificacion(rec.getOrden());
@@ -417,7 +418,7 @@ public class SaltoManager {
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
-		if(competi!=null){
+		if(competi!=null && competi.getActive()){
 			for(SaltoEntity rec:recs){
 				ParticipanteEntity inscripcion = inscripcionesrepo.findByPatinadorAndCategoriaAndCompeticion(
 						rec.getPatinador(), categoria, competicion);

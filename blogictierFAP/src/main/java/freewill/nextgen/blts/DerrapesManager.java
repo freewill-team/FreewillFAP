@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PuntuacionesRepository;
-import freewill.nextgen.blts.daos.RankingRepository;
+import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.DerrapesRepository;
@@ -25,6 +25,7 @@ import freewill.nextgen.blts.daos.DerrapesRondaRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.DerrapesRondaEntity;
 import freewill.nextgen.blts.data.DerrapesRondaEntity.EliminatoriaEnum;
 import freewill.nextgen.blts.data.CircuitoEntity;
@@ -69,7 +70,7 @@ public class DerrapesManager {
 	UserRepository userrepo;
 	
 	@Autowired
-	RankingRepository rankingrepo;
+	RankingAbsRepository rankingrepo;
 
 	@RequestMapping("/create")
 	public DerrapesEntity add(@RequestBody DerrapesEntity rec) throws Exception {
@@ -165,7 +166,7 @@ public class DerrapesManager {
 				rec.setDorsal(inscripcion.getDorsal());
 				
 				rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-						competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+						ModalidadEnum.SLIDE));
 				System.out.println("Creating "+rec+" Orden "+rec.getOrden());
 				
 				rec.setClasificacion(rec.getOrden());
@@ -212,7 +213,7 @@ public class DerrapesManager {
 			rec.setDorsal(inscripcion.getDorsal());
 			
 			rec.setOrden(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+					ModalidadEnum.SLIDE));
 			System.out.println("Mocking "+rec+" Orden "+rec.getOrden());
 			
 			rec.setClasificacion(rec.getOrden());
@@ -341,7 +342,7 @@ public class DerrapesManager {
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
-		if(competi!=null){
+		if(competi!=null && competi.getActive()){
 			for(DerrapesEntity rec:recs){
 				ParticipanteEntity inscripcion = inscripcionesrepo.findByPatinadorAndCategoriaAndCompeticion(
 						rec.getPatinador(), categoria, competicion);

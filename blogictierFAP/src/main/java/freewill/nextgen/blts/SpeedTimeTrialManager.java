@@ -20,7 +20,7 @@ import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ConfigRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PuntuacionesRepository;
-import freewill.nextgen.blts.daos.RankingRepository;
+import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.SpeedKOSystemRepository;
 import freewill.nextgen.blts.daos.SpeedTimeTrialRepository;
 import freewill.nextgen.blts.daos.UserRepository;
@@ -32,6 +32,7 @@ import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.SpeedKOSystemEntity;
 import freewill.nextgen.blts.data.SpeedKOSystemEntity.EliminatoriaEnum;
 import freewill.nextgen.blts.data.SpeedTimeTrialEntity;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
@@ -71,7 +72,7 @@ public class SpeedTimeTrialManager {
 	UserRepository userrepo;
 	
 	@Autowired
-	RankingRepository rankingrepo;
+	RankingAbsRepository rankingrepo;
 	
 	@Autowired
 	ConfigRepository configrepo;
@@ -210,7 +211,7 @@ public class SpeedTimeTrialManager {
 				rec.setDorsal(inscripcion.getDorsal());
 				
 				rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-						competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+						ModalidadEnum.SPEED));
 				System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 				
 				rec.setOrden2(rec.getOrden1());
@@ -261,7 +262,7 @@ public class SpeedTimeTrialManager {
 			rec.setDorsal(inscripcion.getDorsal());
 			
 			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+					ModalidadEnum.SPEED));
 			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
 			
 			rec.setOrden2(rec.getOrden1());
@@ -515,7 +516,7 @@ public class SpeedTimeTrialManager {
 		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
-		if(competi!=null){
+		if(competi!=null && competi.getActive()){
 			for(SpeedTimeTrialEntity rec:output){
 				ParticipanteEntity inscripcion = inscripcionesrepo.findByPatinadorAndCategoriaAndCompeticion(
 						rec.getPatinador(), categoria, competicion);

@@ -4,30 +4,27 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import freewill.nextgen.blts.BltAuditingEntityListener;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 
 /**
  * Session Bean implementation class PuntuacionesEntity
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "RANKINGENTITY")
+@Table(name = "RANKINGABSOLUTOENTITY")
 @EntityListeners(BltAuditingEntityListener.class)
-public class RankingEntity implements Serializable, Cloneable {
+public class RankingAbsEntity implements Serializable, Cloneable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;				// ID
 	private String nombre;			// Nombre del Patinador
     private String apellidos;		// Apellidos
-    private String nombrePareja;	// Nombre del Patinador
-    private String apellidosPareja;	// Apellidos
     private Long club;				// Id del Club al que pertenece
     private String clubStr;			// Club al que pertenece
 	private Long company;			// Company the project belongs to
 	private Long patinador;
-	private Long circuito;
-	private Long competicion;
-	private Long categoria;
+	private ModalidadEnum modalidad;
 	private int puntuacion;			// Puntuacion acumulada obtenida
 	private int puntos1;
 	private int puntos2;
@@ -43,13 +40,11 @@ public class RankingEntity implements Serializable, Cloneable {
     /**
      * Default constructor. 
      */
-	public RankingEntity(){
+	public RankingAbsEntity(){
     	// Void with no-args as requested for non-enhanced JPA entities
     	//id = 0;
 		nombre = "";
     	apellidos = "";
-    	nombrePareja = "";
-    	apellidosPareja = "";
     	clubStr = "";
     	puntuacion = 0;
     	orden = 0;
@@ -57,6 +52,10 @@ public class RankingEntity implements Serializable, Cloneable {
     	puntos2 = 0;
     	puntos3 = 0;
     	puntos4 = 0;
+    	competicion1 = "";
+    	competicion2 = "";
+    	competicion3 = "";
+    	competicion4 = "";
     	//company = null;
     }
     
@@ -64,7 +63,7 @@ public class RankingEntity implements Serializable, Cloneable {
     {
     	return  id + ","+
     			nombre + " " + apellidos + "," +
-    			puntuacion + "," + circuito;
+    			puntuacion;
     }
     
     @Override
@@ -76,8 +75,8 @@ public class RankingEntity implements Serializable, Cloneable {
 			return false;
 		}
 
-		if (obj instanceof RankingEntity && obj.getClass().equals(getClass())) {
-			return this.id.equals(((RankingEntity) obj).id);
+		if (obj instanceof RankingAbsEntity && obj.getClass().equals(getClass())) {
+			return this.id.equals(((RankingAbsEntity) obj).id);
 		}
 
 		return false;
@@ -91,8 +90,8 @@ public class RankingEntity implements Serializable, Cloneable {
 	}
 
 	@Override
-	public RankingEntity clone() throws CloneNotSupportedException {
-		return (RankingEntity) super.clone();
+	public RankingAbsEntity clone() throws CloneNotSupportedException {
+		return (RankingAbsEntity) super.clone();
 	}
     
     public void setId(long id)
@@ -153,36 +152,12 @@ public class RankingEntity implements Serializable, Cloneable {
 		this.patinador = patinador;
 	}
 
-	public Long getCompeticion() {
-		return competicion;
-	}
-
-	public void setCompeticion(Long competicion) {
-		this.competicion = competicion;
-	}
-
-	public Long getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Long categoria) {
-		this.categoria = categoria;
-	}
-
 	public int getPuntuacion() {
 		return puntuacion;
 	}
 
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
-	}
-
-	public Long getCircuito() {
-		return circuito;
-	}
-
-	public void setCircuito(Long circuito) {
-		this.circuito = circuito;
 	}
 
 	public int getOrden() {
@@ -224,21 +199,13 @@ public class RankingEntity implements Serializable, Cloneable {
 	public void setPuntos4(int puntos4) {
 		this.puntos4 = puntos4;
 	}
-	
-	public String getNombrePareja() {
-		return nombrePareja;
+
+	public ModalidadEnum getModalidad() {
+		return modalidad;
 	}
 
-	public void setNombrePareja(String nombrePareja) {
-		this.nombrePareja = nombrePareja;
-	}
-
-	public String getApellidosPareja() {
-		return apellidosPareja;
-	}
-
-	public void setApellidosPareja(String apellidosPareja) {
-		this.apellidosPareja = apellidosPareja;
+	public void setModalidad(ModalidadEnum modalidad) {
+		this.modalidad = modalidad;
 	}
 
 	public String getCompeticion1() {

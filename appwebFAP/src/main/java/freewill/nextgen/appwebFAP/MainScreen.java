@@ -196,7 +196,7 @@ public class MainScreen extends HorizontalLayout {
         }
         
 	    // Section Ranking - Todos los demás usuarios
-        menu.addTitle(Messages.get().getKey("ranking"), FontAwesome.USERS);
+        menu.addTitle(Messages.get().getKey("resultados"), FontAwesome.USERS);
         
 	        // Resultados Competición en Curso
 	    	ResultadosCrudView resultadosView = new ResultadosCrudView();

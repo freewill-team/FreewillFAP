@@ -1,7 +1,6 @@
 package freewill.nextgen.blts.daos;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +25,7 @@ public interface RankingRepository extends CrudRepository<RankingEntity, Long> {
 	Long getMaxId();
 	long countByCircuitoAndCategoria(Long circuito, Long categoria);
 	
+	/* To be deleted
 	default int getSortedRanking(Long patinador, Long circuito, Long categoria, Long circuitoUltimoAnno){
 		Random numRandom = new Random();
 		RankingEntity ranking = findByPatinadorAndCircuitoAndCategoria(patinador, circuito, categoria);
@@ -39,6 +39,6 @@ public interface RankingRepository extends CrudRepository<RankingEntity, Long> {
 			else
 				return 20000 - numRandom.nextInt(500);
 		}
-	}
+	}*/
 	
 }

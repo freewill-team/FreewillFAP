@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PuntuacionesRepository;
-import freewill.nextgen.blts.daos.RankingRepository;
+import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.JamShowRepository;
 import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.JamShowEntity;
 import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.ClassicShowEntity;
@@ -64,7 +65,7 @@ public class JamShowManager {
 	UserRepository userrepo;
 	
 	@Autowired
-	RankingRepository rankingrepo;
+	RankingAbsRepository rankingrepo;
 
 	@RequestMapping("/create")
 	public JamShowEntity add(@RequestBody JamShowEntity rec) throws Exception {
@@ -200,7 +201,7 @@ public class JamShowManager {
 					rec.setCompany(userCompany);
 					
 					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-							competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+							ModalidadEnum.JAM));
 					System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 					
 					repository.save(rec);
@@ -244,7 +245,7 @@ public class JamShowManager {
 			rec.setDorsal(inscripcion.getDorsal());
 			
 			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-					competi.getCircuito(), categoria, circuitoUltimoAnno.getId()));
+					ModalidadEnum.JAM));
 			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
 			
 			rec.setClasificacionFinal(rec.getOrden1());
@@ -389,10 +390,9 @@ public class JamShowManager {
 		
 		recs = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
 
-			
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
-		if(competi!=null){
+		if(competi!=null && competi.getActive()){
 			for(JamShowEntity rec:recs){
 				ParticipanteEntity inscripcion = inscripcionesrepo.findByPatinadorAndCategoriaAndCompeticion(
 						rec.getPatinador(), categoria, competicion);
@@ -417,7 +417,6 @@ public class JamShowManager {
 				}
 			}
 		}
-			
 		return recs;
 	}
 	
@@ -498,6 +497,7 @@ public class JamShowManager {
 			repository.save(rec);
 		}
 	}
+	
 	private void setRankingJuez2(Long competicion, Long categoria)
 	{
 		int posicion = 0;
@@ -535,6 +535,7 @@ public class JamShowManager {
 			repository.save(rec);
 		}
 	}
+	
 	private void setRankingJuez3(Long competicion, Long categoria)
 	{
 		int posicion = 0;
@@ -572,6 +573,7 @@ public class JamShowManager {
 			repository.save(rec);
 		}
 	}
+	
 	private void CalculaClasificacionFinal(Long competicion, Long categoria,  float[][]PV)
 	{
 
@@ -658,22 +660,6 @@ public class JamShowManager {
 			@PathVariable Long categoria) throws Exception {
 		System.out.println("Deleting JamShow By competicion y categoria..."
 			+competicion+","+categoria);
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//UserEntity user = userrepo.findByLoginname(auth.getName());
-		List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
-				competicion, categoria);
-		for(JamShowEntity rec:recs){
-			repository.delete(rec);
-		}
-		return true;
-	}
-	
-	@RequestMapping("/rankingValido/{competicion}/{categoria}")
-	public boolean rankingValido(@PathVariable Long competicion,
-			@PathVariable Long categoria) throws Exception {
-		System.out.println("Checking rankings By competicion y categoria..."
-			+competicion+","+categoria);
-
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
 		List<JamShowEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(
