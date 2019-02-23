@@ -71,7 +71,7 @@ public class UserManager {
 			String title = Messages.get().getKey("accountcreated", System.getProperty("LOCALE"));
 			String message = String.format(
 					Messages.get().getKey("accountcreatedmsg", System.getProperty("LOCALE")),
-					rec.getLoginname(), newpassword);
+					rec.getLoginname(), newpassword, "http://137.74.195.144:8895/");
 			if(!rec.getEmail().equals(""))
 				RtdbDataService.get().pushEmail(new EmailEntity(
 					rec.getEmail(),

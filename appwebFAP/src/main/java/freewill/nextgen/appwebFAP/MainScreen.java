@@ -121,6 +121,10 @@ public class MainScreen extends HorizontalLayout {
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
 		    
+		    // Ranking
+        	RankingCrudView rankingView = new RankingCrudView();
+        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.CHILD);
+		    
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
@@ -199,8 +203,8 @@ public class MainScreen extends HorizontalLayout {
 	    	menu.addView(resultadosView, resultadosView.VIEW_NAME, FontAwesome.CHILD);
     	
         	// Ranking
-        	RankingCrudView rankingView = new RankingCrudView();
-        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.CHILD);
+        	//RankingCrudView rankingView = new RankingCrudView();
+        	//menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.CHILD);
         	
         	// Pre-Inscripción
         	PreinscripcionCrudView preinscripcionView = new PreinscripcionCrudView(InscripcionEnum.PREINSCRIPCION);
