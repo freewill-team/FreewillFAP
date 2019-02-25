@@ -1,6 +1,5 @@
-package freewill.nextgen.ranking;
+package freewill.nextgen.rankingabsoluto;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -20,11 +19,10 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
-import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.PatinadorEntity;
-import freewill.nextgen.data.RankingEntity;
+import freewill.nextgen.data.RankingAbsEntity;
+import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
@@ -37,18 +35,18 @@ import freewill.nextgen.patinador.SelectPatinadorDialog;
  * CSS rules.
  */
 @SuppressWarnings("serial")
-public class RankingForm extends RankingFormDesign {
+public class RankingAbsForm extends RankingAbsFormDesign {
 
-    private BeanFieldGroup<RankingEntity> fieldGroup;
-    private RankingCrudLogic viewLogic;
+    private BeanFieldGroup<RankingAbsEntity> fieldGroup;
+    private RankingAbsCrudLogic viewLogic;
     
     @SuppressWarnings("rawtypes")
-    public RankingForm(RankingCrudLogic logic) {
+    public RankingAbsForm(RankingAbsCrudLogic logic) {
         super();
         addStyleName("product-form");
         viewLogic = logic;
         
-        fieldGroup = new BeanFieldGroup<RankingEntity>(RankingEntity.class); 
+        fieldGroup = new BeanFieldGroup<RankingAbsEntity>(RankingAbsEntity.class); 
         fieldGroup.bindMemberFields(this);
         
         // perform validation and enable/disable buttons while editing
@@ -75,7 +73,7 @@ public class RankingForm extends RankingFormDesign {
             public void postCommit(CommitEvent commitEvent)
                     throws CommitException {
             	//System.out.println("Entrando en postCommit...");
-				RankingEntity rec = fieldGroup.getItemDataSource().getBean();
+				RankingAbsEntity rec = fieldGroup.getItemDataSource().getBean();
 				if(viewLogic!=null){
 					viewLogic.saveRecord(rec);
 				}
@@ -117,7 +115,7 @@ public class RankingForm extends RankingFormDesign {
                     @Override
                     public void buttonClick(final ClickEvent event) {
             			cd.close();
-            			RankingEntity rec = fieldGroup.getItemDataSource().getBean();
+            			RankingAbsEntity rec = fieldGroup.getItemDataSource().getBean();
             			if(viewLogic!=null){
             				viewLogic.deleteRecord(rec);
             			}
@@ -127,37 +125,10 @@ public class RankingForm extends RankingFormDesign {
             }
         });
         
-        /*try{
-        	// Rellenar ComboBox Competicion
-        	competicion.removeAllItems();
-            Collection<CompeticionEntity> recs = BltClient.get().getEntities(CompeticionEntity.class,
-    				EntryPoint.get().getAccessControl().getTokenKey());
-    		for (CompeticionEntity s : recs) {
-    			competicion.addItem(s.getId());
-    			competicion.setItemCaption(s.getId(), s.getNombre());
-    	    }
-    		competicion.setRequired(true);
+        for (ModalidadEnum s : ModalidadEnum.values()) {
+            modalidad.addItem(s);
         }
-        catch(Exception e){
-        	e.printStackTrace();
-        	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
-        }*/
-        
-        try{
-        	// Rellenar ComboBox Categoria
-        	categoria.removeAllItems();
-            Collection<CategoriaEntity> recs = BltClient.get().getEntities(CategoriaEntity.class,
-    				EntryPoint.get().getAccessControl().getTokenKey());
-    		for (CategoriaEntity s : recs) {
-    			categoria.addItem(s.getId());
-    			categoria.setItemCaption(s.getId(), s.getNombre());
-    	    }
-    		categoria.setRequired(true);
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
-        }
+        modalidad.setRequired(true);
         
         patinBtn.setCaption(Messages.get().getKey("patinador"));
         patinBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -189,13 +160,13 @@ public class RankingForm extends RankingFormDesign {
         
     }
     
-	public void editRecord(RankingEntity rec) {
+	public void editRecord(RankingAbsEntity rec) {
         if (rec == null) {
-            rec = new RankingEntity();
-            fieldGroup.setItemDataSource(new BeanItem<RankingEntity>(rec));
+            rec = new RankingAbsEntity();
+            fieldGroup.setItemDataSource(new BeanItem<RankingAbsEntity>(rec));
             return;
         }
-        fieldGroup.setItemDataSource(new BeanItem<RankingEntity>(rec));
+        fieldGroup.setItemDataSource(new BeanItem<RankingAbsEntity>(rec));
         
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -206,8 +177,6 @@ public class RankingForm extends RankingFormDesign {
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
-        //competicion.setValue(rec.getCompeticion());
-        categoria.setValue(rec.getCategoria());
         formHasChanged();
     }
 	
@@ -217,9 +186,9 @@ public class RankingForm extends RankingFormDesign {
 
         // only products that have been saved should be removable
         boolean canEditRecord = false;
-        BeanItem<RankingEntity> item = fieldGroup.getItemDataSource();
+        BeanItem<RankingAbsEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
-        	RankingEntity rec = item.getBean();
+        	RankingAbsEntity rec = item.getBean();
         	if(rec!=null){
         		canEditRecord = (rec.getId() == null);
         	}

@@ -3,7 +3,6 @@ package freewill.nextgen.appwebFAP;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -27,7 +26,6 @@ import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ConfigEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
-import freewill.nextgen.data.RankingAbsEntity;
 import freewill.nextgen.dorsal.DorsalCrudView;
 import freewill.nextgen.genericCrud.GenericCrudView;
 import freewill.nextgen.hmi.common.AboutView;
@@ -39,6 +37,7 @@ import freewill.nextgen.patinador.PatinadorForm;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 import freewill.nextgen.ranking.RankingCrudView;
+import freewill.nextgen.rankingabsoluto.RankingAbsCrudView;
 import freewill.nextgen.resultados.ResultadosCrudView;
 //import freewill.nextgen.mail.MailServerCrudView;
 //import freewill.nextgen.support.SupportCrudView;
@@ -121,16 +120,6 @@ public class MainScreen extends HorizontalLayout {
 		       		"PERMISSION", puntuaciones, PuntuacionesEntity.class,
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
-		    
-        	// Ranking Absoluto
-        	String ranking = Messages.get().getKey("rankingabs");
-		    GenericCrudView<RankingAbsEntity> rankingCrud = new GenericCrudView<RankingAbsEntity>(
-		       		"PERMISSION", puntuaciones, RankingAbsEntity.class,
-		       		"id", "patinador", "nombre", "apellidos", "modalidad", "puntuacion",
-		       		"puntos1", "competicion1", "puntos2", "competicion2", 
-		       		"puntos3", "competicion3", "puntos4", "competicion4"
-		       		);
-		    menu.addView(rankingCrud, ranking, FontAwesome.SORT_DESC);
         	
         }
         
@@ -165,9 +154,9 @@ public class MainScreen extends HorizontalLayout {
 		    PreinscripcionCrudView inscripcionView = new PreinscripcionCrudView(InscripcionEnum.INSCRIPCION);
         	menu.addView(inscripcionView , inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
 		    
-        	 // Ranking
-        	RankingCrudView rankingView = new RankingCrudView();
-        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.SORT);
+        	// Ranking Absoluto
+        	RankingAbsCrudView rankingabsView = new RankingAbsCrudView();
+        	menu.addView(rankingabsView, rankingabsView.VIEW_NAME, FontAwesome.SORT_NUMERIC_ASC);
         	
         }
         
@@ -213,9 +202,9 @@ public class MainScreen extends HorizontalLayout {
 	    	ResultadosCrudView resultadosView = new ResultadosCrudView();
 	    	menu.addView(resultadosView, resultadosView.VIEW_NAME, FontAwesome.CHILD);
     	
-        	// Ranking
-        	//RankingCrudView rankingView = new RankingCrudView();
-        	//menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.CHILD);
+	    	// Ranking del Circuito
+        	RankingCrudView rankingView = new RankingCrudView();
+        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.SORT_ALPHA_ASC);
         	
         	// Pre-Inscripción
         	PreinscripcionCrudView preinscripcionView = new PreinscripcionCrudView(InscripcionEnum.PREINSCRIPCION);

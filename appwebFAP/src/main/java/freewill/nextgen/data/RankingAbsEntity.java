@@ -18,6 +18,7 @@ public class RankingAbsEntity implements Serializable, Cloneable {
 	private Long company;			// Company the project belongs to
 	private Long patinador;
 	private ModalidadEnum modalidad;
+	private String categoriaStr;
 	private int puntuacion;			// Puntuacion acumulada obtenida
 	private int puntos1;
 	private int puntos2;
@@ -48,6 +49,7 @@ public class RankingAbsEntity implements Serializable, Cloneable {
     	competicion2 = "";
     	competicion3 = "";
     	competicion4 = "";
+    	categoriaStr = "";
     	//company = null;
     }
     
@@ -230,6 +232,14 @@ public class RankingAbsEntity implements Serializable, Cloneable {
 
 	public void setCompeticion4(String competicion4) {
 		this.competicion4 = competicion4;
+	}
+
+	public String getCategoriaStr() {
+		return categoriaStr;
+	}
+
+	public void setCategoriaStr(String categoriaStr) {
+		this.categoriaStr = categoriaStr;
 	}
 	
 }

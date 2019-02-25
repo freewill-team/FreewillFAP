@@ -199,11 +199,14 @@ public class CompeticionManager {
         			rec.setCompeticion4("");
         			rankingrepo.save(rec);
         			//System.out.println("  Reseting..."+rec);
+        			if(rec.getCategoriaStr().contains("Mixto"))
+        				rankingrepo.delete(rec);
         		}
             	// Procesa valores para cada modalidad
             	for(ModalidadEnum modalidad:ModalidadEnum.values()){
             		generateByModalidad(modalidad, circuito);
             	}
+            	
             	System.out.println("CalculateRankingThread thread finished.");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -268,6 +271,8 @@ public class CompeticionManager {
     				System.out.println("Hay un registro huerfano = "+inscripcion);
     				continue;
     			}
+    			//System.out.println("      Patinador="+inscripcion.getId()+" CatStd="+categoriaStd);
+    			
     			// Crea o Salva el registro de ranking
     			RankingEntity rec = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
     					inscripcion.getPatinador(), circuito, categoriaStd.getId());
@@ -280,7 +285,8 @@ public class CompeticionManager {
     				rec.setClub(inscripcion.getClub());
     				rec.setClubStr(inscripcion.getClubStr());
     				rec.setCompany(user.getCompany());
-    				rec.setCategoria(inscripcion.getId());
+    				rec.setCategoria(categoriaStd.getId());
+    				rec.setCategoriaStr(categoriaStd.getNombre());
     				rec.setCircuito(circuito);
     				//rec.setPuntuacion(inscripcion.getPuntuacion());
     				//rec.setPuntos1(0);
@@ -309,7 +315,7 @@ public class CompeticionManager {
 				}
     			rec.setPuntuacion(getBest3Of4(rec));
     			rankingrepo.save(rec);
-				System.out.println("  Saving..."+rec);
+				System.out.println("      Saving..."+rec);
     		}
 		}
     	
@@ -408,19 +414,29 @@ public class CompeticionManager {
     			System.out.println("  Procesando Competicion "+rec);
     			for(CategoriaEntity categoria:categorias){
     				System.out.println("    Procesando Categoria "+categoria);
-        			saveRankingByCompeticionAndCategoria(i, rec, categoria);
+        			saveRankingByCompeticionAndCategoria(i, rec, categoria, categorias);
     			}
         		i++;
     		}	
     	}
 
 		private void saveRankingByCompeticionAndCategoria(int i,
-				CompeticionEntity competi, CategoriaEntity categoria) {
+				CompeticionEntity competi, CategoriaEntity categoria,
+				List<CategoriaEntity> categorias) {
 			List<ParticipanteEntity> inscripciones = 
 					inscripcionesrepo.findByCompeticionAndCategoria(
 							competi.getId(), categoria.getId());
 			// Acumula las puntuaciones conseguidas
     		for(ParticipanteEntity inscripcion:inscripciones){
+    			// Obtiene la categoria estandard para este patinador
+    			CategoriaEntity categoriaStd = getCategoriaStd(categorias,
+    					inscripcion.getPatinador(), categoria.getModalidad());
+    			if(categoriaStd==null){
+    				System.out.println("Hay un registro huerfano = "+inscripcion);
+    				continue;
+    			}
+    			//System.out.println("      Patinador="+inscripcion.getId()+" CatStd="+categoriaStd);
+    			
     			// Crea o salva el registro de Ranking
     			RankingAbsEntity rec = rankingabsrepo.findByPatinadorAndModalidad(
     					inscripcion.getPatinador(), categoria.getModalidad());
@@ -434,6 +450,7 @@ public class CompeticionManager {
     				rec.setClubStr(inscripcion.getClubStr());
     				rec.setCompany(user.getCompany());
     				rec.setModalidad(categoria.getModalidad());
+    				rec.setCategoriaStr(categoriaStd.getNombre());
     				//rec.setPuntuacion(inscripcion.getPuntuacion());
     				//rec.setPuntos1(0);
     				//rec.setPuntos2(0);

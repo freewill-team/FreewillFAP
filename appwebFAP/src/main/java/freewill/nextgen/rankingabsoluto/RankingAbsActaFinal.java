@@ -1,4 +1,4 @@
-package freewill.nextgen.ranking;
+package freewill.nextgen.rankingabsoluto;
 
 import java.io.File;
 import java.util.List;
@@ -24,65 +24,38 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.data.ParticipanteEntity;
-import freewill.nextgen.data.RankingEntity;
+import freewill.nextgen.data.RankingAbsEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class RankingActaFinal extends CssLayout {
+public class RankingAbsActaFinal extends CssLayout {
 	
-	public final String VIEW_NAME = Messages.get().getKey("rankingacta");
-	private Long circuito = null;
-	private String circuitoStr = "";
-	private Long categoria = null;
-	private String categoriaStr = "";
-	private GenericGrid<RankingEntity> grid;
-	private RankingCrudLogic viewLogic;
-	private RankingCrudView parent = null;
-	private RankingForm form;
-	private CategoriaEntity category = null;
+	public final String VIEW_NAME = Messages.get().getKey("rankingabsacta");
+	private ModalidadEnum modalidad;
+	private GenericGrid<RankingAbsEntity> grid;
+	private RankingAbsCrudLogic viewLogic;
+	private RankingAbsCrudView parent = null;
+	private RankingAbsForm form;
 
-	public RankingActaFinal(Long categoria, String labelcategoria, Long circuito, 
-			String circuitolabel, RankingCrudView parent){
-		this.circuito = circuito;
-		this.circuitoStr = circuitolabel;
-		this.categoria = categoria;
-		this.categoriaStr = labelcategoria;
+	public RankingAbsActaFinal(ModalidadEnum modalidad, RankingAbsCrudView parent){
+		this.modalidad = modalidad;
 		this.parent = parent;
 		setSizeFull();
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar();
 		
-		viewLogic = new RankingCrudLogic(this);
+		viewLogic = new RankingAbsCrudLogic(this);
 		
-		category = viewLogic.findCategoria(""+categoria);
-		
-		switch(category.getModalidad()){
-		case SLIDE:
-		case BATTLE:	
-		case CLASSIC:
-		case JUMP:
-		case SPEED:
-			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
-				       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion",
-				       //"categoriaStr",
-				       "puntos1", "competicion1", "puntos2", "competicion2", 
-			       		"puntos3", "competicion3", "puntos4", "competicion4"
-				       );
-			break;
-		case JAM:
-			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
-				       "id", "orden", "nombre", "apellidos", "nombrePareja", "apellidosPareja", 
-				       "clubStr", "puntuacion", 
-				       //"categoriaStr",
-				       "puntos1", "competicion1", "puntos2", "competicion2", 
-			       		"puntos3", "competicion3", "puntos4", "competicion4"
-			       		);
-			break;
-		}
-		
+		grid = new GenericGrid<RankingAbsEntity>(RankingAbsEntity.class,
+				"id", "orden", "nombre", "apellidos", "clubStr", "puntuacion",
+				"categoriaStr",
+				"puntos1", "competicion1", "puntos2", "competicion2", 
+			    "puntos3", "competicion3", "puntos4", "competicion4"
+				);
 		grid.addSelectionListener(new SelectionListener() {
 	        @Override
 	        public void select(SelectionEvent event) {
@@ -90,7 +63,7 @@ public class RankingActaFinal extends CssLayout {
 	        }
 	    });
 		
-		form = new RankingForm(viewLogic);
+		form = new RankingAbsForm(viewLogic);
 		
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -104,7 +77,7 @@ public class RankingActaFinal extends CssLayout {
 	    addComponent(barAndGridLayout);
 	    addComponent(form);
 	    
-	    viewLogic.initGrid(this.circuito, this.categoria);	
+	    viewLogic.initGrid(this.modalidad);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -126,13 +99,13 @@ public class RankingActaFinal extends CssLayout {
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
     		File file = Export2Xls.get().createXLS(
-    				(List<RankingEntity>)grid.getContainerDataSource().getItemIds(),
-    				RankingEntity.class,
-    				("Ranking "+circuitoStr+" / "+categoriaStr).toUpperCase(),
+    				(List<RankingAbsEntity>)grid.getContainerDataSource().getItemIds(),
+    				RankingAbsEntity.class,
+    				("Ranking Absoluto "+modalidad).toUpperCase(),
     				"orden", "nombre", "apellidos", "clubStr", "puntuacion",
 				    "categoriaStr",
 				    "puntos1", "competicion1", "puntos2", "competicion2", 
-			        "puntos3", "competicion3", "puntos4", "competicion4"
+			       	"puntos3", "competicion3", "puntos4", "competicion4"
     				);
     		if(file!=null){
     			FileResource resource = new FileResource(file);
@@ -149,9 +122,8 @@ public class RankingActaFinal extends CssLayout {
 			@Override
             public void buttonClick(ClickEvent event) {
             	try{
-            		RankingEntity rec = new RankingEntity();
-            		rec.setCategoria(categoria);
-    	        	rec.setCircuito(circuito);
+            		RankingAbsEntity rec = new RankingAbsEntity();
+            		rec.setModalidad(modalidad);
     	        	editRecord(rec);
             	}
             	catch(Exception e){
@@ -160,7 +132,7 @@ public class RankingActaFinal extends CssLayout {
             }
         });
         
-        Label competicionLabel = new Label("Ranking "+circuitoStr+" / "+categoriaStr);
+        Label competicionLabel = new Label("Ranking Absoluto "+modalidad);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
@@ -190,24 +162,24 @@ public class RankingActaFinal extends CssLayout {
         Notification.show(msg, Type.TRAY_NOTIFICATION);
     }
 
-    public void showRecords(List<RankingEntity> records) {
+    public void showRecords(List<RankingAbsEntity> records) {
         grid.setRecords(records);
     }
     
-    public void refreshRecord(RankingEntity rec) {
+    public void refreshRecord(RankingAbsEntity rec) {
         grid.refresh(rec);
         grid.scrollTo(rec);
     }
 
-    public void removeRecord(RankingEntity rec) {
+    public void removeRecord(RankingAbsEntity rec) {
         grid.remove(rec);
     }
     
-    public RankingEntity getSelectedRow() {
+    public RankingAbsEntity getSelectedRow() {
         return grid.getSelectedRow();
     }
 
-	public void editRecord(RankingEntity rec) {
+	public void editRecord(RankingAbsEntity rec) {
         if (rec != null) {
             form.addStyleName("visible");
             form.setEnabled(true);
@@ -222,7 +194,7 @@ public class RankingActaFinal extends CssLayout {
         grid.getSelectionModel().reset();
     }
 
-    public void selectRow(RankingEntity row) {
+    public void selectRow(RankingAbsEntity row) {
         ((SelectionModel.Single) grid.getSelectionModel()).select(row);
     }
     

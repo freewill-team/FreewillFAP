@@ -20,6 +20,7 @@ public class RankingEntity implements Serializable, Cloneable {
 	private Long circuito;
 	private Long competicion;
 	private Long categoria;
+	private String categoriaStr;
 	private int puntuacion;			// Puntuacion acumulada obtenida
 	private int puntos1;
 	private int puntos2;
@@ -48,6 +49,7 @@ public class RankingEntity implements Serializable, Cloneable {
     	puntos2 = 0;
     	puntos3 = 0;
     	puntos4 = 0;
+    	categoriaStr = "";
     	//company = null;
     }
     
@@ -262,6 +264,14 @@ public class RankingEntity implements Serializable, Cloneable {
 
 	public void setCompeticion4(String competicion4) {
 		this.competicion4 = competicion4;
+	}
+
+	public String getCategoriaStr() {
+		return categoriaStr;
+	}
+
+	public void setCategoriaStr(String categoriaStr) {
+		this.categoriaStr = categoriaStr;
 	}
 	
 }

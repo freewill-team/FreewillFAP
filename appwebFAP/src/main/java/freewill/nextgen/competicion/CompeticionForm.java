@@ -138,7 +138,12 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
         closeCompeticion.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	ConfirmDialog cd = new ConfirmDialog("Esta acción cerrará esta Competición y consolidará\nlos datos de Rankig. ¿Desea Continuar?");
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		removeStyleName("visible");
+            	
+            	ConfirmDialog cd = new ConfirmDialog("Esta acción cerrará esta Competición y consolidará\nlos datos de Ranking. ¿Desea Continuar?");
             	cd.setOKAction(new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
@@ -226,10 +231,6 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
 	        		CompeticionEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
 	        }
-			if(viewLogic!=null)
-        		viewLogic.cancelRecord();
-        	else
-        		removeStyleName("visible");
     	}
 		catch(Exception e){
 			e.printStackTrace();
