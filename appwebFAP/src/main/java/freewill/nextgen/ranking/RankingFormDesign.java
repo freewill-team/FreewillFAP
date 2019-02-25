@@ -31,8 +31,12 @@ public class RankingFormDesign extends CssLayout {
     protected TextField puntos2;
     protected TextField puntos3;
     protected TextField puntos4;
+    protected TextField competicion1;
+    protected TextField competicion2;
+    protected TextField competicion3;
+    protected TextField competicion4;
     protected TextField puntuacion;
-    protected ComboBox competicion;
+    //protected ComboBox competicion;
     protected ComboBox categoria;
     
     protected Button save;

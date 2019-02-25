@@ -14,8 +14,8 @@ public interface RankingAbsRepository extends CrudRepository<RankingAbsEntity, L
 	
 	RankingAbsEntity findById(Long id);
 	List<RankingAbsEntity> findByCompany(Long id);
-	List<RankingAbsEntity> findByModalidadOrderByPuntuacionDesc(
-			ModalidadEnum modalidad);
+	List<RankingAbsEntity> findByModalidadAndCompanyOrderByPuntuacionDesc(
+			ModalidadEnum modalidad, Long company);
 	RankingAbsEntity findByPatinadorAndModalidad(
 			Long patinador, ModalidadEnum modalidad);
 	

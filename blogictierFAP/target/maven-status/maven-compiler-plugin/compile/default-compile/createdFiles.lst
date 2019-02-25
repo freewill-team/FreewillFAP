@@ -1,8 +1,10 @@
 freewill\nextgen\blts\data\RankingEntity.class
 freewill\nextgen\blts\ParticipanteManager.class
+freewill\nextgen\blts\CompeticionManager$CalculateRankingAbsThread.class
 freewill\nextgen\blts\CustomWebSecurityConfigurerAdapter.class
 freewill\nextgen\blts\daos\JamShowRepository.class
 freewill\nextgen\blts\BattleRondaManager.class
+freewill\nextgen\blts\RankingAbsManager.class
 freewill\nextgen\blts\data\JamShowEntity.class
 freewill\nextgen\blts\daos\DerrapesRepository.class
 freewill\nextgen\blts\data\PatinadorEntity.class

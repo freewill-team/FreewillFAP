@@ -155,9 +155,6 @@ public class JamShowManager {
 		long userCompany = user.getCompany();
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -189,15 +186,15 @@ public class JamShowManager {
 					// Create individual record
 					JamShowEntity rec = new JamShowEntity();
 					rec.setPatinador(inscripcion.getPatinador());
-					rec.setNombre(inscripcion.getNombre()); // BVM
+					rec.setNombre(inscripcion.getNombre());
 					rec.setApellidos(inscripcion.getApellidos());
-					rec.setPatinadorPareja(inscripcion.getPatinadorPareja()); // BVM
-					rec.setApellidosPareja(inscripcion.getApellidosPareja()); // BVM
-					rec.setNombrePareja(inscripcion.getNombrePareja()); // BVM
+					rec.setPatinadorPareja(inscripcion.getPatinadorPareja());
+					rec.setApellidosPareja(inscripcion.getApellidosPareja());
+					rec.setNombrePareja(inscripcion.getNombrePareja());
 					rec.setCategoria(inscripcion.getCategoria());
 					rec.setCompeticion(inscripcion.getCompeticion());
 					rec.setDorsal(inscripcion.getDorsal());
-					rec.setDorsalPareja(inscripcion.getDorsalPareja()); // BVM
+					rec.setDorsalPareja(inscripcion.getDorsalPareja());
 					rec.setCompany(userCompany);
 					
 					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
@@ -227,30 +224,29 @@ public class JamShowManager {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<JamShowEntity> recs = new ArrayList<JamShowEntity>();
 		
-		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
-		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 		
 		for(ParticipanteEntity inscripcion:inscripciones){
 			// Create individual record
 			JamShowEntity rec = new JamShowEntity();
+			rec.setPatinador(inscripcion.getPatinador());
+			rec.setNombre(inscripcion.getNombre()); // BVM
 			rec.setApellidos(inscripcion.getApellidos());
+			rec.setPatinadorPareja(inscripcion.getPatinadorPareja());
+			rec.setApellidosPareja(inscripcion.getApellidosPareja());
+			rec.setNombrePareja(inscripcion.getNombrePareja());
 			rec.setCategoria(inscripcion.getCategoria());
 			rec.setCompeticion(inscripcion.getCompeticion());
-			rec.setNombre(inscripcion.getNombre());
 			rec.setDorsal(inscripcion.getDorsal());
+			rec.setDorsalPareja(inscripcion.getDorsalPareja());
+			rec.setCompany(inscripcion.getCompany());
 			
 			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
 					ModalidadEnum.JAM));
-			System.out.println("Mocking "+rec+" Orden "+rec.getOrden1());
+			System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 			
 			rec.setClasificacionFinal(rec.getOrden1());
-			rec.setPatinador(inscripcion.getPatinador());
-			rec.setCompany(inscripcion.getCompany());
 			recs.add(rec);
 		}
 		
@@ -258,7 +254,7 @@ public class JamShowManager {
 		Collections.sort(recs, new Comparator<JamShowEntity>() {
 		    @Override
 		    public int compare(JamShowEntity o1, JamShowEntity o2) {
-		        return o2.getOrden1()-o1.getOrden1();
+		        return o1.getOrden1()-o2.getOrden1();
 		    }
 		});
 		int orden = 1;

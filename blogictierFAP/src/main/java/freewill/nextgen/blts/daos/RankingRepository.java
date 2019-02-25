@@ -24,21 +24,6 @@ public interface RankingRepository extends CrudRepository<RankingEntity, Long> {
 	@Query("SELECT coalesce(max(m.id), 0) FROM RankingEntity m")
 	Long getMaxId();
 	long countByCircuitoAndCategoria(Long circuito, Long categoria);
-	
-	/* To be deleted
-	default int getSortedRanking(Long patinador, Long circuito, Long categoria, Long circuitoUltimoAnno){
-		Random numRandom = new Random();
-		RankingEntity ranking = findByPatinadorAndCircuitoAndCategoria(patinador, circuito, categoria);
-		if(ranking!=null)
-			return 10000 - ranking.getPuntuacion();
-		else{
-			if(circuitoUltimoAnno!=null)
-				ranking = findByPatinadorAndCircuitoAndCategoria(patinador, circuitoUltimoAnno, categoria);
-			if(ranking!=null)
-				return 10000 - ranking.getPuntuacion();
-			else
-				return 20000 - numRandom.nextInt(500);
-		}
-	}*/
+	List<RankingEntity> findByCircuito(Long circuitoId);
 	
 }

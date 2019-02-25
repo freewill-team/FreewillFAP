@@ -175,9 +175,6 @@ public class SpeedTimeTrialManager {
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -244,11 +241,6 @@ public class SpeedTimeTrialManager {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<SpeedTimeTrialEntity> recs = new ArrayList<SpeedTimeTrialEntity>();
 		
-		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
-		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 		
@@ -277,7 +269,7 @@ public class SpeedTimeTrialManager {
 		Collections.sort(recs, new Comparator<SpeedTimeTrialEntity>() {
 			@Override
 			public int compare(SpeedTimeTrialEntity o1, SpeedTimeTrialEntity o2) {
-				return o2.getOrden1()-o1.getOrden1();
+				return o1.getOrden1()-o2.getOrden1();
 			}
 		});
 		int orden = 1;

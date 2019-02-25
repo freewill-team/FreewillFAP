@@ -128,7 +128,7 @@ public class RankingForm extends RankingFormDesign {
             }
         });
         
-        try{
+        /*try{
         	// Rellenar ComboBox Competicion
         	competicion.removeAllItems();
             Collection<CompeticionEntity> recs = BltClient.get().getEntities(CompeticionEntity.class,
@@ -142,7 +142,7 @@ public class RankingForm extends RankingFormDesign {
         catch(Exception e){
         	e.printStackTrace();
         	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
-        }
+        }*/
         
         try{
         	// Rellenar ComboBox Categoria
@@ -207,7 +207,7 @@ public class RankingForm extends RankingFormDesign {
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
-        competicion.setValue(rec.getCompeticion());
+        //competicion.setValue(rec.getCompeticion());
         categoria.setValue(rec.getCategoria());
         formHasChanged();
     }

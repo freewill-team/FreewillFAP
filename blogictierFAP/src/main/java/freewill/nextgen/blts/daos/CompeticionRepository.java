@@ -21,8 +21,8 @@ public interface CompeticionRepository extends CrudRepository<CompeticionEntity,
 	
 	@Query("SELECT coalesce(max(m.id), 0) FROM CompeticionEntity m")
 	Long getMaxId();
-	List<CompeticionEntity> findTop4ByOrderByFechaInicioDesc();
-	List<CompeticionEntity> findTop4ByFechaInicioBeforeOrderByFechaInicioDesc(Date now);
+	//List<CompeticionEntity> findTop4ByOrderByFechaInicioDesc();
+	//List<CompeticionEntity> findTop4ByFechaInicioBeforeOrderByFechaInicioDesc(Date now);
 	List<CompeticionEntity> findTop1ByFechaInicioBeforeOrderByFechaInicioDesc(Date now);
 	List<CompeticionEntity> findTop4BySpeedAndFechaInicioBeforeOrderByFechaFinDesc(boolean b, Date now);
 	List<CompeticionEntity> findTop4ByBattleAndFechaInicioBeforeOrderByFechaFinDesc(boolean b, Date now);
@@ -32,5 +32,11 @@ public interface CompeticionRepository extends CrudRepository<CompeticionEntity,
 	List<CompeticionEntity> findTop4BySaltoAndFechaInicioBeforeOrderByFechaFinDesc(boolean b, Date now);
 	List<CompeticionEntity> findByCompanyOrderByFechaInicioDesc(Long company);
 	List<CompeticionEntity> findByCircuitoOrderByFechaInicioDesc(Long recId);
+	List<CompeticionEntity> findTop4ByCircuitoAndSpeedAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
+	List<CompeticionEntity> findTop4ByCircuitoAndBattleAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
+	List<CompeticionEntity> findTop4ByCircuitoAndClassicAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
+	List<CompeticionEntity> findTop4ByCircuitoAndJamAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
+	List<CompeticionEntity> findTop4ByCircuitoAndDerrapesAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
+	List<CompeticionEntity> findTop4ByCircuitoAndSaltoAndFechaInicioBeforeOrderByFechaFinDesc(Long circuito, boolean b, Date now);
 	
 }

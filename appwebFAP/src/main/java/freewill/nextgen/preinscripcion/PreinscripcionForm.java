@@ -24,6 +24,7 @@ import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
+import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
 /**
  * A form for editing a single record.
@@ -39,6 +40,7 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
     private PreinscripcionCrudLogic viewLogic;
     private CompeticionEntity competicion = null;
     private boolean preinscripcionAbierta = false;
+    private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
     
     @SuppressWarnings("rawtypes")
     public PreinscripcionForm(PreinscripcionCrudLogic sampleCrudLogic) {
@@ -198,10 +200,12 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         idCatBattle.setImmediate(true);
     }
     
-	public void editRecord(PatinadorEntity rec, CompeticionEntity competi, boolean abierta) {
+	public void editRecord(PatinadorEntity rec, CompeticionEntity competi, 
+			boolean abierta, InscripcionEnum tipo) {
 		//System.out.println("Entrando en editRecord()");
 		this.competicion = competi;
 		this.preinscripcionAbierta = abierta;
+		this.tipoForm = tipo;
         if (rec == null) {
             rec = new PatinadorEntity();
             fieldGroup.setItemDataSource(new BeanItem<PatinadorEntity>(rec));
@@ -252,12 +256,12 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         		//canRemoveRecord = (rec.getId() != null);
         		jam.setEnabled(true);
         		parejaLayout.setVisible(jam.getValue());
-        		idCatSpeed.setEnabled(speed.getValue());
-        		idCatSalto.setEnabled(salto.getValue());
-        		idCatDerrapes.setEnabled(derrapes.getValue());
-        		idCatJam.setEnabled(jam.getValue());
-        		idCatClassic.setEnabled(classic.getValue());
-        		idCatBattle.setEnabled(battle.getValue());
+        		idCatSpeed.setEnabled(speed.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
+        		idCatSalto.setEnabled(salto.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
+        		idCatDerrapes.setEnabled(derrapes.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
+        		idCatJam.setEnabled(jam.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
+        		idCatClassic.setEnabled(classic.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
+        		idCatBattle.setEnabled(battle.getValue() && tipoForm==InscripcionEnum.INSCRIPCION);
         		if(rec.getJam() && rec.getIdPareja()==null){
 		            parejaBtn.setEnabled(false);
 			        jam.setEnabled(false);

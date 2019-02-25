@@ -99,7 +99,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    form.setEnabled(competiOpen);
+	    form.setEnabled(eliminatoria==null && competiOpen);
 	}
 	
 	private VerticalLayout createUpDownButtons() {
@@ -253,7 +253,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 
     public void editRecord(DerrapesEntity rec) {
     	selectedRec = rec;
-    	form.setEnabled(selectedRec!=null && eliminatoria==null);
+    	form.setEnabled(selectedRec!=null && eliminatoria==null && competiOpen);
     }
 
     public void showRecords(List<DerrapesEntity> records) {

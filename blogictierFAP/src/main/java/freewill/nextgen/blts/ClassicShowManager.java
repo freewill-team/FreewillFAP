@@ -154,9 +154,6 @@ public class ClassicShowManager {
 		long userCompany = user.getCompany();
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -223,11 +220,6 @@ public class ClassicShowManager {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<ClassicShowEntity> recs = new ArrayList<ClassicShowEntity>();
 		
-		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
-		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 		
@@ -254,7 +246,7 @@ public class ClassicShowManager {
 		Collections.sort(recs, new Comparator<ClassicShowEntity>() {
 		    @Override
 		    public int compare(ClassicShowEntity o1, ClassicShowEntity o2) {
-		        return o2.getOrden1()-o1.getOrden1();
+		        return o1.getOrden1()-o2.getOrden1();
 		    }
 		});
 		int orden = 1;

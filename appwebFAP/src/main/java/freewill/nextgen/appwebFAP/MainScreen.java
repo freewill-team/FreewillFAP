@@ -27,6 +27,7 @@ import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ConfigEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
+import freewill.nextgen.data.RankingAbsEntity;
 import freewill.nextgen.dorsal.DorsalCrudView;
 import freewill.nextgen.genericCrud.GenericCrudView;
 import freewill.nextgen.hmi.common.AboutView;
@@ -121,10 +122,16 @@ public class MainScreen extends HorizontalLayout {
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
 		    
-		    // Ranking
-        	RankingCrudView rankingView = new RankingCrudView();
-        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.CHILD);
-		    
+        	// Ranking Absoluto
+        	String ranking = Messages.get().getKey("rankingabs");
+		    GenericCrudView<RankingAbsEntity> rankingCrud = new GenericCrudView<RankingAbsEntity>(
+		       		"PERMISSION", puntuaciones, RankingAbsEntity.class,
+		       		"id", "patinador", "nombre", "apellidos", "modalidad", "puntuacion",
+		       		"puntos1", "competicion1", "puntos2", "competicion2", 
+		       		"puntos3", "competicion3", "puntos4", "competicion4"
+		       		);
+		    menu.addView(rankingCrud, ranking, FontAwesome.SORT_DESC);
+        	
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
@@ -158,6 +165,10 @@ public class MainScreen extends HorizontalLayout {
 		    PreinscripcionCrudView inscripcionView = new PreinscripcionCrudView(InscripcionEnum.INSCRIPCION);
         	menu.addView(inscripcionView , inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
 		    
+        	 // Ranking
+        	RankingCrudView rankingView = new RankingCrudView();
+        	menu.addView(rankingView, rankingView.VIEW_NAME, FontAwesome.SORT);
+        	
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER)){
@@ -195,7 +206,7 @@ public class MainScreen extends HorizontalLayout {
         
         }
         
-	    // Section Ranking - Todos los demás usuarios
+	    // Section Resultados - Todos los demás usuarios
         menu.addTitle(Messages.get().getKey("resultados"), FontAwesome.USERS);
         
 	        // Resultados Competición en Curso

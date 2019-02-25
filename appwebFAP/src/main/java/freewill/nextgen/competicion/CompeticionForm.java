@@ -144,10 +144,6 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
                     public void buttonClick(final ClickEvent event) {
             			cd.close();
             			closeCompeticion();
-            			if(viewLogic!=null)
-                    		viewLogic.cancelRecord();
-                    	else
-                    		removeStyleName("visible");
                     }
                 });
             	getUI().addWindow(cd);
@@ -230,6 +226,10 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
 	        		CompeticionEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
 	        }
+			if(viewLogic!=null)
+        		viewLogic.cancelRecord();
+        	else
+        		removeStyleName("visible");
     	}
 		catch(Exception e){
 			e.printStackTrace();

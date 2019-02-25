@@ -66,12 +66,18 @@ public class RankingActaFinal extends CssLayout {
 		case JUMP:
 		case SPEED:
 			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
-				       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion");
+				       "id", "orden", "nombre", "apellidos", "clubStr", "puntuacion",
+				       "puntos1", "competicion1", "puntos2", "competicion2", 
+			       		"puntos3", "competicion3", "puntos4", "competicion4"
+				       );
 			break;
 		case JAM:
 			grid = new GenericGrid<RankingEntity>(RankingEntity.class,
 				       "id", "orden", "nombre", "apellidos", "nombrePareja", "apellidosPareja", 
-				       "clubStr", "puntuacion");
+				       "clubStr", "puntuacion",
+				       "puntos1", "competicion1", "puntos2", "competicion2", 
+			       		"puntos3", "competicion3", "puntos4", "competicion4"
+			       		);
 			break;
 		}
 		

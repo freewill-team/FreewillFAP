@@ -16,7 +16,7 @@ public interface ParticipanteRepository extends CrudRepository<ParticipanteEntit
 	List<ParticipanteEntity> findByPatinadorAndCompeticion(Long patinador, Long competicion);
 	ParticipanteEntity findByPatinadorAndCategoriaAndCompeticion(
 			Long patinador, Long categoria, Long competicion);
-	List<ParticipanteEntity> findByCompeticionAndCategoria(Long competicion, Long catmodalidad);
+	List<ParticipanteEntity> findByCompeticionAndCategoria(Long competicion, Long categoria);
 	List<ParticipanteEntity> findByCircuitoAndCategoria(Long circuito, Long categoria);
 	
 	@Modifying

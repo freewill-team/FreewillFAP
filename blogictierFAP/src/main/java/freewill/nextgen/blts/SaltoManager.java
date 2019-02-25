@@ -224,9 +224,6 @@ public class SaltoManager {
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -290,11 +287,6 @@ public class SaltoManager {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<SaltoEntity> recs = new ArrayList<SaltoEntity>();
 		
-		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
-		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 		
@@ -321,7 +313,7 @@ public class SaltoManager {
 		Collections.sort(recs, new Comparator<SaltoEntity>() {
 			@Override
 			public int compare(SaltoEntity o1, SaltoEntity o2) {
-				return o2.getOrden()-o1.getOrden();
+				return o1.getOrden()-o2.getOrden();
 			}
 		});
 		int orden = 1;

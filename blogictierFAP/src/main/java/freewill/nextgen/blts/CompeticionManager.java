@@ -17,12 +17,18 @@ import freewill.nextgen.blts.daos.CategoriaRepository;
 import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
+import freewill.nextgen.blts.daos.PatinadorRepository;
+import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.RankingRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
+import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.PatinadorEntity.GenderEnum;
 import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
+import freewill.nextgen.blts.data.PatinadorEntity;
+import freewill.nextgen.blts.data.RankingAbsEntity;
 import freewill.nextgen.blts.data.RankingEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
@@ -58,6 +64,12 @@ public class CompeticionManager {
 	
 	@Autowired
 	RankingRepository rankingrepo;
+	
+	@Autowired
+	RankingAbsRepository rankingabsrepo;
+	
+	@Autowired
+	PatinadorRepository patinrepo;
 
 	@RequestMapping("/create")
 	public CompeticionEntity add(@RequestBody CompeticionEntity rec) throws Exception {
@@ -142,15 +154,16 @@ public class CompeticionManager {
 			System.out.println("Closing Competicion..."+recId);
 			CompeticionEntity rec = repository.findById(recId);
 			if(rec!=null){
-				rec.setActive(false);
-				repository.save(rec);
-				
 				// forzar ejecución de recalculo de Rankings para todas las categorias y modalidades
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				UserEntity user = userrepo.findByLoginname(auth.getName());
-				CalculateRankingThread thread = new CalculateRankingThread(rec.getCircuito(), user);
-				thread.start();
+				CalculateRankingThread thread1 = new CalculateRankingThread(rec.getCircuito(), user);
+				thread1.run(); // start();
+				CalculateRankingAbsThread thread2 = new CalculateRankingAbsThread(user);
+				thread2.run(); // start();
 				
+				rec.setActive(false);
+				repository.save(rec);
 				return rec;
 			}
 		}
@@ -159,23 +172,37 @@ public class CompeticionManager {
 	
 	class CalculateRankingThread extends Thread {
 		
-		private Long circuitoId;
+		private Long circuito;
 		private UserEntity user;
     	
     	public CalculateRankingThread(Long circuito, UserEntity user){
-    		this.circuitoId = circuito;
+    		this.circuito = circuito;
     		this.user = user;
     	}
     	
         @Override
         public void run() {
             try {
-            	System.out.println("CalculateRankingThread thread started...");
-            	CircuitoEntity circuito = circuitorepo.findById(circuitoId);
-            	List<CategoriaEntity> categorias = categorepo.findByCompany(user.getCompany());
-            	for(CategoriaEntity categoria:categorias){
-            		if(categoria.getActive())
-            			getByCircuitoAndCategoria(circuito, categoria, user);
+            	//CircuitoEntity circuito = circuitorepo.findById(circuitoId);
+            	System.out.println("CalculateRankingThread thread started for circuito..."+circuito);
+            	// Inicializa los valores ya existentes
+        		List<RankingEntity> recs = rankingrepo.findByCircuito(circuito);
+        		for(RankingEntity rec:recs){
+        			rec.setPuntuacion(0);
+        			rec.setPuntos1(0);
+        			rec.setPuntos2(0);
+        			rec.setPuntos3(0);
+        			rec.setPuntos4(0);
+        			rec.setCompeticion1("");
+        			rec.setCompeticion2("");
+        			rec.setCompeticion3("");
+        			rec.setCompeticion4("");
+        			rankingrepo.save(rec);
+        			//System.out.println("  Reseting..."+rec);
+        		}
+            	// Procesa valores para cada modalidad
+            	for(ModalidadEnum modalidad:ModalidadEnum.values()){
+            		generateByModalidad(modalidad, circuito);
             	}
             	System.out.println("CalculateRankingThread thread finished.");
             } catch (Exception e) {
@@ -183,27 +210,178 @@ public class CompeticionManager {
             }
         }
         
-        private List<RankingEntity> getByCircuitoAndCategoria(CircuitoEntity circuito, 
-        		CategoriaEntity categoria, UserEntity user) throws Exception {
-    		System.out.println("Generating Ranking List By circuito y categoria..."+
-    			circuito.getId()+","+categoria.getId());
+        private void generateByModalidad(ModalidadEnum modalidad, Long circuito) 
+        		throws Exception {
+    		System.out.println("Generating Ranking By modalidad..."+modalidad);
+    		// Obtiene categorias para la modalidad
+    		List<CategoriaEntity> categorias = categorepo.findByModalidadAndCompany(
+    				modalidad, user.getCompany());
+    		
+    		// Obtiene las competiciones de este circuito
+    		//List<CompeticionEntity> campeonatos = repository.findByCircuito(circuito);
+    		List<CompeticionEntity> campeonatos = null;
+    		Date now = new Date();
+    		switch(modalidad){
+    			case SPEED:
+    				campeonatos = repository.findTop4ByCircuitoAndSpeedAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				break;
+    			case BATTLE:
+    				campeonatos = repository.findTop4ByCircuitoAndBattleAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				break;
+    			case CLASSIC:
+    				campeonatos = repository.findTop4ByCircuitoAndClassicAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				break;
+    			case JAM:
+    				campeonatos = repository.findTop4ByCircuitoAndJamAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				break;
+    			case SLIDE:
+    				campeonatos = repository.findTop4ByCircuitoAndDerrapesAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				break;
+    			case JUMP:
+    				campeonatos = repository.findTop4ByCircuitoAndSaltoAndFechaInicioBeforeOrderByFechaFinDesc(circuito, true, now);
+    				break;
+    		}
+    		
+    		// Procesa las inscripciones de estas competiciones para cada categoria
+    		int i = 1;
+    		for(CompeticionEntity rec:campeonatos){
+    			System.out.println("  Procesando Competicion "+rec);
+    			for(CategoriaEntity categoria:categorias){
+    				System.out.println("    Procesando Categoria "+categoria);
+        			saveRankingByCompeticionAndCategoria(i, rec, categoria, categorias);
+        		}
+    			i++;
+    		}	
+    	}
+        
+        private void saveRankingByCompeticionAndCategoria(int i,
+        		CompeticionEntity competi, CategoriaEntity categoria, 
+        		List<CategoriaEntity> categorias) {
+			List<ParticipanteEntity> inscripciones = 
+					inscripcionesrepo.findByCompeticionAndCategoria(competi.getId(), categoria.getId());
+			// Acumula las puntuaciones conseguidas
+    		for(ParticipanteEntity inscripcion:inscripciones){
+    			// Obtiene la categoria estandard para este patinador
+    			CategoriaEntity categoriaStd = getCategoriaStd(categorias,
+    					inscripcion.getPatinador(), categoria.getModalidad());
+    			if(categoriaStd==null){
+    				System.out.println("Hay un registro huerfano = "+inscripcion);
+    				continue;
+    			}
+    			// Crea o Salva el registro de ranking
+    			RankingEntity rec = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
+    					inscripcion.getPatinador(), circuito, categoriaStd.getId());
+    			if(rec==null){
+    				// Create new record
+    				rec = new RankingEntity();
+    				rec.setApellidos(inscripcion.getApellidos());
+    				rec.setNombre(inscripcion.getNombre());
+    				rec.setPatinador(inscripcion.getPatinador());
+    				rec.setClub(inscripcion.getClub());
+    				rec.setClubStr(inscripcion.getClubStr());
+    				rec.setCompany(user.getCompany());
+    				rec.setCategoria(inscripcion.getId());
+    				rec.setCircuito(circuito);
+    				//rec.setPuntuacion(inscripcion.getPuntuacion());
+    				//rec.setPuntos1(0);
+    				//rec.setPuntos2(0);
+    				//rec.setPuntos3(0);
+    				//rec.setPuntos4(0);
+    			}
+    			// acumula puntuaciones y calcula best of 3
+    			switch(i){
+				case 1: 
+					rec.setPuntos1(inscripcion.getPuntuacion());
+    				rec.setCompeticion1(competi.getNombre());
+    				break;
+				case 2: 
+					rec.setPuntos2(inscripcion.getPuntuacion());
+    				rec.setCompeticion2(competi.getNombre());
+    				break;
+				case 3: 
+					rec.setPuntos3(inscripcion.getPuntuacion());
+    				rec.setCompeticion3(competi.getNombre());
+    				break;
+				case 4: 
+					rec.setPuntos4(inscripcion.getPuntuacion());
+    				rec.setCompeticion4(competi.getNombre());
+    				break;
+				}
+    			rec.setPuntuacion(getBest3Of4(rec));
+    			rankingrepo.save(rec);
+				System.out.println("  Saving..."+rec);
+    		}
+		}
+    	
+        private int getBest3Of4(RankingEntity rec) {
+    		int minimo = 20000;
+    		int suma = rec.getPuntos1()+rec.getPuntos2()+rec.getPuntos3()+rec.getPuntos4();
+    		//System.out.println("    Suma = "+suma);
+    		if(rec.getPuntos1()<minimo)
+    			minimo = rec.getPuntos1();
+    		if(rec.getPuntos2()<minimo)
+    			minimo = rec.getPuntos2();
+    		if(rec.getPuntos3()<minimo)
+    			minimo = rec.getPuntos3();
+    		if(rec.getPuntos4()<minimo)
+    			minimo = rec.getPuntos4();
+    		if(minimo!=20000)
+    			suma = suma - minimo;
+    		//System.out.println("    Minimo = "+minimo);
+    		//System.out.println("    Best3of4 = "+suma);
+    		return suma;
+    	}
+        
+    }
+	
+	class CalculateRankingAbsThread extends Thread {
+		private UserEntity user;
+    	
+    	public CalculateRankingAbsThread(UserEntity user){
+    		this.user = user;
+    	}
+    	
+        @Override
+        public void run() {
+            try {
+            	System.out.println("CalculateRankingAbsThread thread started...");
+            	for(ModalidadEnum modalidad:ModalidadEnum.values()){
+            		saveRankingByModalidad(modalidad);
+            	}
+            	System.out.println("CalculateRankingAbsThread thread finished.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        private void saveRankingByModalidad(ModalidadEnum modalidad) 
+        		throws Exception {
+    		System.out.println("Generating RankingAbs By modalidad..."+modalidad);
+    		// Obtiene categorias para la modalidad
+    		List<CategoriaEntity> categorias = categorepo.findByModalidadAndCompany(
+    				modalidad, user.getCompany());
     		
     		// Inicializa los valores ya existentes
-    		List<RankingEntity> recs = rankingrepo.findByCircuitoAndCategoriaOrderByPuntuacionDesc(
-    				circuito.getId(), categoria.getId());
-    		for(RankingEntity rec:recs){
+    		List<RankingAbsEntity> recs = 
+    				rankingabsrepo.findByModalidadAndCompanyOrderByPuntuacionDesc(
+    						modalidad, user.getCompany());
+    		for(RankingAbsEntity rec:recs){
     			rec.setPuntuacion(0);
     			rec.setPuntos1(0);
     			rec.setPuntos2(0);
     			rec.setPuntos3(0);
     			rec.setPuntos4(0);
-    			rankingrepo.save(rec);
-    			System.out.println("  Reseting..."+rec);
+    			rec.setCompeticion1("");
+    			rec.setCompeticion2("");
+    			rec.setCompeticion3("");
+    			rec.setCompeticion4("");
+    			rankingabsrepo.save(rec);
+    			//System.out.println("  Reseting..."+rec);
     		}
     		// Obtiene los Ids de las ultimas 4 competiciones
     		List<CompeticionEntity> campeonatos = null;
     		Date now = new Date();
-    		switch(categoria.getModalidad()){
+    		switch(modalidad){
     			case SPEED:
     				campeonatos = repository.findTop4BySpeedAndFechaInicioBeforeOrderByFechaFinDesc(true, now);
     				break;
@@ -223,82 +401,116 @@ public class CompeticionManager {
     				campeonatos = repository.findTop4BySaltoAndFechaInicioBeforeOrderByFechaFinDesc(true, now);
     				break;
     		}
-    		if(campeonatos==null || campeonatos.size()==0)
-    			throw new IllegalArgumentException("No hay datos para mostrar");
-    		List<Long> competis = new ArrayList<Long>();
+    		
+    		// Procesa las inscripciones de estas 4 competiciones para cada categoria
+    		int i = 1;
     		for(CompeticionEntity rec:campeonatos){
     			System.out.println("  Procesando Competicion "+rec);
-    			competis.add(rec.getId());
-    		}
-    		// Obtienen las inscripciones de estos 4 competiciones para la categoria seleccionada
-    		List<ParticipanteEntity> inscripciones = 
-    				inscripcionesrepo.findByCategoriaAndCompeticionIn(categoria.getId(), competis);
-    		// Acumula las puntuaciones conseguidas
+    			for(CategoriaEntity categoria:categorias){
+    				System.out.println("    Procesando Categoria "+categoria);
+        			saveRankingByCompeticionAndCategoria(i, rec, categoria);
+    			}
+        		i++;
+    		}	
+    	}
+
+		private void saveRankingByCompeticionAndCategoria(int i,
+				CompeticionEntity competi, CategoriaEntity categoria) {
+			List<ParticipanteEntity> inscripciones = 
+					inscripcionesrepo.findByCompeticionAndCategoria(
+							competi.getId(), categoria.getId());
+			// Acumula las puntuaciones conseguidas
     		for(ParticipanteEntity inscripcion:inscripciones){
-    			RankingEntity rec = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
-    					inscripcion.getPatinador(), circuito.getId(), categoria.getId());
+    			// Crea o salva el registro de Ranking
+    			RankingAbsEntity rec = rankingabsrepo.findByPatinadorAndModalidad(
+    					inscripcion.getPatinador(), categoria.getModalidad());
     			if(rec==null){
     				// Create new record
-    				rec = new RankingEntity();
+    				rec = new RankingAbsEntity();
     				rec.setApellidos(inscripcion.getApellidos());
     				rec.setNombre(inscripcion.getNombre());
     				rec.setPatinador(inscripcion.getPatinador());
     				rec.setClub(inscripcion.getClub());
     				rec.setClubStr(inscripcion.getClubStr());
     				rec.setCompany(user.getCompany());
-    				rec.setCategoria(categoria.getId());
-    				rec.setCompeticion(inscripcion.getCompeticion());
-    				rec.setCircuito(circuito.getId());
-    				rec.setPuntuacion(inscripcion.getPuntuacion());
-    				rec.setPuntos1(inscripcion.getPuntuacion());
-    				rec.setPuntos2(0);
-    				rec.setPuntos3(0);
-    				rec.setPuntos4(0);
-    				rankingrepo.save(rec);
-    				System.out.println("  Creating..."+rec);
+    				rec.setModalidad(categoria.getModalidad());
+    				//rec.setPuntuacion(inscripcion.getPuntuacion());
+    				//rec.setPuntos1(0);
+    				//rec.setPuntos2(0);
+    				//rec.setPuntos3(0);
+    				//rec.setPuntos4(0);
     			}
-    			else{
-    				// acumula puntuaciones y calcula best of 3
-    				if(rec.getPuntos1()==0)
-    					rec.setPuntos1(inscripcion.getPuntuacion());
-    				else if(rec.getPuntos2()==0)
-    					rec.setPuntos2(inscripcion.getPuntuacion());
-    				else if(rec.getPuntos3()==0)
-    					rec.setPuntos3(inscripcion.getPuntuacion());
-    				else if(rec.getPuntos4()==0)
-    					rec.setPuntos4(inscripcion.getPuntuacion());
-    				rec.setPuntuacion(getBest3Of4(rec));
-    				rankingrepo.save(rec);
-    				System.out.println("  Updating..."+rec);
-    			}
+    			// acumula puntuaciones y calcula best of 3
+    			switch(i){
+				case 1: 
+					rec.setPuntos1(inscripcion.getPuntuacion());
+    				rec.setCompeticion1(competi.getNombre());
+    				break;
+				case 2: 
+					rec.setPuntos2(inscripcion.getPuntuacion());
+    				rec.setCompeticion2(competi.getNombre());
+    				break;
+				case 3: 
+					rec.setPuntos3(inscripcion.getPuntuacion());
+    				rec.setCompeticion3(competi.getNombre());
+    				break;
+				case 4: 
+					rec.setPuntos4(inscripcion.getPuntuacion());
+    				rec.setCompeticion4(competi.getNombre());
+    				break;
+				}
+    			rec.setPuntuacion(getBest3Of4(rec));
+    			rankingabsrepo.save(rec);
+				System.out.println("  Saving..."+rec);
     		}
-    		// retrieve and return new created records, setting resulted orden
-    		recs = rankingrepo.findByCircuitoAndCategoriaOrderByPuntuacionDesc(circuito.getId(), categoria.getId());
-    		int orden = 1;
-    		for(RankingEntity rec:recs)
-    			rec.setOrden(orden++);
-    		return recs;
-    	}
+		}
     	
-    	private int getBest3Of4(RankingEntity rec) {
-    		int minimo = 20000;
-    		int suma = rec.getPuntos1()+rec.getPuntos2()+rec.getPuntos3()+rec.getPuntos4();
-    		//System.out.println("    Suma = "+suma);
-    		if(rec.getPuntos1()<minimo)
-    			minimo = rec.getPuntos1();
-    		if(rec.getPuntos2()<minimo)
-    			minimo = rec.getPuntos2();
-    		if(rec.getPuntos3()<minimo)
-    			minimo = rec.getPuntos3();
-    		if(rec.getPuntos4()<minimo)
-    			minimo = rec.getPuntos4();
-    		if(minimo!=20000)
-    			suma = suma - minimo;
-    		//System.out.println("    Minimo = "+minimo);
-    		//System.out.println("    Best3of4 = "+suma);
-    		return suma;
-    	}
-    	
+		private int getBest3Of4(RankingAbsEntity rec) {
+			int minimo = 20000;
+			int suma = rec.getPuntos1()+rec.getPuntos2()+rec.getPuntos3()+rec.getPuntos4();
+			//System.out.println("    Suma = "+suma);
+			if(rec.getPuntos1()<minimo)
+				minimo = rec.getPuntos1();
+			if(rec.getPuntos2()<minimo)
+				minimo = rec.getPuntos2();
+			if(rec.getPuntos3()<minimo)
+				minimo = rec.getPuntos3();
+			if(rec.getPuntos4()<minimo)
+				minimo = rec.getPuntos4();
+			if(minimo!=20000)
+				suma = suma - minimo;
+			//System.out.println("    Minimo = "+minimo);
+			//System.out.println("    Best3of4 = "+suma);
+			return suma;
+		}
+		
     }
+	
+	@SuppressWarnings("deprecation")
+	private CategoriaEntity getCategoriaStd(List<CategoriaEntity> categorias,
+			Long patinador, ModalidadEnum modalidad) {
+		if(categorias==null){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			UserEntity user = userrepo.findByLoginname(auth.getName());
+			categorias = categorepo.findByModalidadAndCompany(
+	    			modalidad, user.getCompany());
+		}
+		PatinadorEntity patin = patinrepo.findById(patinador);
+		if(patin==null) return null;
+		// A partir de la edad del niño inferirá su posible categoria
+    	Date now = new Date();
+    	int edad = now.getYear() - patin.getFechaNacimiento().getYear();
+    	//System.out.println("Edad = "+edad);
+    	
+    	for(CategoriaEntity cat:categorias){
+    		//System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
+    		//		cat.getEdadMinima()+"-"+cat.getEdadMaxima());
+    		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() &&
+    				(patin.getGenero()==cat.getGenero()) ){
+    			return cat;
+    		}
+    	}
+		return null;
+	}
 	
 }

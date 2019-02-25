@@ -207,7 +207,7 @@ public class PreinscripcionCrudView extends CssLayout implements View {
             form.removeStyleName("visible");
             form.setEnabled(false);
         }
-        form.editRecord(rec, competi, preinscripcionAbierta);
+        form.editRecord(rec, competi, preinscripcionAbierta, tipoForm);
     }
 
     public void showRecords(Collection<PatinadorEntity> records) {

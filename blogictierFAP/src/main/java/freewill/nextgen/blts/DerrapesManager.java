@@ -129,9 +129,6 @@ public class DerrapesManager {
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -196,9 +193,6 @@ public class DerrapesManager {
 		List<DerrapesEntity> recs = new ArrayList<DerrapesEntity>();
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
@@ -226,7 +220,7 @@ public class DerrapesManager {
 		Collections.sort(recs, new Comparator<DerrapesEntity>() {
 			@Override
 			public int compare(DerrapesEntity o1, DerrapesEntity o2) {
-				return o2.getOrden()-o1.getOrden();
+				return o1.getOrden()-o2.getOrden();
 			}
 		});
 		int orden = 1;

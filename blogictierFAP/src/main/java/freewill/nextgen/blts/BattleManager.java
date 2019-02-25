@@ -129,9 +129,6 @@ public class BattleManager {
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		
 		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
 		
 		// Verifica si la competición puede empezar
 		Date now = new Date();
@@ -195,11 +192,6 @@ public class BattleManager {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<BattleEntity> recs = new ArrayList<BattleEntity>();
 		
-		CompeticionEntity competi = competirepo.findById(competicion);
-		Date ultimoAnno = new Date();
-		ultimoAnno.setYear(ultimoAnno.getYear()-1);
-		CircuitoEntity circuitoUltimoAnno = circuitorepo.findByTemporada(ultimoAnno.getYear()+1900);
-		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);
 		
@@ -226,7 +218,7 @@ public class BattleManager {
 		Collections.sort(recs, new Comparator<BattleEntity>() {
 			@Override
 			public int compare(BattleEntity o1, BattleEntity o2) {
-				return o2.getOrden()-o1.getOrden();
+				return o1.getOrden()-o2.getOrden();
 			}
 		});
 		int orden = 1;
