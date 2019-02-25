@@ -232,7 +232,8 @@ public class CompanyForm extends CompanyFormDesign {
         Plan.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.SUPER));
         Active.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.SUPER));
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
-        
+        Add.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        Del.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.SUPER));
         save.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }

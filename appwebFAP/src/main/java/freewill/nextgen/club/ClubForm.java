@@ -202,7 +202,8 @@ public class ClubForm extends ClubFormDesign implements CustomFormInterface<Club
         	}
         }
         delete.setEnabled(canRemoveRecord);
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }
     
     @Override

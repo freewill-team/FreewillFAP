@@ -138,20 +138,16 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
         closeCompeticion.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	if(viewLogic!=null)
-            		viewLogic.cancelRecord();
-            	else
-            		removeStyleName("visible");
-            	
-            	ConfirmDialog cd = new ConfirmDialog("Esta acción cerrará esta Competición y consolidará\nlos datos de Ranking. ¿Desea Continuar?");
+            	/*ConfirmDialog cd = new ConfirmDialog("Esta acción cerrará esta Competición y consolidará\nlos datos de Ranking. ¿Desea Continuar?");
             	cd.setOKAction(new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
-            			cd.close();
-            			closeCompeticion();
-                    }
+            			cd.close();*/
+            			CompeticionEntity rec = fieldGroup.getItemDataSource().getBean();
+            			closeCompeticion(rec);
+                    /*}
                 });
-            	getUI().addWindow(cd);
+            	getUI().addWindow(cd);*/
             }
         });
         
@@ -208,8 +204,9 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
         	closeCompeticion.setEnabled(rec.getActive());
         }
         active.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
-        delete.setEnabled(canRemoveRecord && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        delete.setEnabled(canRemoveRecord);
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }
     
     @Override
@@ -222,14 +219,16 @@ public class CompeticionForm extends CompeticionFormDesign implements CustomForm
 		return this;
 	}
 	
-	private void closeCompeticion() {
+	private void closeCompeticion(CompeticionEntity rec) {
 		try{
-			CompeticionEntity rec = fieldGroup.getItemDataSource().getBean();
-			if(rec!=null){
-	        	BltClient.get().executeCommand(
+			if(rec!=null && rec.getId()!=null){
+				CompeticionEntity res = (CompeticionEntity) BltClient.get().executeCommand(
 	        		"/closeCompeticion/"+rec.getId(),
 	        		CompeticionEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
+				if(viewLogic!=null && res!=null){
+            		viewLogic.saveRecord(res);
+            	}
 	        }
     	}
 		catch(Exception e){

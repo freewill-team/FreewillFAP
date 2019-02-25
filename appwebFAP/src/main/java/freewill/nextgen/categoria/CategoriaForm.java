@@ -167,6 +167,7 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
         }
         delete.setEnabled(canRemoveRecord);
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }
     
     @Override

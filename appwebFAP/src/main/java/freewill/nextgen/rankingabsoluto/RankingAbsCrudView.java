@@ -50,7 +50,8 @@ public class RankingAbsCrudView extends VerticalLayout implements View {
         
         removeAllComponents();
         addComponent(selectModalidad);
-        setExpandRatio(selectModalidad, 1);
+        VerticalLayout expander = new VerticalLayout();
+        addComponent(expander);
     }
 
 	public void showError(String msg) {

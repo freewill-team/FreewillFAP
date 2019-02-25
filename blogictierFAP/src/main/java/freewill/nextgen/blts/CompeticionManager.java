@@ -1,6 +1,5 @@
 package freewill.nextgen.blts;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -158,9 +157,9 @@ public class CompeticionManager {
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				UserEntity user = userrepo.findByLoginname(auth.getName());
 				CalculateRankingThread thread1 = new CalculateRankingThread(rec.getCircuito(), user);
-				thread1.run(); // start();
+				thread1.start();
 				CalculateRankingAbsThread thread2 = new CalculateRankingAbsThread(user);
-				thread2.run(); // start();
+				thread2.start();
 				
 				rec.setActive(false);
 				repository.save(rec);
@@ -197,6 +196,7 @@ public class CompeticionManager {
         			rec.setCompeticion2("");
         			rec.setCompeticion3("");
         			rec.setCompeticion4("");
+        			rec.setCategoriaStr("");
         			rankingrepo.save(rec);
         			//System.out.println("  Reseting..."+rec);
         			if(rec.getCategoriaStr().contains("Mixto"))
@@ -286,7 +286,6 @@ public class CompeticionManager {
     				rec.setClubStr(inscripcion.getClubStr());
     				rec.setCompany(user.getCompany());
     				rec.setCategoria(categoriaStd.getId());
-    				rec.setCategoriaStr(categoriaStd.getNombre());
     				rec.setCircuito(circuito);
     				//rec.setPuntuacion(inscripcion.getPuntuacion());
     				//rec.setPuntos1(0);
@@ -314,6 +313,7 @@ public class CompeticionManager {
     				break;
 				}
     			rec.setPuntuacion(getBest3Of4(rec));
+				rec.setCategoriaStr(categoriaStd.getNombre());
     			rankingrepo.save(rec);
 				System.out.println("      Saving..."+rec);
     		}
@@ -381,6 +381,7 @@ public class CompeticionManager {
     			rec.setCompeticion2("");
     			rec.setCompeticion3("");
     			rec.setCompeticion4("");
+    			rec.setCategoriaStr("");
     			rankingabsrepo.save(rec);
     			//System.out.println("  Reseting..."+rec);
     		}
@@ -450,7 +451,6 @@ public class CompeticionManager {
     				rec.setClubStr(inscripcion.getClubStr());
     				rec.setCompany(user.getCompany());
     				rec.setModalidad(categoria.getModalidad());
-    				rec.setCategoriaStr(categoriaStd.getNombre());
     				//rec.setPuntuacion(inscripcion.getPuntuacion());
     				//rec.setPuntos1(0);
     				//rec.setPuntos2(0);
@@ -477,6 +477,7 @@ public class CompeticionManager {
     				break;
 				}
     			rec.setPuntuacion(getBest3Of4(rec));
+    			rec.setCategoriaStr(categoriaStd.getNombre());
     			rankingabsrepo.save(rec);
 				System.out.println("  Saving..."+rec);
     		}
