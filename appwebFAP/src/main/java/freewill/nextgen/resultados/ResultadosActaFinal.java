@@ -39,7 +39,7 @@ import freewill.nextgen.ranking.RankingForm;
 @SuppressWarnings("serial")
 public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 	
-	public final String VIEW_NAME = Messages.get().getKey("resultadosacta");
+	public final String VIEW_NAME = Messages.get().getKey("resultados");
 	private Long competicion = null;
 	private String competicionStr = "";
 	private Long categoria = null;

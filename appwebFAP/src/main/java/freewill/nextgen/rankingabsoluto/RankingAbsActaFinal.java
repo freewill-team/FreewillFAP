@@ -34,7 +34,7 @@ import freewill.nextgen.hmi.utils.Messages;
 @SuppressWarnings("serial")
 public class RankingAbsActaFinal extends CssLayout {
 	
-	public final String VIEW_NAME = Messages.get().getKey("rankingabsacta");
+	public final String VIEW_NAME = Messages.get().getKey("rankingabs");
 	private ModalidadEnum modalidad;
 	private GenericGrid<RankingAbsEntity> grid;
 	private RankingAbsCrudLogic viewLogic;
