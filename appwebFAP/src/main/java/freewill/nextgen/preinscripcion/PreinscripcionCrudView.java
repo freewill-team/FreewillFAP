@@ -126,7 +126,7 @@ public class PreinscripcionCrudView extends CssLayout implements View {
     				(List<PatinadorEntity>)grid.getContainerDataSource().getItemIds(),
     				PatinadorEntity.class,
     				competicionLabel.getValue().toUpperCase(),
-    				"id", "nombre", "apellidos", "clubStr", 
+    				"nombre", "apellidos", "clubStr", 
     				"catSpeed", "catSalto", "catDerrapes", "catClassic", "catBattle", "catJam");
     		if(file!=null){
     			FileResource resource = new FileResource(file);

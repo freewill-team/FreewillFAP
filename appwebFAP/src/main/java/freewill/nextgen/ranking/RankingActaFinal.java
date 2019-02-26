@@ -128,7 +128,7 @@ public class RankingActaFinal extends CssLayout {
     		File file = Export2Xls.get().createXLS(
     				(List<RankingEntity>)grid.getContainerDataSource().getItemIds(),
     				RankingEntity.class,
-    				("Ranking "+circuitoStr+" / "+categoriaStr).toUpperCase(),
+    				(VIEW_NAME+" "+circuitoStr+" / "+categoriaStr).toUpperCase(),
     				"orden", "nombre", "apellidos", "clubStr", "puntuacion",
 				    "categoriaStr",
 				    "puntos1", "competicion1", "puntos2", "competicion2", 
@@ -160,7 +160,7 @@ public class RankingActaFinal extends CssLayout {
             }
         });
         
-        Label competicionLabel = new Label("Ranking "+circuitoStr+" / "+categoriaStr);
+        Label competicionLabel = new Label(VIEW_NAME+" "+circuitoStr+" / "+categoriaStr);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
