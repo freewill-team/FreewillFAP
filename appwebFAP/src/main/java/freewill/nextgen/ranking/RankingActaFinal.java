@@ -33,7 +33,7 @@ import freewill.nextgen.hmi.utils.Messages;
 @SuppressWarnings("serial")
 public class RankingActaFinal extends CssLayout {
 	
-	public final String VIEW_NAME = Messages.get().getKey("rankingacta");
+	public final String VIEW_NAME = Messages.get().getKey("ranking");
 	private Long circuito = null;
 	private String circuitoStr = "";
 	private Long categoria = null;

@@ -166,8 +166,8 @@ public class MainScreen extends HorizontalLayout {
         	menu.addTitle(Messages.get().getKey("pruebas"), FontAwesome.GAMEPAD);
         
 	        // Inscripciones
-		    DorsalCrudView participanteView = new DorsalCrudView();
-		    menu.addView(participanteView, Messages.get().getKey("registro"), FontAwesome.SIGN_IN);
+		    DorsalCrudView dorsalesView = new DorsalCrudView();
+		    menu.addView(dorsalesView, dorsalesView.VIEW_NAME, FontAwesome.SIGN_IN);
 		    
 	        // Competicion Speed
 		    SpeedCrudView speedView = new SpeedCrudView();

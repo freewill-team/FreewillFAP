@@ -47,7 +47,7 @@ public class DorsalCrudView extends CssLayout implements View {
 
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
-    public final String VIEW_NAME = Messages.get().getKey("inscripciones");
+    public final String VIEW_NAME = Messages.get().getKey("registro");
     private GenericGrid<PatinadorEntity> grid;
     private DorsalCrudLogic viewLogic = new DorsalCrudLogic(this);
     private Long competicion = null;
@@ -221,7 +221,7 @@ public class DorsalCrudView extends CssLayout implements View {
         		new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                    	competicionLabel.setValue("Inscripciones "+event.getButton().getDescription());
+                    	competicionLabel.setValue(VIEW_NAME+" "+event.getButton().getDescription());
                     	competicion = Long.parseLong(event.getButton().getId());
             	        removeAllComponents();
             			addComponent(barAndGridLayout);
