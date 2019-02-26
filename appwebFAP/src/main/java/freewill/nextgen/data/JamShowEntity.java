@@ -20,7 +20,9 @@ public class JamShowEntity implements Serializable, Cloneable {
 	private String nombrePareja;
 	private String apellidosPareja;
 	private Integer dorsalPareja;
+	@SuppressWarnings("unused")
 	private final String nombreDuo;
+	@SuppressWarnings("unused")
 	private final String dorsalDuo;
 	private int orden1=0;			// Puesto de salida del patinador 1a ronda
 	private int tecnicaJuez1=0;

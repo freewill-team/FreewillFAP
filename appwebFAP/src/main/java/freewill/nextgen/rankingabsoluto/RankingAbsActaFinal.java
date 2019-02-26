@@ -23,9 +23,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.RankingAbsEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;

@@ -9,7 +9,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import freewill.nextgen.authentication.AccessControl;
-import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.resultados.ResultadosCrudView;
 

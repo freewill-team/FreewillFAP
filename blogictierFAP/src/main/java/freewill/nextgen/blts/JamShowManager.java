@@ -26,8 +26,6 @@ import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.JamShowEntity;
-import freewill.nextgen.blts.data.CircuitoEntity;
-import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
@@ -619,10 +617,7 @@ public class JamShowManager {
 					recI.getPuntuacionTotal());	
 			
 			repository.save(recI);
-			//System.out.println(recI.getNombre() + " " + recI.getSumaPonderada());
 		}
-		//System.out.println();
-		//System.out.println("Calculando Clasificacion");
 		
 		//Calcular clasificacion final en funcion de suma ponderada
 		int posicion = 0; 

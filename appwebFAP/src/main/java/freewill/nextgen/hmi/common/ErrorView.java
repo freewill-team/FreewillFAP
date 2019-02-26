@@ -2,16 +2,9 @@ package freewill.nextgen.hmi.common;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.Reindeer;
-import com.vaadin.ui.themes.ValoTheme;
-
-import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.hmi.utils.Messages;
 
 /**

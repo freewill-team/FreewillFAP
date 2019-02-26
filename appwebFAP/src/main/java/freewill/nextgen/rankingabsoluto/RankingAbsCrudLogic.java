@@ -9,9 +9,7 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.common.entities.UserEntity;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingAbsEntity;
