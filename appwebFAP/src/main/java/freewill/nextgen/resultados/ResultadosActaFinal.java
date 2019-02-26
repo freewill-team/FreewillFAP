@@ -118,10 +118,10 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
 		
 		CompeticionEntity competi = viewLogic.findCompeticion(""+competicion);
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		String fecha = " "+format.format(competi.getFechaInicio());
+		String fecha = format.format(competi.getFechaInicio());
 		
-		competicionLabel = new Label("<b>"+competicionStr+" / "+categoriaStr
-				+ fecha + "</b>", ContentMode.HTML);
+		competicionLabel = new Label(competicionStr+" / "+categoriaStr+ " "+ fecha, 
+				ContentMode.HTML);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
@@ -149,23 +149,23 @@ public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
-    					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
+        				(VIEW_NAME+" " + competicionLabel.getValue()).toUpperCase(),
+    					"dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion");
     			break;
     		case JUMP:
     		case SPEED:
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
-    					"id", "dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
+        				(VIEW_NAME+" " + competicionLabel.getValue()).toUpperCase(),
+    					"dorsal", "clasificacion", "nombre", "apellidos", "clubStr", "puntuacion", "mejorMarca");
     			break;
     		case JAM:
     			file = Export2Xls.get().createXLS(
         				(List<ParticipanteEntity>)grid.getContainerDataSource().getItemIds(),
         				ParticipanteEntity.class,
-        				("Resultados " + competicionLabel.getValue()).toUpperCase(),
-    					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
+        				(VIEW_NAME+" " + competicionLabel.getValue()).toUpperCase(),
+    					"dorsal", "clasificacion", "nombre", "apellidos", 
     					"dorsalPareja", "nombrePareja", "apellidosPareja", "clubStr");
     			break;
     		}
