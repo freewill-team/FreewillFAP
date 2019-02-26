@@ -33,7 +33,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.common.entities.MailServerEntity;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.ImportGrid;
-import freewill.nextgen.hmi.utils.ExportToXls;
+import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.ImportFromXls;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -111,9 +111,11 @@ public class MailServerCrudView extends CssLayout implements View {
 			@SuppressWarnings("unchecked")
 			@Override
             public void buttonClick(ClickEvent event) {
-				File file = ExportToXls.get().createXLS(
-						(List<Object>)grid.getContainerDataSource().getItemIds(),
-						MailServerEntity.class, "id", "label", "description", "active", 
+				File file = Export2Xls.get().createXLS(
+						(List<MailServerEntity>)grid.getContainerDataSource().getItemIds(),
+						MailServerEntity.class, 
+						VIEW_NAME,
+						"id", "label", "description", "active", 
 						"hostname", "port", "username", "password");
 				if(file!=null){
 					FileResource resource = new FileResource(file);
