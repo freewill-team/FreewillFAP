@@ -23,7 +23,6 @@ import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.SaltoIntentoRepository;
 import freewill.nextgen.blts.daos.SaltoRepository;
 import freewill.nextgen.blts.daos.UserRepository;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
@@ -213,7 +212,6 @@ public class SaltoManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<SaltoEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -282,7 +280,6 @@ public class SaltoManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<SaltoEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<SaltoEntity> recs = new ArrayList<SaltoEntity>();

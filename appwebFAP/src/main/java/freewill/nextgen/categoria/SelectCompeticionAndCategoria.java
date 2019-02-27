@@ -9,12 +9,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Responsive;
 
-import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.competicion.SelectCompeticionCombo;
-import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.categoria.SelectModalidad;
-import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 
 @SuppressWarnings("serial")

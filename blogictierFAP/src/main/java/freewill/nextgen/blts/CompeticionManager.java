@@ -22,8 +22,6 @@ import freewill.nextgen.blts.daos.RankingRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.blts.data.PatinadorEntity.GenderEnum;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;

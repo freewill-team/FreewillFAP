@@ -25,7 +25,6 @@ import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.entities.UserEntity;
@@ -144,7 +143,6 @@ public class ClassicShowManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<ClassicShowEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -215,7 +213,6 @@ public class ClassicShowManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<ClassicShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<ClassicShowEntity> recs = new ArrayList<ClassicShowEntity>();

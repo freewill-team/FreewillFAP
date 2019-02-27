@@ -3,8 +3,6 @@ package freewill.nextgen.blts.data;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import freewill.nextgen.blts.BltAuditingEntityListener;
 
 /**

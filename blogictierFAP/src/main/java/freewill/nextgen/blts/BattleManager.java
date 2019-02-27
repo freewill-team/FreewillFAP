@@ -117,7 +117,6 @@ public class BattleManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<BattleEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -186,7 +185,6 @@ public class BattleManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<BattleEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<BattleEntity> recs = new ArrayList<BattleEntity>();

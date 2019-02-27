@@ -28,7 +28,6 @@ import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.DerrapesRondaEntity;
 import freewill.nextgen.blts.data.DerrapesRondaEntity.EliminatoriaEnum;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.DerrapesEntity;
 import freewill.nextgen.blts.entities.UserEntity;
@@ -118,7 +117,6 @@ public class DerrapesManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<DerrapesEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -187,12 +185,9 @@ public class DerrapesManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<DerrapesEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<DerrapesEntity> recs = new ArrayList<DerrapesEntity>();
-		
-		CompeticionEntity competi = competirepo.findById(competicion);
 		
 		List<ParticipanteEntity> inscripciones = 
 				inscripcionesrepo.findByCompeticionAndCategoria(competicion, categoria);

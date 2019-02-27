@@ -142,7 +142,6 @@ public class JamShowManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<JamShowEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -217,7 +216,6 @@ public class JamShowManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<JamShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<JamShowEntity> recs = new ArrayList<JamShowEntity>();
