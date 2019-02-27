@@ -55,7 +55,7 @@ public class ClassicFinal extends VerticalLayout {
 		viewLogic = new ClassicCrudLogic(this);
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
-        		"id", "orden1", "dorsal", "nombre", "apellidos",
+        		"id", "dorsal", "orden1", "nombre", "apellidos",
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "totalJuez1", "rankingJuez1",
         		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",

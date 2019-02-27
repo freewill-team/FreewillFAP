@@ -45,7 +45,7 @@ public class JamActaFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic();
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-		       "id", "clasificacionFinal", "dorsalDuo", "nombreDuo", 
+		       "id", "dorsalDuo", "clasificacionFinal", "nombreDuo", 
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
         

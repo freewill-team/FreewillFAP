@@ -45,7 +45,7 @@ public class ClassicActaFinal extends VerticalLayout {
 		viewLogic = new ClassicCrudLogic();
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
-		       "id", "clasificacionFinal", "dorsal", "nombre", "apellidos",
+		       "id", "dorsal", "clasificacionFinal", "nombre", "apellidos",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       //"rankingJuez1","rankingJuez2", "rankingJuez3", "orden1"
 		       );

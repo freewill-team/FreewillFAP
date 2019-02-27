@@ -55,7 +55,7 @@ public class JamFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic(this);
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-				"id", "orden1", "dorsalDuo", "nombreDuo",
+				"id", "dorsalDuo", "orden1", "nombreDuo",
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "sincronizacionJuez1", "totalJuez1", "rankingJuez1", 
         		"tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
