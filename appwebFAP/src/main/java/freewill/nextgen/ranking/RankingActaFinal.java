@@ -130,7 +130,7 @@ public class RankingActaFinal extends CssLayout {
     				RankingEntity.class,
     				(VIEW_NAME+" "+circuitoStr+" / "+categoriaStr).toUpperCase(),
     				"orden", "nombre", "apellidos", "clubStr", "puntuacion",
-				    "categoriaStr",
+				    //"categoriaStr",
 				    "puntos1", "competicion1", "puntos2", "competicion2", 
 			        "puntos3", "competicion3", "puntos4", "competicion4"
     				);

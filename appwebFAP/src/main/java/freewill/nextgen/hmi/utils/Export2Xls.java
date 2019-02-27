@@ -98,7 +98,7 @@ public class Export2Xls {
     		   	doc.addRow(fila++, data, false, false);
     		}
     		// Específico FAP, imprime texto "Firma Juez Principal / Comité"
-    		doc.setFooter("Firma Juez Principal / Comité");
+    		//doc.setFooter("Firma Juez Principal / Comité");
     		
     		// Close the Word Document
     		int widths[] = new int[fields.length];

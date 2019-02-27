@@ -3,6 +3,7 @@ package freewill.nextgen.rankingabsoluto;
 import java.io.File;
 import java.util.List;
 
+import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
@@ -14,6 +15,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -83,6 +85,18 @@ public class RankingAbsActaFinal extends CssLayout {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public HorizontalLayout createTopBar() {
 		
+		TextField filter = new TextField();
+        filter.setStyleName("filter-textfield");
+        filter.setInputPrompt("Filter");
+        
+        filter.setImmediate(true);
+        filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
+            @Override
+            public void textChange(FieldEvents.TextChangeEvent event) {
+                grid.setFilter(event.getText());
+            }
+        });
+		
 		Button prevButton = new Button(Messages.get().getKey("prev"));
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
@@ -143,6 +157,7 @@ public class RankingAbsActaFinal extends CssLayout {
         //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
+        topLayout.addComponent(filter);
         topLayout.addComponent(prevButton);
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER))
         	topLayout.addComponent(printButton);

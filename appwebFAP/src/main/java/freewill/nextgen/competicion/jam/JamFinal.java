@@ -6,6 +6,7 @@ import java.util.Date;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -54,7 +55,7 @@ public class JamFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic(this);
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-				"id", "dorsalDuo", "nombreDuo",
+				"id", "orden1", "dorsalDuo", "nombreDuo",
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "sincronizacionJuez1", "totalJuez1", "rankingJuez1", 
         		"tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
@@ -71,7 +72,7 @@ public class JamFinal extends VerticalLayout {
         form = new JamShowForm(viewLogic);
           
         HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setWidth("100%");
+        gridLayout.setSizeFull();
         gridLayout.setMargin(true);
         gridLayout.setSpacing(true);
         gridLayout.addComponent(grid);
@@ -181,7 +182,7 @@ public class JamFinal extends VerticalLayout {
     }
 	
 	public void showError(String msg) {
-        Notification.show(msg, Type.ERROR_MESSAGE);
+        Notification.show(msg, Type.WARNING_MESSAGE); //ERROR_MESSAGE);
     }
 
     public void showSaveNotification(String msg) {
@@ -211,8 +212,10 @@ public class JamFinal extends VerticalLayout {
 
     public void showRecords(List<JamShowEntity> records) {
         grid.setRecords(records); 
-        if(records!=null && records.size()>0)
+        if(records!=null && records.size()>0){
+    		grid. sort("orden1", SortDirection.DESCENDING);
     		this.selectRow(records.get(0));
+        }
     }
 
     public void refreshRecord(JamShowEntity rec) {

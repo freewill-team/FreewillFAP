@@ -6,6 +6,7 @@ import java.util.List;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -54,7 +55,7 @@ public class ClassicFinal extends VerticalLayout {
 		viewLogic = new ClassicCrudLogic(this);
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
-        		"id", "dorsal", "nombre", "apellidos",
+        		"id", "orden1", "dorsal", "nombre", "apellidos",
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "totalJuez1", "rankingJuez1",
         		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",
@@ -72,7 +73,7 @@ public class ClassicFinal extends VerticalLayout {
        
         
         HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setWidth("100%");
+        gridLayout.setSizeFull();
         gridLayout.setMargin(true);
         gridLayout.setSpacing(true);
         gridLayout.addComponent(grid);
@@ -212,8 +213,10 @@ public class ClassicFinal extends VerticalLayout {
 
     public void showRecords(List<ClassicShowEntity> records) {
         grid.setRecords(records); 
-        if(records!=null && records.size()>0)
+        if(records!=null && records.size()>0){
+    		grid. sort("orden1", SortDirection.DESCENDING);
     		this.selectRow(records.get(0));
+        }
     }
 
     public void refreshRecord(ClassicShowEntity rec) {

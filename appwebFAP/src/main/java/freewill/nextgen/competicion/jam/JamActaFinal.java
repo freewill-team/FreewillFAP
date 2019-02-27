@@ -45,7 +45,7 @@ public class JamActaFinal extends VerticalLayout {
 		viewLogic = new JamCrudLogic();
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-		       "id", "clasificacionFinal", "dorsalDuo", "nombreApellidosDuo", 
+		       "id", "clasificacionFinal", "dorsalDuo", "nombreDuo", 
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
         
@@ -87,9 +87,8 @@ public class JamActaFinal extends VerticalLayout {
     				(List<JamShowEntity>)grid.getContainerDataSource().getItemIds(),
     				JamShowEntity.class,
     				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
-    				"clasificacionFinal", "dorsal", "nombre", "apellidos",
-    				"dorsalPareja", "nombrePareja", "apellidosPareja",
-    				"sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
+    				"clasificacionFinal", "dorsalDuo", "nombreDuo", 
+    			    "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
