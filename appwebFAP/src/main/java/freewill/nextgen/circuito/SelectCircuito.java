@@ -23,8 +23,7 @@ public class SelectCircuito extends HorizontalLayout {
 	
 	@SuppressWarnings("deprecation")
 	public SelectCircuito(){
-		//this.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-		//this.setSizeFull();
+		this.setWidth("100%"); //
         this.setMargin(true);
         this.setSpacing(true);
         this.addStyleName("dashboard-view");
@@ -33,13 +32,25 @@ public class SelectCircuito extends HorizontalLayout {
         Label title = new Label("Seleccione un Circuito...");
         title.setStyleName(ValoTheme.LABEL_LARGE);
         title.addStyleName(ValoTheme.LABEL_COLORED);
-        this.addComponent(title);
+        //this.addComponent(title);
         
         combo = new ComboBox();
         combo.setImmediate(true);
         combo.setNullSelectionAllowed(false);
-        //combo.setStyleName(ValoTheme.COMBOBOX_LARGE);
-        this.addComponent(combo);
+        combo.setWidth("100%");
+        //this.addComponent(combo);
+        
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        layout.setMargin(true);
+        layout.setSpacing(true);
+        layout.addStyleName("sparks");
+        layout.addComponent(title);
+        layout.addComponent(combo);
+        layout.setExpandRatio(title, 1);
+        layout.setExpandRatio(combo, 2);
+        
+        this.addComponent(layout);
         
         try{
         	// Rellena Combobox

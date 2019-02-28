@@ -68,6 +68,7 @@ public class Sparkline extends HorizontalLayout {
         iconBtn.addStyleName(ValoTheme.BUTTON_HUGE);
         //iconBtn.setDisableOnClick(true);
         layout.addComponent(iconBtn);
+        iconBtn.focus();
         
         Label title = new Label(name);
         title.setSizeUndefined();
