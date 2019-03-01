@@ -2,11 +2,15 @@ package freewill.nextgen.rankingabsoluto;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Responsive;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.HorizontalLayout;
 
 import freewill.nextgen.categoria.SelectModalidad;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
@@ -47,11 +51,13 @@ public class RankingAbsCrudView extends VerticalLayout implements View {
     	                gotoRankingAbs();
     	            }
     	        });
-        
+    	selectModalidad.setSizeUndefined();
+    	
         removeAllComponents();
         addComponent(selectModalidad);
-        VerticalLayout expander = new VerticalLayout();
-        addComponent(expander);
+        addComponent(new VerticalLayout());
+        addComponent(new VerticalLayout());
+    	addComponent(new HorizontalLayout());
     }
 
 	public void showError(String msg) {

@@ -11,11 +11,11 @@ import com.vaadin.server.Responsive;
 
 import freewill.nextgen.categoria.SelectCategoriaByParticipante;
 import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.competicion.SelectCompeticion;
+import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 
 @SuppressWarnings("serial")
-public class SelectCampeonatoAndCategoria extends Panel {
+public class SelectCompeticionSparkAndCategoria extends Panel {
 
 	private VerticalLayout content = null;
     private Long competicion = null;
@@ -24,12 +24,12 @@ public class SelectCampeonatoAndCategoria extends Panel {
     //private String categoriaStr = "";
     private SelectCircuito selectcircuito = null;
     private VerticalLayout selectionarea = new VerticalLayout();
-    private SelectCompeticion selectcampeonato = null;
+    private SelectCompeticionSpark selectcampeonato = null;
     private SelectCategoriaByParticipante selectcategoria = null;
     private ClickListener action;
     private ModalidadEnum modalidad = null;
     
-    public SelectCampeonatoAndCategoria(ModalidadEnum modalidad, ClickListener action) {
+    public SelectCompeticionSparkAndCategoria(ModalidadEnum modalidad, ClickListener action) {
     	this.addStyleName(ValoTheme.PANEL_BORDERLESS);
     	setSizeFull();
     	this.action = action;
@@ -70,8 +70,8 @@ public class SelectCampeonatoAndCategoria extends Panel {
         content.setExpandRatio(selectionarea, 1);
     }
 	
-	private SelectCompeticion createSelectCampeonato(Long circuito){
-		return new SelectCompeticion(circuito,
+	private SelectCompeticionSpark createSelectCampeonato(Long circuito){
+		return new SelectCompeticionSpark(circuito,
         		new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {

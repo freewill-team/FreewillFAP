@@ -29,7 +29,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.competicion.SelectCompeticion;
+import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
@@ -55,7 +55,7 @@ public class DorsalCrudView extends CssLayout implements View {
     private VerticalLayout barAndGridLayout = null;
     private SelectCircuito selectcircuito = null;
     private VerticalLayout selectionarea = new VerticalLayout();
-    private SelectCompeticion selectcampeonato = null;
+    private SelectCompeticionSpark selectcampeonato = null;
     private DorsalForm form;
     private boolean checkinAbierto = true;
     
@@ -216,8 +216,8 @@ public class DorsalCrudView extends CssLayout implements View {
         // Not allowed here grid.remove(rec);
     }
 
-	private SelectCompeticion createSelectCampeonato(Long circuito){
-		return new SelectCompeticion(circuito,
+	private SelectCompeticionSpark createSelectCampeonato(Long circuito){
+		return new SelectCompeticionSpark(circuito,
         		new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {

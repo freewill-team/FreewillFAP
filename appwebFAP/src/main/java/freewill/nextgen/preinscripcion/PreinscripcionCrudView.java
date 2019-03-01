@@ -29,7 +29,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.competicion.SelectCompeticion;
+import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -57,7 +57,7 @@ public class PreinscripcionCrudView extends CssLayout implements View {
     private VerticalLayout barAndGridLayout = null;
     private SelectCircuito selectcircuito = null;
     private VerticalLayout selectionarea = new VerticalLayout();
-    private SelectCompeticion selectcampeonato = null;
+    private SelectCompeticionSpark selectcampeonato = null;
     private PreinscripcionForm form;
     private boolean preinscripcionAbierta = true;
     private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
@@ -89,8 +89,8 @@ public class PreinscripcionCrudView extends CssLayout implements View {
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
-        //barAndGridLayout.setMargin(true);
-        //barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
@@ -223,8 +223,8 @@ public class PreinscripcionCrudView extends CssLayout implements View {
         grid.remove(rec);
     }
 
-	private SelectCompeticion createSelectCampeonato(Long circuito){
-		return new SelectCompeticion(circuito,
+	private SelectCompeticionSpark createSelectCampeonato(Long circuito){
+		return new SelectCompeticionSpark(circuito,
         		new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {

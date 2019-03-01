@@ -8,6 +8,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -23,26 +24,29 @@ public class SelectModalidad extends VerticalLayout {
 		//this.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
 		this.setSizeFull();
         this.setMargin(true);
-        this.setSpacing(true);
+        this.setSpacing(false);
         this.addStyleName("dashboard-view");
-        //this.addStyleName(ValoTheme.LAYOUT_CARD); // temporal
         Responsive.makeResponsive(this);
         
         Label title = new Label("Seleccione una Modalidad...");
         title.setStyleName(ValoTheme.LABEL_LARGE);
         title.addStyleName(ValoTheme.LABEL_COLORED);
-        this.addComponent(title);
+        //this.addComponent(title);
+        
+        HorizontalLayout hlayout = new HorizontalLayout();
+        hlayout.setSizeFull();
+        hlayout.setMargin(false); // true
+        hlayout.setSpacing(true);
+        hlayout.addStyleName("sparks");
+        hlayout.addComponents(new Label(), title);
+        hlayout.setExpandRatio(title, 1);
+        this.addComponent(hlayout);
         
         CssLayout sparks = new CssLayout();
         sparks.addStyleName("sparks");
         sparks.setWidth("100%");
         Responsive.makeResponsive(sparks);
         this.addComponent(sparks);
-        
-        /*HorizontalLayout expander = new HorizontalLayout();
-        expander.setWidth("100%");
-        this.addComponent(expander);
-        this.setExpandRatio(expander, 1);*/
         
         try{
         	for(ModalidadEnum modalidad:ModalidadEnum.values()){

@@ -1,4 +1,4 @@
-package freewill.nextgen.categoria;
+package freewill.nextgen.competicion;
 
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -15,24 +15,23 @@ import com.vaadin.ui.Button.ClickListener;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.hmi.common.Sparkline;
-import freewill.nextgen.data.CategoriaEntity;
-import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.data.RankingEntity;
+import freewill.nextgen.data.CompeticionEntity;
 
 @SuppressWarnings("serial")
-public class SelectCategoriaByRanking extends VerticalLayout {
+public class SelectCompeticionSpark extends VerticalLayout {
 	
 	ClickListener action = null;
 	
-	public SelectCategoriaByRanking(Long circuito, ModalidadEnum modalidad, ClickListener action){
+	public SelectCompeticionSpark(Long circuito, ClickListener action){
 		//this.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
 		this.setSizeFull();
         this.setMargin(true);
         this.setSpacing(false);
         this.addStyleName("dashboard-view");
+        //this.addStyleName(ValoTheme.LAYOUT_CARD); // temporal
         Responsive.makeResponsive(this);
         
-        Label title = new Label("Seleccione una Categoría...");
+        Label title = new Label("Seleccione una Competición...");
         title.setStyleName(ValoTheme.LABEL_LARGE);
         title.addStyleName(ValoTheme.LABEL_COLORED);
         //this.addComponent(title);
@@ -48,45 +47,31 @@ public class SelectCategoriaByRanking extends VerticalLayout {
         
         CssLayout sparks = new CssLayout();
         sparks.addStyleName("sparks");
+        //sparks.addStyleName("dashboard-panels");
         sparks.setWidth("100%");
         Responsive.makeResponsive(sparks);
         this.addComponent(sparks);
         
+        /*HorizontalLayout expander = new HorizontalLayout();
+        expander.setWidth("100%");
+        this.addComponent(expander);
+        this.setExpandRatio(expander, 1);*/
+        
         try{
-        	// filtrar por modalidad actual
-        	if(modalidad==null) return;
+        	// filtrar por circuito actual
+        	if(circuito==null) return;
         	
-	        List<CategoriaEntity> categorias = BltClient.get().executeQuery(
-	        		"/getByModalidad/"+modalidad.name(), CategoriaEntity.class,
+        	List<CompeticionEntity> campeonatos = BltClient.get().executeQuery(
+	        		"/getCompeticiones/"+circuito/*.getId()*/, CompeticionEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
 	        
-	        int numSparks = 0;
-	        for(CategoriaEntity categoria:categorias){
-	        	if(circuito!=null){
-	        		RankingEntity rec = (RankingEntity) BltClient.get().executeCommand(
-		        		"/countByCircuitoAndCategoria/"+circuito+"/"+categoria.getId(), 
-		        		RankingEntity.class, EntryPoint.get().getAccessControl().getTokenKey());
-	        		
-	        		if(rec.getId()>0){
-		        		Sparkline layout = new Sparkline(
-		        			categoria.getNombre(), rec.getId(),
-		            		FontAwesome.PAPERCLIP, categoria.getId());
-			        	layout.addClickListener(action);
-			        	sparks.addComponent(layout);
-			        	numSparks++;
-	        		}
-	        	}
-	        	else{
-	        		Sparkline layout = new Sparkline(
-		        			categoria.getNombre(),
-		            		FontAwesome.CHILD, categoria.getId());
-		        	layout.addClickListener(action);
-		        	sparks.addComponent(layout);
-		        	numSparks++;
-	        	}
+	        for(CompeticionEntity campeonato:campeonatos){
+	        	Sparkline layout = new Sparkline(
+	        			campeonato.getNombre(), //circuito.getNombre(),
+	            		FontAwesome.TROPHY, campeonato.getId());
+	        	layout.addClickListener(action);
+	        	sparks.addComponent(layout);
 	        }
-	        if(numSparks==0)
-	        	title.setValue("No hay categorias con patinadores para mostrar.");
     	}
 		catch(Exception e){
 			//log.error(e.getMessage());

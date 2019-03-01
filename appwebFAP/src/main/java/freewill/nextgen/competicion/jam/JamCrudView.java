@@ -8,7 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import freewill.nextgen.categoria.SelectCampeonatoAndCategoria;
+import freewill.nextgen.categoria.SelectCompeticionSparkAndCategoria;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -29,7 +29,7 @@ public class JamCrudView extends VerticalLayout implements View {
     private String competicionStr = "";
     private Long categoria = null;
     private String categoriaStr = "";
-    SelectCampeonatoAndCategoria selectCampeonatoAndCategoria = null;
+    SelectCompeticionSparkAndCategoria selectCampeonatoAndCategoria = null;
     
     public JamCrudView() {
         setSizeFull();
@@ -41,7 +41,7 @@ public class JamCrudView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
     	
-    	selectCampeonatoAndCategoria = new SelectCampeonatoAndCategoria(ModalidadEnum.JAM,
+    	selectCampeonatoAndCategoria = new SelectCompeticionSparkAndCategoria(ModalidadEnum.JAM,
     			new ClickListener() {
     	            @Override
     	            public void buttonClick(final ClickEvent event) {

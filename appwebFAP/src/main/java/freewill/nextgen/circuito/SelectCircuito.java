@@ -23,7 +23,7 @@ public class SelectCircuito extends HorizontalLayout {
 	
 	@SuppressWarnings("deprecation")
 	public SelectCircuito(){
-		this.setWidth("100%"); //
+		this.setWidth("100%"); 
         this.setMargin(true);
         this.setSpacing(true);
         this.addStyleName("dashboard-view");
