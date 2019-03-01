@@ -35,16 +35,15 @@ public class PodiumPanel extends VerticalLayout {
     	for(ParticipanteEntity rec:results){
     		String patin = ""+rec.getClasificacion()+".- "+
     				rec.getNombre()+" "+rec.getApellidos();
+    		if(name.toUpperCase().contains("JAM "))
+    			patin = patin + " / " + 
+    				rec.getNombrePareja()+" "+rec.getApellidosPareja();
     		
     		Button label = new Button(patin);
 	        label.setStyleName(ValoTheme.BUTTON_TINY);
 	        label.addStyleName(ValoTheme.BUTTON_BORDERLESS);
-    		/*TextField label = new TextField();
-    		label.setValue(patin);
-    		label.setStyleName(ValoTheme.TEXTFIELD_TINY);
-    		label.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
-    		label.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);*/
-    		label.setSizeUndefined();
+    		label.setWidth("100%");
+    		//label.setSizeUndefined();
     		label.setEnabled(false);
         	this.addComponent(label);
         	

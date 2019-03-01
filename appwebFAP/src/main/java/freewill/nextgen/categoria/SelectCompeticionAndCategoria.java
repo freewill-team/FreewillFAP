@@ -11,7 +11,7 @@ import com.vaadin.server.Responsive;
 
 import freewill.nextgen.circuito.SelectCircuito;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.competicion.SelectCompeticionCombo;
+import freewill.nextgen.competicion.SelectCompeticion;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.categoria.SelectModalidad;
 import freewill.nextgen.data.CompeticionEntity;
@@ -23,7 +23,7 @@ public class SelectCompeticionAndCategoria extends Panel {
 	private VerticalLayout content = null;
     private int modalidad = 0;
     private ModalidadEnum modalidadenum = null;
-    private SelectCompeticionCombo selectcompeticion = null;
+    private SelectCompeticion selectcompeticion = null;
     private VerticalLayout selectionarea = new VerticalLayout();
     private SelectModalidad selectmodalidad = null;
     private SelectCategoriaByParticipante selectcategoria = null;
@@ -47,7 +47,7 @@ public class SelectCompeticionAndCategoria extends Panel {
 
     private void createContent() {
     	
-    	selectcompeticion = new SelectCompeticionCombo();
+    	selectcompeticion = new SelectCompeticion();
     	selectcompeticion.addAction(
     		new ValueChangeListener() {
 	            public void valueChange(ValueChangeEvent event) {

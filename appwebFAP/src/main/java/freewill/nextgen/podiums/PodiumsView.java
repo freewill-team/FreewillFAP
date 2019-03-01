@@ -9,7 +9,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Responsive;
 
-import freewill.nextgen.competicion.SelectCompeticionCombo;
+import freewill.nextgen.competicion.SelectCompeticion;
 import freewill.nextgen.categoria.SelectModalidad;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 
@@ -19,7 +19,7 @@ public class PodiumsView extends Panel {
 	private VerticalLayout content = null;
     private int modalidad = 0;
     private ModalidadEnum modalidadenum = null;
-    private SelectCompeticionCombo selectcompeticion = null;
+    private SelectCompeticion selectcompeticion = null;
     private VerticalLayout selectionarea = new VerticalLayout();
     private SelectModalidad selectmodalidad = null;
     private PodiumsByCategoria selectcategoria = null;
@@ -42,7 +42,7 @@ public class PodiumsView extends Panel {
 
     private void createContent() {
     	
-    	selectcompeticion = new SelectCompeticionCombo();
+    	selectcompeticion = new SelectCompeticion();
     	selectcompeticion.addAction(
     		new ValueChangeListener() {
 	            public void valueChange(ValueChangeEvent event) {

@@ -1,72 +1,88 @@
 package freewill.nextgen.competicion;
 
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
 
-import com.vaadin.server.FontAwesome;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.hmi.common.Sparkline;
 import freewill.nextgen.data.CompeticionEntity;
 
 @SuppressWarnings("serial")
-public class SelectCompeticion extends VerticalLayout {
+public class SelectCompeticion extends HorizontalLayout {
 	
-	ClickListener action = null;
+	ValueChangeListener action = null;
+	ComboBox combo = null;
 	
-	public SelectCompeticion(Long circuito, ClickListener action){
-		//this.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-		this.setSizeFull();
+	public SelectCompeticion(){
+		this.setWidth("100%");
         this.setMargin(true);
         this.setSpacing(true);
         this.addStyleName("dashboard-view");
-        //this.addStyleName(ValoTheme.LAYOUT_CARD); // temporal
         Responsive.makeResponsive(this);
         
-        Label title = new Label("Seleccione una Competición...");
+        Label title = new Label("Seleccione una Competicion...");
         title.setStyleName(ValoTheme.LABEL_LARGE);
         title.addStyleName(ValoTheme.LABEL_COLORED);
-        this.addComponent(title);
+        //this.addComponent(title);
         
-        CssLayout sparks = new CssLayout();
-        sparks.addStyleName("sparks");
-        //sparks.addStyleName("dashboard-panels");
-        sparks.setWidth("100%");
-        Responsive.makeResponsive(sparks);
-        this.addComponent(sparks);
+        combo = new ComboBox();
+        combo.setImmediate(true);
+        combo.setNullSelectionAllowed(false);
+        combo.setWidth("100%");
+        //this.addComponent(combo);
         
-        /*HorizontalLayout expander = new HorizontalLayout();
-        expander.setWidth("100%");
-        this.addComponent(expander);
-        this.setExpandRatio(expander, 1);*/
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        layout.setMargin(true);
+        layout.setSpacing(true);
+        layout.addStyleName("sparks");
+        layout.addComponent(title);
+        layout.addComponent(combo);
+        layout.setExpandRatio(title, 1);
+        layout.setExpandRatio(combo, 2);
+        
+        this.addComponent(layout);
         
         try{
-        	// filtrar por circuito actual
-        	if(circuito==null) return;
-        	
-        	List<CompeticionEntity> campeonatos = BltClient.get().executeQuery(
-	        		"/getCompeticiones/"+circuito/*.getId()*/, CompeticionEntity.class,
+        	// Rellena Combobox
+        	List<CompeticionEntity> competis = BltClient.get().getEntities(
+        			CompeticionEntity.class, 
 	        		EntryPoint.get().getAccessControl().getTokenKey());
-	        
-	        for(CompeticionEntity campeonato:campeonatos){
-	        	Sparkline layout = new Sparkline(
-	        			campeonato.getNombre(), //circuito.getNombre(),
-	            		FontAwesome.TROPHY, campeonato.getId());
-	        	layout.addClickListener(action);
-	        	sparks.addComponent(layout);
+	        for(CompeticionEntity rec:competis){
+	        	combo.addItem(rec.getId());
+	        	combo.setItemCaption(rec.getId(), rec.getNombre());
 	        }
+	        
+	        // Selecciona registro correspondiente a la ultima competicion
+	        CompeticionEntity competi = (CompeticionEntity) BltClient.get().executeCommand(
+        			"/getLastCompeticion", CompeticionEntity.class,
+        			EntryPoint.get().getAccessControl().getTokenKey());
+        	if(competi!=null)
+        		combo.setValue(competi.getId());
     	}
 		catch(Exception e){
 			//log.error(e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	public Long getValue() {
+		return (Long)combo.getValue();
+	}
+	
+	public String getCaption() {
+		return combo.getItemCaption(combo.getValue());
+	}
+
+	public void addAction(ValueChangeListener action) {
+		combo.addValueChangeListener(action);
 	}
 	
 }
