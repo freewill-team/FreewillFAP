@@ -54,9 +54,11 @@ freewill\nextgen\blts\data\DerrapesRondaEntity$EliminatoriaEnum.class
 freewill\nextgen\blts\daos\SpeedKOSystemRepository.class
 freewill\nextgen\blts\daos\SaltoIntentoRepository.class
 freewill\nextgen\blts\daos\CategoriaRepository.class
+freewill\nextgen\blts\data\ParejaJamEntity.class
 freewill\nextgen\blts\entities\JobScheduled$JobStatusEnum.class
 freewill\nextgen\blts\data\CompanyEntity$PlanEnum.class
 freewill\nextgen\blts\data\DerrapesRondaEntity.class
+freewill\nextgen\blts\daos\ParejaJamRepository.class
 freewill\nextgen\blts\data\SpeedKOSystemEntity$EliminatoriaEnum.class
 freewill\nextgen\blts\data\SpeedKOSystemEntity.class
 freewill\nextgen\blts\ClassicShowManager$2.class
@@ -95,6 +97,7 @@ freewill\nextgen\blts\daos\PatinadorRepository.class
 freewill\nextgen\blts\daos\SaltoRepository.class
 freewill\nextgen\blts\data\PuntuacionesEntity.class
 freewill\nextgen\blts\daos\SpeedTimeTrialRepository.class
+freewill\nextgen\blts\ParejaJamManager.class
 freewill\nextgen\blts\data\SupportEntity.class
 freewill\nextgen\blts\data\ClassicShowEntity.class
 freewill\nextgen\blts\PatinadorManager$1.class

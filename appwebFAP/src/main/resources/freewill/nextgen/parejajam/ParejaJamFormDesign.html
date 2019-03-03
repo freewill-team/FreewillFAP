@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:org.vaadin.ui" />
+</head>
+<body>
+<v-css-layout id="parejajam-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+	    <v-horizontal-layout caption="Patinador #1" width-full spacing>
+	    	<v-button _id="patin1Btn" :bottom :left >patinador1</v-button>
+	     	<v-text-field caption="patinador" _id="patinador1" width-full />
+	        <v-text-field caption="nombre1" _id="nombre1" width-full />
+	        <v-text-field caption="apellidos1" _id="apellidos1" width-full />
+	    </v-horizontal-layout>
+        <v-horizontal-layout caption="Patinador #2" width-full spacing>
+        	<v-button _id="patin2Btn" :bottom :left >patinador2</v-button>
+        	<v-text-field caption="patinador" _id="patinador2" width-full />
+        	<v-text-field caption="nombre2" _id="nombre2" width-full />
+        	<v-text-field caption="apellidos2" _id="apellidos2" width-full />
+        </v-horizontal-layout>
+        <v-horizontal-layout width-full spacing>
+        	<v-combo-box caption="club" _id="club" width-full null-selection-allowed=false text-input-allowed=true />
+        	<v-combo-box caption="categoria" _id="categoria" width-full null-selection-allowed=false text-input-allowed=true />
+        </v-horizontal-layout>
+        
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary" _id="save">Salvar</v-button>
+        <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Salir</v-button>
+		<v-button style-name="danger" _id="delete">Eliminar</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

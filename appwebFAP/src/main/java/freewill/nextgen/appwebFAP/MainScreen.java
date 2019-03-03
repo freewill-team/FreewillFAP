@@ -24,6 +24,7 @@ import freewill.nextgen.data.CircuitoEntity;
 import freewill.nextgen.data.ClubEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ConfigEntity;
+import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
 import freewill.nextgen.dorsal.DorsalCrudView;
@@ -32,6 +33,7 @@ import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.parejajam.ParejaJamForm;
 import freewill.nextgen.participante.ParticipanteCrudView;
 import freewill.nextgen.patinador.PatinadorForm;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
@@ -136,12 +138,18 @@ public class MainScreen extends HorizontalLayout {
 		    menu.addView(clubesCrud, clubes, FontAwesome.UNIVERSITY);
         	
         	String patinadores = Messages.get().getKey("patinadores");
-        	//PatinadorForm patinadorForm = new PatinadorForm();
 		    GenericCrudView<PatinadorEntity> patinadoresCrud = new GenericCrudView<PatinadorEntity>(
 		       		//"PERMISSION", patinadores, patinadorForm, PatinadorEntity.class,
 		       		"PERMISSION", patinadores, PatinadorForm.class, PatinadorEntity.class,
 		       		"id", "nombre", "apellidos", "fichaFederativa", "clubStr", "fechaNacimiento", "active");
 		    menu.addView(patinadoresCrud, patinadores, FontAwesome.CHILD);
+		    
+		    String parejasjam = Messages.get().getKey("parejasjam");
+		    ParejaJamForm parejajamForm = new ParejaJamForm();
+		    GenericCrudView<ParejaJamEntity> parejasjamCrud = new GenericCrudView<ParejaJamEntity>(
+		    		"PERMISSION", parejasjam, parejajamForm, ParejaJamEntity.class,	
+		       		"id", "nombre1", "apellidos1", "nombre2", "apellidos2", "clubStr", "categoriaStr");
+		    menu.addView(parejasjamCrud, parejasjam, FontAwesome.CHILD);
 		    
 		    String campeonatos = Messages.get().getKey("competiciones");
 		    CompeticionForm competicionForm = new CompeticionForm();
