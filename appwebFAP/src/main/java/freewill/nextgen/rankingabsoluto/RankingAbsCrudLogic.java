@@ -175,7 +175,7 @@ public class RankingAbsCrudLogic implements Serializable {
     }
     
     public void rowSelected(RankingAbsEntity rec) {
-        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN)){
             view.editRecord(rec);
         }
     }

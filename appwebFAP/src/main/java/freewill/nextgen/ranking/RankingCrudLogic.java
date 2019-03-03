@@ -174,7 +174,7 @@ public class RankingCrudLogic implements Serializable {
     }
     
     public void rowSelected(RankingEntity rec) {
-        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN)){
             view.editRecord(rec);
         }
     }

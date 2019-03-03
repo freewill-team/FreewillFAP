@@ -212,7 +212,7 @@ public class ResultadosCrudLogic implements Serializable {
     }
 	
     public void rowSelected(ParticipanteEntity rec) {
-        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD)){
+        if (EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN)){
             view.editRecord(rec);
         }
     }

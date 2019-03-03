@@ -51,13 +51,12 @@ public class RankingAbsCrudView extends VerticalLayout implements View {
     	                gotoRankingAbs();
     	            }
     	        });
-    	selectModalidad.setSizeUndefined();
     	
         removeAllComponents();
         addComponent(selectModalidad);
         addComponent(new VerticalLayout());
         addComponent(new VerticalLayout());
-    	addComponent(new HorizontalLayout());
+    	addComponent(new VerticalLayout());
     }
 
 	public void showError(String msg) {

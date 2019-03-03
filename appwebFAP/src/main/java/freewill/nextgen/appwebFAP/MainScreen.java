@@ -154,10 +154,6 @@ public class MainScreen extends HorizontalLayout {
 		    PreinscripcionCrudView inscripcionView = new PreinscripcionCrudView(InscripcionEnum.INSCRIPCION);
         	menu.addView(inscripcionView , inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
 		    
-        	// Ranking Absoluto
-        	RankingAbsCrudView rankingabsView = new RankingAbsCrudView();
-        	menu.addView(rankingabsView, rankingabsView.VIEW_NAME, FontAwesome.SORT_NUMERIC_ASC);
-        	
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER)){
@@ -213,6 +209,10 @@ public class MainScreen extends HorizontalLayout {
         	// Palmares
 		    ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
 		    menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.TROPHY);
+		    
+		    // Ranking Absoluto
+        	RankingAbsCrudView rankingabsView = new RankingAbsCrudView();
+        	menu.addView(rankingabsView, rankingabsView.VIEW_NAME, FontAwesome.SORT_NUMERIC_ASC);
         	
         // Section About
         //menu.addTitle(Messages.get().getKey("aboutview.viewname"));
