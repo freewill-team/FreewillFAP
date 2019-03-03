@@ -26,8 +26,6 @@ import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.JamShowEntity;
-import freewill.nextgen.blts.data.CircuitoEntity;
-import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
@@ -197,8 +195,10 @@ public class JamShowManager {
 					rec.setDorsalPareja(inscripcion.getDorsalPareja());
 					rec.setCompany(userCompany);
 					
-					rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-							ModalidadEnum.JAM));
+					rec.setOrden1(
+							rankingrepo.getSortedRanking(inscripcion.getPatinador(), ModalidadEnum.CLASSIC)+
+							rankingrepo.getSortedRanking(inscripcion.getPatinadorPareja(), ModalidadEnum.CLASSIC)
+							);
 					System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 					
 					repository.save(rec);
