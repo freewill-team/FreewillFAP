@@ -173,7 +173,7 @@ public class JamFinal extends VerticalLayout {
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        //topLayout.addComponent(prevButton);
+        topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);

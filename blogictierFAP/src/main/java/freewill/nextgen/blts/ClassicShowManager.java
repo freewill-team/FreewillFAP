@@ -28,6 +28,7 @@ import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
+import freewill.nextgen.blts.data.ClassicShowEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
@@ -656,6 +657,117 @@ public class ClassicShowManager {
 			repository.delete(rec);
 		}
 		return true;
+	}
+	
+	@RequestMapping("/updateJuez1")
+	public ClassicShowEntity updateJuez1(@RequestBody ClassicShowEntity record) throws Exception {
+		ClassicShowEntity rec = null;
+		if(record!=null){
+			rec = repository.findById(record.getId());
+		}
+		if(rec!=null){
+			rec.setArtisticaJuez1(record.getArtisticaJuez1());
+			rec.setTecnicaJuez1(record.getTecnicaJuez1());
+			
+			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() - rec.getPenalizaciones());
+			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
+			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
+			
+			ClassicShowEntity res = repository.save(rec);
+			
+			// Calcular los rankings
+			setRankingJuez1(rec.getCompeticion(), rec.getCategoria());
+
+			res = repository.findById(res.getId());
+			
+			System.out.println("Updating ClassicShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
+			return res;
+		}
+		return null;	
+	}
+	
+	@RequestMapping("/updateJuez2")
+	public ClassicShowEntity updateJuez2(@RequestBody ClassicShowEntity record) throws Exception {
+		ClassicShowEntity rec = null;
+		if(record!=null){
+			rec = repository.findById(record.getId());
+		}
+		if(rec!=null){
+			rec.setArtisticaJuez2(record.getArtisticaJuez2());
+			rec.setTecnicaJuez2(record.getTecnicaJuez2());
+			
+			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() - rec.getPenalizaciones());
+			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
+			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
+			
+			ClassicShowEntity res = repository.save(rec);
+			
+			// Calcular los rankings
+			setRankingJuez2(rec.getCompeticion(), rec.getCategoria());
+
+			res = repository.findById(res.getId());
+			
+			System.out.println("Updating ClassicShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
+			return res;
+		}
+		return null;	
+	}
+	
+	@RequestMapping("/updateJuez3")
+	public ClassicShowEntity updateJuez3(@RequestBody ClassicShowEntity record) throws Exception {
+		ClassicShowEntity rec = null;
+		if(record!=null){
+			rec = repository.findById(record.getId());
+		}
+		if(rec!=null){
+			rec.setArtisticaJuez3(record.getArtisticaJuez3());
+			rec.setTecnicaJuez3(record.getTecnicaJuez3());
+			
+			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() - rec.getPenalizaciones());
+			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
+			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
+			
+			ClassicShowEntity res = repository.save(rec);
+			
+			// Calcular los rankings
+			setRankingJuez3(rec.getCompeticion(), rec.getCategoria());
+
+			res = repository.findById(res.getId());
+			
+			System.out.println("Updating ClassicShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
+			return res;
+		}
+		return null;	
+	}
+	
+	@RequestMapping("/updatePenalizacion")
+	public ClassicShowEntity updatePenalizacion(@RequestBody ClassicShowEntity record) throws Exception {
+		ClassicShowEntity rec = null;
+		if(record!=null){
+			rec = repository.findById(record.getId());
+		}
+		if(rec!=null){
+			rec.setPenalizaciones(record.getPenalizaciones());
+			
+			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() - rec.getPenalizaciones());
+			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() - rec.getPenalizaciones());
+			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() - rec.getPenalizaciones());
+			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
+			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
+			
+			ClassicShowEntity res = repository.save(rec);
+			
+			// Calcular los rankings
+			setRankingJuez1(rec.getCompeticion(), rec.getCategoria());
+			setRankingJuez2(rec.getCompeticion(), rec.getCategoria());
+			setRankingJuez3(rec.getCompeticion(), rec.getCategoria());
+
+			res = repository.findById(res.getId());
+			
+			System.out.println("Updating ClassicShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
+			return res;
+		}
+		return null;	
 	}
 	
 }

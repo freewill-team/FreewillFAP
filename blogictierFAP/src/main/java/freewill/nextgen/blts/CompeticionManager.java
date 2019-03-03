@@ -287,6 +287,10 @@ public class CompeticionManager {
     				rec.setCompany(user.getCompany());
     				rec.setCategoria(categoriaStd.getId());
     				rec.setCircuito(circuito);
+    				// datos de Jam
+    				rec.setApellidosPareja(inscripcion.getApellidosPareja());
+    				rec.setNombrePareja(inscripcion.getNombrePareja());
+    				rec.setPatinadorPareja(inscripcion.getPatinadorPareja());
     				//rec.setPuntuacion(inscripcion.getPuntuacion());
     				//rec.setPuntos1(0);
     				//rec.setPuntos2(0);
@@ -352,6 +356,7 @@ public class CompeticionManager {
             try {
             	System.out.println("CalculateRankingAbsThread thread started...");
             	for(ModalidadEnum modalidad:ModalidadEnum.values()){
+            		if(modalidad==ModalidadEnum.JAM) continue; // no hay ranking absoluto de Jam
             		saveRankingByModalidad(modalidad);
             	}
             	System.out.println("CalculateRankingAbsThread thread finished.");
@@ -524,7 +529,12 @@ public class CompeticionManager {
     		//System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
     		//		cat.getEdadMinima()+"-"+cat.getEdadMaxima());
     		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() &&
-    				(patin.getGenero()==cat.getGenero()) ){
+    				patin.getGenero()==cat.getGenero()){
+    			return cat;
+    		}
+    		// caso especifico de Jam, pueden ir a mixtos
+    		else if(modalidad==ModalidadEnum.JAM && 
+    				cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima()){
     			return cat;
     		}
     	}

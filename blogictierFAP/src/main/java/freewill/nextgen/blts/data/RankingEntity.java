@@ -25,6 +25,7 @@ public class RankingEntity implements Serializable, Cloneable {
     private String clubStr;			// Club al que pertenece
 	private Long company;			// Company the project belongs to
 	private Long patinador;
+	private Long patinadorPareja;
 	private Long circuito;
 	private Long competicion;
 	private Long categoria;
@@ -281,6 +282,14 @@ public class RankingEntity implements Serializable, Cloneable {
 
 	public void setCategoriaStr(String categoriaStr) {
 		this.categoriaStr = categoriaStr;
+	}
+
+	public Long getPatinadorPareja() {
+		return patinadorPareja;
+	}
+
+	public void setPatinadorPareja(Long patinadorPareja) {
+		this.patinadorPareja = patinadorPareja;
 	}
 	
 }
