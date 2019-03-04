@@ -1,4 +1,4 @@
-package freewill.nextgen.participante;
+package freewill.nextgen.palmares;
 
 import java.io.File;
 import java.util.Collection;
@@ -46,17 +46,17 @@ import freewill.nextgen.patinador.SelectPatinadorDialog;
  */
 
 @SuppressWarnings("serial")
-public class ParticipanteCrudView extends CssLayout implements View {
+public class PalmaresCrudView extends CssLayout implements View {
 
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
     public final String VIEW_NAME = Messages.get().getKey("palmares");
     private GenericGrid<ParticipanteEntity> grid;
-    private ParticipanteCrudLogic viewLogic = new ParticipanteCrudLogic(this);
+    private PalmaresCrudLogic viewLogic = new PalmaresCrudLogic(this);
     private Label patinadorLabel = null;
     private VerticalLayout barAndGridLayout = null;
     
-    public ParticipanteCrudView() {
+    public PalmaresCrudView() {
         setSizeFull();
         addStyleName("crud-view");        
         HorizontalLayout topLayout = createTopBar();

@@ -1,4 +1,4 @@
-package freewill.nextgen.participante;
+package freewill.nextgen.palmares;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -24,12 +24,12 @@ import freewill.nextgen.data.PatinadorEntity;
  * data.
  */
 @SuppressWarnings("serial")
-public class ParticipanteCrudLogic implements Serializable {
+public class PalmaresCrudLogic implements Serializable {
 
-    private ParticipanteCrudView view;
+    private PalmaresCrudView view;
     private Logger log = null;
 
-    public ParticipanteCrudLogic(ParticipanteCrudView simpleCrudView) {
+    public PalmaresCrudLogic(PalmaresCrudView simpleCrudView) {
         view = simpleCrudView;
         log = Logger.getLogger(view.getClass());
     }

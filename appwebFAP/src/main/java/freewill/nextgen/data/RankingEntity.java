@@ -32,6 +32,7 @@ public class RankingEntity implements Serializable, Cloneable {
 	private String competicion3;
 	private String competicion4;
 	private int orden;
+	private Long parejaJam;
 	
     /**
      * Default constructor. 
@@ -281,6 +282,14 @@ public class RankingEntity implements Serializable, Cloneable {
 
 	public void setPatinadorPareja(Long patinadorPareja) {
 		this.patinadorPareja = patinadorPareja;
+	}
+
+	public Long getParejaJam() {
+		return parejaJam;
+	}
+
+	public void setParejaJam(Long parejaJam) {
+		this.parejaJam = parejaJam;
 	}
 	
 }

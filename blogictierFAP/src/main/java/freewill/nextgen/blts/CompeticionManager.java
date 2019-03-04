@@ -264,18 +264,32 @@ public class CompeticionManager {
 					inscripcionesrepo.findByCompeticionAndCategoria(competi.getId(), categoria.getId());
 			// Acumula las puntuaciones conseguidas
     		for(ParticipanteEntity inscripcion:inscripciones){
-    			// Obtiene la categoria estandard para este patinador
-    			CategoriaEntity categoriaStd = getCategoriaStd(categorias,
-    					inscripcion.getPatinador(), categoria.getModalidad());
+    			CategoriaEntity categoriaStd = null;
+    			if(categoria.getModalidad()==ModalidadEnum.JAM){
+    				// Obtiene la categoria estandard para esta pareja de Jam
+    				categoriaStd = categoria;
+    			}
+    			else{
+	    			// Obtiene la categoria estandard para este patinador
+	    			categoriaStd = getCategoriaStd(categorias,
+	    					inscripcion.getPatinador(), categoria.getModalidad());
+    			}
     			if(categoriaStd==null){
     				System.out.println("Hay un registro huerfano = "+inscripcion);
     				continue;
     			}
+    			RankingEntity rec = null;
+    			if(categoria.getModalidad()==ModalidadEnum.JAM){
+    				rec = rankingrepo.findByParejaJamAndCircuitoAndCategoria(
+	    					inscripcion.getParejaJam(), circuito, categoriaStd.getId());
+    			}
+    			else{
+	    			rec = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
+	    					inscripcion.getPatinador(), circuito, categoriaStd.getId());
+    			}
     			//System.out.println("      Patinador="+inscripcion.getId()+" CatStd="+categoriaStd);
     			
     			// Crea o Salva el registro de ranking
-    			RankingEntity rec = rankingrepo.findByPatinadorAndCircuitoAndCategoria(
-    					inscripcion.getPatinador(), circuito, categoriaStd.getId());
     			if(rec==null){
     				// Create new record
     				rec = new RankingEntity();
@@ -288,6 +302,7 @@ public class CompeticionManager {
     				rec.setCategoria(categoriaStd.getId());
     				rec.setCircuito(circuito);
     				// datos de Jam
+    				rec.setParejaJam(inscripcion.getParejaJam());
     				rec.setApellidosPareja(inscripcion.getApellidosPareja());
     				rec.setNombrePareja(inscripcion.getNombrePareja());
     				rec.setPatinadorPareja(inscripcion.getPatinadorPareja());

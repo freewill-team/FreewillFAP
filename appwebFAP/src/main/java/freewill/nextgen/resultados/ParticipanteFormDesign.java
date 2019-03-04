@@ -25,6 +25,7 @@ public class ParticipanteFormDesign extends CssLayout {
 	protected TextField nombre;
     protected TextField apellidos;
     protected Button parejaBtn;
+    protected TextField parejaJam;
 	protected TextField patinadorPareja;
 	protected TextField nombrePareja;
     protected TextField apellidosPareja;

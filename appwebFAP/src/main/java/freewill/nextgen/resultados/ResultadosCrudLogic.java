@@ -12,6 +12,7 @@ import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.RankingEntity;
@@ -216,5 +217,17 @@ public class ResultadosCrudLogic implements Serializable {
             view.editRecord(rec);
         }
     }
+
+	public List<ParejaJamEntity> getParejasJam() {
+		try{
+	        return BltClient.get().getEntities(ParejaJamEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
     
 }

@@ -16,6 +16,8 @@ public interface RankingRepository extends CrudRepository<RankingEntity, Long> {
 			Long circuito, Long categoria);
 	RankingEntity findByPatinadorAndCircuitoAndCategoria(
 			Long patinador, Long circuito, Long categoria);
+	RankingEntity findByParejaJamAndCircuitoAndCategoria(
+			Long parejaJam, Long circuito, Long categoria);
 	
 	@Modifying
 	@Query("DELETE FROM RankingEntity u where u.company = ?1")

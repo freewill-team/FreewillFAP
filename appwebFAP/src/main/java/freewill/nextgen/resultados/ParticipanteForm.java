@@ -25,10 +25,12 @@ import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.ClubEntity;
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.parejajam.SelectParejaJamDialog;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
@@ -205,25 +207,31 @@ public class ParticipanteForm extends ParticipanteFormDesign {
 			}
         });
         
-        parejaBtn.setCaption(Messages.get().getKey("patinador"));
+        parejaBtn.setCaption(Messages.get().getKey("parejajam"));
         parejaBtn.addStyleName(ValoTheme.BUTTON_PRIMARY);
         parejaBtn.setIcon(FontAwesome.SEARCH);
         parejaBtn.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
 				// Abre la ventana de seleccion de patinador Pareja
-				List<PatinadorEntity> students = viewLogic.getPatinadores();
+				List<ParejaJamEntity> students = viewLogic.getParejasJam();
+				//List<PatinadorEntity> students = viewLogic.getPatinadores();
 				
-				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
+				SelectParejaJamDialog cd = new SelectParejaJamDialog(students);
             	cd.setOKAction(new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
             			cd.close();
-            			PatinadorEntity user = cd.getSelected();
-            			if(user!=null){
-            				patinadorPareja.setValue(""+user.getId());
-                    		nombrePareja.setValue(user.getNombre());
-                    		apellidosPareja.setValue(user.getApellidos());
+            			ParejaJamEntity users= cd.getSelected();
+            			if(users!=null){
+            				parejaJam.setValue(""+users.getId());
+            				patinador.setValue(""+users.getPatinador1());
+                    		nombre.setValue(users.getNombre1());
+                    		apellidos.setValue(users.getApellidos1());
+            				patinadorPareja.setValue(""+users.getPatinador2());
+                    		nombrePareja.setValue(users.getNombre2());
+                    		apellidosPareja.setValue(users.getApellidos2());
+                    		club.setValue(users.getClub());
             			}
                     }
                 });
@@ -276,6 +284,7 @@ public class ParticipanteForm extends ParticipanteFormDesign {
         nombre.setEnabled(!canRemoveRecord);
         apellidos.setEnabled(!canRemoveRecord);
         patinadorPareja.setVisible(false);
+        parejaJam.setVisible(false);
         
         delete.setEnabled(canRemoveRecord);
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));

@@ -33,8 +33,8 @@ import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.palmares.PalmaresCrudView;
 import freewill.nextgen.parejajam.ParejaJamForm;
-import freewill.nextgen.participante.ParticipanteCrudView;
 import freewill.nextgen.patinador.PatinadorForm;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
@@ -215,7 +215,7 @@ public class MainScreen extends HorizontalLayout {
         	menu.addView(preinscripcionView , Messages.get().getKey("preinscripciones"), FontAwesome.PAPERCLIP);
 	    
         	// Palmares
-		    ParticipanteCrudView participantesCrud = new ParticipanteCrudView();
+		    PalmaresCrudView participantesCrud = new PalmaresCrudView();
 		    menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.TROPHY);
 		    
 		    // Ranking Absoluto
