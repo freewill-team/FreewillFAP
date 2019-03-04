@@ -63,7 +63,7 @@ public class ClassicActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
-	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
+	    showRecords(viewLogic.initGridFinalResults(this.competicion, this.categoria));  	
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -76,7 +76,7 @@ public class ClassicActaFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 // Previous screen
-            	parent.gotoClassicFinal();
+            	parent.gotoResultados();
             }
         });
 		

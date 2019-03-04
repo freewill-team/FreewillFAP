@@ -77,6 +77,15 @@ public class JamCrudView extends VerticalLayout implements View {
     			JamCrudView.this));
 	}
 	
+	public void gotoResultados() {
+		// muestra resultados
+		removeAllComponents();
+		addComponent(new JamResultados(
+    			categoria, categoriaStr,
+    			competicion, competicionStr, 
+    			JamCrudView.this));
+	}
+	
 	public void gotoActaFinal() {
 		// Crea acta final
 		removeAllComponents();

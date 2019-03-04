@@ -19,11 +19,12 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.data.JamShowEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
+import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class JamActaFinal extends VerticalLayout {
+public class JamResultados extends VerticalLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("jamacta");
 	private Long competicion = null;
@@ -34,7 +35,7 @@ public class JamActaFinal extends VerticalLayout {
 	private JamCrudLogic viewLogic;
 	private JamCrudView parent = null;
 
-	public JamActaFinal(Long categoria, String labelcategoria, Long competicion, 
+	public JamResultados(Long categoria, String labelcategoria, Long competicion, 
 			String label, JamCrudView parent){
 		this.competicion = competicion;
 		this.competicionStr = label;
@@ -46,6 +47,7 @@ public class JamActaFinal extends VerticalLayout {
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
 		       "id", "dorsalDuo", "clasificacionFinal", "nombreDuo", 
+		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
         
@@ -62,7 +64,7 @@ public class JamActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
-	    showRecords(viewLogic.initGridFinalResults(this.competicion, this.categoria));  	
+	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -75,9 +77,31 @@ public class JamActaFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 // Previous screen
-            	parent.gotoResultados();
+            	parent.gotoJamFinal();
             }
         });
+		
+		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
+		nextButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {	
+            	// Next screen
+             	ConfirmDialog cd = new ConfirmDialog(
+             			"Esta acción publicará los resultados en la web pública.\n" +
+             			"¿ Desea continuar ?");
+                 cd.setOKAction(new ClickListener() {
+                 	@Override
+                     public void buttonClick(final ClickEvent event) {
+                     	cd.close();
+                     	parent.gotoActaFinal();
+                 	}
+                 });
+                 getUI().addWindow(cd);
+            }
+        });
+		nextButton.setEnabled(true);
 		
 		Button printButton = new Button(Messages.get().getKey("acta"));
 		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -88,6 +112,7 @@ public class JamActaFinal extends VerticalLayout {
     				JamShowEntity.class,
     				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
     				"clasificacionFinal", "dorsalDuo", "nombreDuo", 
+    				"rankingJuez1", "rankingJuez2", "rankingJuez3",
     			    "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
@@ -109,6 +134,7 @@ public class JamActaFinal extends VerticalLayout {
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);
+        topLayout.addComponent(nextButton);
         topLayout.addComponent(printButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);

@@ -1,4 +1,4 @@
-package freewill.nextgen.competicion.jam;
+package freewill.nextgen.competicion.classic;
 
 import java.io.File;
 import java.util.List;
@@ -17,36 +17,39 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-import freewill.nextgen.data.JamShowEntity;
+import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
+import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class JamActaFinal extends VerticalLayout {
+public class ClassicResultados extends VerticalLayout {
 	
-	public final String VIEW_NAME = Messages.get().getKey("jamacta");
+	public final String VIEW_NAME = Messages.get().getKey("classicacta");
 	private Long competicion = null;
 	private String competicionStr = "";
 	private Long categoria = null;
 	private String categoriaStr = "";
-	private GenericGrid<JamShowEntity> grid;
-	private JamCrudLogic viewLogic;
-	private JamCrudView parent = null;
+	private GenericGrid<ClassicShowEntity> grid;
+	private ClassicCrudLogic viewLogic;
+	private ClassicCrudView parent = null;
 
-	public JamActaFinal(Long categoria, String labelcategoria, Long competicion, 
-			String label, JamCrudView parent){
+	public ClassicResultados(Long categoria, String labelcategoria, Long competicion, 
+			String label, ClassicCrudView parent){
 		this.competicion = competicion;
 		this.competicionStr = label;
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
 		
-		viewLogic = new JamCrudLogic();
+		viewLogic = new ClassicCrudLogic();
 		
-		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
-		       "id", "dorsalDuo", "clasificacionFinal", "nombreDuo", 
+		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
+		       "id", "dorsal", "clasificacionFinal", "nombre", "apellidos",
+		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
+		       //"rankingJuez1","rankingJuez2", "rankingJuez3", "orden1"
 		       );
         
         HorizontalLayout gridLayout = new HorizontalLayout();
@@ -62,7 +65,7 @@ public class JamActaFinal extends VerticalLayout {
 	    setSizeFull();
 	    setExpandRatio(gridLayout, 1);
 	    setStyleName("crud-main-layout");
-	    showRecords(viewLogic.initGridFinalResults(this.competicion, this.categoria));  	
+	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -75,19 +78,42 @@ public class JamActaFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 // Previous screen
-            	parent.gotoResultados();
+            	parent.gotoClassicFinal();
             }
         });
+		
+		Button nextButton = new Button(Messages.get().getKey("next"));
+		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
+		nextButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	// Next screen
+             	ConfirmDialog cd = new ConfirmDialog(
+             			"Esta acción publicará los resultados en la web pública.\n" +
+             			"¿ Desea continuar ?");
+                 cd.setOKAction(new ClickListener() {
+                 	@Override
+                     public void buttonClick(final ClickEvent event) {
+                     	cd.close();
+                     	parent.gotoActaFinal();
+                 	}
+                 });
+                 getUI().addWindow(cd);
+            }
+        });
+		nextButton.setEnabled(true);
 		
 		Button printButton = new Button(Messages.get().getKey("acta"));
 		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
     		File file = Export2Xls.get().createXLS(
-    				(List<JamShowEntity>)grid.getContainerDataSource().getItemIds(),
-    				JamShowEntity.class,
+    				(List<ClassicShowEntity>)grid.getContainerDataSource().getItemIds(),
+    				ClassicShowEntity.class,
     				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
-    				"clasificacionFinal", "dorsalDuo", "nombreDuo", 
+    				"clasificacionFinal", "dorsal", "nombre", "apellidos", 
+    				"rankingJuez1", "rankingJuez2", "rankingJuez3",
     			    "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
@@ -109,6 +135,7 @@ public class JamActaFinal extends VerticalLayout {
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);
+        topLayout.addComponent(nextButton);
         topLayout.addComponent(printButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
@@ -124,7 +151,7 @@ public class JamActaFinal extends VerticalLayout {
         Notification.show(msg, Type.TRAY_NOTIFICATION);
     }
 
-    public void showRecords(List<JamShowEntity> records) {
+    public void showRecords(List<ClassicShowEntity> records) {
         grid.setRecords(records);
     }
     

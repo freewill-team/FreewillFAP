@@ -214,7 +214,6 @@ public class ClassicShowManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<ClassicShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<ClassicShowEntity> recs = new ArrayList<ClassicShowEntity>();
@@ -257,10 +256,10 @@ public class ClassicShowManager {
 		return recs;
 	}
 	
-	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
-	public List<ClassicShowEntity> getResultadosFinal(@PathVariable Long competicion,
+	@RequestMapping("/getResultados/{competicion}/{categoria}")
+	public List<ClassicShowEntity> getResultados(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
-		System.out.println("Getting ClassicShow Results Final By competicion and categoria..." 
+		System.out.println("Getting ClassicShow Results By competicion and categoria..." 
 			+ competicion + "," + categoria);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
@@ -269,7 +268,8 @@ public class ClassicShowManager {
 		System.out.println("Calculando Clasificacion Classic");
 		
 		// Paso 1: crear tabla puntos victoria
-		List<ClassicShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
+		List<ClassicShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
 		int numParticipantes = recs.size();
 		
 		float[][] PV = new float[numParticipantes][numParticipantes];
@@ -374,8 +374,21 @@ public class ClassicShowManager {
 		
 		CalculaClasificacionFinal(competicion, categoria, PV);
 		
-		recs = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
-
+		return repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+	}
+	
+	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
+	public List<ClassicShowEntity> getResultadosFinal(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting ClassicShow Results Final By competicion and categoria..." 
+			+ competicion + "," + categoria);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		Long userCompany = user.getCompany();
+		
+		List<ClassicShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+	
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
 		if(competi!=null && competi.getActive()){
@@ -403,9 +416,9 @@ public class ClassicShowManager {
 				}
 			}
 		}
-		return recs;
-	}
-	
+		return recs;	
+	}	
+		
 	@RequestMapping("/moveRecordUp/{recId}")
 	public ClassicShowEntity moveRecordUp(@PathVariable Long recId) throws Exception {
 		if(recId!=null){

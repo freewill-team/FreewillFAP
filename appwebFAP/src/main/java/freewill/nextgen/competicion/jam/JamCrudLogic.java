@@ -188,6 +188,22 @@ public class JamCrudLogic implements Serializable {
 	public List<JamShowEntity> initGridResults(Long competicion, Long categoria) {
 		try{
 	        return BltClient.get().executeQuery(
+	        		"/getResultados/"+competicion+"/"+categoria,
+	        		JamShowEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<JamShowEntity> initGridFinalResults(Long competicion, Long categoria) {
+		try{
+	        return BltClient.get().executeQuery(
 	        		"/getResultadosFinal/"+competicion+"/"+categoria,
 	        		JamShowEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());

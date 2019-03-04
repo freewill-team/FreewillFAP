@@ -114,7 +114,7 @@ public class JamFinal extends VerticalLayout {
             	parent.enter(null);
             }
         });
-		prevButton.setEnabled(false);
+		prevButton.setEnabled(true);
 		
 		nextButton = new Button(Messages.get().getKey("next"));
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -123,17 +123,7 @@ public class JamFinal extends VerticalLayout {
             @Override
             public void buttonClick(ClickEvent event) {	
             	// Next screen
-             	ConfirmDialog cd = new ConfirmDialog(
-             			"Esta acción publicará los resultados en la web pública.\n" +
-             			"¿ Desea continuar ?");
-                 cd.setOKAction(new ClickListener() {
-                 	@Override
-                     public void buttonClick(final ClickEvent event) {
-                     	cd.close();
-                     	parent.gotoActaFinal();
-                 	}
-                 });
-                 getUI().addWindow(cd);
+             	parent.gotoResultados();
             }
         });
 		nextButton.setEnabled(true);

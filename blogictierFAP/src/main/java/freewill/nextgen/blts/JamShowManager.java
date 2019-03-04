@@ -219,7 +219,6 @@ public class JamShowManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<JamShowEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<JamShowEntity> recs = new ArrayList<JamShowEntity>();
@@ -266,20 +265,20 @@ public class JamShowManager {
 		return recs;
 	}
 	
-	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
-	public List<JamShowEntity> getResultadosFinal(@PathVariable Long competicion,
+	@RequestMapping("/getResultados/{competicion}/{categoria}")
+	public List<JamShowEntity> getResultados(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
-		System.out.println("Getting JamShow Results Final By competicion and categoria..." 
+		System.out.println("Getting JamShow Results By competicion and categoria..." 
 			+ competicion + "," + categoria);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserEntity user = userrepo.findByLoginname(auth.getName());
-		Long userCompany = user.getCompany();
-		
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		//Long userCompany = user.getCompany();
 		
 		System.out.println("Calculando Clasificacion Jam");
 		
 		// Paso 1: crear tabla puntos victoria
-		List<JamShowEntity>recs = repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
+		List<JamShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByOrden1Asc(competicion, categoria);
 		int numParticipantes = recs.size();
 		
 		float[][] PV = new float[numParticipantes][numParticipantes];
@@ -384,8 +383,21 @@ public class JamShowManager {
 		
 		CalculaClasificacionFinal(competicion, categoria, PV);
 		
-		recs = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
-
+		return repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+	}
+	
+	@RequestMapping("/getResultadosFinal/{competicion}/{categoria}")
+	public List<JamShowEntity> getResultadosFinal(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting JamShow Results Final By competicion and categoria..." 
+			+ competicion + "," + categoria);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		Long userCompany = user.getCompany();
+		
+		List<JamShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+		
 		// Aprovechamos y actualizamos aqui los registros ParticipanteEntity
 		CompeticionEntity competi = competirepo.findById(competicion);
 		if(competi!=null && competi.getActive()){
@@ -414,8 +426,8 @@ public class JamShowManager {
 			}
 		}
 		return recs;
-	}
-	
+	}	
+		
 	@RequestMapping("/moveRecordUp/{recId}")
 	public JamShowEntity moveRecordUp(@PathVariable Long recId) throws Exception {
 		if(recId!=null){

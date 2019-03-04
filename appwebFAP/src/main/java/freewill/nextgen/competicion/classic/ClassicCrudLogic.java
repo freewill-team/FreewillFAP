@@ -187,6 +187,23 @@ public class ClassicCrudLogic implements Serializable {
 	public List<ClassicShowEntity> initGridResults(Long competicion, Long categoria) {
 		try{
 	        return BltClient.get().executeQuery(
+	        		"/getResultados/"+competicion+"/"+categoria,
+	        		ClassicShowEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(activeView!=null){
+				activeView.showError(e.getMessage());
+			}
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<ClassicShowEntity> initGridFinalResults(Long competicion, Long categoria) {
+		try{
+	        return BltClient.get().executeQuery(
 	        		"/getResultadosFinal/"+competicion+"/"+categoria,
 	        		ClassicShowEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());

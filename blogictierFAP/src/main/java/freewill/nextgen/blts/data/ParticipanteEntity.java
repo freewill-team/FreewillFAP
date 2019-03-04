@@ -41,6 +41,7 @@ public class ParticipanteEntity implements Serializable, Cloneable {
 	private String categoriaStr;
 	@Transient
 	private Date fecha;
+	private Long parejaJam;
 	
     /**
      * Default constructor. 
@@ -267,6 +268,14 @@ public class ParticipanteEntity implements Serializable, Cloneable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Long getParejaJam() {
+		return parejaJam;
+	}
+
+	public void setParejaJam(Long parejaJam) {
+		this.parejaJam = parejaJam;
 	}
 	
 }
