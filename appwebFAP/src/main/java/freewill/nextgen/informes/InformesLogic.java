@@ -192,10 +192,10 @@ public class InformesLogic implements Serializable {
 		return null;
     }
 	
-	public List<ParticipanteEntity> getMejoresMarcas(Long categoria) {
+	public List<ParticipanteEntity> getMejoresMarcas(Long categoria, String sortby) {
 		try{
 			return BltClient.get().executeQuery(
-					"/getMejoresMarcas/"+categoria,
+					"/getMejoresMarcas/"+categoria+"/"+sortby,
         			ParticipanteEntity.class,
         			EntryPoint.get().getAccessControl().getTokenKey());
     	}

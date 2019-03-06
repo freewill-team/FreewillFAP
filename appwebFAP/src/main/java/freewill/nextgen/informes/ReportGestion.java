@@ -9,7 +9,6 @@ import java.util.List;
 import freewill.nextgen.apoi.ApoiDocExport;
 import freewill.nextgen.apoi.Report;
 import freewill.nextgen.appwebFAP.EntryPoint;
-import freewill.nextgen.common.Messages;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
@@ -17,8 +16,7 @@ import freewill.nextgen.data.CompanyEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.Style;
-import freewill.nextgen.data.Style.StyleEnum;
-import com.vaadin.ui.ProgressBar;
+import freewill.nextgen.hmi.utils.Messages;
 
 public class ReportGestion extends Report {
 	
@@ -73,8 +71,8 @@ public class ReportGestion extends Report {
 					+ "obtenidas por los deportistas en el presente año, para las modalidades "
 					+ "Speed y Salto."
 					);
-			printMejoresMarcas(ModalidadEnum.SPEED, viewLogic, doc);
-			printMejoresMarcas(ModalidadEnum.JUMP, viewLogic, doc);
+			printMejoresMarcas(ModalidadEnum.SPEED, "DESC", viewLogic, doc);
+			printMejoresMarcas(ModalidadEnum.JUMP, "ASC", viewLogic, doc);
 					
 			// Close the Word Document
 			doc.AddParagraph("");
@@ -92,14 +90,14 @@ public class ReportGestion extends Report {
 		}
 	}
 
-	private void printMejoresMarcas(ModalidadEnum modalidad, InformesLogic viewLogic, 
-			ApoiDocExport doc) {
+	private void printMejoresMarcas(ModalidadEnum modalidad, String sortby, 
+			InformesLogic viewLogic, ApoiDocExport doc) {
 		try{
 			doc.AddTitle("Mejores Marcas "+modalidad, 2);
 			List<CategoriaEntity> categorias = viewLogic.getCategorias(modalidad);
 			for(CategoriaEntity rec:categorias){
 				List<ParticipanteEntity> collection = 
-						viewLogic.getMejoresMarcas(rec.getId());
+						viewLogic.getMejoresMarcas(rec.getId(), sortby);
 				if(collection!=null && collection.size()>0)
 					printMarcas(rec.getNombre(), collection, doc);
 			}
@@ -110,14 +108,14 @@ public class ReportGestion extends Report {
 	}
 
 	private void printMarcas(String title, List<ParticipanteEntity> collection, 
-			ApoiDocExport doc) {
+			 ApoiDocExport doc) {
 		try{
 			doc.AddTitle(title, 3);
 			String table[][] = new String[collection.size()+1][4];
-    		table[0][0]=Messages.get().getKey("fecha", System.getProperty("LOCALE"));
-    		table[0][1]=Messages.get().getKey("competicion", System.getProperty("LOCALE"));
-    		table[0][2]=Messages.get().getKey("patinador", System.getProperty("LOCALE"));
-    		table[0][3]=Messages.get().getKey("mejorMarca", System.getProperty("LOCALE"));
+    		table[0][0]=Messages.get().getKey("fecha");
+    		table[0][1]=Messages.get().getKey("competicion");
+    		table[0][2]=Messages.get().getKey("patinador");
+    		table[0][3]=Messages.get().getKey("mejorMarca");
     		int j=1;
 			// Process the List item
 			for(ParticipanteEntity rec:collection){
@@ -181,9 +179,9 @@ public class ReportGestion extends Report {
 		try{
 			doc.AddTitle(title, 3);
 			String table[][] = new String[collection.size()+1][3];
-    		table[0][0]=Messages.get().getKey("clasificacion", System.getProperty("LOCALE"));
-    		table[0][1]=Messages.get().getKey("patinador", System.getProperty("LOCALE"));
-    		table[0][2]=Messages.get().getKey("club", System.getProperty("LOCALE"));
+    		table[0][0]=Messages.get().getKey("clasificacion");
+    		table[0][1]=Messages.get().getKey("patinador");
+    		table[0][2]=Messages.get().getKey("club");
     		int j=1;
 			// Process the List item
 			for(ParticipanteEntity rec:collection){
