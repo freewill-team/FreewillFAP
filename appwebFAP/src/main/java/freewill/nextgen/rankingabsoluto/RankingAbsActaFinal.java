@@ -79,7 +79,10 @@ public class RankingAbsActaFinal extends CssLayout {
 	    addComponent(barAndGridLayout);
 	    addComponent(form);
 	    
-	    viewLogic.initGrid(this.modalidad);
+	    if(modalidad==ModalidadEnum.JAM)
+	    	parent.showError("No existe Ranking Absoluto para Jam.");
+	    else
+	    	viewLogic.initGrid(this.modalidad);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })

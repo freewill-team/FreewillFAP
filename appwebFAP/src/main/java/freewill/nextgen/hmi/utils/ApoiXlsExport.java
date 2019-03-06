@@ -34,8 +34,15 @@ public class ApoiXlsExport {
 			in = new ByteArrayInputStream(template);
 		document = new XSSFWorkbook(in);
 		worksheet = document.getSheetAt(0); //createSheet("Data");
+		worksheet.setFitToPage(true);
+		worksheet.setHorizontallyCenter(true);
+		worksheet.setVerticallyCenter(false);
 		out = new FileOutputStream(file);
 		System.out.println("ApoiXlsExport " + filename + " open successfully");
+	}
+	
+	public void createSheet(String value){
+		worksheet = document.createSheet(value);
 		worksheet.setFitToPage(true);
 		worksheet.setHorizontallyCenter(true);
 		worksheet.setVerticallyCenter(false);
@@ -137,6 +144,35 @@ public class ApoiXlsExport {
 			}
 			// Repeat first row
 			worksheet.setRepeatingRows(CellRangeAddress.valueOf("1:1"));
+			// Forces to recalculate formulas
+			document.setForceFormulaRecalculation(true);
+			// Writes the Document in file system
+			document.write(out);
+			out.close();
+			// document.close();
+		    System.out.println("ApoiXlsExport " + filename + " written successfully");
+		}
+	}
+	
+	public void setWidths(int[] widths) throws Exception {
+		if(document!=null && out!=null){
+			// sets column auto sizing
+			//XSSFRow row = document.getSheetAt(0).getRow(0);
+			for(int colNum= 0; colNum<widths.length/*row.getLastCellNum()*/;colNum++){
+				if(widths[colNum]>0){ 
+					worksheet.setColumnWidth(colNum, widths[colNum]*256);
+				}
+				else
+					worksheet.autoSizeColumn(colNum);
+			}
+			// Repeat first row
+			worksheet.setRepeatingRows(CellRangeAddress.valueOf("1:1"));
+		}
+	}
+  	
+	
+	public void closeDocument() throws Exception {
+		if(document!=null && out!=null){
 			// Forces to recalculate formulas
 			document.setForceFormulaRecalculation(true);
 			// Writes the Document in file system

@@ -1,6 +1,7 @@
 package freewill.nextgen.appwebFAP;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
@@ -33,6 +34,7 @@ import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.informes.InformesView;
 import freewill.nextgen.palmares.PalmaresCrudView;
 import freewill.nextgen.parejajam.ParejaJamForm;
 import freewill.nextgen.patinador.PatinadorForm;
@@ -160,8 +162,11 @@ public class MainScreen extends HorizontalLayout {
 		    
 		    // Inscripciones
 		    PreinscripcionCrudView inscripcionView = new PreinscripcionCrudView(InscripcionEnum.INSCRIPCION);
-        	menu.addView(inscripcionView , inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
+        	menu.addView(inscripcionView, inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
 		    
+        	InformesView informesCrud = new InformesView();
+		    menu.addView(informesCrud, informesCrud.VIEW_NAME, FontAwesome.FILES_O);
+        	
         }
         
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.USER)){
