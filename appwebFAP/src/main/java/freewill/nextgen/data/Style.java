@@ -1,22 +1,13 @@
-package freewill.nextgen.blts.data;
+package freewill.nextgen.data;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import freewill.nextgen.blts.BltAuditingEntityListener;
 
 /**
  * Session Bean implementation class Style
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "STYLEENTITY")
-@EntityListeners(BltAuditingEntityListener.class)
 public class Style implements Serializable, Cloneable{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;								// ID
 	private String name="";							// Style name
 	private String styleid="";						// Style id

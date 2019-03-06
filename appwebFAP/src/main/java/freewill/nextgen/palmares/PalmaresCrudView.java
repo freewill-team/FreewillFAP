@@ -11,6 +11,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -193,6 +194,8 @@ public class PalmaresCrudView extends CssLayout implements View {
 
     public void showRecords(Collection<ParticipanteEntity> records) {
         grid.setRecords(records);
+        if(records!=null && records.size()>0)
+        	grid.sort("fecha", SortDirection.DESCENDING);
     }
 
     public void refreshRecord(ParticipanteEntity rec) {

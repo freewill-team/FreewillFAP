@@ -12,6 +12,8 @@ import com.vaadin.server.Page;
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 
@@ -149,10 +151,51 @@ public class InformesLogic implements Serializable {
 		return null;
 	}
 	
-	public List<ParticipanteEntity> getParticipantes(Long competicion, Long categoria) {
+	public List<ParticipanteEntity> getResultados(Long competicion, Long categoria) {
 		try{
 			return BltClient.get().executeQuery(
 					"/getResultados/"+competicion+"/"+categoria,
+        			ParticipanteEntity.class,
+        			EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+
+	public List<CompeticionEntity> getCompeticiones(Long circuito) {
+		try{
+			return BltClient.get().executeQuery(
+					"/getCompeticiones/"+circuito,
+					CompeticionEntity.class,
+        			EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<CategoriaEntity> getCategorias(ModalidadEnum modalidad) {
+    	try{
+    		return BltClient.get().executeQuery(
+    	     		"/getByModalidad/"+modalidad.name(), CategoriaEntity.class,
+    	     		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+    }
+	
+	public List<ParticipanteEntity> getMejoresMarcas(Long categoria) {
+		try{
+			return BltClient.get().executeQuery(
+					"/getMejoresMarcas/"+categoria,
         			ParticipanteEntity.class,
         			EntryPoint.get().getAccessControl().getTokenKey());
     	}

@@ -110,6 +110,8 @@ public class InformesView extends Panel implements View {
 	    		// Finally, removes the temporal file
 	    		// file.delete();
 	    	}
+	    	else
+	    		showError("Error durante la generación del informe.");
 	    });
 		//printButton.setEnabled(false);
 		
@@ -143,23 +145,23 @@ public class InformesView extends Panel implements View {
 		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
-			List<ParticipanteEntity>[] data = 
-					viewLogic.getParticipantes(selectcircuito.getValue());
 			
-	    	File file = Export2XlsMultiple.get().createXLS(
-	    			("Informe "+selectcircuito.getCaption()).toUpperCase(),
-	    			data, ParticipanteEntity.class,
-	    			viewLogic.getCategoriasStr(),
-	    			"dorsal", "clasificacion", "nombre", "apellidos", 
-					"clubStr", "puntuacion", "mejorMarca");
-	    	if(file!=null){
+			ReportGestion report = new ReportGestion(
+					selectcircuito.getValue(),
+	    			selectcircuito.getCaption(),
+	    			viewLogic);
+			
+	    	File file = report.getFile();
+	    	if(report.isSuccess() && file!=null){
 	    		FileResource resource = new FileResource(file);
-	    		Page.getCurrent().open(resource, "Export File", false);
+	    		Page.getCurrent().open(resource, "Report File", false);
 	    		// Finally, removes the temporal file
 	    		// file.delete();
 	    	}
+	    	else
+	    		showError("Error durante la generación del informe.");
 	    });
-		printButton.setEnabled(false);
+		//printButton.setEnabled(false);
 		
 		HorizontalLayout hlayout = new HorizontalLayout();
         hlayout.setWidth("100%");
