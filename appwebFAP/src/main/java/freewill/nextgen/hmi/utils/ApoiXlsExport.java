@@ -24,6 +24,7 @@ public class ApoiXlsExport {
 	private FileOutputStream out = null;
 	private InputStream in = null;
 	private String filename;
+	//private boolean firsttime = true;
 	
 	public ApoiXlsExport(File file, byte[] template) throws Exception {
 		// create Blank Word Document
@@ -42,7 +43,15 @@ public class ApoiXlsExport {
 	}
 	
 	public void createSheet(String value){
-		worksheet = document.createSheet(value);
+		/*if(firsttime){
+			firsttime = false;
+			worksheet = document.getSheetAt(0);
+			document.setSheetName(0, value); 
+		}
+		else{*/
+			worksheet = document.cloneSheet(0); // clono hoja plantilla
+			document.setSheetName(document.getSheetIndex(worksheet), value); 
+		//}
 		worksheet.setFitToPage(true);
 		worksheet.setHorizontallyCenter(true);
 		worksheet.setVerticallyCenter(false);
@@ -173,6 +182,8 @@ public class ApoiXlsExport {
 	
 	public void closeDocument() throws Exception {
 		if(document!=null && out!=null){
+			// borra hoja plantilla
+			document.removeSheetAt(0);
 			// Forces to recalculate formulas
 			document.setForceFormulaRecalculation(true);
 			// Writes the Document in file system

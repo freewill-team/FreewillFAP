@@ -51,7 +51,7 @@ public class Export2XlsMultiple {
     		
     		int i = 0;
     		for(List<T> collection:collections){
-    			if(collection!=null){
+    			if(collection!=null && collection.size()>0){
     				printSheet(title[i], collection, entity, doc, fields);
     			}
     			i++;

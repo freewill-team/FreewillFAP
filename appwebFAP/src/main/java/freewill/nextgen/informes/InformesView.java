@@ -115,7 +115,7 @@ public class InformesView extends Panel implements View {
 		
 		HorizontalLayout hlayout = new HorizontalLayout();
         hlayout.setWidth("100%");
-        hlayout.setMargin(true);
+        hlayout.setMargin(false);
         hlayout.setSpacing(true);
         hlayout.addComponents(new Label(), title, printButton);
         hlayout.setExpandRatio(title, 1);
@@ -163,7 +163,7 @@ public class InformesView extends Panel implements View {
 		
 		HorizontalLayout hlayout = new HorizontalLayout();
         hlayout.setWidth("100%");
-        hlayout.setMargin(true);
+        hlayout.setMargin(false);
         hlayout.setSpacing(true);
         hlayout.addComponents(new Label(), title, printButton);
         hlayout.setExpandRatio(title, 1);
