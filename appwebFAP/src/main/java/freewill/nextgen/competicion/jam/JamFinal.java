@@ -74,7 +74,7 @@ public class JamFinal extends VerticalLayout {
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
+        gridLayout.setSpacing(false);
         gridLayout.addComponent(grid);
         gridLayout.setExpandRatio(grid, 3);    
         gridLayout.addComponent(form);

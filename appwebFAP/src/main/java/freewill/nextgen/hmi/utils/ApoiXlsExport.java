@@ -193,5 +193,9 @@ public class ApoiXlsExport {
 		    System.out.println("ApoiXlsExport " + filename + " written successfully");
 		}
 	}
+
+	public void setLandScape(boolean b) {
+		worksheet.getPrintSetup().setLandscape(b);
+	}
   	
 }

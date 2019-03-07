@@ -79,7 +79,7 @@ public class SaltoTrial extends VerticalLayout {
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
+        gridLayout.setSpacing(false);
         gridLayout.addComponent(grid);
         if(ronda>0){
 	        gridLayout.setExpandRatio(grid, 3);

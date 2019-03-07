@@ -25,7 +25,7 @@ public class PodiumsByCategoria extends VerticalLayout {
 	public PodiumsByCategoria(Long competicion, ModalidadEnum modalidad){
 		this.setSizeFull();
         this.setMargin(true);
-        this.setSpacing(true);
+        this.setSpacing(false); //
         this.addStyleName("dashboard-view");
         Responsive.makeResponsive(this);
         

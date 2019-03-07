@@ -305,7 +305,7 @@ public class PatinadorManager {
 			CategoriaEntity cat = categorepo.findById(inscr.getCategoria());
 			if(cat!=null && cat.getModalidad()==modalidad){
 				System.out.println("Registro ParticipanteEntity ya existe ..."+inscr+" "+modalidad);
-				if(categoria.equals(cat.getNombre()))
+				if(categoria!=null && categoria.equals(cat.getNombre()))
 					return; // Ya existe y no ha cambiado
 				// Actualizar la categoria
 				CategoriaEntity newcat = categorepo.findByNombreAndCompany(categoria, user.getCompany());
@@ -350,8 +350,8 @@ public class PatinadorManager {
 	    	List<CategoriaEntity> categorias = categorepo.findByModalidadAndCompanyAndActive(
 	    			modalidad, user.getCompany(), true);
 	    	for(CategoriaEntity cat:categorias){
-	    		//System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
-	    		//		cat.getEdadMinima()+"-"+cat.getEdadMaxima());
+	    		System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
+	    				cat.getEdadMinima()+"-"+cat.getEdadMaxima());
 	    		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() &&
 	    				(rec.getGenero()==cat.getGenero() || cat.getGenero()==GenderEnum.MIXTO) ){
 	    			inscripcion.setCategoria(cat.getId());

@@ -80,6 +80,7 @@ public class Export2XlsMultiple {
 		
 		doc.createSheet(title);
 		doc.setHeader(title);
+		doc.setLandScape(true);
 		
 		Object data[] = new Object[fields.length];
 		// Set the headings

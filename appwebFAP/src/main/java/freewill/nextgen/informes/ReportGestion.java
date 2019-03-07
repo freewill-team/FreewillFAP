@@ -71,8 +71,8 @@ public class ReportGestion extends Report {
 					+ "obtenidas por los deportistas en el presente año, para las modalidades "
 					+ "Speed y Salto."
 					);
-			printMejoresMarcas(ModalidadEnum.SPEED, "DESC", viewLogic, doc);
-			printMejoresMarcas(ModalidadEnum.JUMP, "ASC", viewLogic, doc);
+			printMejoresMarcas(ModalidadEnum.SPEED, "ASC", viewLogic, doc);
+			printMejoresMarcas(ModalidadEnum.JUMP, "DESC", viewLogic, doc);
 					
 			// Close the Word Document
 			doc.AddParagraph("");
@@ -110,6 +110,7 @@ public class ReportGestion extends Report {
 	private void printMarcas(String title, List<ParticipanteEntity> collection, 
 			 ApoiDocExport doc) {
 		try{
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			doc.AddTitle(title, 3);
 			String table[][] = new String[collection.size()+1][4];
     		table[0][0]=Messages.get().getKey("fecha");
@@ -119,14 +120,14 @@ public class ReportGestion extends Report {
     		int j=1;
 			// Process the List item
 			for(ParticipanteEntity rec:collection){
-				table[j][0]=""+rec.getFecha();
+				table[j][0]=""+df.format(rec.getFecha());
 				table[j][1]=""+rec.getCompeticionStr();
 		    	table[j][2]=""+rec.getNombre() + " " + rec.getApellidos();
 		    	table[j][3]=""+rec.getMejorMarca();
 		    	if(rec.getCategoriaStr().toLowerCase().contains("speed"))
-		    		table[j][3]+="ms";
+		    		table[j][3]+=" ms";
 		    	else
-		    		table[j][3]+="cm";
+		    		table[j][3]+=" cm";
 	    		j++;
 			}
     		doc.AddTable(table);
