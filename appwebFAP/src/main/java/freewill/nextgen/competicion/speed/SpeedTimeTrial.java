@@ -137,7 +137,7 @@ public class SpeedTimeTrial extends VerticalLayout {
         else
         	selectRonda.setValue(EliminatoriaEnum.CUARTOS);
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
@@ -154,7 +154,7 @@ public class SpeedTimeTrial extends VerticalLayout {
         });
 		//prevButton.setEnabled(ronda!=RondaEnum.PRIMERA);
 		
-		nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {

@@ -83,10 +83,10 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             public void postCommit(CommitEvent commitEvent)
                     throws CommitException {
             	//System.out.println("Entrando en Update Record...");
-            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
+            	/*ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
             	if(viewLogic!=null){
             		viewLogic.saveRecord(rec);
-            	}
+            	}*/
             }
         });
 
@@ -95,6 +95,10 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             public void buttonClick(ClickEvent event) {
                 try {
                     fieldGroup.commit();
+                    ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
+                	if(viewLogic!=null){
+                		viewLogic.saveRecord(rec);
+                	}
                     // only if validation succeeds
                 } catch (CommitException e) {
                 	System.out.println(e.getMessage());
@@ -137,8 +141,11 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
-	            	rec.setPenalizaciones(Float.parseFloat(penalizaciones.getValue()));
+	            	//String penal = penalizaciones.getValue().replace(",", ".");
+	            	//rec.setPenalizaciones(Float.parseFloat(penal));
+	            	//rec.setPenalizaciones((float)penalizaciones.getConvertedValue());
 	            	rec.setArtisticaJuez1(Integer.parseInt(artisticaJuez1b.getValue()));
 	            	rec.setTecnicaJuez1(Integer.parseInt(tecnicaJuez1b.getValue()));
 	            	if(viewLogic!=null)
@@ -157,6 +164,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
 	            	rec.setArtisticaJuez2(Integer.parseInt(artisticaJuez2b.getValue()));
 	            	rec.setTecnicaJuez2(Integer.parseInt(tecnicaJuez2b.getValue()));
@@ -176,6 +184,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
 	            	rec.setArtisticaJuez3(Integer.parseInt(artisticaJuez3b.getValue()));
 	            	rec.setTecnicaJuez3(Integer.parseInt(tecnicaJuez3b.getValue()));

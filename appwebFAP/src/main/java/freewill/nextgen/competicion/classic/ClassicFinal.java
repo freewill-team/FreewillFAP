@@ -17,6 +17,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
@@ -43,6 +44,7 @@ public class ClassicFinal extends VerticalLayout {
 	private ClassicCrudView parent = null;
 	private boolean competiOpen = false;
 	private Button nextButton = null;
+	private Button delete = null;
 	
 	public ClassicFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, ClassicCrudView parent){
@@ -70,6 +72,8 @@ public class ClassicFinal extends VerticalLayout {
         });
         
         form = new ClassicShowForm(viewLogic);
+		Panel panel = new Panel(form);
+		panel.setSizeFull();
        
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
@@ -77,8 +81,8 @@ public class ClassicFinal extends VerticalLayout {
         gridLayout.setSpacing(false);
         gridLayout.addComponent(grid);
         gridLayout.setExpandRatio(grid, 2);    
-        gridLayout.addComponent(form);
-	    gridLayout.setExpandRatio(form, 1);     
+        gridLayout.addComponent(panel /*form*/);
+	    gridLayout.setExpandRatio(panel /*form*/, 1);     
         
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -105,8 +109,9 @@ public class ClassicFinal extends VerticalLayout {
 	
 	public HorizontalLayout createTopBar() {
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		//prevButton.addStyleName("toggle-label");
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
             @Override
@@ -117,8 +122,9 @@ public class ClassicFinal extends VerticalLayout {
         });
 		prevButton.setEnabled(true);
 		
-		nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		//nextButton.addStyleName("toggle-label");
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
@@ -129,7 +135,7 @@ public class ClassicFinal extends VerticalLayout {
         });
 		nextButton.setEnabled(true);
 		
-		Button delete = new Button("");
+		delete = new Button("");
 		delete.addStyleName(ValoTheme.BUTTON_DANGER);
 		delete.setIcon(FontAwesome.REMOVE);
 		delete.addClickListener(new ClickListener() {
@@ -155,6 +161,7 @@ public class ClassicFinal extends VerticalLayout {
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
+        //competicionLabel.addStyleName("toggle-label");
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
@@ -205,7 +212,7 @@ public class ClassicFinal extends VerticalLayout {
         grid.setRecords(records); 
         if(records!=null && records.size()>0){
     		grid. sort("orden1", SortDirection.DESCENDING);
-    		this.selectRow(records.get(0));
+    		//this.selectRow(records.get(0));
         }
     }
 
@@ -219,6 +226,7 @@ public class ClassicFinal extends VerticalLayout {
     }
 
 	public boolean setGridVisibility() {
+		delete.setVisible(false);
 		grid.setVisible(!grid.isVisible());
 		return grid.isVisible();
 	}

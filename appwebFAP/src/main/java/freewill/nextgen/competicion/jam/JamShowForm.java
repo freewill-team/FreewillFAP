@@ -20,7 +20,6 @@ import com.vaadin.ui.TabSheet.Tab;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.JamShowEntity;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -81,10 +80,10 @@ public class JamShowForm extends JamShowFormDesign {
             public void postCommit(CommitEvent commitEvent)
                     throws CommitException {
             	//System.out.println("Entrando en Update Record...");
-            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
+            	/*JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
             	if(viewLogic!=null){
             		viewLogic.saveRecord(rec);
-            	}
+            	}*/
             }
         });
 
@@ -93,6 +92,10 @@ public class JamShowForm extends JamShowFormDesign {
             public void buttonClick(ClickEvent event) {
                 try {
                     fieldGroup.commit();
+                    JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
+                	if(viewLogic!=null){
+                		viewLogic.saveRecord(rec);
+                	}
                     // only if validation succeeds
                 } catch (CommitException e) {
                 	System.out.println(e.getMessage());
@@ -135,8 +138,11 @@ public class JamShowForm extends JamShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
-	            	rec.setPenalizaciones(Float.parseFloat(penalizaciones.getValue()));
+	            	//String penal = penalizaciones.getValue().replace(",", ".");
+	            	//rec.setPenalizaciones(Float.parseFloat(penal));
+	            	//rec.setPenalizaciones((float)penalizaciones.getConvertedValue());
 	            	rec.setArtisticaJuez1(Integer.parseInt(artisticaJuez1b.getValue()));
 	            	rec.setTecnicaJuez1(Integer.parseInt(tecnicaJuez1b.getValue()));
 	            	rec.setSincronizacionJuez1(Integer.parseInt(sincronizacionJuez1b.getValue()));
@@ -156,6 +162,7 @@ public class JamShowForm extends JamShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
 	            	rec.setArtisticaJuez2(Integer.parseInt(artisticaJuez2b.getValue()));
 	            	rec.setTecnicaJuez2(Integer.parseInt(tecnicaJuez2b.getValue()));
@@ -176,6 +183,7 @@ public class JamShowForm extends JamShowFormDesign {
             @Override
             public void buttonClick(ClickEvent event) {
             	try{
+            		fieldGroup.commit();
 	            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
 	            	rec.setArtisticaJuez3(Integer.parseInt(artisticaJuez3b.getValue()));
 	            	rec.setTecnicaJuez3(Integer.parseInt(tecnicaJuez3b.getValue()));

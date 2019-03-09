@@ -43,6 +43,7 @@ public class JamFinal extends VerticalLayout {
 	private JamCrudView parent = null;
 	private boolean competiOpen = false;
 	private Button nextButton = null;
+	private Button delete = null;
 	
 	public JamFinal(Long categoria, String labelcategoria, Long competicion, 
 			String label, JamCrudView parent){
@@ -104,8 +105,9 @@ public class JamFinal extends VerticalLayout {
 	
 	public HorizontalLayout createTopBar() {
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		//prevButton.addStyleName("toggle-label");
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
             @Override
@@ -116,8 +118,9 @@ public class JamFinal extends VerticalLayout {
         });
 		prevButton.setEnabled(true);
 		
-		nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		//nextButton.addStyleName("toggle-label");
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
@@ -128,7 +131,7 @@ public class JamFinal extends VerticalLayout {
         });
 		nextButton.setEnabled(true);
 		
-		Button delete = new Button("");
+		delete = new Button("");
 		delete.addStyleName(ValoTheme.BUTTON_DANGER);
 		delete.setIcon(FontAwesome.REMOVE);
 		delete.addClickListener(new ClickListener() {
@@ -154,7 +157,8 @@ public class JamFinal extends VerticalLayout {
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
-
+        //competicionLabel.addStyleName("toggle-label");
+        
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
@@ -204,7 +208,7 @@ public class JamFinal extends VerticalLayout {
         grid.setRecords(records); 
         if(records!=null && records.size()>0){
     		grid. sort("orden1", SortDirection.DESCENDING);
-    		this.selectRow(records.get(0));
+    		//this.selectRow(records.get(0));
         }
     }
 
@@ -218,6 +222,7 @@ public class JamFinal extends VerticalLayout {
     }
     
     public boolean setGridVisibility() {
+    	delete.setVisible(false);
 		grid.setVisible(!grid.isVisible());
 		return grid.isVisible();
 	}
