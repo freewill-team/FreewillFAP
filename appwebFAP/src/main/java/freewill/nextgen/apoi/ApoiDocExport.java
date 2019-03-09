@@ -236,7 +236,7 @@ public class ApoiDocExport {
 	public void AddTable(String[][] data) throws Exception {
 		// it creates a table
 	    XWPFTable table = document.createTable();
-	    table.setWidth(800);
+	    table.setWidth(2000);
 		// Add data to table
 	    // First row
 	    XWPFTableRow tableRow = table.getRow(0);

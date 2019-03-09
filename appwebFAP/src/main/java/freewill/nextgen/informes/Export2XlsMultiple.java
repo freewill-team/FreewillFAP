@@ -52,7 +52,7 @@ public class Export2XlsMultiple {
     		int i = 0;
     		for(List<T> collection:collections){
     			if(collection!=null && collection.size()>0){
-    				printSheet(title[i], collection, entity, doc, fields);
+    				printSheet(file, title[i], collection, entity, doc, fields);
     			}
     			i++;
     		}
@@ -74,12 +74,12 @@ public class Export2XlsMultiple {
     	return null;
 	}
 
-	private <T> void printSheet(String title, List<T> collection, Class<T> entity, ApoiXlsExport doc, String... fields)
+	private <T> void printSheet(String file, String title, List<T> collection, Class<T> entity, ApoiXlsExport doc, String... fields)
 			throws Exception {
 		int fila = 0;
 		
 		doc.createSheet(title);
-		doc.setHeader(title);
+		doc.setHeader(file+" / "+title);
 		doc.setLandScape(true);
 		
 		Object data[] = new Object[fields.length];

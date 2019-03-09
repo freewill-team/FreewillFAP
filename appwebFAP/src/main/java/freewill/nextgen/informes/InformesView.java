@@ -99,7 +99,7 @@ public class InformesView extends Panel implements View {
 					viewLogic.getParticipantes(selectcompeticion.getValue());
 			
 	    	File file = Export2XlsMultiple.get().createXLS(
-	    			("Actas "+selectcompeticion.getCaption()).toUpperCase(),
+	    			selectcompeticion.getCaption(),
 	    			data, ParticipanteEntity.class,
 	    			viewLogic.getCategoriasStr(),
 	    			"dorsal", "clasificacion", "nombre", "apellidos", 

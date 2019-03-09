@@ -52,24 +52,11 @@ public class RankingAbsCrudView extends VerticalLayout implements View {
     	            }
     	        });
     	
-    	VerticalLayout expander = new VerticalLayout();
-    	expander.setSizeFull();
-    	expander.addStyleName("dashboard-view");
-    	expander.setSpacing(false);
-    	expander.setMargin(true);
-    	expander.addComponent(selectModalidad);
-    	HorizontalLayout mmm = new HorizontalLayout();
-    	expander.addComponent(mmm);
-    	expander.setExpandRatio(mmm, 1);
-    	
-    	Panel panel = new Panel();
-    	panel.addStyleName(ValoTheme.PANEL_BORDERLESS);
-    	panel.setSizeFull();
-    	panel.setContent(expander);
-    	Responsive.makeResponsive(expander);
-    	
         removeAllComponents();
-        addComponent(panel);
+        addComponent(selectModalidad);
+        addComponent(new HorizontalLayout());
+        addComponent(new HorizontalLayout());
+        addComponent(new HorizontalLayout());
     }
 
 	public void showError(String msg) {

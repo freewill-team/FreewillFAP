@@ -7,12 +7,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.hmi.common.Sparkline;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
@@ -204,6 +206,21 @@ public class InformesLogic implements Serializable {
 			view.showError(e.getMessage());
 		}
 		return null;
+	}
+
+	public long getCountParticipantes(Long competicion, Long categoria) {
+		try{
+        	ParticipanteEntity rec = (ParticipanteEntity) BltClient.get().executeCommand(
+	        		"/countByCompeticionAndCategoria/"+competicion+"/"+categoria, 
+	        		ParticipanteEntity.class, EntryPoint.get().getAccessControl().getTokenKey());
+        	if(rec!=null)
+        		return rec.getId();
+        }
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return 0;
 	}
 	
 }

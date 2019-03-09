@@ -55,9 +55,8 @@ public class ReportGestion extends Report {
 			
 			doc.AddTitle("Pruebas "+circuitoStr, 1);
 			doc.AddParagraph("Durante el presente año (" +circuitoStr+ ") han sido organizadas por "
-					+ "los clubes, en colaboración con la " + cpy.getName() +", las siguientes "
-					+ "competiciones."
-					);
+					+ "los clubes, en colaboración con " + cpy.getName() +", las siguientes "
+					+ "competiciones.");
 			printCompeticiones(circuito, viewLogic, doc);
 			
 			doc.AddTitle("Resultados "+circuitoStr, 1);
@@ -87,6 +86,81 @@ public class ReportGestion extends Report {
 		catch(Exception e){
 			e.printStackTrace();
 			setSuccess(false);
+		}
+	}
+
+	private void printCompeticiones(Long circuito, InformesLogic viewLogic, 
+			ApoiDocExport doc) {
+		try{
+			List<CompeticionEntity> competiciones = viewLogic.getCompeticiones(circuito);
+			for(CompeticionEntity rec:competiciones){
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				String text = "• " + df.format(rec.getFechaInicio()) + " " +
+						rec.getNombre() + " - " + rec.getLocalidad() + "";
+				doc.AddBullet(text);
+			}
+			doc.AddParagraph("");
+			for(CompeticionEntity rec:competiciones){
+				printDetalleCompeticion(rec, viewLogic, doc);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	private void printDetalleCompeticion(CompeticionEntity rec, InformesLogic viewLogic, 
+			ApoiDocExport doc) {
+		try{
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			doc.AddTitle(rec.getNombre(), 2);
+			String table[][] = new String[6][2];
+    		table[0][0] = Messages.get().getKey("competicion");
+    		table[1][0] = Messages.get().getKey("fecha");
+    		table[2][0] = Messages.get().getKey("organizador");
+    		table[3][0] = Messages.get().getKey("localidad");
+    		table[4][0] = Messages.get().getKey("modalidades");
+    		table[5][0] = Messages.get().getKey("participantes");
+    		table[0][1] = rec.getNombre();
+    		table[1][1] = df.format(rec.getFechaInicio()) + " - " + df.format(rec.getFechaFin());
+    		table[2][1] = rec.getOrganizador();
+    		table[3][1] = rec.getLocalidad();
+    		table[4][1] = (rec.getSpeed()?"Speed ":"") + (rec.getDerrapes()?"Derrapes ":"") +
+    				(rec.getSalto()?"Salto ":"") + (rec.getClassic()?"Classic ":"") +
+    				(rec.getBattle()?"Battle ":"") + (rec.getJam()?"Jam ":"");
+    		table[5][1] = ""; // TODO
+    		doc.AddTable(table);
+    		doc.AddParagraph("");
+    		
+    		doc.AddTitle("Detalle Participantes por Modalidad", 3);
+    		for(ModalidadEnum modalidad:ModalidadEnum.values()){
+    			long suma = 0;
+	    		List<CategoriaEntity> categorias = viewLogic.getCategorias(modalidad);
+	    		String table2[][] = new String[categorias.size()+2][3]; // TODO borrar lineas en blanco
+	    		table2[0][0]=Messages.get().getKey("modalidad");
+	    		table2[0][1]=Messages.get().getKey("categoria");
+	    		table2[0][2]=Messages.get().getKey("participantes");
+	    		int j=1;
+				// Process the List item
+				for(CategoriaEntity cat:categorias){
+					long count = viewLogic.getCountParticipantes(rec.getId(), cat.getId());
+					if(count>0){
+						table2[j][0]= ""+modalidad;
+			    		table2[j][1]= cat.getNombre();
+			    		table2[j][2]= ""+count;
+			    		suma+=count;
+			    		j++;
+					}
+				}
+				table2[j][0]= ""+modalidad;
+	    		table2[j][1]= "Total "+Messages.get().getKey("participantes");
+	    		table2[j][2]= ""+suma;
+	    		doc.AddTable(table2);
+	    		doc.AddParagraph("");
+    		}
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -157,22 +231,6 @@ public class ReportGestion extends Report {
 		catch(Exception e){
 			e.printStackTrace();
 		}	
-	}
-
-	private void printCompeticiones(Long circuito, InformesLogic viewLogic,
-			ApoiDocExport doc) {
-		try{
-			List<CompeticionEntity> competiciones = viewLogic.getCompeticiones(circuito);
-			for(CompeticionEntity rec:competiciones){
-				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-				String text = "• " + df.format(rec.getFechaInicio()) + " " +
-						rec.getNombre() + " - " + rec.getLocalidad() + "";
-				doc.AddBullet(text);
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 
 	private void printResultados(String title, 
