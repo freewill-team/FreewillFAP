@@ -679,6 +679,8 @@ public class ClassicShowManager {
 		}
 		if(rec!=null){
 			rec.setPenalizaciones(record.getPenalizaciones());
+			rec.setArtisticaJuez1(record.getArtisticaJuez1());
+			rec.setTecnicaJuez1(record.getTecnicaJuez1());
 			
 			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() - rec.getPenalizaciones());
 			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() - rec.getPenalizaciones());

@@ -76,7 +76,7 @@ public class JamFinal extends VerticalLayout {
         gridLayout.setMargin(true);
         gridLayout.setSpacing(false);
         gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 3);    
+        gridLayout.setExpandRatio(grid, 2);    
         gridLayout.addComponent(form);
 	    gridLayout.setExpandRatio(form, 1);     
         
@@ -217,4 +217,67 @@ public class JamFinal extends VerticalLayout {
         // Not allowed here grid.remove(rec);
     }
     
+    public boolean setGridVisibility() {
+		grid.setVisible(!grid.isVisible());
+		return grid.isVisible();
+	}
+
+	public void setGridColumns(int i) {
+		grid.getColumn("tecnicaJuez1").setHidden(true);
+		grid.getColumn("artisticaJuez1").setHidden(true);
+		grid.getColumn("sincronizacionJuez1").setHidden(true);
+		grid.getColumn("totalJuez1").setHidden(true);
+		grid.getColumn("rankingJuez1").setHidden(true);
+		grid.getColumn("tecnicaJuez2").setHidden(true);
+		grid.getColumn("artisticaJuez2").setHidden(true);
+		grid.getColumn("sincronizacionJuez2").setHidden(true);
+		grid.getColumn("totalJuez2").setHidden(true);
+		grid.getColumn("rankingJuez2").setHidden(true);
+		grid.getColumn("tecnicaJuez3").setHidden(true);
+		grid.getColumn("artisticaJuez3").setHidden(true);
+		grid.getColumn("sincronizacionJuez3").setHidden(true);
+		grid.getColumn("totalJuez3").setHidden(true);
+		grid.getColumn("rankingJuez3").setHidden(true);
+		switch(i){
+    	case 0: 
+    		grid.getColumn("tecnicaJuez1").setHidden(false);
+    		grid.getColumn("artisticaJuez1").setHidden(false);
+    		grid.getColumn("sincronizacionJuez1").setHidden(false);
+    		grid.getColumn("totalJuez1").setHidden(false);
+    		grid.getColumn("rankingJuez1").setHidden(false);
+    		grid.getColumn("tecnicaJuez2").setHidden(false);
+    		grid.getColumn("artisticaJuez2").setHidden(false);
+    		grid.getColumn("sincronizacionJuez2").setHidden(false);
+    		grid.getColumn("totalJuez2").setHidden(false);
+    		grid.getColumn("rankingJuez2").setHidden(false);
+    		grid.getColumn("tecnicaJuez3").setHidden(false);
+    		grid.getColumn("artisticaJuez3").setHidden(false);
+    		grid.getColumn("sincronizacionJuez3").setHidden(false);
+    		grid.getColumn("totalJuez3").setHidden(false);
+    		grid.getColumn("rankingJuez3").setHidden(false);
+    		break;
+    	case 1: 
+    		grid.getColumn("tecnicaJuez1").setHidden(false);
+    		grid.getColumn("artisticaJuez1").setHidden(false);
+    		grid.getColumn("sincronizacionJuez1").setHidden(false);
+    		grid.getColumn("totalJuez1").setHidden(false);
+    		grid.getColumn("rankingJuez1").setHidden(false);
+    		break;
+    	case 2: 
+    		grid.getColumn("tecnicaJuez2").setHidden(false);
+    		grid.getColumn("artisticaJuez2").setHidden(false);
+    		grid.getColumn("sincronizacionJuez2").setHidden(false);
+    		grid.getColumn("totalJuez2").setHidden(false);
+    		grid.getColumn("rankingJuez2").setHidden(false);
+    		break;
+    	case 3: 
+    		grid.getColumn("tecnicaJuez3").setHidden(false);
+    		grid.getColumn("artisticaJuez3").setHidden(false);
+    		grid.getColumn("sincronizacionJuez3").setHidden(false);
+    		grid.getColumn("totalJuez3").setHidden(false);
+    		grid.getColumn("rankingJuez3").setHidden(false);
+    		break;
+    	}
+	}
+	
 }

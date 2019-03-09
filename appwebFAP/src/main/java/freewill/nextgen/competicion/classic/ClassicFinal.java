@@ -76,7 +76,7 @@ public class ClassicFinal extends VerticalLayout {
         gridLayout.setMargin(true);
         gridLayout.setSpacing(false);
         gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 3);    
+        gridLayout.setExpandRatio(grid, 2);    
         gridLayout.addComponent(form);
 	    gridLayout.setExpandRatio(form, 1);     
         

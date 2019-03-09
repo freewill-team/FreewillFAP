@@ -9,6 +9,7 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
+import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.JamShowEntity;
 
 /**
@@ -231,5 +232,50 @@ public class JamCrudLogic implements Serializable {
 		}
 		return false;
 	}
-		
+	
+	public boolean setGridVisibility() {
+		if(activeView!=null){
+			return activeView.setGridVisibility();
+		}
+		return false;
+	}
+
+	public void setGridColumns(int i) {
+		if(activeView!=null){
+			activeView.setGridColumns(i);
+		}
+	}
+
+	public JamShowEntity saveJuez(JamShowEntity rec, int juez) {
+		try{
+    		if(rec==null || rec.getId()==null) 
+    			return rec;
+    		
+    		System.out.println("Saving = "+rec.toString());
+    		boolean result = BltClient.get().executeCommand(
+    				"/updateJuez"+juez, rec, JamShowEntity.class,
+        			EntryPoint.get().getAccessControl().getTokenKey());
+    		
+    		if(result){
+    			rec = this.findRecord(""+rec.getId());
+    		}
+    		
+	    	if(activeView!=null && result){
+	    		activeView.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") updated");
+		        //view.clearSelection();
+	    		activeView.editRecord(rec);
+	    		//activeView.refreshRecord(res);
+	    		initGrid(rec.getCompeticion(), rec.getCategoria());
+		        return rec;
+	    	}
+	        setFragmentParameter("");
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(activeView!=null)
+				activeView.showError(e.getMessage());
+		}
+    	return null;
+	}
+	
 }

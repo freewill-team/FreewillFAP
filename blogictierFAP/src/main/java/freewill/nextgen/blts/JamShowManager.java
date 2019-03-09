@@ -584,7 +584,6 @@ public class JamShowManager {
 	
 	private void CalculaClasificacionFinal(Long competicion, Long categoria,  float[][]PV)
 	{
-
 		//System.out.println("Calculando Puntos Locales");
 		
 		// Tengo que seguir el orden de la tabla PV[i][j]
@@ -679,17 +678,21 @@ public class JamShowManager {
 	}
 	
 	@RequestMapping("/updateJuez1")
-	public JamShowEntity updateJuez1(@RequestBody JamShowEntity record) throws Exception {
+	public boolean updateJuez1(@RequestBody JamShowEntity record) throws Exception {
+		System.out.println("Entering updateJuez1 " + record);
 		JamShowEntity rec = null;
 		if(record!=null){
 			rec = repository.findById(record.getId());
 		}
 		if(rec!=null){
+			rec.setPenalizaciones(record.getPenalizaciones());
 			rec.setArtisticaJuez1(record.getArtisticaJuez1());
 			rec.setTecnicaJuez1(record.getTecnicaJuez1());
 			rec.setSincronizacionJuez1(record.getSincronizacionJuez1());
 			
 			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() + rec.getSincronizacionJuez1() - rec.getPenalizaciones());
+			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() + rec.getSincronizacionJuez2() - rec.getPenalizaciones());
+			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() + rec.getSincronizacionJuez3() - rec.getPenalizaciones());
 			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
 			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
 			
@@ -701,13 +704,14 @@ public class JamShowManager {
 			res = repository.findById(res.getId());
 			
 			System.out.println("Updating JamShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
-			return res;
+			return true;
 		}
-		return null;	
+		return false;	
 	}
 	
 	@RequestMapping("/updateJuez2")
-	public JamShowEntity updateJuez2(@RequestBody JamShowEntity record) throws Exception {
+	public boolean updateJuez2(@RequestBody JamShowEntity record) throws Exception {
+		System.out.println("Entering updateJuez2 " + record);
 		JamShowEntity rec = null;
 		if(record!=null){
 			rec = repository.findById(record.getId());
@@ -729,13 +733,14 @@ public class JamShowManager {
 			res = repository.findById(res.getId());
 			
 			System.out.println("Updating JamShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
-			return res;
+			return true;
 		}
-		return null;	
+		return false;	
 	}
 	
 	@RequestMapping("/updateJuez3")
-	public JamShowEntity updateJuez3(@RequestBody JamShowEntity record) throws Exception {
+	public boolean updateJuez3(@RequestBody JamShowEntity record) throws Exception {
+		System.out.println("Entering updateJuez3 " + record);
 		JamShowEntity rec = null;
 		if(record!=null){
 			rec = repository.findById(record.getId());
@@ -757,39 +762,10 @@ public class JamShowManager {
 			res = repository.findById(res.getId());
 			
 			System.out.println("Updating JamShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
-			return res;
+			return true;
 		}
-		return null;	
+		return false;
 	}
 	
-	@RequestMapping("/updatePenalizacion")
-	public JamShowEntity updatePenalizacion(@RequestBody JamShowEntity record) throws Exception {
-		JamShowEntity rec = null;
-		if(record!=null){
-			rec = repository.findById(record.getId());
-		}
-		if(rec!=null){
-			rec.setPenalizaciones(record.getPenalizaciones());
-			
-			rec.setTotalJuez1(rec.getArtisticaJuez1() + rec.getTecnicaJuez1() + rec.getSincronizacionJuez1()- rec.getPenalizaciones());
-			rec.setTotalJuez2(rec.getArtisticaJuez2() + rec.getTecnicaJuez2() + rec.getSincronizacionJuez2()- rec.getPenalizaciones());
-			rec.setTotalJuez3(rec.getArtisticaJuez3() + rec.getTecnicaJuez3() + rec.getSincronizacionJuez3()- rec.getPenalizaciones());
-			rec.setTotalTecnica(rec.getTecnicaJuez1() + rec.getTecnicaJuez2() + rec.getTecnicaJuez3());
-			rec.setPuntuacionTotal(rec.getTotalJuez1() + rec.getTotalJuez2() + rec.getTotalJuez3());
-			
-			JamShowEntity res = repository.save(rec);
-			
-			// Calcular los rankings
-			setRankingJuez1(rec.getCompeticion(), rec.getCategoria());
-			setRankingJuez2(rec.getCompeticion(), rec.getCategoria());
-			setRankingJuez3(rec.getCompeticion(), rec.getCategoria());
-
-			res = repository.findById(res.getId());
-			
-			System.out.println("Updating JamShow Id = " + res.getId() + res.getApellidos() + " " + res.getTotalJuez1());
-			return res;
-		}
-		return null;	
-	}
 	
 }
