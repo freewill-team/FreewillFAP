@@ -14,6 +14,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -23,7 +24,7 @@ import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class ClassicActaFinal extends VerticalLayout {
+public class ClassicActaFinal extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("classicacta");
 	private Long competicion = null;
@@ -41,8 +42,11 @@ public class ClassicActaFinal extends VerticalLayout {
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
-		
 		viewLogic = new ClassicCrudLogic();
+		
+		setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 		
 		grid = new GenericGrid<ClassicShowEntity>(ClassicShowEntity.class,
 		       "id", "dorsal", "clasificacionFinal", "nombre", "apellidos",
@@ -50,19 +54,17 @@ public class ClassicActaFinal extends VerticalLayout {
 		       //"rankingJuez1","rankingJuez2", "rankingJuez3", "orden1"
 		       );
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
-        gridLayout.addComponent(grid);
-        	
-		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
+		VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
+        
+        addComponent(barAndGridLayout);
+        
 	    showRecords(viewLogic.initGridFinalResults(this.competicion, this.categoria));  	
 	}
 	
@@ -106,7 +108,7 @@ public class ClassicActaFinal extends VerticalLayout {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(prevButton);

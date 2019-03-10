@@ -4,16 +4,16 @@
     <meta name="package-mapping" content="x:com.app.freewill.company" />
 </head>
 <body>
-<v-form-layout id="company-form" >
-    <v-vertical-layout height-full spacing > <!-- style-name="form-layout" -->
+<v-css-layout id="jam-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout" >
         <v-horizontal-layout width-full spacing>    
-    		<v-button style-name="" _id="expand" :bottom :left >Expandir</v-button>
        		<v-text-field caption="penalizacionesF" _id="penalizaciones" width-full />
        	</v-horizontal-layout>	
         
         <vaadin-tab-sheet _id="tabSheet" >
         	<tab caption="Global" _id="tabTodo">
 	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing />
 			        <v-horizontal-layout width-full spacing>    
 				        <v-text-field caption="tecnicaJuez1F" _id="tecnicaJuez1" width-full />
 				    	<v-text-field caption="artisticaJuez1F" _id="artisticaJuez1" width-full />
@@ -29,37 +29,44 @@
 				        <v-text-field caption="artisticaJuez3F" _id="artisticaJuez3" width-full />	
 				        <v-text-field caption="sincronizacionJuez3F" _id="sincronizacionJuez3" width-full />        
 			        </v-horizontal-layout>
+			        <v-horizontal-layout width-full spacing />
 			        <v-button style-name="primary" _id="save">Salvar</v-button>
 			    </v-vertical-layout>
 			</tab>
 	       	<tab caption="Juez #1" _id="tabJuez1">
 	       		<v-vertical-layout height-full spacing>
-		       		<v-text-field caption="Técnica" _id="tecnicaJuez1b" width-full />
-    				<v-text-field caption="Artística" _id="artisticaJuez1b" width-full />
-    				<v-text-field caption="Sincronización" _id="sincronizacionJuez1b" width-full />
+	       			<v-horizontal-layout width-full spacing />
+		       		<v-text-field caption="Tecnica" _id="tecnicaJuez1b" width-full />
+    				<v-text-field caption="Artistica" _id="artisticaJuez1b" width-full />
+    				<v-text-field caption="Sincronizacion" _id="sincronizacionJuez1b" width-full />
+			        <v-horizontal-layout width-full spacing />
 			        <v-button style-name="primary" _id="save1">Salvar Juez#1</v-button>
 			    </v-vertical-layout>	
 	       	</tab>
 	       	<tab caption="Juez #2" _id="tabJuez2">
 	       		<v-vertical-layout height-full spacing>
-		       		<v-text-field caption="Técnica" _id="tecnicaJuez2b" width-full />
-        			<v-text-field caption="Artística" _id="artisticaJuez2b" width-full />
-        			<v-text-field caption="Sincronización" _id="sincronizacionJuez2b" width-full />
+	       			<v-horizontal-layout width-full spacing />
+		       		<v-text-field caption="Tecnica" _id="tecnicaJuez2b" width-full />
+        			<v-text-field caption="Artistica" _id="artisticaJuez2b" width-full />
+        			<v-text-field caption="Sincronizacion" _id="sincronizacionJuez2b" width-full />
+			        <v-horizontal-layout width-full spacing />
 			        <v-button style-name="primary" _id="save2">Salvar Juez#2</v-button>
 			    </v-vertical-layout>	
 	       	</tab>
 	       	<tab caption="Juez #3" _id="tabJuez3">
 	       		<v-vertical-layout height-full spacing>
-		       		<v-text-field caption="Técnica" _id="tecnicaJuez3b" width-full />
-        			<v-text-field caption="Artística" _id="artisticaJuez3b" width-full />
-        			<v-text-field caption="Sincronización" _id="sincronizacionJuez3b" width-full />
+	       			<v-horizontal-layout width-full spacing />
+		       		<v-text-field caption="Tecnica" _id="tecnicaJuez3b" width-full />
+        			<v-text-field caption="Artistica" _id="artisticaJuez3b" width-full />
+        			<v-text-field caption="Sincronizacion" _id="sincronizacionJuez3b" width-full />
+			        <v-horizontal-layout width-full spacing />
 			        <v-button style-name="primary" _id="save3">Salvar Juez#3</v-button>
 			    </v-vertical-layout>	
 	       	</tab>
 	    </vaadin-tab-sheet> 
-	    <!-- <v-css-layout :expand style-name="expander" /> -->      
-			        	        
+	    <v-css-layout :expand style-name="expander" /> 
+		<v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancelar</v-button>	        	        
     </v-vertical-layout>
-</v-form-layout>
+</v-css-layout>
 </body>
 </html>

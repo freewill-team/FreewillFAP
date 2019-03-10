@@ -298,10 +298,6 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
       margin-bottom: 4; // antes 0
       margin-left: 20; // nuevo
     }
-    
-    .toggle-label {
-	  font-size: initial;
-	}
 	
   }
 
@@ -310,10 +306,6 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     .product-form-wrapper {
       width:100%;
     }
-
-	.toggle-label {
-	  font-size: 0;
-	}
 
     // Remove margins around the grid and reduce top bar margins on small screens
     .crud-view .crud-main-layout {

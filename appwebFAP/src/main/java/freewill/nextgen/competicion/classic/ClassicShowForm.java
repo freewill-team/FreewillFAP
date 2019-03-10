@@ -1,6 +1,5 @@
 package freewill.nextgen.competicion.classic;
 
-import com.google.gwt.user.client.ui.Grid;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -8,18 +7,15 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
-import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
@@ -42,10 +38,8 @@ public class ClassicShowForm extends ClassicShowFormDesign {
     @SuppressWarnings("rawtypes")
     public ClassicShowForm(ClassicCrudLogic logic) {
         super();
-        //addStyleName("product-form");
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
         
         penalizaciones.setRequired(true);
         tecnicaJuez1.setRequired(true);
@@ -54,7 +48,6 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         artisticaJuez2.setRequired(true);
         tecnicaJuez3.setRequired(true);
         artisticaJuez3.setRequired(true);
-        expand.setIcon(FontAwesome.ARROW_LEFT);
         
         fieldGroup = new BeanFieldGroup<ClassicShowEntity>(ClassicShowEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -110,19 +103,14 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             }
         });
         
-        expand.addClickListener(new ClickListener() {
+        cancel.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	if(viewLogic!=null){
-            		if(viewLogic.setGridVisibility()){
-            			 expand.setIcon(FontAwesome.ARROW_LEFT);
-            			 expand.setCaption("Expandir");
-            		}
-            		else{
-            			 expand.setIcon(FontAwesome.ARROW_RIGHT);
-            			 expand.setCaption("Contraer");
-            		}
-            	}
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
             }
         });
         
@@ -204,7 +192,6 @@ public class ClassicShowForm extends ClassicShowFormDesign {
     
     public void editRecord(ClassicShowEntity rec) {
         if (rec == null) {
-        	//TODO MMFL esto no deberia ocurrir borrar
             rec = new ClassicShowEntity();
             fieldGroup.setItemDataSource(new BeanItem<ClassicShowEntity>(rec));
             save.setEnabled(false);

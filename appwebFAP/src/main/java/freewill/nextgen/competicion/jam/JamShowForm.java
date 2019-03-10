@@ -7,7 +7,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -39,10 +38,8 @@ public class JamShowForm extends JamShowFormDesign {
     @SuppressWarnings("rawtypes")
     public JamShowForm(JamCrudLogic logic) {
         super();
-        //addStyleName("product-form");
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
         
         penalizaciones.setRequired(true);
         tecnicaJuez1.setRequired(true);
@@ -51,7 +48,6 @@ public class JamShowForm extends JamShowFormDesign {
         artisticaJuez2.setRequired(true);
         tecnicaJuez3.setRequired(true);
         artisticaJuez3.setRequired(true);
-        expand.setIcon(FontAwesome.ARROW_LEFT);
         
         fieldGroup = new BeanFieldGroup<JamShowEntity>(JamShowEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -107,19 +103,14 @@ public class JamShowForm extends JamShowFormDesign {
             }
         });
         
-        expand.addClickListener(new ClickListener() {
+        cancel.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	if(viewLogic!=null){
-            		if(viewLogic.setGridVisibility()){
-            			 expand.setIcon(FontAwesome.ARROW_LEFT);
-            			 expand.setCaption("Expandir");
-            		}
-            		else{
-            			 expand.setIcon(FontAwesome.ARROW_RIGHT);
-            			 expand.setCaption("Contraer");
-            		}
-            	}
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
             }
         });
         

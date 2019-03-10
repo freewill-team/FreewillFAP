@@ -13761,16 +13761,8 @@ div.v-layout.v-horizontal.v-widget {
 	margin-left: 20;
 }
 
-.mytheme .v-ui[width-range~="801px-"] .valo-menu-part .toggle-label {
-	font-size: initial;
-}
-
 .mytheme .v-ui[width-range~="0-550px"] .product-form-wrapper {
 	width: 100%;
-}
-
-.mytheme .v-ui[width-range~="0-550px"] .toggle-label {
-	font-size: 0;
 }
 
 .mytheme .v-ui[width-range~="0-550px"] .crud-view .crud-main-layout {

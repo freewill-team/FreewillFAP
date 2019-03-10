@@ -136,7 +136,7 @@ public class JamCrudLogic implements Serializable {
 	    	if(activeView!=null){
 	    		activeView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
 		        //view.clearSelection();
-	    		activeView.editRecord(res);
+	    		activeView.editRecord(null);
 	    		//activeView.refreshRecord(res);
 	    		initGrid(res.getCompeticion(), res.getCategoria());
 		        return res;
@@ -232,13 +232,6 @@ public class JamCrudLogic implements Serializable {
 		}
 		return false;
 	}
-	
-	public boolean setGridVisibility() {
-		if(activeView!=null){
-			return activeView.setGridVisibility();
-		}
-		return false;
-	}
 
 	public void setGridColumns(int i) {
 		if(activeView!=null){
@@ -263,7 +256,7 @@ public class JamCrudLogic implements Serializable {
 	    	if(activeView!=null && result){
 	    		activeView.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") updated");
 		        //view.clearSelection();
-	    		activeView.editRecord(rec);
+	    		activeView.editRecord(null);
 	    		//activeView.refreshRecord(res);
 	    		initGrid(rec.getCompeticion(), rec.getCategoria());
 		        return rec;

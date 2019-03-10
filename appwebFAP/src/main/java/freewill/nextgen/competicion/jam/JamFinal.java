@@ -15,6 +15,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
@@ -30,7 +31,7 @@ import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class JamFinal extends VerticalLayout {
+public class JamFinal extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("Jamshow");
 	private Long competicion = null;
@@ -52,8 +53,11 @@ public class JamFinal extends VerticalLayout {
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
-		
 		viewLogic = new JamCrudLogic(this);
+		
+		setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
 				"id", "dorsalDuo", "orden1", "nombreDuo",
@@ -72,22 +76,17 @@ public class JamFinal extends VerticalLayout {
         
         form = new JamShowForm(viewLogic);
           
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(false);
-        gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 2);    
-        gridLayout.addComponent(form);
-	    gridLayout.setExpandRatio(form, 1);     
+        VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
         
-		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
+        addComponent(barAndGridLayout);
+        addComponent(form);
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
 	    
@@ -162,7 +161,7 @@ public class JamFinal extends VerticalLayout {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
@@ -201,7 +200,15 @@ public class JamFinal extends VerticalLayout {
     }
 
     public void editRecord(JamShowEntity rec) {
-    	form.editRecord(rec);
+    	System.out.println("Entrando en editRecord "+rec);
+    	if (rec != null) {
+            form.addStyleName("visible");
+            //form.setEnabled(true);
+        } else {
+            form.removeStyleName("visible");
+            //form.setEnabled(false);
+        }
+        form.editRecord(rec);
     }
 
     public void showRecords(List<JamShowEntity> records) {
@@ -221,12 +228,6 @@ public class JamFinal extends VerticalLayout {
         // Not allowed here grid.remove(rec);
     }
     
-    public boolean setGridVisibility() {
-    	delete.setVisible(false);
-		grid.setVisible(!grid.isVisible());
-		return grid.isVisible();
-	}
-
 	public void setGridColumns(int i) {
 		grid.getColumn("tecnicaJuez1").setHidden(true);
 		grid.getColumn("artisticaJuez1").setHidden(true);

@@ -133,8 +133,8 @@ public class ClassicCrudLogic implements Serializable {
     		
 	    	if(activeView!=null){
 	    		activeView.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
-		        //view.clearSelection();
-	    		activeView.editRecord(res);
+	    		//activeView.clearSelection();
+	    		activeView.editRecord(null);
 	    		//activeView.refreshRecord(res);
 	    		initGrid(res.getCompeticion(), res.getCategoria());
 		        return res;
@@ -180,6 +180,7 @@ public class ClassicCrudLogic implements Serializable {
     }
 
     public void rowSelected(ClassicShowEntity rec) {
+    	System.out.println("Entrando en rowSelected "+rec);
     	if(activeView!=null)
     		activeView.editRecord(rec);
     }
@@ -233,13 +234,6 @@ public class ClassicCrudLogic implements Serializable {
 		return false;
 	}
 
-	public boolean setGridVisibility() {
-		if(activeView!=null){
-			return activeView.setGridVisibility();
-		}
-		return false;
-	}
-
 	public void setGridColumns(int i) {
 		if(activeView!=null){
 			activeView.setGridColumns(i);
@@ -263,7 +257,7 @@ public class ClassicCrudLogic implements Serializable {
 	    	if(activeView!=null && result){
 	    		activeView.showSaveNotification(rec.getNombre() + " (" + rec.getId() + ") updated");
 		        //view.clearSelection();
-	    		activeView.editRecord(rec);
+	    		activeView.editRecord(null);
 	    		//activeView.refreshRecord(res);
 	    		initGrid(rec.getCompeticion(), rec.getCategoria());
 		        return rec;
