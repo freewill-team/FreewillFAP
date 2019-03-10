@@ -34,6 +34,7 @@ public class JamShowForm extends JamShowFormDesign {
 	
     private JamCrudLogic viewLogic;
     private BeanFieldGroup<JamShowEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings("rawtypes")
     public JamShowForm(JamCrudLogic logic) {
@@ -193,8 +194,7 @@ public class JamShowForm extends JamShowFormDesign {
         
     }
     
-
-    public void editRecord(JamShowEntity rec) {
+    public void editRecord(JamShowEntity rec, boolean editable) {
         if (rec == null) {
         	//TODO MMFL esto no deberia ocurrir borrar
             rec = new JamShowEntity();
@@ -203,6 +203,7 @@ public class JamShowForm extends JamShowFormDesign {
             return;
         }
         fieldGroup.setItemDataSource(new BeanItem<JamShowEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -238,10 +239,12 @@ public class JamShowForm extends JamShowFormDesign {
         	}
         }
         */
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save1.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save2.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save3.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+    	dorsalDuo.setEnabled(false);
+    	nombreDuo.setEnabled(false);
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save1.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save2.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save3.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
 }

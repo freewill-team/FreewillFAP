@@ -100,7 +100,7 @@ public class ClassicFinal extends CssLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    form.setEnabled(competiOpen);
+	    //form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
@@ -209,7 +209,7 @@ public class ClassicFinal extends CssLayout {
             form.removeStyleName("visible");
             //form.setEnabled(false);
         }
-        form.editRecord(rec);
+        form.editRecord(rec, competiOpen);
     }
 
     public void showRecords(List<ClassicShowEntity> records) {

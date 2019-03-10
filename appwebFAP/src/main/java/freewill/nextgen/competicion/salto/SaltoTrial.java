@@ -14,6 +14,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
@@ -31,7 +32,7 @@ import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class SaltoTrial extends VerticalLayout {
+public class SaltoTrial extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("saltotrial");
 	private Long competicion = null;
@@ -57,8 +58,11 @@ public class SaltoTrial extends VerticalLayout {
 		this.categoriaStr = labelcategoria;
 		this.ronda = ronda;
 		this.parent = parent;
-		
 		viewLogic = new SaltoCrudLogic(this);
+		
+		setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 		
 		if(ronda==0)
 			grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
@@ -70,35 +74,27 @@ public class SaltoTrial extends VerticalLayout {
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
-            	viewLogic.rowSelected(grid.getSelectedRow());
+            	if(ronda>0)
+            		viewLogic.rowSelected(grid.getSelectedRow());
             }
         });
         
         form = new SaltoTrialForm(viewLogic);
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(false);
-        gridLayout.addComponent(grid);
-        if(ronda>0){
-	        gridLayout.setExpandRatio(grid, 3);
-		    gridLayout.addComponent(form);
-		    gridLayout.setExpandRatio(form, 1);
-        }
+        VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
+        
+        addComponent(barAndGridLayout);
+        addComponent(form);
         
         alturaNextRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda+1);
-        /*if(alturaNextRonda!=0)
-        	form.setEnabled(false);*/
-        	
-		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
-	    
+        
 	    viewLogic.initGrid(this.competicion, this.categoria, ronda);
 	    
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
@@ -110,7 +106,7 @@ public class SaltoTrial extends VerticalLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    form.setEnabled(alturaNextRonda==0 && competiOpen);
+	    //form.setEnabled(alturaNextRonda==0 && competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
@@ -274,8 +270,15 @@ public class SaltoTrial extends VerticalLayout {
     }
 
     public void editRecord(SaltoEntity rec) {
-    	form.setEnabled(alturaNextRonda==0 && rec!=null && competiOpen);
-    	form.editRecord(rec, showOnly2Jumps);
+    	System.out.println("Entrando en editRecord "+rec);
+    	if (rec != null) {
+            form.addStyleName("visible");
+            //form.setEnabled(true);
+        } else {
+            form.removeStyleName("visible");
+            //form.setEnabled(false);
+        }
+    	form.editRecord(rec, showOnly2Jumps, alturaNextRonda==0 && rec!=null && competiOpen);
     }
 
     public void showRecords(List<SaltoEntity> records) {

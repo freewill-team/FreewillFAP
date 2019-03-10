@@ -4,9 +4,8 @@
     <meta name="package-mapping" content="x:com.app.freewill.company" />
 </head>
 <body>
-<v-form-layout id="company-form" >
-    <v-vertical-layout height-full spacing > <!-- style-name="form-layout" -->
-    	<!--
+<v-css-layout id="battle-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout" >
     	<v-horizontal-layout width-full spacing>
     		<v-text-field caption="patina1" _id="patina1" width-full />
         	<v-text-field caption="patina2" _id="patina2" width-full />
@@ -15,15 +14,16 @@
     		<v-text-field caption="patina3" _id="patina3" width-full />
         	<v-text-field caption="patina4" _id="patina4" width-full />
     	</v-horizontal-layout>
-    	 -->
+    	
 		<v-combo-box caption="ganador1" _id="ganador1" width-full null-selection-allowed=false text-input-allowed=false />
 		<v-combo-box caption="ganador2" _id="ganador2" width-full null-selection-allowed=false text-input-allowed=false />
     	<v-combo-box caption="ganador3" _id="ganador3" width-full null-selection-allowed=false text-input-allowed=false />
 		<v-combo-box caption="ganador4" _id="ganador4" width-full null-selection-allowed=false text-input-allowed=false />
     	
-        <v-css-layout :expand style-name="expander" />
         <v-button style-name="primary" _id="save">Salvar</v-button>
+        <v-css-layout :expand style-name="expander" /> 
+		<v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancelar</v-button>
     </v-vertical-layout>
-</v-form-layout>
+</v-css-layout>
 </body>
 </html>

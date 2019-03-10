@@ -33,14 +33,13 @@ public class SpeedTimeTrialForm2 extends SpeedTimeTrialFormDesign2 {
 	
     private SpeedCrudLogic viewLogic;
     private BeanFieldGroup<SpeedTimeTrialEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings("rawtypes")
     public SpeedTimeTrialForm2(SpeedCrudLogic logic) {
         super();
-        //addStyleName("product-form");
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
         
         tiempo2A.setRequired(true);
         tiempo2B.setRequired(true);
@@ -102,9 +101,20 @@ public class SpeedTimeTrialForm2 extends SpeedTimeTrialFormDesign2 {
             }
         });
         
+        cancel.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
+            }
+        });
+        
     }
 
-    public void editRecord(SpeedTimeTrialEntity rec) {
+    public void editRecord(SpeedTimeTrialEntity rec, boolean editable) {
         if (rec == null) {
             rec = new SpeedTimeTrialEntity();
             fieldGroup.setItemDataSource(new BeanItem<SpeedTimeTrialEntity>(rec));
@@ -112,6 +122,7 @@ public class SpeedTimeTrialForm2 extends SpeedTimeTrialFormDesign2 {
             return;
         }
         fieldGroup.setItemDataSource(new BeanItem<SpeedTimeTrialEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -138,7 +149,10 @@ public class SpeedTimeTrialForm2 extends SpeedTimeTrialFormDesign2 {
         	}
         }
         tiempoAjustado2.setEnabled(false);
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        dorsal.setEnabled(false);
+    	nombre.setEnabled(false);
+    	apellidos.setEnabled(false);
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
 }

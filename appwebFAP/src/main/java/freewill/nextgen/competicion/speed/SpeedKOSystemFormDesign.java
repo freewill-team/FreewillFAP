@@ -38,6 +38,7 @@ public class SpeedKOSystemFormDesign extends FormLayout {
 	protected ComboBox  ganador;
     
     protected Button save;
+    protected Button cancel;
 
     public SpeedKOSystemFormDesign() {
         Design.read(this);

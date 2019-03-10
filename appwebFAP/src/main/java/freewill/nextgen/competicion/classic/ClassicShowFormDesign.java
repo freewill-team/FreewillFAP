@@ -28,6 +28,9 @@ public class ClassicShowFormDesign extends CssLayout {
 	protected TextField tecnicaJuez3;				
 	protected TextField artisticaJuez3;	
 	protected TextField penalizaciones;
+	protected TextField dorsal;
+	protected TextField nombre;
+	protected TextField apellidos;
 	
     protected Button save;
     protected Button cancel;

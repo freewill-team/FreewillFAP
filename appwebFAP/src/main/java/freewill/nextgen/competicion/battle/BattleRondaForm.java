@@ -31,15 +31,13 @@ public class BattleRondaForm extends BattleRondaFormDesign {
 	
     private BattleCrudLogic viewLogic;
     private BeanFieldGroup<BattleRondaEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings({ "rawtypes"})
     public BattleRondaForm(BattleCrudLogic logic) {
-        super();
-        //addStyleName("product-form");
+    	super();
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
-        this.setHeight("100%");
         
         ganador1.setRequired(true);
         ganador2.setRequired(true);
@@ -117,9 +115,20 @@ public class BattleRondaForm extends BattleRondaFormDesign {
             }
         });
         
+        cancel.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
+            }
+        });
+        
     }
 
-    public void editRecord(BattleRondaEntity rec) {
+    public void editRecord(BattleRondaEntity rec, boolean editable) {
         if (rec == null) {
             rec = new BattleRondaEntity();
             fieldGroup.setItemDataSource(new BeanItem<BattleRondaEntity>(rec));
@@ -128,14 +137,14 @@ public class BattleRondaForm extends BattleRondaFormDesign {
             ganador2.removeAllItems();
             ganador3.removeAllItems();
             ganador4.removeAllItems();
-            /*patina1.setValue("");
+            patina1.setValue("");
             patina2.setValue("");
             patina3.setValue("");
-            patina4.setValue("");*/
+            patina4.setValue("");
             return;
         }
-        
         fieldGroup.setItemDataSource(new BeanItem<BattleRondaEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -197,18 +206,18 @@ public class BattleRondaForm extends BattleRondaFormDesign {
         // show validation errors after the user has changed something
         //nombre.setValidationVisible(true);
 
-        BeanItem<BattleRondaEntity> item = fieldGroup.getItemDataSource();
+        /*BeanItem<BattleRondaEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
         	BattleRondaEntity rec = item.getBean();
         	if(rec!=null){
         		//
         	}
-        }
-        /*patina1.setEnabled(false);
+        }*/
+        patina1.setEnabled(false);
         patina2.setEnabled(false);
         patina3.setEnabled(false);
-        patina4.setEnabled(false);*/
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        patina4.setEnabled(false);
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
 }

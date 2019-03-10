@@ -49,8 +49,8 @@ public class JamCrudLogic implements Serializable {
 	        		"/getByCompeticionAndCategoria/"+competicion+"/"+categoria,
 	        		JamShowEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
-	        
-	       	activeView.showRecords(records);  
+	        if(activeView!=null)
+	        	activeView.showRecords(records);  
     	}
 		catch(Exception e){
 			log.error(e.getMessage());
@@ -264,6 +264,7 @@ public class JamCrudLogic implements Serializable {
 	        setFragmentParameter("");
     	}
 		catch(Exception e){
+			e.printStackTrace();
 			log.error(e.getMessage());
 			if(activeView!=null)
 				activeView.showError(e.getMessage());

@@ -99,7 +99,7 @@ public class JamFinal extends CssLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    form.setEnabled(competiOpen);
+	    //form.setEnabled(competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
@@ -208,13 +208,13 @@ public class JamFinal extends CssLayout {
             form.removeStyleName("visible");
             //form.setEnabled(false);
         }
-        form.editRecord(rec);
+        form.editRecord(rec, competiOpen);
     }
 
     public void showRecords(List<JamShowEntity> records) {
         grid.setRecords(records); 
         if(records!=null && records.size()>0){
-    		grid. sort("orden1", SortDirection.DESCENDING);
+    		grid.sort("orden1", SortDirection.DESCENDING);
     		//this.selectRow(records.get(0));
         }
     }

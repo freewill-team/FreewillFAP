@@ -19,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
@@ -36,7 +37,7 @@ import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class SpeedTimeTrial extends VerticalLayout {
+public class SpeedTimeTrial extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("timetrial");
 	private Long competicion = null;
@@ -61,8 +62,11 @@ public class SpeedTimeTrial extends VerticalLayout {
 		this.categoriaStr = labelcategoria;
 		this.ronda = ronda;
 		this.parent = parent;
-		
 		viewLogic = new SpeedCrudLogic(this, null);
+		
+		setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 		
 		if(ronda==RondaEnum.PRIMERA)
 			grid = new GenericGrid<SpeedTimeTrialEntity>(SpeedTimeTrialEntity.class,
@@ -84,28 +88,22 @@ public class SpeedTimeTrial extends VerticalLayout {
         form2 = new SpeedTimeTrialForm2(viewLogic);
         eliminatoria = viewLogic.existeKO(competicion, categoria);
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(false);
-        gridLayout.addComponent(grid);
-        gridLayout.setExpandRatio(grid, 2);
+        VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
+        
+        addComponent(barAndGridLayout);
         if(ronda==RondaEnum.PRIMERA){
-	        gridLayout.addComponent(form1);
-	        gridLayout.setExpandRatio(form1, 1);
+	        addComponent(form1);
         }
         else if(ronda==RondaEnum.SEGUNDA){
-	        gridLayout.addComponent(form2);
-	        gridLayout.setExpandRatio(form2, 1);
+	        addComponent(form2);
         }
-        
-		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria, this.ronda);
 	    
@@ -118,8 +116,8 @@ public class SpeedTimeTrial extends VerticalLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-    	form1.setEnabled(eliminatoria==null && competiOpen);
-    	form2.setEnabled(eliminatoria==null && competiOpen);
+    	//form1.setEnabled(eliminatoria==null && competiOpen);
+    	//form2.setEnabled(eliminatoria==null && competiOpen);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -287,12 +285,28 @@ public class SpeedTimeTrial extends VerticalLayout {
     }
 
     public void editRecord(SpeedTimeTrialEntity rec) {
-    	form1.setEnabled(eliminatoria==null && rec!=null && competiOpen);
-    	form2.setEnabled(eliminatoria==null && rec!=null && competiOpen);
-    	if(ronda==RondaEnum.PRIMERA)
-    		form1.editRecord(rec);
-    	else if(ronda==RondaEnum.SEGUNDA)
-    		form2.editRecord(rec);
+    	if(ronda==RondaEnum.PRIMERA){
+    		System.out.println("Entrando en editRecord1 "+rec);
+        	if (rec != null) {
+                form1.addStyleName("visible");
+                //form.setEnabled(true);
+            } else {
+                form1.removeStyleName("visible");
+                //form.setEnabled(false);
+            }
+    		form1.editRecord(rec, eliminatoria==null && competiOpen);
+    	}
+    	else if(ronda==RondaEnum.SEGUNDA){
+    		System.out.println("Entrando en editRecord2 "+rec);
+        	if (rec != null) {
+                form2.addStyleName("visible");
+                //form.setEnabled(true);
+            } else {
+                form2.removeStyleName("visible");
+                //form.setEnabled(false);
+            }
+    		form2.editRecord(rec, eliminatoria==null && competiOpen);
+    	}
     }
 
     public void showRecords(List<SpeedTimeTrialEntity> records) {
@@ -304,7 +318,7 @@ public class SpeedTimeTrial extends VerticalLayout {
         else if(ronda==RondaEnum.RESULTADOS)
 			grid. sort("clasificacion", SortDirection.ASCENDING);
         if(records!=null && records.size()>0)
-    		this.selectRow(records.get(0));
+        	{}//this.selectRow(records.get(0));
         else{
         	showError("No existen inscripciones para esta prueba!");
         	this.setEnabled(false);

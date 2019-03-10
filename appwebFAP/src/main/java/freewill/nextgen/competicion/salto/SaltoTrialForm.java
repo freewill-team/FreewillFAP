@@ -32,14 +32,13 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
 	
     private SaltoCrudLogic viewLogic;
     private BeanFieldGroup<SaltoEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings("rawtypes")
     public SaltoTrialForm(SaltoCrudLogic logic) {
         super();
-        //addStyleName("product-form");
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
         
         salto1.setRequired(true);
         salto2.setRequired(true);
@@ -100,9 +99,20 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
             }
         });
         
+        cancel.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
+            }
+        });
+        
     }
 
-    public void editRecord(SaltoEntity rec, boolean showOnly2Jumps) {
+    public void editRecord(SaltoEntity rec, boolean showOnly2Jumps, boolean editable) {
         if (rec == null) {
             rec = new SaltoEntity();
             fieldGroup.setItemDataSource(new BeanItem<SaltoEntity>(rec));
@@ -110,6 +120,7 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
             return;
         }
         fieldGroup.setItemDataSource(new BeanItem<SaltoEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -128,14 +139,17 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
         // show validation errors after the user has changed something
         //nombre.setValidationVisible(true);
 
-        BeanItem<SaltoEntity> item = fieldGroup.getItemDataSource();
+        /*BeanItem<SaltoEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
         	SaltoEntity rec = item.getBean();
         	if(rec!=null){
         		//
         	}
-        }
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        }*/
+        dorsal.setEnabled(false);
+    	nombre.setEnabled(false);
+    	apellidos.setEnabled(false);
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     	
 }

@@ -389,4 +389,10 @@ public class JamShowEntity implements Serializable, Cloneable {
 		return (this.dorsal.toString() + '/' + this.dorsalPareja.toString());
 	}
 	
+	public void setNombreDuo(String val) {
+	}
+
+	public void setDorsalDuo(String val) {
+	}
+	
 }

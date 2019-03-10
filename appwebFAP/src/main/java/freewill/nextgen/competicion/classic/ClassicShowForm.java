@@ -34,6 +34,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
 	
     private ClassicCrudLogic viewLogic;
     private BeanFieldGroup<ClassicShowEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings("rawtypes")
     public ClassicShowForm(ClassicCrudLogic logic) {
@@ -190,7 +191,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         
     }
     
-    public void editRecord(ClassicShowEntity rec) {
+    public void editRecord(ClassicShowEntity rec, boolean editable) {
         if (rec == null) {
             rec = new ClassicShowEntity();
             fieldGroup.setItemDataSource(new BeanItem<ClassicShowEntity>(rec));
@@ -198,6 +199,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             return;
         }
         fieldGroup.setItemDataSource(new BeanItem<ClassicShowEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -230,10 +232,13 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         	}
         }
         */
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save1.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save2.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
-        save3.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+    	dorsal.setEnabled(false);
+    	nombre.setEnabled(false);
+    	apellidos.setEnabled(false);
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save1.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save2.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save3.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
 }

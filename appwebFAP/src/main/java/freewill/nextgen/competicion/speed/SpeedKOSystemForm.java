@@ -31,6 +31,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
 	
     private SpeedCrudLogic viewLogic;
     private BeanFieldGroup<SpeedKOSystemEntity> fieldGroup;
+    private boolean editable = false;
     
     @SuppressWarnings({ "rawtypes"})
     public SpeedKOSystemForm(SpeedCrudLogic logic) {
@@ -132,9 +133,20 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
             }
         });
         
+        cancel.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	if(viewLogic!=null)
+            		viewLogic.cancelRecord();
+            	else
+            		fieldGroup.discard();
+            	removeStyleName("visible");
+            }
+        });
+        
     }
 
-    public void editRecord(SpeedKOSystemEntity rec) {
+    public void editRecord(SpeedKOSystemEntity rec, boolean editable) {
         if (rec == null) {
             rec = new SpeedKOSystemEntity();
             fieldGroup.setItemDataSource(new BeanItem<SpeedKOSystemEntity>(rec));
@@ -146,6 +158,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         }
         
         fieldGroup.setItemDataSource(new BeanItem<SpeedKOSystemEntity>(rec));
+        this.editable = editable;
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -179,7 +192,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         }
         patina1.setEnabled(false);
         patina2.setEnabled(false);
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
+        save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     		
 }

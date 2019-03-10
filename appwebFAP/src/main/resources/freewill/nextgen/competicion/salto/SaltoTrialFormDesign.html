@@ -4,15 +4,22 @@
     <meta name="package-mapping" content="x:com.app.freewill.company" />
 </head>
 <body>
-<v-form-layout id="company-form" > <!-- caption="Registro de Tiempos" style-name="product-form-wrapper" -->
-    <v-vertical-layout height-full spacing > <!-- style-name="form-layout" -->
+<v-css-layout id="jam-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout" >
+    	<v-horizontal-layout width-full spacing>
+    		<v-text-field caption="dorsal" _id="dorsal" width-full />
+        	<v-text-field caption="nombre" _id="nombre" width-full />
+        	<v-text-field caption="apellidos" _id="apellidos" width-full />
+    	</v-horizontal-layout>
+    	
     	<v-combo-box caption="salto1" _id="salto1" width-full null-selection-allowed=false text-input-allowed=false />        
         <v-combo-box caption="salto2" _id="salto2" width-full null-selection-allowed=false text-input-allowed=false />
         <v-combo-box caption="salto3" _id="salto3" width-full null-selection-allowed=false text-input-allowed=false />
         
-        <v-css-layout :expand style-name="expander" />
         <v-button style-name="primary" _id="save">Salvar</v-button>
+        <v-css-layout :expand style-name="expander" /> 
+		<v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancelar</v-button>
     </v-vertical-layout>
-</v-form-layout>
+</v-css-layout>
 </body>
 </html>

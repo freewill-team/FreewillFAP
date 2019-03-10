@@ -31,6 +31,8 @@ public class JamShowFormDesign extends CssLayout {
 	protected TextField artisticaJuez3;
 	protected TextField sincronizacionJuez3;
 	protected TextField penalizaciones;
+	protected TextField dorsalDuo;
+	protected TextField nombreDuo;
 	
     protected Button save;
     protected Button cancel;
