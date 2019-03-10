@@ -36,10 +36,8 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
     @SuppressWarnings({ "rawtypes"})
     public SpeedKOSystemForm(SpeedCrudLogic logic) {
         super();
-        //addStyleName("product-form");
+        addStyleName("product-form");
         this.viewLogic = logic;
-        this.setMargin(true);
-        this.setSpacing(true);
         this.setHeight("100%");
         
         patina1.setCaption(Messages.get().getKey("patina1"));
