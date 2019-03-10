@@ -60,6 +60,8 @@ public class SaltoTrial extends CssLayout {
 		this.parent = parent;
 		viewLogic = new SaltoCrudLogic(this);
 		
+		alturaNextRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda+1);
+		
 		setSizeFull();
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar();
@@ -93,8 +95,6 @@ public class SaltoTrial extends CssLayout {
         addComponent(barAndGridLayout);
         addComponent(form);
         
-        alturaNextRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda+1);
-        
 	    viewLogic.initGrid(this.competicion, this.categoria, ronda);
 	    
 	    GenericCrudLogic<CompeticionEntity> competiLogic = 
@@ -116,7 +116,7 @@ public class SaltoTrial extends CssLayout {
 		if(alturaNextRonda!=0)
 			newAltura.setEnabled(false);
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
@@ -131,7 +131,7 @@ public class SaltoTrial extends CssLayout {
         });
 		//prevButton.setEnabled(ronda>0);
 		
-		nextButton = new Button(Messages.get().getKey("next"));
+		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
@@ -205,7 +205,7 @@ public class SaltoTrial extends CssLayout {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
@@ -288,7 +288,7 @@ public class SaltoTrial extends CssLayout {
     		Column col = grid.getColumn("salto3");
     		if(col!=null)
     			col.setHidden(showOnly2Jumps);
-    		this.selectRow(records.get(0));
+    		//this.selectRow(records.get(0));
         }
         else{
         	showError("No existen inscripciones para esta prueba!");

@@ -72,7 +72,7 @@ public class JamResultados extends CssLayout {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public HorizontalLayout createTopBar() {
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
@@ -83,7 +83,7 @@ public class JamResultados extends CssLayout {
             }
         });
 		
-		Button nextButton = new Button(Messages.get().getKey("next"));
+		Button nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {

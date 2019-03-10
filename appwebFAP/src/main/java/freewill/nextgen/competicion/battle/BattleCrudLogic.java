@@ -210,6 +210,7 @@ public class BattleCrudLogic implements Serializable {
 	        			EntryPoint.get().getAccessControl().getTokenKey());	
 		    
 	    	if(koView!=null){
+	    		koView.editRecord(null);
 	    		koView.showRecords(this.initKO(rec.getCompeticion(), rec.getCategoria()));
 	    		koView.showSaveNotification("Record (" + res.getId() + ") updated");
 	    	}

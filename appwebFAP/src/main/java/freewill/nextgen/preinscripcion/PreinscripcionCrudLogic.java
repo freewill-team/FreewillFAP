@@ -44,15 +44,11 @@ public class PreinscripcionCrudLogic implements Serializable {
     	try{
     		editRecord(null, null, false);
 	        if(view!=null){
-	        	// Primero comprueba que la pre-inscripción está abierta
 	        	Date now = new Date();
 	        	CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
 	        			""+competicion, CompeticionEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());
-	        	if(competi==null || competi.getFechaFinInscripcion().before(now)){
-	        		view.showError("La Pre-Inscripción ya está cerrada.");
-	        		view.setPreinscripcionAbierta(false);
-	        	}
+	        	
 	        	if(tipoForm == InscripcionEnum.PREINSCRIPCION){
 	        		// Solo devuelve los patinadores correspondientes al club del coordinador
 	        		// El usuario logueado debe se el coordinador del club
@@ -60,6 +56,11 @@ public class PreinscripcionCrudLogic implements Serializable {
 	        			BltClient.get().executeQuery("/getInscripcionesbyclub/"+competicion,
 	        			PatinadorEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey()));
+	        		// Comprueba que la pre-inscripción está abierta
+	        		if(competi==null || competi.getFechaFinInscripcion().before(now)){
+		        		view.showError("La Pre-Inscripción ya está cerrada.");
+		        		view.setPreinscripcionAbierta(false);
+		        	}
 	        	}
 	        	else{
 	        		// Devuelve todos los patinadores
@@ -67,6 +68,11 @@ public class PreinscripcionCrudLogic implements Serializable {
 		        		BltClient.get().executeQuery("/getInscripciones/"+competicion+"/true",
 		        		PatinadorEntity.class,
 		        		EntryPoint.get().getAccessControl().getTokenKey()));
+	        		// Comprueba que la cmpeticion nomha empezado ain
+	        		if(competi==null || competi.getFechaInicio().before(now)){
+		        		view.showError("La Inscripción ya está cerrada.");
+		        		view.setPreinscripcionAbierta(false);
+		        	}
 	        	}
 	        }
     	}

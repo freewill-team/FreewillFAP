@@ -132,9 +132,6 @@ public class JamShowForm extends JamShowFormDesign {
             	try{
             		fieldGroup.commit();
 	            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
-	            	//String penal = penalizaciones.getValue().replace(",", ".");
-	            	//rec.setPenalizaciones(Float.parseFloat(penal));
-	            	//rec.setPenalizaciones((float)penalizaciones.getConvertedValue());
 	            	rec.setArtisticaJuez1(Integer.parseInt(artisticaJuez1b.getValue()));
 	            	rec.setTecnicaJuez1(Integer.parseInt(tecnicaJuez1b.getValue()));
 	            	rec.setSincronizacionJuez1(Integer.parseInt(sincronizacionJuez1b.getValue()));

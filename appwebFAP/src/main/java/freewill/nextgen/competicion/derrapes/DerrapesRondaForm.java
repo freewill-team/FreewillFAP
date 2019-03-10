@@ -199,6 +199,12 @@ public class DerrapesRondaForm extends DerrapesRondaFormDesign {
 		ganador2.setValue(rec.getGanador2());
 		ganador3.setValue(rec.getGanador3());
 		ganador4.setValue(rec.getGanador4());
+		
+		patina1.setValue(rec.getDorsal1()+"- "+rec.getNombre1()+" "+rec.getApellidos1());
+	    patina2.setValue(rec.getDorsal2()+"- "+rec.getNombre2()+" "+rec.getApellidos2());
+	    patina3.setValue(rec.getDorsal3()+"- "+rec.getNombre3()+" "+rec.getApellidos3());
+	    patina4.setValue(rec.getDorsal4()+"- "+rec.getNombre4()+" "+rec.getApellidos4());
+		
         formHasChanged();
     }
 
