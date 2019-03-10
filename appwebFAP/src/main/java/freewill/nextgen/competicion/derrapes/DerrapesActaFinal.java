@@ -14,6 +14,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -23,7 +24,7 @@ import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 @SuppressWarnings("serial")
-public class DerrapesActaFinal extends VerticalLayout {
+public class DerrapesActaFinal extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("derrapesacta");
 	private Long competicion = null;
@@ -41,25 +42,25 @@ public class DerrapesActaFinal extends VerticalLayout {
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
-		
 		viewLogic = new DerrapesCrudLogic(null, null);
+		
+		setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 		
 		grid = new GenericGrid<DerrapesEntity>(DerrapesEntity.class,
 		       "id", "dorsal", "clasificacion", "nombre", "apellidos");
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
-        gridLayout.addComponent(grid);
-        	
-		HorizontalLayout topLayout = createTopBar();
-	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
-	    addComponent(topLayout);
-	    addComponent(gridLayout);
-	    setSizeFull();
-	    setExpandRatio(gridLayout, 1);
-	    setStyleName("crud-main-layout");
+		VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
+        
+        addComponent(barAndGridLayout);
 	    
 	    showRecords(viewLogic.initGridResults(this.competicion, this.categoria));  	
 	}

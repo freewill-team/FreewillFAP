@@ -52,7 +52,6 @@ public class BattlePreclasificacion extends VerticalLayout {
 		this.categoria = categoria;
 		this.categoriaStr = labelcategoria;
 		this.parent = parent;
-		
 		viewLogic = new BattleCrudLogic(this, null);
 		
 		grid = new GenericGrid<BattleEntity>(BattleEntity.class,
@@ -213,7 +212,7 @@ public class BattlePreclasificacion extends VerticalLayout {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        //topLayout.setMargin(true);
+        topLayout.setMargin(true); //
         topLayout.setWidth("100%");
         if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
