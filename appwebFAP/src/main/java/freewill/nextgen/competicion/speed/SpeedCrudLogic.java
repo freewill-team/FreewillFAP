@@ -226,7 +226,7 @@ public class SpeedCrudLogic implements Serializable {
 	    		koView.showRecords(this.initKO(rec.getCompeticion(), rec.getCategoria(), rec.getEliminatoria()));
 	    		koView.showSaveNotification("Record (" + res.getId() + ") updated");
 	    		koView.clearSelection();
-	    		koView.editRecord(res);
+	    		koView.editRecord(null);
 	    	}
 	    	return res;
     	}
@@ -276,7 +276,7 @@ public class SpeedCrudLogic implements Serializable {
 	    		
 		        view.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
 		        view.clearSelection();
-		        view.editRecord(res);
+		        view.editRecord(null);
 		        view.refreshRecord(res);
 		        return res;
 	    	}

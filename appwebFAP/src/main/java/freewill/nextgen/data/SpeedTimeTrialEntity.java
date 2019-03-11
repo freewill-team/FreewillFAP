@@ -284,4 +284,8 @@ public class SpeedTimeTrialEntity implements Serializable, Cloneable {
 		this.dorsal = dorsal;
 	}
     
+	public String getFullName(){
+		return nombre +" "+ apellidos;
+	}
+	
 }

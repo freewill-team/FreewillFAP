@@ -24,7 +24,6 @@ import freewill.nextgen.blts.daos.RankingAbsRepository;
 import freewill.nextgen.blts.daos.SpeedKOSystemRepository;
 import freewill.nextgen.blts.daos.SpeedTimeTrialRepository;
 import freewill.nextgen.blts.daos.UserRepository;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.blts.data.ParticipanteEntity;
@@ -164,7 +163,6 @@ public class SpeedTimeTrialManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoriaOrden1/{competicion}/{categoria}")
 	public List<SpeedTimeTrialEntity> getByCompeticionAndCategoriaOrden1(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {

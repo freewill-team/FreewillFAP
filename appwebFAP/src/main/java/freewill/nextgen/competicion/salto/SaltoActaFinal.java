@@ -82,7 +82,7 @@ public class SaltoActaFinal extends CssLayout {
             }
         });
 		
-		Button printButton = new Button(/*Messages.get().getKey("acta")*/);
+		Button printButton = new Button(Messages.get().getKey("acta"));
 		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {

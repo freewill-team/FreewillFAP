@@ -241,8 +241,10 @@ public class JamShowManager {
 			rec.setDorsalPareja(inscripcion.getDorsalPareja());
 			rec.setCompany(inscripcion.getCompany());
 			
-			rec.setOrden1(rankingrepo.getSortedRanking(inscripcion.getPatinador(), 
-					ModalidadEnum.JAM));
+			rec.setOrden1(
+					rankingrepo.getSortedRanking(inscripcion.getPatinador(), ModalidadEnum.CLASSIC)+
+					rankingrepo.getSortedRanking(inscripcion.getPatinadorPareja(), ModalidadEnum.CLASSIC)
+					);
 			System.out.println("Creating "+rec+" Orden "+rec.getOrden1());
 			
 			rec.setClasificacionFinal(rec.getOrden1());

@@ -131,7 +131,7 @@ public class DerrapesCrudLogic implements Serializable {
 	    		
 		        view.showSaveNotification(rec.getNombre() + " (" + res.getId() + ") updated");
 		        view.clearSelection();
-		        view.editRecord(res);
+		        view.editRecord(null);
 		        view.refreshRecord(res);
 		        return res;
 	    	}

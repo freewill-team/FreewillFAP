@@ -64,6 +64,8 @@ public class SpeedTimeTrial extends CssLayout {
 		this.parent = parent;
 		viewLogic = new SpeedCrudLogic(this, null);
 		
+		eliminatoria = viewLogic.existeKO(competicion, categoria);
+		
 		setSizeFull();
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar();
@@ -86,7 +88,6 @@ public class SpeedTimeTrial extends CssLayout {
         
         form1 = new SpeedTimeTrialForm1(viewLogic);
         form2 = new SpeedTimeTrialForm2(viewLogic);
-        eliminatoria = viewLogic.existeKO(competicion, categoria);
         
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -201,9 +202,25 @@ public class SpeedTimeTrial extends CssLayout {
     		File file = Export2Xls.get().createXLS(
     				(List<SpeedTimeTrialEntity>)grid.getContainerDataSource().getItemIds(),
     				SpeedTimeTrialEntity.class,
-    				("Resultados Time-Trial"+competicionStr+" / "+categoriaStr).toUpperCase(),
+    				("Resultados Time-Trial "+competicionStr+" / "+categoriaStr).toUpperCase(),
     				"dorsal", "clasificacion", "nombre", "apellidos", "tiempoAjustado1", /*"valido1",*/ 
     				"tiempoAjustado2", /*"valido2",*/ "mejorTiempo");
+    		if(file!=null){
+    			FileResource resource = new FileResource(file);
+    			Page.getCurrent().open(resource, "Export File", false);
+    		    // Finally, removes the temporal file
+    		    // file.delete();
+    		}
+        });
+		
+		Button exportButton = new Button();
+		exportButton.setIcon(FontAwesome.DOWNLOAD);
+		exportButton.addClickListener(e -> {
+    		File file = Export2Xls.get().createXLS(
+    				(List<SpeedTimeTrialEntity>)grid.getContainerDataSource().getItemIds(),
+    				SpeedTimeTrialEntity.class,
+    				("Export Time-Trial "+competicionStr+" / "+categoriaStr).toUpperCase(),
+    				"dorsal", "orden1", "fullName");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
@@ -253,6 +270,8 @@ public class SpeedTimeTrial extends CssLayout {
         topLayout.addComponent(nextButton);
         if(ronda==RondaEnum.RESULTADOS)
         	topLayout.addComponent(printButton);
+        else
+        	topLayout.addComponent(exportButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");
