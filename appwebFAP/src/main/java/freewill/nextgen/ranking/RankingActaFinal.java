@@ -110,7 +110,7 @@ public class RankingActaFinal extends CssLayout {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public HorizontalLayout createTopBar() {
 		
-		Button prevButton = new Button(Messages.get().getKey("prev"));
+		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
