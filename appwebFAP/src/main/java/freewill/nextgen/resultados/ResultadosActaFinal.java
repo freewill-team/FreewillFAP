@@ -37,7 +37,7 @@ import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.ranking.RankingForm;
 
 @SuppressWarnings("serial")
-public class ResultadosActaFinal extends CssLayout /*VerticalLayout*/ {
+public class ResultadosActaFinal extends CssLayout {
 	
 	public final String VIEW_NAME = Messages.get().getKey("resultados");
 	private Long competicion = null;

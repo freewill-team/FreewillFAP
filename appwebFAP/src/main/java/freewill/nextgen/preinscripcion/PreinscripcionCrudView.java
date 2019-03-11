@@ -90,7 +90,7 @@ public class PreinscripcionCrudView extends CssLayout implements View {
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
         barAndGridLayout.setMargin(true);
-        barAndGridLayout.setSpacing(false);
+        barAndGridLayout.setSpacing(true);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
@@ -139,7 +139,7 @@ public class PreinscripcionCrudView extends CssLayout implements View {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(filter);

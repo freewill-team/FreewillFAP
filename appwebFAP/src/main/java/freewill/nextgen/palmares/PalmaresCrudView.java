@@ -73,8 +73,8 @@ public class PalmaresCrudView extends CssLayout implements View {
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
-        //barAndGridLayout.setMargin(true);
-        //barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
@@ -138,7 +138,7 @@ public class PalmaresCrudView extends CssLayout implements View {
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         topLayout.setSpacing(true);
-        topLayout.setMargin(true);
+        //topLayout.setMargin(true);
         topLayout.setWidth("100%");
         topLayout.addComponent(findRecord);
         topLayout.addComponent(patinadorLabel);
