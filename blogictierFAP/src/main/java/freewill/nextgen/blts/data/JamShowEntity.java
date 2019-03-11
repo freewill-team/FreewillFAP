@@ -60,6 +60,10 @@ public class JamShowEntity implements Serializable, Cloneable {
     	// Void with no-args as requested for non-enhanced JPA entities
     	nombre = "";
     	apellidos = "";
+    	nombrePareja = "";
+    	apellidosPareja = "";
+    	dorsal = 0;
+    	dorsalPareja = 0;
     	orden1 = 0;
     	clasificacionFinal = 0;
     }

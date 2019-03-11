@@ -61,7 +61,7 @@ public class SpeedKOsystem extends CssLayout {
             		rec = viewLogic.findRecordKO(recId);
             	}
             	//form.setEnabled(competiOpen);
-            	form.editRecord(rec, competiOpen);
+            	editRecord(rec);
             }
         });
         

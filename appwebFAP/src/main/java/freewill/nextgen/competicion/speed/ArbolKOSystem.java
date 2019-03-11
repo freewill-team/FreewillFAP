@@ -78,6 +78,7 @@ public class ArbolKOSystem extends Panel {
 				button.addStyleName(ValoTheme.BUTTON_LARGE);
 				button.setIcon(FontAwesome.FORWARD);
 				button.addClickListener(action);
+				button.setEnabled(false);
 				
 				HorizontalLayout celda = new HorizontalLayout();
 				//celda.setStyleName(ValoTheme.LAYOUT_CARD); // temporal
@@ -155,6 +156,7 @@ public class ArbolKOSystem extends Panel {
         	}
         	if(button!=null){
         		button.setId(""+rec.getId());
+        		button.setEnabled(true);
         	}
         }
     }
