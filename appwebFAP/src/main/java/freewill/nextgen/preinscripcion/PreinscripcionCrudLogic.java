@@ -13,6 +13,7 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
@@ -29,10 +30,10 @@ import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 @SuppressWarnings("serial")
 public class PreinscripcionCrudLogic implements Serializable {
 
-    private PreinscripcionCrudView view;
+    private PreinscripcionCrudGrid view;
     private Logger log = null;
 
-    public PreinscripcionCrudLogic(PreinscripcionCrudView simpleCrudView) {
+    public PreinscripcionCrudLogic(PreinscripcionCrudGrid simpleCrudView) {
         view = simpleCrudView;
         if(view!=null)
         	log = Logger.getLogger(view.getClass());
@@ -40,20 +41,20 @@ public class PreinscripcionCrudLogic implements Serializable {
         	log = Logger.getLogger(this.getClass());
     }
 
-    public void init(Long competicion, InscripcionEnum tipoForm) {
+    public void init(CompeticionEntity competi/*Long competicion*/, InscripcionEnum tipoForm) {
     	try{
     		editRecord(null, null, false);
 	        if(view!=null){
 	        	Date now = new Date();
-	        	CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
+	        	/*CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
 	        			""+competicion, CompeticionEntity.class,
-	        			EntryPoint.get().getAccessControl().getTokenKey());
+	        			EntryPoint.get().getAccessControl().getTokenKey());*/
 	        	
 	        	if(tipoForm == InscripcionEnum.PREINSCRIPCION){
 	        		// Solo devuelve los patinadores correspondientes al club del coordinador
 	        		// El usuario logueado debe se el coordinador del club
 	        		view.showRecords(
-	        			BltClient.get().executeQuery("/getInscripcionesbyclub/"+competicion,
+	        			BltClient.get().executeQuery("/getInscripcionesbyclub/"+competi.getId(),
 	        			PatinadorEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey()));
 	        		// Comprueba que la pre-inscripción está abierta
@@ -65,7 +66,7 @@ public class PreinscripcionCrudLogic implements Serializable {
 	        	else{
 	        		// Devuelve todos los patinadores
 	        		view.showRecords(
-		        		BltClient.get().executeQuery("/getInscripciones/"+competicion+"/true",
+		        		BltClient.get().executeQuery("/getInscripciones/"+competi.getId()+"/true",
 		        		PatinadorEntity.class,
 		        		EntryPoint.get().getAccessControl().getTokenKey()));
 	        		// Comprueba que la cmpeticion nomha empezado ain
@@ -251,6 +252,18 @@ public class PreinscripcionCrudLogic implements Serializable {
 		try{
 	        return (CompeticionEntity) BltClient.get().getEntityById(
 	        		""+recId, CompeticionEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<ParejaJamEntity> getParejasJam() {
+		try{
+	        return BltClient.get().getEntities(ParejaJamEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
     	}
 		catch(Exception e){

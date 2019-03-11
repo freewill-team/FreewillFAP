@@ -215,7 +215,6 @@ public class ParticipanteForm extends ParticipanteFormDesign {
             public void buttonClick(ClickEvent event) {
 				// Abre la ventana de seleccion de patinador Pareja
 				List<ParejaJamEntity> students = viewLogic.getParejasJam();
-				//List<PatinadorEntity> students = viewLogic.getPatinadores();
 				
 				SelectParejaJamDialog cd = new SelectParejaJamDialog(students);
             	cd.setOKAction(new ClickListener() {

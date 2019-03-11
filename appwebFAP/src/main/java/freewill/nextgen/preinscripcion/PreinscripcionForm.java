@@ -21,8 +21,10 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.parejajam.SelectParejaJamDialog;
 import freewill.nextgen.patinador.SelectPatinadorDialog;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
@@ -135,19 +137,34 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         parejaBtn.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-				// Abre la ventana de seleccion de patinador Pareja
-				List<PatinadorEntity> students = viewLogic.getPatinadores();
+            	// Abre la ventana de seleccion de patinador Pareja
+				List<ParejaJamEntity> students = viewLogic.getParejasJam();
 				
-				SelectPatinadorDialog cd = new SelectPatinadorDialog(students);
+				SelectParejaJamDialog cd = new SelectParejaJamDialog(students);
             	cd.setOKAction(new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
             			cd.close();
-            			PatinadorEntity user = cd.getSelected();
-            			if(user!=null){
-            				idPareja.setValue(""+user.getId());
-                    		nombrePareja.setValue(user.getNombre());
-                    		apellidosPareja.setValue(user.getApellidos());
+            			ParejaJamEntity users= cd.getSelected();
+            			if(users!=null){
+            				parejaJam.setValue(""+users.getId());
+            				PatinadorEntity rec = fieldGroup.getItemDataSource().getBean();
+            				if(users.getPatinador1().longValue()==rec.getId().longValue()){
+	            				idPareja.setValue(""+users.getPatinador2());
+	                    		nombrePareja.setValue(users.getNombre2());
+	                    		apellidosPareja.setValue(users.getApellidos2());
+            				}
+            				else if(users.getPatinador2().longValue()==rec.getId().longValue()){
+            					idPareja.setValue(""+users.getPatinador1());
+	                    		nombrePareja.setValue(users.getNombre1());
+	                    		apellidosPareja.setValue(users.getApellidos1());
+            				}
+            				else{
+            					 Notification n = new Notification(
+            	                    "Pareja incorrecta para este patinador.", Type.ERROR_MESSAGE);
+            	                    n.setDelayMsec(500);
+            	                    n.show(getUI().getPage());
+            				}
             			}
                     }
                 });
@@ -269,6 +286,7 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         		}
         	}
         }
+        parejaJam.setVisible(false);
         nombre.setEnabled(false);
         apellidos.setEnabled(false);
         fechaNacimiento.setEnabled(false);

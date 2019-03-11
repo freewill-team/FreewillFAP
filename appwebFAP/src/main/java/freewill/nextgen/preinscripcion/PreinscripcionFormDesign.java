@@ -43,6 +43,7 @@ public class PreinscripcionFormDesign extends CssLayout {
     protected ComboBox idCatBattle;
     protected HorizontalLayout parejaLayout;
     protected Button parejaBtn;
+    protected TextField parejaJam;
     protected TextField idPareja;
     protected TextField nombrePareja;
     protected TextField apellidosPareja;
