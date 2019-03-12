@@ -52,7 +52,13 @@ public class Export2XlsMultiple {
     		int i = 0;
     		for(List<T> collection:collections){
     			if(collection!=null && collection.size()>0){
-    				printSheet(file, title[i], collection, entity, doc, fields);
+    				String campos[] = fields;
+    				String jam[] = {"clasificacion", "dorsal", "nombre", "apellidos",
+    						"dorsalPareja", "nombrePareja", "apellidosPareja",
+    						"clubStr", "puntuacion"};
+    				if(title[i].toLowerCase().contains("jam")) // Pedazo de parche cutre
+    					campos = jam;
+    				printSheet(file, title[i], collection, entity, doc, campos);
     			}
     			i++;
     		}

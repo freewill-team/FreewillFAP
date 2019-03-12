@@ -87,7 +87,8 @@ public class ResultadosActaFinal extends CssLayout {
 		case JAM:
 			grid = new GenericGrid<ParticipanteEntity>(ParticipanteEntity.class,
 					"id", "dorsal", "clasificacion", "nombre", "apellidos", 
-					"dorsalPareja", "nombrePareja", "apellidosPareja", "clubStr");
+					"dorsalPareja", "nombrePareja", "apellidosPareja", 
+					"clubStr", "puntuacion");
 			break;
 		}
         

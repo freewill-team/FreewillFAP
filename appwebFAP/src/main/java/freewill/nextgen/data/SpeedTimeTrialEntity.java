@@ -285,7 +285,7 @@ public class SpeedTimeTrialEntity implements Serializable, Cloneable {
 	}
     
 	public String getFullName(){
-		return nombre +" "+ apellidos;
+		return id+":"+dorsal+":"+nombre +" "+ apellidos;
 	}
 	
 }

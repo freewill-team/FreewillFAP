@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.speed;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -346,5 +347,32 @@ public class SpeedCrudLogic implements Serializable {
         if(koView!=null)
         	koView.editRecord(rec);
     }
+
+	public void updateGrid(File file, Long competicion, Long categoria) {
+		// Importar valores del Time-Trial usando Excel generado por crono Seba
+		try{
+			List<SpeedTimeTrialEntity> data = ImportCronoFromXls.get().getList(file);
+			for(SpeedTimeTrialEntity rec:data){
+				System.out.println(
+						rec.getId()+" - "+rec.getNombre()+" "+rec.getApellidos()+" - "+
+						rec.getTiempo1A()+" "+rec.getConos1()+" "+rec.getValido1()+" - "+
+						rec.getTiempo2A()+" "+rec.getConos2()+" "+rec.getValido2());
+				SpeedTimeTrialEntity res = this.findRecord(""+rec.getId());
+				if(res!=null){
+					res.setTiempo1A(rec.getTiempo1A());
+					res.setConos1(rec.getConos1());
+					res = saveRecordTiempo(res, RondaEnum.PRIMERA);
+					res.setTiempo2A(rec.getTiempo2A());
+					res.setConos2(rec.getConos2());
+					res = saveRecordTiempo(res, RondaEnum.SEGUNDA);
+				}
+			}
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		initGrid(competicion, categoria, RondaEnum.RESULTADOS);
+	}
 	
 }

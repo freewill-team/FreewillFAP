@@ -1,6 +1,9 @@
 package freewill.nextgen.competicion.speed;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -22,6 +26,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Upload.StartedEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.data.SpeedKOSystemEntity.EliminatoriaEnum;
@@ -29,6 +34,7 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.SpeedTimeTrialEntity;
+import freewill.nextgen.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.data.SpeedTimeTrialEntity.RondaEnum;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -53,6 +59,8 @@ public class SpeedTimeTrial extends CssLayout {
 	private EliminatoriaEnum eliminatoria = EliminatoriaEnum.CUARTOS;
 	private boolean competiOpen = false;
 	private Button nextButton = null;
+	private File tempFile = null;
+	private Upload upload = null;
 
 	public SpeedTimeTrial(Long categoria, String labelcategoria, Long competicion, 
 			String label, RondaEnum ronda, SpeedCrudView parent){
@@ -116,6 +124,7 @@ public class SpeedTimeTrial extends CssLayout {
     		this.showError("Esta Competición aun no puede comenzar.");
     		competiOpen = false;
     		nextButton.setEnabled(false);
+    		upload.setEnabled(false);
     	}
     	//form1.setEnabled(eliminatoria==null && competiOpen);
     	//form2.setEnabled(eliminatoria==null && competiOpen);
@@ -251,6 +260,70 @@ public class SpeedTimeTrial extends CssLayout {
             }
         });
 		
+		// Create and configure the upload component
+		upload = new Upload("Load Requirements", new Upload.Receiver() {
+            @Override
+            public OutputStream receiveUpload(String filename, String mimeType) {
+            	try {
+            		// Here, we'll stored the uploaded file as a temporary file
+            		if(!filename.toUpperCase().endsWith("XLSX")){
+            			Notification.show("Not an XLSX file. Upload interrupted.");
+	            		return null;
+	            	}
+	            	tempFile = File.createTempFile("temp", ".xlsx");
+	            	return new FileOutputStream(tempFile);
+            	} 
+            	catch (IOException e) {
+            		e.printStackTrace();
+            		return null;
+            	}
+            }
+        });
+
+        upload.addListener(new Upload.StartedListener(){
+			@Override
+			public void uploadStarted(StartedEvent event) {
+				if (event.getFilename().isEmpty()) {
+			        upload.interruptUpload();
+			        return;
+        		}
+				System.out.println("File Upload started... "+event.getContentLength()+" bytes");
+				long size = event.getContentLength()/1024/1024; //bytes->kb->Mb
+				long maxsize = EntryPoint.get().getConfigLong(ConfigItemEnum.MAXUPLOADFILESIZE);
+				if(size>maxsize){
+					Notification.show("File bigger than "+maxsize+"Mb. Upload interrupted.");
+					upload.interruptUpload();
+				}
+			}
+        });
+        
+        upload.addListener(new Upload.FinishedListener() {
+            @Override
+            public void uploadFinished(Upload.FinishedEvent finishedEvent) {
+            	try {
+            		// process the uploaded file and store the new requirements
+            		if(tempFile.length()>10 /*bytes*/){
+	            		//DataService.get().createEvent("Fichero salvado en: " + tempFile.getAbsolutePath());
+            			showSaveNotification("File uploaded successfully.");
+	            		viewLogic.updateGrid(tempFile, competicion, categoria);
+	            		tempFile.delete();
+            		}
+            		else{
+            			// Do nothing
+            			tempFile.delete();
+            		}
+            	} 
+            	catch (Exception e) {
+            		e.printStackTrace();
+            	}
+            }
+        });
+        upload.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+        upload.setButtonCaption(Messages.get().getKey("import"));
+        //upload.setIcon(FontAwesome.UPLOAD);
+        upload.setCaption(null);
+        upload.setImmediate(true);
+		
         Label competicionLabel = new Label(competicionStr+" / "+categoriaStr+" / "+ronda);
         competicionLabel.setStyleName(ValoTheme.LABEL_LARGE);
         competicionLabel.addStyleName(ValoTheme.LABEL_COLORED);
@@ -268,8 +341,10 @@ public class SpeedTimeTrial extends CssLayout {
         	topLayout.addComponent(selectRonda);
         topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
-        if(ronda==RondaEnum.RESULTADOS)
+        if(ronda==RondaEnum.RESULTADOS){
         	topLayout.addComponent(printButton);
+        	topLayout.addComponent(upload);
+        }
         else
         	topLayout.addComponent(exportButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
