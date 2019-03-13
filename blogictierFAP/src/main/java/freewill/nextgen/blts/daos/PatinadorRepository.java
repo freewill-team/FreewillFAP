@@ -24,7 +24,7 @@ public interface PatinadorRepository extends CrudRepository<PatinadorEntity, Lon
 	List<PatinadorEntity> findByCompanyOrderByNombreAsc(Long company);
 	List<PatinadorEntity> findByCompanyAndClubOrderByNombreAsc(
 			Long company, Long club);
-	List<PatinadorEntity> findByCompanyAndClubAnActiveOrderByNombreAsc(
+	List<PatinadorEntity> findByCompanyAndClubAndActiveOrderByNombreAsc(
 			Long company, Long club, boolean active);
 	
 }
