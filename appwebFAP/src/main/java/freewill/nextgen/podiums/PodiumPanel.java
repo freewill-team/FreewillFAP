@@ -42,6 +42,8 @@ public class PodiumPanel extends VerticalLayout {
     		Button label = new Button(patin);
 	        label.setStyleName(ValoTheme.BUTTON_TINY);
 	        label.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+	        if(!name.toUpperCase().contains("JAM "))
+	        	label.addStyleName("truncate");
     		label.setWidth("100%");
     		//label.setSizeUndefined();
     		label.setEnabled(false);

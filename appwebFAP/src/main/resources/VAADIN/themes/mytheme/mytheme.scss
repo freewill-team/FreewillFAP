@@ -79,6 +79,13 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
   	background: #F1F1F1;
   	color: $v-focus-color;
   }
+  
+  // Truncate texts
+  .truncate {
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  }
 
   // login screen - for small screens, see below
   .login-screen {

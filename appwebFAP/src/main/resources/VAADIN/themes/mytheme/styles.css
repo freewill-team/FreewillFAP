@@ -13210,6 +13210,12 @@ div.v-layout.v-horizontal.v-widget {
 	color: #22b14c;
 }
 
+.mytheme .truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .mytheme .login-screen {
 	background: #F9F9F9;
 	background-image: url(img/archetype-login-bg.jpg);
