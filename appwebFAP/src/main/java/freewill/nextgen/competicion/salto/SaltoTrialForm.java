@@ -149,6 +149,7 @@ public class SaltoTrialForm extends SaltoTrialFormDesign {
         dorsal.setEnabled(false);
     	nombre.setEnabled(false);
     	apellidos.setEnabled(false);
+    	altura.setEnabled(false);
         save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
     	

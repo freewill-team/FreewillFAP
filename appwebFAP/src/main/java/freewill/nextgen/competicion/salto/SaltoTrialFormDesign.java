@@ -27,6 +27,7 @@ public class SaltoTrialFormDesign extends CssLayout {
 	protected TextField dorsal;
 	protected TextField nombre;
 	protected TextField apellidos;
+	protected TextField altura;
 	
     protected Button save;
     protected Button cancel;

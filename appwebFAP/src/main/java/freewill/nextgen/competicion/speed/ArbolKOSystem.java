@@ -118,6 +118,7 @@ public class ArbolKOSystem extends Panel {
 			button.addStyleName(ValoTheme.BUTTON_LARGE);
 			button.setIcon(FontAwesome.FORWARD);
 			button.addClickListener(action);
+			button.setEnabled(false);
 			
 			HorizontalLayout celda = new HorizontalLayout();
 			//celda.setStyleName(ValoTheme.LAYOUT_CARD); // temporal
@@ -145,6 +146,7 @@ public class ArbolKOSystem extends Panel {
         		if(rec.getGanador()!=null && rec.getPatinador1()!=null &&
         				rec.getGanador().longValue()==rec.getPatinador1().longValue()){
         			label1.setStyleName(ValoTheme.LABEL_SUCCESS);
+        			label2.setStyleName(ValoTheme.LABEL_FAILURE);
         		}
         	}
         	if(label2!=null){
@@ -152,11 +154,13 @@ public class ArbolKOSystem extends Panel {
         		if(rec.getGanador()!=null && rec.getPatinador2()!=null &&
         				rec.getGanador().longValue()==rec.getPatinador2().longValue()){
         			label2.setStyleName(ValoTheme.LABEL_SUCCESS);
+        			label1.setStyleName(ValoTheme.LABEL_FAILURE);
         		}
         	}
         	if(button!=null){
         		button.setId(""+rec.getId());
-        		button.setEnabled(true);
+        		if(!label1.getValue().contains("null") && !label2.getValue().contains("null"))
+        			button.setEnabled(true);
         	}
         }
     }
