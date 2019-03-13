@@ -22,6 +22,9 @@ public interface PatinadorRepository extends CrudRepository<PatinadorEntity, Lon
 	Long getMaxId();
 	long countByCompanyAndActive(Long company, boolean active);
 	List<PatinadorEntity> findByCompanyOrderByNombreAsc(Long company);
-	List<PatinadorEntity> findByCompanyAndClubOrderByNombreAsc(Long company, Long club);
+	List<PatinadorEntity> findByCompanyAndClubOrderByNombreAsc(
+			Long company, Long club);
+	List<PatinadorEntity> findByCompanyAndClubAnActiveOrderByNombreAsc(
+			Long company, Long club, boolean active);
 	
 }

@@ -226,7 +226,7 @@ public class PatinadorManager {
 			throw new IllegalArgumentException("Sólo el Coordinador de Club puede registrar Pre-Inscripciones.");
 		
 		List<PatinadorEntity> recs = 
-				repository.findByCompanyAndClubOrderByNombreAsc(user.getCompany(), club.getId());
+				repository.findByCompanyAndClubAnActiveOrderByNombreAsc(user.getCompany(), club.getId(), true);
 		for(PatinadorEntity rec:recs){
 			enrichPatinadorData(rec, competicion);
 		}
