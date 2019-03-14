@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import freewill.nextgen.appwebFAP.EntryPoint;
+import freewill.nextgen.data.CompanyEntity;
 import freewill.nextgen.hmi.utils.ApoiXlsExport;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -46,8 +48,11 @@ public class Export2XlsMultiple {
     		// Create first a temporal file
     		File tempFile = File.createTempFile(file.replace("/", "-")+" ", ".xlsx");
     		
+    		// Gets Company Template
+    		CompanyEntity cpy = EntryPoint.get().getAccessControl().getCompany();
+    		
     		// Creates the Excel Document and first sheet
-    		ApoiXlsExport doc = new ApoiXlsExport(tempFile, null);
+    		ApoiXlsExport doc = new ApoiXlsExport(tempFile, cpy.getXlsxtemplate());
     		
     		int i = 0;
     		for(List<T> collection:collections){

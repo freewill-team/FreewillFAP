@@ -40,6 +40,10 @@ public class CompanyFormDesign extends CssLayout {
     protected HorizontalLayout imageLayout;
     protected VerticalLayout imageLayout2;
     
+    protected Button Styles;
+    protected Button Docx;
+    protected Button Xlsx;
+    
     protected Button save;
     protected Button cancel;
     protected Button delete;

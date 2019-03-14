@@ -1,6 +1,7 @@
 package freewill.nextgen.company;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.vaadin.server.Page;
 
@@ -10,6 +11,7 @@ import freewill.nextgen.common.entities.UserEntity;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CompanyEntity;
 import freewill.nextgen.data.CrudLogicInterface;
+import freewill.nextgen.data.Style;
 
 /**
  * This class provides an interface for the logical operations between the CRUD
@@ -188,6 +190,24 @@ public class CompanyCrudLogic implements CrudLogicInterface /*Serializable*/ {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public void saveStyles(List<Style> styleList) {
+		// update or save new styles
+		if(styleList==null) return;
+		try {
+			BltClient.get().executeCommand(
+				"/deleteall", Style.class,
+				EntryPoint.get().getAccessControl().getTokenKey());
+			    for(Style rec:styleList){
+			    	BltClient.get().createEntity(rec, Style.class,
+			    	EntryPoint.get().getAccessControl().getTokenKey());
+			    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			if(view!=null)
+				view.showError("Error: "+e.getMessage());
+		}
 	}
 	
 }

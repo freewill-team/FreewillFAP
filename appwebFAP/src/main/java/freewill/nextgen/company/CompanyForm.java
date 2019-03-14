@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Locale;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -14,6 +15,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -26,7 +28,9 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.company.CompanyForm.TemplateEnum;
 import freewill.nextgen.data.CompanyEntity;
+import freewill.nextgen.data.Style;
 import freewill.nextgen.data.CompanyEntity.PlanEnum;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
@@ -43,6 +47,16 @@ public class CompanyForm extends CompanyFormDesign {
 	
     private CompanyCrudLogic viewLogic;
     private BeanFieldGroup<CompanyEntity> fieldGroup;
+    private List<Style> styleList = null;
+    
+    public enum TemplateEnum{ 
+		XLS("XLSX"),
+		DOC("DOCX"),
+		STYLES(".DOCX");
+		private final String type;
+		TemplateEnum(String t){ type = t; }
+		public String toString(){ return type; } 
+	}
 
     @SuppressWarnings("rawtypes")
     public CompanyForm(CompanyCrudLogic sampleCrudLogic) {
@@ -68,6 +82,13 @@ public class CompanyForm extends CompanyFormDesign {
         Del.addStyleName(ValoTheme.BUTTON_SMALL);
         imageLayout.setExpandRatio(imageLayout2, 1L);
         imageLayout.setExpandRatio(image, 2L);
+        
+        Styles.setIcon(FontAwesome.PAGELINES);
+        Styles.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+        Docx.setIcon(FontAwesome.FILE_WORD_O);
+        Docx.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+        Xlsx.setIcon(FontAwesome.FILE_EXCEL_O);
+        Xlsx.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
         
         fieldGroup = new BeanFieldGroup<CompanyEntity>(CompanyEntity.class);
         fieldGroup.bindMemberFields(this);
@@ -99,6 +120,7 @@ public class CompanyForm extends CompanyFormDesign {
             	CompanyEntity rec = fieldGroup.getItemDataSource().getBean();
             	if(viewLogic!=null){
             		viewLogic.saveRecord(rec);
+            		viewLogic.saveStyles(styleList);
             	}
             	removeStyleName("visible");
             }
@@ -162,6 +184,27 @@ public class CompanyForm extends CompanyFormDesign {
             	rec.setImage(new byte[0]);
             	image.setSource(null);
             	fieldGroup.setItemDataSource(new BeanItem<CompanyEntity>(rec));
+            }
+        });
+        
+        Styles.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	getUI().addWindow(new CompanyLoadTemplate(CompanyForm.this, TemplateEnum.STYLES));
+            }
+        });
+        
+        Docx.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	getUI().addWindow(new CompanyLoadTemplate(CompanyForm.this, TemplateEnum.DOC));
+            }
+        });
+        
+        Xlsx.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	getUI().addWindow(new CompanyLoadTemplate(CompanyForm.this, TemplateEnum.XLS));
             }
         });
         
@@ -234,6 +277,11 @@ public class CompanyForm extends CompanyFormDesign {
         save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
         Add.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
         Del.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        
+        Styles.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        Docx.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        Xlsx.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        
         delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.SUPER));
         save.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
     }
@@ -258,5 +306,30 @@ public class CompanyForm extends CompanyFormDesign {
             n.show(getUI().getPage());
 		}
 	}
-		
+	
+	public void addTemplate(File tempFile, TemplateEnum type, List<Style> styleList) {
+		try {
+    		byte[] array = Files.readAllBytes(tempFile.toPath());
+        	// then saves image into Company
+    		CompanyEntity rec = fieldGroup.getItemDataSource().getBean();
+    		if( type==TemplateEnum.STYLES ){
+    			this.styleList = styleList;
+    		}
+    		else if( type==TemplateEnum.DOC ){
+    			rec.setDocxtemplate(array);
+    		}
+    		else{
+    			rec.setXlsxtemplate(array);
+    		}
+        	fieldGroup.setItemDataSource(new BeanItem<CompanyEntity>(rec));
+        	// tempFile.delete();
+    	} catch (IOException e) {
+			e.printStackTrace();
+			Notification n = new Notification(
+                    "Error uploading template file", Type.ERROR_MESSAGE);
+            n.setDelayMsec(500);
+            n.show(getUI().getPage());
+		}
+	}
+	
 }

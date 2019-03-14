@@ -182,7 +182,7 @@ public class InformesView extends Panel implements View {
 	
 	public HorizontalLayout createTopBar() {
         
-        Label title = new Label(this.VIEW_NAME+" de Gestión");
+        Label title = new Label(this.VIEW_NAME+"");
         title.setStyleName(ValoTheme.LABEL_HUGE);
         title.addStyleName(ValoTheme.LABEL_COLORED);
         title.addStyleName(ValoTheme.LABEL_BOLD);
