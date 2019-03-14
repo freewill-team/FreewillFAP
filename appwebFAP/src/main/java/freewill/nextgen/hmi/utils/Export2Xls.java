@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import freewill.nextgen.appwebFAP.EntryPoint;
+import freewill.nextgen.data.CompanyEntity;
+
 /*
  * This Export2Xls class enables export of lists to Excel format.
  * As it follows the singleton model, it will be used for all the web sessions.
@@ -43,8 +46,11 @@ public class Export2Xls {
     		// Create first a temporal file
     		File tempFile = File.createTempFile(title.replace("/", "-")+" ", ".xlsx");
     		
+    		// Gets Company Template
+    		CompanyEntity cpy = EntryPoint.get().getAccessControl().getCompany();
+    		
     		// Creates the Excel Document and first sheet
-    		ApoiXlsExport doc = new ApoiXlsExport(tempFile, null);
+    		ApoiXlsExport doc = new ApoiXlsExport(tempFile, cpy.getXlsxtemplate());
     		doc.setHeader(title); //entity.getSimpleName());
     		int fila = 0;
     		
