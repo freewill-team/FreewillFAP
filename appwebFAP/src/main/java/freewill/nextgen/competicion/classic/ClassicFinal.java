@@ -18,7 +18,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
@@ -67,7 +66,7 @@ public class ClassicFinal extends CssLayout {
         		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",
         		"tecnicaJuez3", "artisticaJuez3", "totalJuez3", "rankingJuez3");
 		
-		grid.setFrozenColumnCount(3);
+		//grid.setFrozenColumnCount(3);
 		grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
