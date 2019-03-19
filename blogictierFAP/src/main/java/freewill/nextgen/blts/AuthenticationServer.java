@@ -25,7 +25,7 @@ class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("foo").secret("foo")
 			.authorizedGrantTypes("authorization_code", "refresh_token", "password").scopes("openid");
-			//.accessTokenValiditySeconds(120) //Access token is only valid for 2 minutes.
+			//.accessTokenValiditySeconds(420) //Access token is only valid for 7 minutes.
 			//.refreshTokenValiditySeconds(600); //Refresh token is only valid for 10 minutes.
 		// This check is required and previous to verifications in CustomAuthenticationProvider 
 	}

@@ -188,6 +188,7 @@ public class SpeedKOSystemForm extends SpeedKOSystemFormDesign {
         	//SpeedKOSystemEntity rec = item.getBean();
         	//CheckGanador();
         }
+        ganador.setEnabled(false);
         patina1.setEnabled(false);
         patina2.setEnabled(false);
         save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));

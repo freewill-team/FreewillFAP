@@ -152,7 +152,7 @@ public class EntryPoint extends UI {
     	setContent(new MainScreen(EntryPoint.this));
         
         // Set Session timeout
-        VaadinSession.getCurrent().getSession().setMaxInactiveInterval(360); // 6 minutes
+        VaadinSession.getCurrent().getSession().setMaxInactiveInterval(300); // 5 minutes
         
         // Start the user heartbeat thread
         heartbeat = new FeederThread(

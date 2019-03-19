@@ -29,6 +29,7 @@ public class AppwebFAP {
     	// It reads properties
     	MainCycle = service.readConfigPropInt("MainCycle", 5000);
     	int tomcatPort = service.readConfigPropInt("TomcatPort", 8895);
+    	int dohearbeat = service.readConfigPropInt("DoHearbeat", 1);
     	
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(tomcatPort);
@@ -50,7 +51,7 @@ public class AppwebFAP {
     		{
     			// Refresh status in processMonitor
     			// disabled during testing 
-    			// TODO during debug service.checkin();
+    			if(dohearbeat>0) service.checkin();
     			
     			// Actually it does nothing, as all the work is done by Tomcat
     			// Wait until next cycle
