@@ -201,6 +201,21 @@ public class SaltoCrudLogic implements Serializable {
 		return 0;
 	}
 	
+	public boolean deleteDatosRonda(Long competicion, Long categoria, int ronda) {
+		try{
+			return BltClient.get().executeCommand(
+		    		"/deleteRondaByCompeticionAndCategoria/"+competicion+"/"+categoria+"/"+ronda,
+		    		new SaltoEntity(), SaltoEntity.class, 
+		    		EntryPoint.get().getAccessControl().getTokenKey());
+		}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
+		}
+		return false;
+	}
+	
 	public boolean createNewAltura(Long competicion, Long categoria, int ronda, int altura) {
 		// Create nuevos SaltoIntentoEntity para newAltura 
 		try{

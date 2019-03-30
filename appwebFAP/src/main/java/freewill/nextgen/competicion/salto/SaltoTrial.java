@@ -111,10 +111,36 @@ public class SaltoTrial extends CssLayout {
 	
 	public HorizontalLayout createTopBar() {
 		
+		Button deleteRonda = new Button("");
+		deleteRonda.addStyleName(ValoTheme.BUTTON_DANGER);
+		deleteRonda.setIcon(FontAwesome.REMOVE);
+		deleteRonda.setDescription("Elimina datos de esta ronda");
+		deleteRonda.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	if(ronda==0) return;
+            	ConfirmDialog cd = new ConfirmDialog("Realmente desea eliminar los datos de esta Ronda?");
+            	cd.setOKAction(new ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+            			cd.close();
+            			if(viewLogic!=null){
+            				viewLogic.deleteDatosRonda(competicion, categoria, ronda);
+            				parent.showSaveNotification("Ronda borrada.");
+            				parent.gotoSaltoTrial(ronda-1);
+            			}
+                    }
+                });
+            	getUI().addWindow(cd);
+            }
+        });
+		
 		newAltura = new TextField();
 		newAltura.setValue(""+alturaNextRonda);
-		if(alturaNextRonda!=0)
+		if(alturaNextRonda!=0){
 			newAltura.setEnabled(false);
+			deleteRonda.setEnabled(false);
+		}
 		
 		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -207,9 +233,11 @@ public class SaltoTrial extends CssLayout {
         topLayout.setSpacing(true);
         //topLayout.setMargin(true);
         topLayout.setWidth("100%");
-        if(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        if(ronda==0 && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
+        if(ronda>0 && !EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        	topLayout.addComponent(deleteRonda);
         topLayout.addComponent(newAltura);
         topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);

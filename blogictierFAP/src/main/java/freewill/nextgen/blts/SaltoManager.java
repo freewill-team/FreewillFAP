@@ -213,7 +213,6 @@ public class SaltoManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<SaltoEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -282,7 +281,6 @@ public class SaltoManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<SaltoEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<SaltoEntity> recs = new ArrayList<SaltoEntity>();
@@ -529,6 +527,24 @@ public class SaltoManager {
 			repository.delete(rec);
 		}
 		// Nótese que SaltosIntentosEntity se borrarán al mismo tiempo 
+		return true;
+	}
+	
+	@RequestMapping("/deleteRondaByCompeticionAndCategoria/{competicion}/{categoria}/{ronda}")
+	public boolean deleteRondaByCompeticionAndCategoria(@PathVariable Long competicion,
+			@PathVariable Long categoria, @PathVariable int ronda) throws Exception {
+		System.out.println("deleteRonda By competicion, categoria y ronda..."
+			+competicion+","+categoria+","+ronda);
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		List<SaltoEntity> recs = repository.findByCompeticionAndCategoriaOrderByOrdenAsc(
+				competicion, categoria);
+		for(SaltoEntity rec:recs){
+			SaltoIntentoEntity salto = saltosrepo.findByRondaAndSaltoPatinadorId(ronda, rec.getId());
+			if(salto!=null){
+				saltosrepo.delete(salto);
+			}
+		}
 		return true;
 	}
 	
