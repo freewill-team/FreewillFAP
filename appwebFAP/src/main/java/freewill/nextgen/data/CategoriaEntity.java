@@ -22,6 +22,7 @@ public class CategoriaEntity implements Serializable, Cloneable {
 	
 	public enum AccionEnum{
 		NADA(""),
+		DEFAULT("Valores por defecto"),
 		DIVIDIR("Dividir en Masc/Fem"),
 		UNIR("Crear Categoría Mixta"),
 		BAJAR("Unir a Categoría Inferior"),

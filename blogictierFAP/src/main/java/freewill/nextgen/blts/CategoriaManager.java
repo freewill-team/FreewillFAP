@@ -1,6 +1,7 @@
 package freewill.nextgen.blts;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,17 +170,20 @@ public class CategoriaManager {
 			List<CategoriaEntity> recs = 
 					repository.findByModalidadAndCompany(origen.getModalidad(), user.getCompany());
 			switch(accion){
+			case DEFAULT:
+				defaultCategoria(competicion, origen, recs);
+				break;
 			case DIVIDIR:
-				dividirCategoria(origen, recs);
+				dividirCategoria(competicion, origen, recs);
 				break;
 			case UNIR:
-				unirCategorias(origen, recs);
+				unirCategorias(competicion, origen, recs);
 				break;
 			case BAJAR:
-				bajarCategoria(origen, recs);
+				bajarCategoria(competicion, origen, recs);
 				break;
 			case SUBIR:
-				subirCategoria(origen, recs);
+				subirCategoria(competicion, origen, recs);
 				break;
 			case NADA:
 				break;
@@ -189,7 +193,8 @@ public class CategoriaManager {
 		return false;	
 	}
 
-	private void subirCategoria(CategoriaEntity origen, List<CategoriaEntity> recs) {
+	private void subirCategoria(Long competicion, CategoriaEntity origen, 
+			List<CategoriaEntity> recs) {
 		System.out.println("Origen  = "+origen);
 		CategoriaEntity destino = null;
 		for(CategoriaEntity cat:recs){
@@ -200,10 +205,17 @@ public class CategoriaManager {
 		if(destino==null)
 			throw new IllegalArgumentException("No existe una Categoría de destino para ejecutar esta acción.");
 		System.out.println("Destino = "+destino);
-	
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, origen.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			rec.setCategoria(destino.getId());
+			inscripcionesrepo.save(rec);
+		}
+		System.out.println("Done");
 	}
 
-	private void bajarCategoria(CategoriaEntity origen, List<CategoriaEntity> recs) {
+	private void bajarCategoria(Long competicion, CategoriaEntity origen, 
+			List<CategoriaEntity> recs) {
 		System.out.println("Origen  = "+origen);
 		CategoriaEntity destino = null;
 		for(CategoriaEntity cat:recs){
@@ -214,10 +226,17 @@ public class CategoriaManager {
 		if(destino==null)
 			throw new IllegalArgumentException("No existe una Categoría de destino para ejecutar esta acción.");
 		System.out.println("Destino = "+destino);
-	
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, origen.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			rec.setCategoria(destino.getId());
+			inscripcionesrepo.save(rec);
+		}
+		System.out.println("Done");
 	}
 
-	private void unirCategorias(CategoriaEntity origen, List<CategoriaEntity> recs) {
+	private void unirCategorias(Long competicion, CategoriaEntity origen, 
+			List<CategoriaEntity> recs) {
 		System.out.println("Origen  = "+origen);
 		if(origen.getGenero()==GenderEnum.MIXTO)
 			throw new IllegalArgumentException("No se puede unir una categoría mixta.");
@@ -225,9 +244,9 @@ public class CategoriaManager {
 		for(CategoriaEntity cat:recs){
 			if(cat.getEdadMinima()==origen.getEdadMinima() &&
 			   cat.getEdadMaxima()==origen.getEdadMaxima()){
-				if(cat.getGenero() == GenderEnum.MIXTO)
+				if(cat.getGenero()==GenderEnum.MIXTO)
 					destino = cat;
-				else if(cat.getGenero() == GenderEnum.FEMALE)
+				else if(cat.getGenero()==GenderEnum.FEMALE)
 					ofem = cat;
 				else
 					omasc = cat;
@@ -236,11 +255,22 @@ public class CategoriaManager {
 		if(ofem == null || omasc == null || destino == null)
 			throw new IllegalArgumentException("No existe una Categoría de destino para ejecutar esta acción.");
 		System.out.println("Destino = "+destino);
-	
-	
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, omasc.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			rec.setCategoria(destino.getId());
+			inscripcionesrepo.save(rec);
+		}
+		inscripciones = inscripcionesrepo.findByCompeticionAndCategoria(competicion, ofem.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			rec.setCategoria(destino.getId());
+			inscripcionesrepo.save(rec);
+		}
+		System.out.println("Done");
 	}
 
-	private void dividirCategoria(CategoriaEntity origen, List<CategoriaEntity> recs) {
+	private void dividirCategoria(Long competicion, CategoriaEntity origen, 
+			List<CategoriaEntity> recs) {
 		System.out.println("Origen  = "+origen);
 		if(origen.getGenero()!=GenderEnum.MIXTO)
 			throw new IllegalArgumentException("Sólo se puede dividir una categoría mixta.");
@@ -258,7 +288,43 @@ public class CategoriaManager {
 			throw new IllegalArgumentException("No existe una Categoría de destino para ejecutar esta acción.");
 		System.out.println("Destino Masc = "+dmasc);
 		System.out.println("Destino Fem  = "+dfem);
-		
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, origen.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			PatinadorEntity patin = patinrepo.findById(rec.getPatinador());
+			if(patin!=null){
+				if(patin.getGenero()==GenderEnum.FEMALE)
+					rec.setCategoria(dfem.getId());
+				else 
+					rec.setCategoria(dmasc.getId());
+				inscripcionesrepo.save(rec);
+			}
+		}
+		System.out.println("Done");
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void defaultCategoria(Long competicion, CategoriaEntity origen,
+			List<CategoriaEntity> recs) {
+		System.out.println("Origen  = "+origen);
+		List<ParticipanteEntity> inscripciones = 
+				inscripcionesrepo.findByCompeticionAndCategoria(competicion, origen.getId());
+		for(ParticipanteEntity rec:inscripciones){
+			PatinadorEntity patin = patinrepo.findById(rec.getPatinador());
+			if(patin!=null){
+				// A partir de la edad del niño inferirá su posible categoria
+		    	Date now = new Date();
+		    	int edad = now.getYear() - patin.getFechaNacimiento().getYear();
+		    	for(CategoriaEntity cat:recs){
+		    		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() 
+		    			&& patin.getGenero()==cat.getGenero() ){
+		    			rec.setCategoria(cat.getId());
+		    			inscripcionesrepo.save(rec);
+		    		}
+		    	}
+	    	}
+		}
+		System.out.println("Done");
 	}
 	
 }

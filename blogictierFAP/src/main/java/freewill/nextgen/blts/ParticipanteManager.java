@@ -331,7 +331,8 @@ public class ParticipanteManager {
 			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
 			if(competi!=null){
 				if(rec.getClasificacion()==0 || rec.getClasificacion()==999
-						|| competi.getFechaInicio().after(now))
+						|| competi.getFechaInicio().after(now)
+						|| rec.getMejorMarca()==0)
 					continue;
 				rec.setCompeticionStr(competi.getNombre());
 				rec.setFecha(competi.getFechaInicio());

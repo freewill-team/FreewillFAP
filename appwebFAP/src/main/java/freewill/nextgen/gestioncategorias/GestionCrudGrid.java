@@ -74,13 +74,23 @@ public class GestionCrudGrid extends CssLayout {
         // Menu contextual con acciones disponibles
         menu = new ContextMenu(grid, true);
         for(AccionEnum accion:AccionEnum.values()){
+        	if(accion==AccionEnum.NADA) continue;
         	final MenuItem basic = menu.addItem(accion.toString(), e -> {
         		if(edicionAbierta)
         			viewLogic.executeAction(getSelectedRow(), accion, competicion);
         		else
-        			showError("Ya estamos fuera del período de edicion.");
+        			showError("Estamos fuera del período de edicion.");
             });
-            basic.setIcon(FontAwesome.PARAGRAPH);
+        	if(accion==AccionEnum.DIVIDIR)
+        		basic.setIcon(FontAwesome.CUT);
+        	if(accion==AccionEnum.UNIR)
+        		basic.setIcon(FontAwesome.PLUS);
+        	if(accion==AccionEnum.SUBIR)
+        		basic.setIcon(FontAwesome.LEVEL_UP);
+        	if(accion==AccionEnum.BAJAR)
+        		basic.setIcon(FontAwesome.LEVEL_DOWN);
+        	if(accion==AccionEnum.DEFAULT)
+        		basic.setIcon(FontAwesome.SIMPLYBUILT);
         }
 
         barAndGridLayout = new VerticalLayout();
@@ -130,7 +140,7 @@ public class GestionCrudGrid extends CssLayout {
     				(List<CategoriaEntity>)grid.getContainerDataSource().getItemIds(),
     				CategoriaEntity.class,
     				competicionLabel.getValue().toUpperCase(),
-    				"modalidad", "nombre", "genero", "hombres", "mujeres", "total");
+    				"modalidad", "nombre", "genero", "hombres", "mujeres", "total", "accion");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
