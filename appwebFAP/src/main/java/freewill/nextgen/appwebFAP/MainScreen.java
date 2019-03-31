@@ -30,6 +30,7 @@ import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
 import freewill.nextgen.dorsal.DorsalCrudView;
 import freewill.nextgen.genericCrud.GenericCrudView;
+import freewill.nextgen.gestioncategorias.GestionCrudView;
 import freewill.nextgen.hmi.common.AboutView;
 import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
@@ -174,9 +175,13 @@ public class MainScreen extends HorizontalLayout {
         	// Section Pruebas - Jueces
         	menu.addTitle(Messages.get().getKey("pruebas"), FontAwesome.GAMEPAD);
         
-	        // Inscripciones
+	        // Dorsales
 		    DorsalCrudView dorsalesView = new DorsalCrudView();
 		    menu.addView(dorsalesView, dorsalesView.VIEW_NAME, FontAwesome.SIGN_IN);
+		    
+		    // Gestion Categorias
+		    GestionCrudView gestionView = new GestionCrudView();
+		    menu.addView(gestionView, gestionView.VIEW_NAME, FontAwesome.ADJUST);
 		    
 	        // Competicion Speed
 		    SpeedCrudView speedView = new SpeedCrudView();

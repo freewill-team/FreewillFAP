@@ -236,7 +236,7 @@ public class SaltoTrial extends CssLayout {
         if(ronda==0 && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        if(ronda>0 && !EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
+        if(ronda>0)
         	topLayout.addComponent(deleteRonda);
         topLayout.addComponent(newAltura);
         topLayout.addComponent(prevButton);

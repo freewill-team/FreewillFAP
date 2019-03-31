@@ -3,6 +3,7 @@ freewill\nextgen\blts\ParticipanteManager.class
 freewill\nextgen\blts\CompeticionManager$CalculateRankingAbsThread.class
 freewill\nextgen\blts\CustomWebSecurityConfigurerAdapter.class
 freewill\nextgen\blts\daos\JamShowRepository.class
+freewill\nextgen\blts\data\CategoriaEntity$AccionEnum.class
 freewill\nextgen\blts\BattleRondaManager.class
 freewill\nextgen\blts\RankingAbsManager.class
 freewill\nextgen\blts\data\JamShowEntity.class
@@ -96,6 +97,7 @@ freewill\nextgen\blts\daos\MailServerRepository.class
 freewill\nextgen\blts\BattleManager$1.class
 freewill\nextgen\blts\data\PatinadorEntity$GenderEnum.class
 freewill\nextgen\blts\data\CategoriaEntity$ModalidadEnum.class
+freewill\nextgen\blts\CategoriaManager$1.class
 freewill\nextgen\blts\daos\UserRepository.class
 freewill\nextgen\blts\daos\ConfigRepository.class
 freewill\nextgen\blts\daos\PatinadorRepository.class

@@ -24,5 +24,6 @@ public interface CategoriaRepository extends CrudRepository<CategoriaEntity, Lon
 	Long getMaxId();
 	List<CategoriaEntity> findByCompanyOrderByNombreAsc(Long company);
 	List<CategoriaEntity> findByModalidadAndCompanyAndActive(ModalidadEnum modalidad, Long company, boolean b);
+	List<CategoriaEntity> findByCompanyOrderByEdadMinimaAsc(Long company);
 	
 }

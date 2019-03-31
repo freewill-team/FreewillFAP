@@ -16,6 +16,20 @@ public class CategoriaEntity implements Serializable, Cloneable {
 	private int edadMinima;
 	private PatinadorEntity.GenderEnum genero;
 	private Boolean active;
+	private int hombres = 0;
+	private int mujeres = 0;
+	private AccionEnum accion = AccionEnum.NADA;
+	
+	public enum AccionEnum{
+		NADA(""),
+		DIVIDIR("Dividir en Masc/Fem"),
+		UNIR("Crear Categoría Mixta"),
+		BAJAR("Unir a Categoría Inferior"),
+		SUBIR("Unir a Categoría Superior");
+		private final String type;
+		AccionEnum(String t){ type = t; }
+		public String toString(){ return type; }
+	}
 	
 	public enum ModalidadEnum{
 		SPEED("Speed"),
@@ -143,6 +157,34 @@ public class CategoriaEntity implements Serializable, Cloneable {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	public int getHombres() {
+		return hombres;
+	}
+
+	public void setHombres(int hombres) {
+		this.hombres = hombres;
+	}
+
+	public int getMujeres() {
+		return mujeres;
+	}
+
+	public void setMujeres(int mujeres) {
+		this.mujeres = mujeres;
+	}
+
+	public AccionEnum getAccion() {
+		return accion;
+	}
+
+	public void setAccion(AccionEnum accion) {
+		this.accion = accion;
+	}
+	
+	public int getTotal() {
+		return hombres+mujeres;
 	}
 	
 }

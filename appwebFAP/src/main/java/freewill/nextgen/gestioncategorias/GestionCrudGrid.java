@@ -1,15 +1,18 @@
-package freewill.nextgen.preinscripcion;
+package freewill.nextgen.gestioncategorias;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
+import com.vaadin.addon.contextmenu.ContextMenu;
+import com.vaadin.addon.contextmenu.MenuItem;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -23,11 +26,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.data.CompeticionEntity;
-import freewill.nextgen.data.PatinadorEntity;
+import freewill.nextgen.data.CategoriaEntity;
+import freewill.nextgen.data.CategoriaEntity.AccionEnum;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
-import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
 /**
  * A view for performing create-read-update-delete operations on records.
@@ -37,42 +40,48 @@ import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
  */
 
 @SuppressWarnings("serial")
-public class PreinscripcionCrudGrid extends CssLayout {
+public class GestionCrudGrid extends CssLayout {
 
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
-    public final String VIEW_NAME = Messages.get().getKey("inscripciones");
-    private GenericGrid<PatinadorEntity> grid;
-    private PreinscripcionCrudLogic viewLogic = new PreinscripcionCrudLogic(this);
+    public final String VIEW_NAME = Messages.get().getKey("gestioncategorias");
+    private GenericGrid<CategoriaEntity> grid;
+    private GestionCrudLogic viewLogic = new GestionCrudLogic(this);
     private Long competicion = null;
     private CompeticionEntity competi = null;
     private Label competicionLabel = null;
     private VerticalLayout barAndGridLayout = null;
-    private PreinscripcionForm form;
-    private boolean preinscripcionAbierta = true;
-    private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
-    //private PreinscripcionCrudView parent = null;
+    private boolean edicionAbierta = true;
+    //private GestionCrudView parent = null;
+    private ContextMenu menu = null;
     
-    public PreinscripcionCrudGrid(InscripcionEnum tipo, Long competicion, 
-    		PreinscripcionCrudView parent) {
-    	this.tipoForm = tipo;
+    public GestionCrudGrid(Long competicion, GestionCrudView parent) {
     	this.competicion = competicion;
     	
         setSizeFull();
         addStyleName("crud-view");        
         HorizontalLayout topLayout = createTopBar();
         
-        grid = new GenericGrid<PatinadorEntity>(PatinadorEntity.class,
-            	"id", "nombre", "apellidos", "clubStr", 
-            	"speed", "salto", "derrapes", "classic", "battle", "jam" );	
+        grid = new GenericGrid<CategoriaEntity>(CategoriaEntity.class,
+            	"id", "modalidad", "nombre", "genero", "hombres", "mujeres", "total", "accion");	
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
-                viewLogic.rowSelected(grid.getSelectedRow(), competi, preinscripcionAbierta);
+                //viewLogic.rowSelected(grid.getSelectedRow(), competi, preinscripcionAbierta);
             }
         });
         
-        form = new PreinscripcionForm(viewLogic);
+        // Menu contextual con acciones disponibles
+        menu = new ContextMenu(grid, true);
+        for(AccionEnum accion:AccionEnum.values()){
+        	final MenuItem basic = menu.addItem(accion.toString(), e -> {
+        		if(edicionAbierta)
+        			viewLogic.executeAction(getSelectedRow(), accion, competicion);
+        		else
+        			showError("Ya estamos fuera del período de edicion.");
+            });
+            basic.setIcon(FontAwesome.PARAGRAPH);
+        }
 
         barAndGridLayout = new VerticalLayout();
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -85,17 +94,12 @@ public class PreinscripcionCrudGrid extends CssLayout {
         barAndGridLayout.setStyleName("crud-main-layout");
         
         addComponent(barAndGridLayout);
-        addComponent(form);
         
-        preinscripcionAbierta = true;
-       
+        edicionAbierta = true;
     	competi = viewLogic.getCompeticion(this.competicion);
     	if(competi!=null){
-    		if(tipoForm == InscripcionEnum.PREINSCRIPCION)
-    			competicionLabel.setValue("Pre-Inscripciones "+competi.getNombre());
-    	    else
-    	    	competicionLabel.setValue("Inscripciones "+competi.getNombre());
-    		viewLogic.init(competi, tipoForm);
+    		competicionLabel.setValue("Gestión Categorias "+competi.getNombre());
+    		viewLogic.init(competi);
     	}
     }
 
@@ -123,11 +127,10 @@ public class PreinscripcionCrudGrid extends CssLayout {
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
     		File file = Export2Xls.get().createXLS(
-    				(List<PatinadorEntity>)grid.getContainerDataSource().getItemIds(),
-    				PatinadorEntity.class,
+    				(List<CategoriaEntity>)grid.getContainerDataSource().getItemIds(),
+    				CategoriaEntity.class,
     				competicionLabel.getValue().toUpperCase(),
-    				"nombre", "apellidos", "clubStr", 
-    				"catSpeed", "catSalto", "catDerrapes", "catClassic", "catBattle", "catJam");
+    				"modalidad", "nombre", "genero", "hombres", "mujeres", "total");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
@@ -167,40 +170,30 @@ public class PreinscripcionCrudGrid extends CssLayout {
     	}
     }
 
-    public void selectRow(PatinadorEntity row) {
+    public void selectRow(CategoriaEntity row) {
         ((SelectionModel.Single) grid.getSelectionModel()).select(row);
     }
 
-    public PatinadorEntity getSelectedRow() {
+    public CategoriaEntity getSelectedRow() {
         return grid.getSelectedRow();
     }
 
-    public void editRecord(PatinadorEntity rec, CompeticionEntity competi, boolean preinscripcionAbierta) {    
-        if (rec != null) {
-            form.addStyleName("visible");
-            form.setEnabled(true);
-        } else {
-            form.removeStyleName("visible");
-            form.setEnabled(false);
-        }
-        form.editRecord(rec, competi, preinscripcionAbierta, tipoForm);
-    }
-
-    public void showRecords(Collection<PatinadorEntity> records) {
+    public void showRecords(Collection<CategoriaEntity> records) {
         grid.setRecords(records);
+        grid.sort("modalidad", SortDirection.ASCENDING);
     }
 
-    public void refreshRecord(PatinadorEntity rec) {
+    public void refreshRecord(CategoriaEntity rec) {
         grid.refresh(rec);
         grid.scrollTo(rec);
     }
-
-    public void removeRecord(PatinadorEntity rec) {
+    
+    public void removeRecord(CategoriaEntity rec) {
         grid.remove(rec);
     }
 
-	public void setPreinscripcionAbierta(boolean b) {
-		preinscripcionAbierta = b;
+	public void setEdicionAbierta(boolean b) {
+		edicionAbierta = b;
 	}
 	
 }
