@@ -134,7 +134,7 @@ public class ReportGestion extends Report {
     		
     		doc.AddTitle("Detalle Participantes por Modalidad", 3);
     		List<CategoriaEntity> categorias = viewLogic.getInscripciones(rec.getId());
-	    	String table2[][] = new String[categorias.size()+2][6];
+	    	String table2[][] = new String[categorias.size()+1][6];
 	    	table2[0][0]=Messages.get().getKey("modalidad");
 	    	table2[0][1]=Messages.get().getKey("nombre");
 	    	table2[0][2]=Messages.get().getKey("genero");

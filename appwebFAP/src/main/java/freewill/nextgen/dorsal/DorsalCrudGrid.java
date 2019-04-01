@@ -1,12 +1,16 @@
-package freewill.nextgen.preinscripcion;
+package freewill.nextgen.dorsal;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -20,13 +24,18 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
+import freewill.nextgen.circuito.SelectCircuito;
+import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
 /**
@@ -37,25 +46,21 @@ import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
  */
 
 @SuppressWarnings("serial")
-public class PreinscripcionCrudGrid extends CssLayout {
+public class DorsalCrudGrid extends CssLayout {
 
 	@SuppressWarnings("unused")
 	private static String ICC_PERMISSION = "ICC_ALARMS_PERMISSION";
-    public final String VIEW_NAME = Messages.get().getKey("inscripciones");
+    public final String VIEW_NAME = Messages.get().getKey("registro");
     private GenericGrid<PatinadorEntity> grid;
-    private PreinscripcionCrudLogic viewLogic = new PreinscripcionCrudLogic(this);
+    private DorsalCrudLogic viewLogic = new DorsalCrudLogic(this);
     private Long competicion = null;
     private CompeticionEntity competi = null;
     private Label competicionLabel = null;
     private VerticalLayout barAndGridLayout = null;
-    private PreinscripcionForm form;
-    private boolean preinscripcionAbierta = true;
-    private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
-    //private PreinscripcionCrudView parent = null;
+    private DorsalForm form;
+    private boolean checkinAbierto = true;
     
-    public PreinscripcionCrudGrid(InscripcionEnum tipo, Long competicion, 
-    		PreinscripcionCrudView parent) {
-    	this.tipoForm = tipo;
+    public DorsalCrudGrid(Long competicion, DorsalCrudView parent) {
     	this.competicion = competicion;
     	
         setSizeFull();
@@ -63,16 +68,16 @@ public class PreinscripcionCrudGrid extends CssLayout {
         HorizontalLayout topLayout = createTopBar();
         
         grid = new GenericGrid<PatinadorEntity>(PatinadorEntity.class,
-            	"id", "nombre", "apellidos", "clubStr", 
-            	"speed", "salto", "derrapes", "classic", "battle", "jam" );	
+            	"id", "dorsal", "nombre", "apellidos", "clubStr", 
+        		"speed", "salto", "derrapes", "classic", "battle", "jam" );	
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
-                viewLogic.rowSelected(grid.getSelectedRow(), competi, preinscripcionAbierta);
+                viewLogic.rowSelected(grid.getSelectedRow(), competicion, checkinAbierto);
             }
         });
         
-        form = new PreinscripcionForm(viewLogic);
+        form = new DorsalForm(viewLogic);
 
         barAndGridLayout = new VerticalLayout();
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -87,15 +92,10 @@ public class PreinscripcionCrudGrid extends CssLayout {
         addComponent(barAndGridLayout);
         addComponent(form);
         
-        preinscripcionAbierta = true;
-       
-    	competi = viewLogic.getCompeticion(this.competicion);
+        competi = viewLogic.getCompeticion(this.competicion);
     	if(competi!=null){
-    		if(tipoForm == InscripcionEnum.PREINSCRIPCION)
-    			competicionLabel.setValue("Pre-Inscripciones "+competi.getNombre());
-    	    else
-    	    	competicionLabel.setValue("Inscripciones "+competi.getNombre());
-    		viewLogic.init(competi, tipoForm);
+    		competicionLabel.setValue(VIEW_NAME+" "+competi.getNombre());
+    		viewLogic.init(competi);
     		grid.getColumn("speed").setHidden(!competi.getSpeed());
     		grid.getColumn("salto").setHidden(!competi.getSalto());
     		grid.getColumn("derrapes").setHidden(!competi.getDerrapes());
@@ -126,14 +126,15 @@ public class PreinscripcionCrudGrid extends CssLayout {
         competicionLabel.addStyleName(ValoTheme.LABEL_BOLD);
         
         Button printButton = new Button(Messages.get().getKey("acta"));
+		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		printButton.setIcon(FontAwesome.DOWNLOAD);
 		printButton.addClickListener(e -> {
     		File file = Export2Xls.get().createXLS(
     				(List<PatinadorEntity>)grid.getContainerDataSource().getItemIds(),
     				PatinadorEntity.class,
     				competicionLabel.getValue().toUpperCase(),
-    				"nombre", "apellidos", "clubStr", 
-    				"catSpeed", "catSalto", "catDerrapes", "catClassic", "catBattle", "catJam");
+    				"id", "dorsal", "nombre", "apellidos", "clubStr", 
+                	"speed", "classic", "battle", "jam", "derrapes", "salto");	
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);
@@ -157,7 +158,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
     }
 
     public void showError(String msg) {
-        Notification.show(msg, Type.ERROR_MESSAGE);
+        Notification.show(msg, Type.WARNING_MESSAGE); //ERROR_MESSAGE);
     }
 
     public void showSaveNotification(String msg) {
@@ -181,7 +182,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
         return grid.getSelectedRow();
     }
 
-    public void editRecord(PatinadorEntity rec, CompeticionEntity competi, boolean preinscripcionAbierta) {    
+    public void editRecord(PatinadorEntity rec, Long competicion, boolean checkinAbierto) {
         if (rec != null) {
             form.addStyleName("visible");
             form.setEnabled(true);
@@ -189,7 +190,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
             form.removeStyleName("visible");
             form.setEnabled(false);
         }
-        form.editRecord(rec, competi, preinscripcionAbierta, tipoForm);
+        form.editRecord(rec, competicion, checkinAbierto);
     }
 
     public void showRecords(Collection<PatinadorEntity> records) {
@@ -202,11 +203,11 @@ public class PreinscripcionCrudGrid extends CssLayout {
     }
 
     public void removeRecord(PatinadorEntity rec) {
-        grid.remove(rec);
+        // Not allowed here grid.remove(rec);
     }
-
-	public void setPreinscripcionAbierta(boolean b) {
-		preinscripcionAbierta = b;
+	
+	public void setCheckinAbierto(boolean b) {
+		checkinAbierto = b;
 	}
 	
 }

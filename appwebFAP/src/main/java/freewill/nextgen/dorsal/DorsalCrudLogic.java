@@ -28,30 +28,31 @@ import freewill.nextgen.data.PatinadorEntity;
 @SuppressWarnings("serial")
 public class DorsalCrudLogic implements Serializable {
 
-    private DorsalCrudView view;
+    private DorsalCrudGrid view;
     private Logger log = null;
 
-    public DorsalCrudLogic(DorsalCrudView simpleCrudView) {
+    public DorsalCrudLogic(DorsalCrudGrid simpleCrudView) {
         view = simpleCrudView;
         log = Logger.getLogger(view.getClass());
     }
 
-    public void init(Long competicion) {
+    public void init(CompeticionEntity competi /*Long competicion*/) {
     	try{
 	        editRecord(null, null, false);
 	        if(view!=null){
 	        	// Primero comprueba que el checkin está abierto
 	        	Date now = new Date();
-	        	CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
+	        	/*CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
 	        			""+competicion, CompeticionEntity.class,
-	        			EntryPoint.get().getAccessControl().getTokenKey());
+	        			EntryPoint.get().getAccessControl().getTokenKey());*/
+	        	
 	        	if(competi==null || competi.getFechaFinInscripcion().after(now)
 	        			|| competi.getFechaFin().before(now)){
 	        		view.showError("El Checkin está cerrado.");
 	        		view.setCheckinAbierto(false);
 	        	}
 	        	view.showRecords(//BltClient.get().getEntities(
-	        			BltClient.get().executeQuery("/getInscripciones/"+competicion+"/false",
+	        			BltClient.get().executeQuery("/getInscripciones/"+competi.getId()+"/false",
 	        			PatinadorEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey()));
 	        }
@@ -266,6 +267,19 @@ public class DorsalCrudLogic implements Serializable {
 	public List<PatinadorEntity> getPatinadores() {
 		try{
 	        return BltClient.get().getEntities(PatinadorEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+
+	public CompeticionEntity getCompeticion(Long recId) {
+		try{
+	        return (CompeticionEntity) BltClient.get().getEntityById(
+	        		""+recId, CompeticionEntity.class,
 	        		EntryPoint.get().getAccessControl().getTokenKey());
     	}
 		catch(Exception e){
