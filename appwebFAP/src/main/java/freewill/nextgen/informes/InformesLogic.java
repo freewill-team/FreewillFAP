@@ -223,4 +223,18 @@ public class InformesLogic implements Serializable {
 		return 0;
 	}
 	
+	public List<CategoriaEntity> getInscripciones(Long competicion) {
+    	try{
+    		// Devuelve todos las categorias con datos de inscripciones
+    		return BltClient.get().executeQuery("/getByCompeticion/"+competicion,
+		        	CategoriaEntity.class,
+		        	EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+    }
+	
 }

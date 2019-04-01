@@ -133,31 +133,27 @@ public class ReportGestion extends Report {
     		doc.AddParagraph("");
     		
     		doc.AddTitle("Detalle Participantes por Modalidad", 3);
-    		for(ModalidadEnum modalidad:ModalidadEnum.values()){
-    			long suma = 0;
-	    		List<CategoriaEntity> categorias = viewLogic.getCategorias(modalidad);
-	    		String table2[][] = new String[categorias.size()+2][3]; // TODO borrar lineas en blanco
-	    		table2[0][0]=Messages.get().getKey("modalidad");
-	    		table2[0][1]=Messages.get().getKey("categoria");
-	    		table2[0][2]=Messages.get().getKey("participantes");
-	    		int j=1;
-				// Process the List item
-				for(CategoriaEntity cat:categorias){
-					long count = viewLogic.getCountParticipantes(rec.getId(), cat.getId());
-					if(count>0){
-						table2[j][0]= ""+modalidad;
-			    		table2[j][1]= cat.getNombre();
-			    		table2[j][2]= ""+count;
-			    		suma+=count;
-			    		j++;
-					}
-				}
-				table2[j][0]= ""+modalidad;
-	    		table2[j][1]= "Total "+Messages.get().getKey("participantes");
-	    		table2[j][2]= ""+suma;
-	    		doc.AddTable(table2);
-	    		doc.AddParagraph("");
-    		}
+    		List<CategoriaEntity> categorias = viewLogic.getInscripciones(rec.getId());
+	    	String table2[][] = new String[categorias.size()+2][6];
+	    	table2[0][0]=Messages.get().getKey("modalidad");
+	    	table2[0][1]=Messages.get().getKey("nombre");
+	    	table2[0][2]=Messages.get().getKey("genero");
+	    	table2[0][3]=Messages.get().getKey("hombres");
+	    	table2[0][4]=Messages.get().getKey("mujeres");
+	    	table2[0][5]=Messages.get().getKey("total");
+			// Process the List item
+	    	int j=1;
+			for(CategoriaEntity cat:categorias){
+				table2[j][0]= ""+cat.getModalidad();
+			    table2[j][1]= cat.getNombre();
+			    table2[j][2]= ""+cat.getGenero();
+			    table2[j][3]= ""+cat.getHombres();
+			    table2[j][4]= ""+cat.getMujeres();
+			    table2[j][5]= ""+cat.getTotal();
+			    j++;
+			}
+			doc.AddTable(table2);
+	    	doc.AddParagraph("");
 		}
 		catch(Exception e){
 			e.printStackTrace();

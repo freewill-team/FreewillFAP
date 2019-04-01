@@ -53,6 +53,11 @@ public class GestionCrudLogic implements Serializable {
 	        		view.showError("La Inscripción aun está abierta.");
 		        	view.setEdicionAbierta(false);
 	        	}
+	        	else // Comprueba si la competicion ya ha terminadp
+		        if(competi.getFechaFin().before(now)){
+				    view.showError("La Competición ya ha terminado.");
+				    view.setEdicionAbierta(false);
+				}
 	        	else // Comprueba si la competicion ya ha empezado
 	        	if(competi.getFechaInicio().before(now)){
 			        view.showError("La Competición ya ha empezado.");
