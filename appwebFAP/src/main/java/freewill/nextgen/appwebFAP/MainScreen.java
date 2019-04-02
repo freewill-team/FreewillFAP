@@ -36,6 +36,7 @@ import freewill.nextgen.hmi.common.Menu;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.informes.InformesView;
+import freewill.nextgen.mejoresmarcas.MarcasCrudView;
 import freewill.nextgen.palmares.PalmaresCrudView;
 import freewill.nextgen.parejajam.ParejaJamForm;
 import freewill.nextgen.patinador.PatinadorForm;
@@ -227,6 +228,10 @@ public class MainScreen extends HorizontalLayout {
         	// Palmares
 		    PalmaresCrudView participantesCrud = new PalmaresCrudView();
 		    menu.addView(participantesCrud, participantesCrud.VIEW_NAME, FontAwesome.TROPHY);
+		    
+		    // Mejores Marcas
+		    MarcasCrudView marcasCrud = new MarcasCrudView();
+		    menu.addView(marcasCrud, marcasCrud.VIEW_NAME, FontAwesome.WRENCH);
 		    
 		    // Ranking Absoluto
         	RankingAbsCrudView rankingabsView = new RankingAbsCrudView();

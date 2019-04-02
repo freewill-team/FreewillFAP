@@ -317,7 +317,7 @@ public class ParticipanteManager {
 	@RequestMapping("/getMejoresMarcas/{categoria}/{sortby}")
 	public List<ParticipanteEntity> getMejoresMarcas(@PathVariable String sortby,
 			@PathVariable Long categoria) throws Exception {
-		System.out.println("Getting Mejores Marcas By categoria..."+categoria+sortby);
+		System.out.println("Getting Mejores Marcas By categoria..."+categoria+" "+sortby);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
 		List<ParticipanteEntity> recs = null;
