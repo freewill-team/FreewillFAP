@@ -19,7 +19,7 @@ import freewill.nextgen.common.entities.KpiValue;
 @SuppressWarnings("serial")
 public class BarChartJs extends VerticalLayout {
 	
-	// Chart variables
+	// Chart variables...
 	private String title = "";
 	private BarChartConfig config = null;
 	private int numTrends = 0;
