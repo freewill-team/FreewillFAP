@@ -37,5 +37,7 @@ public interface ParticipanteRepository extends CrudRepository<ParticipanteEntit
 	List<ParticipanteEntity> findByPatinadorPareja(Long patinador);
 	List<ParticipanteEntity> findTop10ByCategoriaOrderByMejorMarcaDesc(Long categoria);
 	List<ParticipanteEntity> findTop10ByCategoriaOrderByMejorMarcaAsc(Long categoria);
+	List<ParticipanteEntity> findTop10ByCategoriaAndMejorMarcaGreaterThanOrderByMejorMarcaAsc(Long categoria, int lim);
+	List<ParticipanteEntity> findTop10ByCategoriaAndMejorMarcaGreaterThanOrderByMejorMarcaDesc(Long categoria, int lim);
 	
 }

@@ -318,16 +318,20 @@ public class ParticipanteManager {
 	public List<ParticipanteEntity> getMejoresMarcas(@PathVariable String sortby,
 			@PathVariable Long categoria) throws Exception {
 		System.out.println("Getting Mejores Marcas By categoria..."+categoria+" "+sortby);
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		CategoriaEntity catego = categoriarepo.findById(categoria);
+		if(catego==null)
+			throw new IllegalArgumentException("Error: La categoria indicada no existe");
 		List<ParticipanteEntity> recs = null;
 		if(sortby.toUpperCase().contains("ASC"))
-			recs = repository.findTop10ByCategoriaOrderByMejorMarcaAsc(categoria);
+			recs = repository.findTop10ByCategoriaAndMejorMarcaGreaterThanOrderByMejorMarcaAsc(categoria, 0);
 		else
-			recs = repository.findTop10ByCategoriaOrderByMejorMarcaDesc(categoria);
+			recs = repository.findTop10ByCategoriaAndMejorMarcaGreaterThanOrderByMejorMarcaDesc(categoria, 0);
 		List<ParticipanteEntity> output = new ArrayList<ParticipanteEntity>();
 		Date now = new Date();
 		for(ParticipanteEntity rec:recs){
+			//System.out.println("Rec="+rec.getNombre()+" "+rec.getMejorMarca());
 			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
 			if(competi!=null){
 				if(rec.getClasificacion()==0 || rec.getClasificacion()==999
@@ -336,11 +340,19 @@ public class ParticipanteManager {
 					continue;
 				rec.setCompeticionStr(competi.getNombre());
 				rec.setFecha(competi.getFechaInicio());
-				CategoriaEntity catego = categoriarepo.findById(rec.getCategoria());
-				if(catego!=null){
-					rec.setCategoriaStr(catego.getNombre());
-					output.add(rec);
+				PatinadorEntity patin = patinrepo.findById(rec.getPatinador());
+				if(patin!=null){
+					CategoriaEntity defaultcat = categoriarepo.getDefaultCategoria(
+						patin.getFechaNacimiento(), patin.getGenero(),
+						catego.getModalidad(), user.getCompany());
+					if(defaultcat!=null){
+						rec.setCategoriaStr(defaultcat.getNombre());
+						rec.setCategoria(defaultcat.getId());
+					}
 				}
+				else
+					rec.setCategoriaStr(catego.getNombre());
+				output.add(rec);
 			}
 		}
 		return output;

@@ -155,6 +155,10 @@ public class MarcasCrudGrid extends CssLayout {
 
     public void showRecords(Collection<ParticipanteEntity> records) {
         grid.setRecords(records);
+        if(modalidad.getValue()==ModalidadEnum.SPEED)
+        	grid.sort("mejorMarca", SortDirection.ASCENDING);
+        else
+        	grid.sort("mejorMarca", SortDirection.DESCENDING);
     }
 	
 }
