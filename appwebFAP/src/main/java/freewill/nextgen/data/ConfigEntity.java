@@ -18,7 +18,8 @@ public class ConfigEntity implements Serializable, Cloneable {
 		MAXNUMCONOSDERRIBADOS("Máximo número conos derribados para nulo", "5"),
 		FINALCONSOLACIONSPEED("Final de Consolación (3 y 4 puestos) en Speed", "true"),
 		KOSYSTEMITALIANA("KO System a la Italiana", "false"),
-		PENALIZAZIONCONOS("Penalización por cono derribado (ms)", "200");
+		PENALIZAZIONCONOS("Penalización por cono derribado (ms)", "200"),
+		PARTICIPANTESMINIMO("Participantes mínimo por categoría", "3");
 		private final String type;
 		private final String defval;
 		ConfigItemEnum(String t, String v){ type = t; defval=v;}

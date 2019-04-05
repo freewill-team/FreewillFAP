@@ -66,7 +66,6 @@ public class PreinscripcionForm extends PreinscripcionFormDesign {
         for (Field f : fieldGroup.getFields()) {
             f.addValueChangeListener(valueListener);
             f.setCaption(Messages.get().getKey(f.getCaption())); // Translations
-            System.out.println("formhaschanged applied to "+f.getCaption());
         }
 
         fieldGroup.addCommitHandler(new CommitHandler() {

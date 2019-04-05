@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.CategoriaRepository;
+import freewill.nextgen.blts.daos.ConfigRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PatinadorRepository;
 import freewill.nextgen.blts.daos.UserRepository;
@@ -23,6 +24,7 @@ import freewill.nextgen.blts.data.PatinadorEntity;
 import freewill.nextgen.blts.data.PatinadorEntity.GenderEnum;
 import freewill.nextgen.blts.data.CategoriaEntity.AccionEnum;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
@@ -51,6 +53,9 @@ public class CategoriaManager {
 	
 	@Autowired
 	PatinadorRepository patinrepo;
+	
+	@Autowired
+	ConfigRepository configrepo;
 
 	@RequestMapping("/create")
 	public CategoriaEntity add(@RequestBody CategoriaEntity rec) throws Exception {
@@ -143,14 +148,14 @@ public class CategoriaManager {
 			rec.setHombres(hombres);
 			rec.setMujeres(mujeres);
 			int total = hombres + mujeres;
-			// TODO hacerlo configurable
-			if(rec.getGenero()==GenderEnum.MALE && hombres<3)
+			int participantesminimo = configrepo.getConfigInteger(ConfigItemEnum.PARTICIPANTESMINIMO, user.getCompany());
+			if(rec.getGenero()==GenderEnum.MALE && hombres<participantesminimo)
 				rec.setAccion(AccionEnum.UNIR);
-			if(rec.getGenero()==GenderEnum.FEMALE && mujeres<3) 
+			if(rec.getGenero()==GenderEnum.FEMALE && mujeres<participantesminimo) 
 				rec.setAccion(AccionEnum.UNIR);
-			if(rec.getGenero()==GenderEnum.MIXTO && hombres>=3 && mujeres>=3)
+			if(rec.getGenero()==GenderEnum.MIXTO && hombres>=participantesminimo && mujeres>=participantesminimo)
 				rec.setAccion(AccionEnum.DIVIDIR);
-			if(rec.getGenero()==GenderEnum.MIXTO && total<3 && rec.getEdadMinima()>1)
+			if(rec.getGenero()==GenderEnum.MIXTO && total<participantesminimo && rec.getEdadMinima()>1)
 				rec.setAccion(AccionEnum.BAJAR);
 			if(total>0)
 				output.add(rec);

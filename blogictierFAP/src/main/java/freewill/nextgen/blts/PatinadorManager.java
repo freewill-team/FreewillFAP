@@ -218,7 +218,7 @@ public class PatinadorManager {
 	@RequestMapping("/getInscripcionesbyclub/{competicion}")
 	public List<PatinadorEntity> getInscripcionesByClub(
 			@PathVariable Long competicion) throws Exception {
-		System.out.println("Getting Inscripciones List By competicion..."+competicion);
+		System.out.println("Getting Inscripciones List By club and competicion..."+competicion);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());	
 		ClubEntity club = clubrepo.findByCoordinadorAndCompany(user.getName(), user.getCompany());

@@ -156,7 +156,7 @@ public class CompanyForm extends CompanyFormDesign {
         delete.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	ConfirmDialog cd = new ConfirmDialog("Do you really want to remove this record?");
+            	ConfirmDialog cd = new ConfirmDialog(Messages.get().getKey("reallyremovequestion"));
             	cd.setOKAction(new ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {

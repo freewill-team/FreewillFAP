@@ -20,9 +20,12 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.InscripcionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
@@ -52,6 +55,9 @@ public class PreinscripcionCrudGrid extends CssLayout {
     private boolean preinscripcionAbierta = true;
     private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
     //private PreinscripcionCrudView parent = null;
+    private FichaInscripcionForm ficha;
+    private InscripcionEntity inscripcion = null;
+    private Button sendButton = null;
     
     public PreinscripcionCrudGrid(InscripcionEnum tipo, Long competicion, 
     		PreinscripcionCrudView parent) {
@@ -73,6 +79,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
         });
         
         form = new PreinscripcionForm(viewLogic);
+        ficha = new FichaInscripcionForm(viewLogic);
 
         barAndGridLayout = new VerticalLayout();
         //barAndGridLayout.addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -86,6 +93,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
         
         addComponent(barAndGridLayout);
         addComponent(form);
+        addComponent(ficha);
         
         preinscripcionAbierta = true;
        
@@ -103,6 +111,17 @@ public class PreinscripcionCrudGrid extends CssLayout {
     		grid.getColumn("battle").setHidden(!competi.getBattle());
     		grid.getColumn("jam").setHidden(!competi.getJam());
     	}
+    	
+    	inscripcion = viewLogic.getFichaInscripcion(competicion);
+    	if(inscripcion!=null){
+    		this.editRecord(inscripcion, competi, preinscripcionAbierta);
+    		if(inscripcion.getEnviado())
+    			preinscripcionAbierta = false;
+    	}
+    	else{
+    		preinscripcionAbierta = false;
+    	}
+    	
     }
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
@@ -141,6 +160,16 @@ public class PreinscripcionCrudGrid extends CssLayout {
     		    // file.delete();
     		}
         });
+		
+		sendButton = new Button(Messages.get().getKey("inscripcion"));
+		sendButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		sendButton.setIcon(FontAwesome.SEND);
+		sendButton.addClickListener(new ClickListener() {
+	    	@Override
+	        public void buttonClick(ClickEvent event) {
+	            viewLogic.editRecord(inscripcion, competi, preinscripcionAbierta);
+	        }
+	    });
 
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
@@ -150,6 +179,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(filter);
         topLayout.addComponent(printButton);
+        topLayout.addComponent(sendButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");
@@ -207,6 +237,21 @@ public class PreinscripcionCrudGrid extends CssLayout {
 
 	public void setPreinscripcionAbierta(boolean b) {
 		preinscripcionAbierta = b;
+	}
+
+	public void editRecord(InscripcionEntity rec, CompeticionEntity competi, boolean preinscripcionAbierta) {    
+        if (rec != null) {
+        	ficha.addStyleName("visible");
+            ficha.setEnabled(true);
+        } else {
+        	ficha.removeStyleName("visible");
+            ficha.setEnabled(false);
+        }
+        ficha.editRecord(rec, competi, preinscripcionAbierta);
+	}
+
+	public void setFichaInscripcion(InscripcionEntity rec) {
+		inscripcion = rec;
 	}
 	
 }

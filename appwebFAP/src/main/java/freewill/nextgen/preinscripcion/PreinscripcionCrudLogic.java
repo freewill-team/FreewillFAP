@@ -11,8 +11,10 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
+import freewill.nextgen.common.entities.UserEntity;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.InscripcionEntity;
 import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
@@ -41,15 +43,11 @@ public class PreinscripcionCrudLogic implements Serializable {
         	log = Logger.getLogger(this.getClass());
     }
 
-    public void init(CompeticionEntity competi/*Long competicion*/, InscripcionEnum tipoForm) {
+    public void init(CompeticionEntity competi, InscripcionEnum tipoForm) {
     	try{
-    		editRecord(null, null, false);
+    		editRecord((PatinadorEntity)null, null, false);
 	        if(view!=null){
 	        	Date now = new Date();
-	        	/*CompeticionEntity competi = (CompeticionEntity) BltClient.get().getEntityById(
-	        			""+competicion, CompeticionEntity.class,
-	        			EntryPoint.get().getAccessControl().getTokenKey());*/
-	        	
 	        	if(tipoForm == InscripcionEnum.PREINSCRIPCION){
 	        		// Solo devuelve los patinadores correspondientes al club del coordinador
 	        		// El usuario logueado debe se el coordinador del club
@@ -90,7 +88,7 @@ public class PreinscripcionCrudLogic implements Serializable {
         setFragmentParameter("");
         if(view!=null){
 	        view.clearSelection();
-	        view.editRecord(null, null, false);
+	        view.editRecord((PatinadorEntity)null, null, false);
         }
     }
 
@@ -159,7 +157,8 @@ public class PreinscripcionCrudLogic implements Serializable {
 		return null;
     }
 
-    public void editRecord(PatinadorEntity rec, CompeticionEntity competicion, boolean preinscripcionAbierta) {
+    public void editRecord(PatinadorEntity rec, CompeticionEntity competicion, 
+    		boolean preinscripcionAbierta) {
         if (rec == null) {
             setFragmentParameter("");
         } else {
@@ -271,6 +270,73 @@ public class PreinscripcionCrudLogic implements Serializable {
 			view.showError(e.getMessage());
 		}
 		return null;
+	}
+
+	public void editRecord(InscripcionEntity rec, CompeticionEntity competicion, 
+			boolean preinscripcionAbierta) {
+		if (rec == null) {
+	        setFragmentParameter("");
+	    } else {
+	        setFragmentParameter(rec.getId() + "");
+	    }
+	    if(view!=null)
+	        view.editRecord(rec, competicion, preinscripcionAbierta);
+	}
+
+	public InscripcionEntity getFichaInscripcion(Long competicion) {
+		try{
+			// siempre devuelve un registro
+	        return (InscripcionEntity) BltClient.get().executeCommand(
+	        		"getByClubAndCompeticion/"+competicion, 
+	        		InscripcionEntity.class,
+	        		EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+
+	public InscripcionEntity sendRecord(InscripcionEntity rec) {
+		try{
+	    	if(view!=null){
+	    		System.out.println("Sending = "+rec.toString());
+	    		InscripcionEntity res = (InscripcionEntity) BltClient.get().executeCommand(
+        				"/sendInscripcion/"+rec.getId(), InscripcionEntity.class,
+        				EntryPoint.get().getAccessControl().getTokenKey());
+	    		
+	    		view.setFichaInscripcion(res);
+	    		
+		        view.showSaveNotification(res.getClubStr() + " (" + res.getId() + ") enviada");
+		        return res;
+	    	}
+	        setFragmentParameter("");
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
+		}
+		return rec;
+	}
+
+	public void deleteRecord(InscripcionEntity rec) {
+		try{
+		    System.out.println("Deleting = "+rec.toString());
+		    BltClient.get().deleteEntity(""+rec.getId(), InscripcionEntity.class,
+		    		EntryPoint.get().getAccessControl().getTokenKey());
+		    if(view!=null){	
+		        view.showSaveNotification("Record " + rec.getId() + " removed");
+		        view.setEnabled(false);
+	        }
+	        setFragmentParameter("");
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			if(view!=null)
+				view.showError(e.getMessage());
+		}
 	}
 	
 }

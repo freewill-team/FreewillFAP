@@ -1,4 +1,4 @@
-package freewill.nextgen.categoria;
+package freewill.nextgen.preinscripcion;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -10,18 +10,15 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.CategoriaEntity;
-import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.data.PatinadorEntity.GenderEnum;
-import freewill.nextgen.genericCrud.CustomFormInterface;
-import freewill.nextgen.genericCrud.GenericCrudLogic;
+import freewill.nextgen.data.ClubEntity;
+import freewill.nextgen.data.CompeticionEntity;
+import freewill.nextgen.data.InscripcionEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -33,26 +30,20 @@ import freewill.nextgen.hmi.utils.Messages;
  * CSS rules.
  */
 @SuppressWarnings("serial")
-public class CategoriaForm extends CategoriaFormDesign implements CustomFormInterface<CategoriaEntity> {
-	
-    private GenericCrudLogic<CategoriaEntity> viewLogic;
-    private BeanFieldGroup<CategoriaEntity> fieldGroup;
+public class FichaInscripcionForm extends FichaInscripcionFormDesign {
+
+    private BeanFieldGroup<InscripcionEntity> fieldGroup;
+    private PreinscripcionCrudLogic viewLogic;
+    private CompeticionEntity competicion = null;
+    private boolean preinscripcionAbierta = false;
     
     @SuppressWarnings("rawtypes")
-    public CategoriaForm() {
+    public FichaInscripcionForm(PreinscripcionCrudLogic sampleCrudLogic) {
         super();
         addStyleName("product-form");
+        this.viewLogic = sampleCrudLogic;
         
-        for (GenderEnum s : GenderEnum.values()) {
-            genero.addItem(s);
-        }
-        for (ModalidadEnum s : ModalidadEnum.values()) {
-            modalidad.addItem(s);
-        }
-        genero.setRequired(true);
-        modalidad.setRequired(true);
-        
-        fieldGroup = new BeanFieldGroup<CategoriaEntity>(CategoriaEntity.class);
+        fieldGroup = new BeanFieldGroup<InscripcionEntity>(InscripcionEntity.class); 
         fieldGroup.bindMemberFields(this);
 
         // perform validation and enable/disable buttons while editing
@@ -78,11 +69,21 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
             @Override
             public void postCommit(CommitEvent commitEvent)
                     throws CommitException {
-            	//System.out.println("Entrando en Update Record...");
-            	CategoriaEntity rec = fieldGroup.getItemDataSource().getBean();
-            	if(viewLogic!=null){
-            		viewLogic.saveRecord(rec);
-            	}
+            	//System.out.println("Entrando en Send Record...");
+            	ConfirmDialog cd = new ConfirmDialog(
+            			"Tras enviar las inscripciones, ya no podrá editarlas. Desea continuar?");
+            	cd.setOKAction(new ClickListener() {
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+            			cd.close();
+            			InscripcionEntity rec = fieldGroup.getItemDataSource().getBean();
+                    	if(viewLogic!=null){
+                    		viewLogic.sendRecord(rec);
+                    		removeStyleName("visible");
+                    	}
+                    }
+                });
+            	getUI().addWindow(cd);
             }
         });
 
@@ -90,7 +91,7 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
             @Override
             public void buttonClick(ClickEvent event) {
                 try {
-                    fieldGroup.commit();
+                	fieldGroup.commit();
                     // only if validation succeeds
                 } catch (CommitException e) {
                 	System.out.println(e.getMessage());
@@ -105,13 +106,11 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
         cancel.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                if(viewLogic!=null)
-            		viewLogic.cancelRecord();
-            	else
-            		removeStyleName("visible");
+            	fieldGroup.discard();
+                removeStyleName("visible");
             }
         });
-
+        
         delete.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
@@ -120,8 +119,9 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
                     @Override
                     public void buttonClick(final ClickEvent event) {
             			cd.close();
-            			CategoriaEntity rec = fieldGroup.getItemDataSource().getBean();
+            			InscripcionEntity rec = fieldGroup.getItemDataSource().getBean();
             			if(viewLogic!=null){
+            				removeStyleName("visible");
             				viewLogic.deleteRecord(rec);
             			}
                     }
@@ -131,53 +131,57 @@ public class CategoriaForm extends CategoriaFormDesign implements CustomFormInte
         });
         
     }
-
-    public void editRecord(CategoriaEntity rec) {
+    
+	public void editRecord(InscripcionEntity rec, CompeticionEntity competi, 
+			boolean abierta) {
+		//System.out.println("Entrando en editRecord()");
+		this.competicion = competi;
+		this.preinscripcionAbierta = abierta;
         if (rec == null) {
-            rec = new CategoriaEntity();
-            fieldGroup.setItemDataSource(new BeanItem<CategoriaEntity>(rec));
+            rec = new InscripcionEntity();
+            fieldGroup.setItemDataSource(new BeanItem<InscripcionEntity>(rec));
             return;
         }
-        fieldGroup.setItemDataSource(new BeanItem<CategoriaEntity>(rec));
-
+        fieldGroup.setItemDataSource(new BeanItem<InscripcionEntity>(rec));
+        
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
-        nombre.setValidationVisible(false);
-
+        coordinador.setValidationVisible(false);
+        
         // Scroll to the top
         // As this is not a Panel, using JavaScript
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
         
+        if(competicion!=null) {
+    		save.setEnabled(!rec.getEnviado() && competi.getActive() && preinscripcionAbierta);
+    	}
+        
         formHasChanged();
     }
-
-    private void formHasChanged() {
+	
+	private void formHasChanged() {
+		//System.out.println("Entrando en formHasChanged()");
         // show validation errors after the user has changed something
-        nombre.setValidationVisible(true);
+		coordinador.setValidationVisible(true);
 
         // only products that have been saved should be removable
-        boolean canRemoveRecord = false;
-        BeanItem<CategoriaEntity> item = fieldGroup.getItemDataSource();
+        //boolean canRemoveRecord = false;
+        BeanItem<InscripcionEntity> item = fieldGroup.getItemDataSource();
         if (item != null) {
-        	CategoriaEntity rec = item.getBean();
+        	InscripcionEntity rec = item.getBean();
         	if(rec!=null){
-        		canRemoveRecord = (rec.getId() != null);
+        		//canRemoveRecord = (rec.getId() != null);
         	}
         }
-        delete.setEnabled(canRemoveRecord);
-        save.setEnabled(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
-        delete.setVisible(EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN));
+        boolean admin = EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN);
+        coordinador.setEnabled(admin);
+        clubStr.setEnabled(admin);
+        fechaEnvio.setEnabled(admin);
+        email.setEnabled(admin);
+        telefono.setEnabled(admin);
+        enviado.setEnabled(admin);
+        delete.setVisible(admin);
     }
     
-    @Override
-	public void setLogic(GenericCrudLogic<CategoriaEntity> logic) {
-		viewLogic = logic;
-	}
-
-	@Override
-	public Component getComponent() {
-		return this;
-	}
-		
 }
