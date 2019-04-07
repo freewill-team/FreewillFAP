@@ -284,7 +284,13 @@ public class SpeedKOSystemManager {
 	public SpeedKOSystemEntity existByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
 		System.out.println("Getting existByCompeticionAndCategoria..."+competicion+","+categoria);
-		List<SpeedKOSystemEntity> recs = repository.findByCompeticionAndCategoria(competicion, categoria);
+		
+		EliminatoriaEnum eliminatoria = repository.getEliminatoria(competicion, categoria);
+		SpeedKOSystemEntity out = new SpeedKOSystemEntity();
+		out.setEliminatoria(eliminatoria);
+		return out;
+		
+		/*List<SpeedKOSystemEntity> recs = repository.findByCompeticionAndCategoria(competicion, categoria);
 		SpeedKOSystemEntity out = new SpeedKOSystemEntity();
 		out.setEliminatoria(null);
 		if(recs==null || recs.size()==0)
@@ -294,7 +300,7 @@ public class SpeedKOSystemManager {
 			if(rec.getEliminatoria().ordinal()>out.getEliminatoria().ordinal())
 				out.setEliminatoria(rec.getEliminatoria());
 		}
-		return out;	
+		return out;*/
 	}
 	
 }

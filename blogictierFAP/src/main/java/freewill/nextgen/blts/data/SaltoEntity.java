@@ -34,6 +34,8 @@ public class SaltoEntity implements Serializable, Cloneable {
 	private int numeroSaltos;
 	private int numeroFallos;
 	private int alturaPrimerFallo;
+	private Integer totalSaltos;
+	private Boolean ganaDesempate;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "saltoPatinadorId")
 	private List<SaltoIntentoEntity> intentos;
@@ -63,6 +65,8 @@ public class SaltoEntity implements Serializable, Cloneable {
     	numeroSaltos = 0;
     	numeroFallos = 0;
     	alturaPrimerFallo = 0;
+    	totalSaltos = 0;
+    	ganaDesempate = false;
     	ronda = 0;
     	//company = null;
     }
@@ -270,6 +274,26 @@ public class SaltoEntity implements Serializable, Cloneable {
 
 	public void setDorsal(Integer dorsal) {
 		this.dorsal = dorsal;
+	}
+
+	public Integer getTotalSaltos() {
+		if(totalSaltos==null)
+			totalSaltos = 0;
+		return totalSaltos;
+	}
+
+	public void setTotalSaltos(Integer totalSaltos) {
+		this.totalSaltos = totalSaltos;
+	}
+
+	public Boolean getGanaDesempate() {
+		if(ganaDesempate==null)
+			ganaDesempate = false;
+		return ganaDesempate;
+	}
+
+	public void setGanaDesempate(Boolean ganaDesempate) {
+		this.ganaDesempate = ganaDesempate;
 	}
 	
 }

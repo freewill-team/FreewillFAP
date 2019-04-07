@@ -420,6 +420,17 @@ public class SpeedTimeTrialManager {
 		boolean consolacion = configrepo.getConfigBoolean(
 				ConfigItemEnum.FINALCONSOLACIONSPEED, user.getCompany());
 		
+		EliminatoriaEnum eliminator = korepo.getEliminatoria(competicion, categoria);
+		int base = (int)(Math.pow(10.0, eliminator.ordinal()+3));
+		// Obtiene lista con la clasificacion final
+		List<SpeedTimeTrialEntity> output = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
+				competicion, categoria);
+		for(SpeedTimeTrialEntity rec:output){
+			rec.setClasificacionFinal(base+rec.getMejorTiempo()); // orden temporal
+			repository.save(rec);
+		}
+		
 		for(EliminatoriaEnum eliminatoria:EliminatoriaEnum.values()){
 			List<SpeedKOSystemEntity> recs = 
 					korepo.findByCompeticionAndCategoriaAndEliminatoria(competicion, categoria, eliminatoria);
@@ -484,7 +495,7 @@ public class SpeedTimeTrialManager {
 							repository.findByPatinadorAndCompeticion(
 							segundo, rec.getCompeticion());
 					if(patin!=null){
-						int base = (int)(Math.pow(10.0, eliminatoria.ordinal()+2));
+						base = (int)(Math.pow(10.0, eliminatoria.ordinal()+2));
 						patin.setClasificacionFinal(base+patin.getMejorTiempo()); // orden temporal
 						repository.save(patin);
 						//System.out.println("Setting "+segundo+" to "+posicion[rec.getGrupo()]+" grupo "+rec.getGrupo());
@@ -494,9 +505,8 @@ public class SpeedTimeTrialManager {
 			}
 		}
 		
-		// Obtiene lista con la clasificacion final
-		List<SpeedTimeTrialEntity> output = 
-				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
+		// Obtiene lista con la clasificacion final definitiva
+		output = repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(
 				competicion, categoria);
 		int orden = 1;
 		for(SpeedTimeTrialEntity rec:output){

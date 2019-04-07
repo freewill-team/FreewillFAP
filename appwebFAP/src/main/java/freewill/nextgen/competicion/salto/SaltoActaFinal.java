@@ -52,7 +52,7 @@ public class SaltoActaFinal extends CssLayout {
 		
 		grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
 		       "id", "dorsal", "clasificacion", "nombre", "apellidos", "mejorSalto", 
-		       "numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs");
+		       "numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs", "totalSaltos");
         
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);

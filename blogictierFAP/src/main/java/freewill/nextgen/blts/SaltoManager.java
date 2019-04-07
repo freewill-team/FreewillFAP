@@ -118,7 +118,17 @@ public class SaltoManager {
 			int numeroFallos = 0;
 			int numeroOKs = 0;
 			int numeroSaltos = 0;
+			int totalSaltos = 0;
 			for(SaltoIntentoEntity salto2:res.getIntentos()){
+				if(rec.getAltura()==salto2.getAltura()
+					&&((salto2.getSalto1()==ResultEnum.FALLO && salto2.getSalto2()==ResultEnum.FALLO && salto2.getSalto3()==ResultEnum.FALLO)
+					|| (salto2.getSalto1()==ResultEnum.FALLO && salto2.getSalto2()==ResultEnum.FALLO && salto2.getSalto3()==ResultEnum.PENDIENTE)
+					|| (salto2.getSalto1()==ResultEnum.FALLO && salto2.getSalto2()==ResultEnum.PENDIENTE && salto2.getSalto3()==ResultEnum.PENDIENTE)
+						)){
+					totalSaltos++;
+					if(alturaPrimerFallo==-1) alturaPrimerFallo=salto2.getAltura();
+					continue; // No contabiliza ultima altura saltada y fallada
+				}
 				switch(salto2.getSalto1()){
 					case PENDIENTE:
 						break;
@@ -128,12 +138,14 @@ public class SaltoManager {
 						mejorSalto = salto2.getAltura();
 						numeroOKs++;
 						numeroSaltos++;
+						totalSaltos++;
 						break;
 					case FALLO:
 						if(alturaPrimerFallo==-1) 
 							alturaPrimerFallo = salto2.getAltura();
 						numeroFallos++;
 						numeroSaltos++;
+						totalSaltos++;
 						break;
 				}
 				switch(salto2.getSalto2()){
@@ -145,12 +157,14 @@ public class SaltoManager {
 					mejorSalto = salto2.getAltura();
 					numeroOKs++;
 					numeroSaltos++;
+					totalSaltos++;
 					break;
 				case FALLO:
 					if(alturaPrimerFallo==-1) 
 						alturaPrimerFallo = salto2.getAltura();
 					numeroFallos++;
 					numeroSaltos++;
+					totalSaltos++;
 					break;
 				}
 				switch(salto2.getSalto3()){
@@ -162,12 +176,14 @@ public class SaltoManager {
 					mejorSalto = salto2.getAltura();
 					numeroOKs++;
 					numeroSaltos++;
+					totalSaltos++;
 					break;
 				case FALLO:
 					if(alturaPrimerFallo==-1) 
 						alturaPrimerFallo = salto2.getAltura();
 					numeroFallos++;
 					numeroSaltos++;
+					totalSaltos++;
 					break;
 				}
 			}
@@ -176,10 +192,17 @@ public class SaltoManager {
 			res.setNumeroFallos(numeroFallos);
 			res.setNumeroOKs(numeroOKs);
 			res.setNumeroSaltos(numeroSaltos);
-			
+			res.setTotalSaltos(totalSaltos);
 			res = repository.save(res);
 			System.out.println("Id = "+res.getId());
-			return rec;
+			// Añado campos transient
+			res.setAltura(rec.getAltura());
+			res.setSalto1(rec.getSalto1());
+			res.setSalto2(rec.getSalto2());
+			res.setSalto3(rec.getSalto3());
+			res.setRonda(rec.getRonda());
+			res.setIntentos(null);
+			return res;
 		}
 		return null;	
 	}
@@ -352,6 +375,7 @@ public class SaltoManager {
 				rec.setSalto1(salto.getSalto1());
 				rec.setSalto2(salto.getSalto2());
 				rec.setSalto3(salto.getSalto3());
+				rec.setIntentos(null);
 				output.add(rec);
 			}
 		}
@@ -394,6 +418,12 @@ public class SaltoManager {
 							if(res.getAlturaPrimerFallo()>recs.get(i-1).getAlturaPrimerFallo()){
 								changeOrdenClasificacion(res, recs, i);
 								break;
+							}
+							else if(res.getAlturaPrimerFallo()==recs.get(i-1).getAlturaPrimerFallo()){
+								if(res.getGanaDesempate()){
+									changeOrdenClasificacion(res, recs, i);
+									break;
+								}
 							}
 						}
 					}

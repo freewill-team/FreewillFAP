@@ -35,4 +35,17 @@ public interface SpeedKOSystemRepository extends CrudRepository<SpeedKOSystemEnt
 	@Query("SELECT coalesce(max(m.id), 0) FROM SpeedKOSystemEntity m")
 	Long getMaxId();
 	
+	default EliminatoriaEnum getEliminatoria(Long competicion, Long categoria){
+		EliminatoriaEnum aliminatoria = EliminatoriaEnum.FINAL;
+		List<SpeedKOSystemEntity> recs = 
+				this.findByCompeticionAndCategoria(competicion, categoria);
+		if(recs==null || recs.size()==0)
+			return null;
+		for(SpeedKOSystemEntity rec:recs){
+			if(rec.getEliminatoria().ordinal()>aliminatoria.ordinal())
+				aliminatoria = rec.getEliminatoria();
+		}
+		return aliminatoria;	
+	}
+	
 }

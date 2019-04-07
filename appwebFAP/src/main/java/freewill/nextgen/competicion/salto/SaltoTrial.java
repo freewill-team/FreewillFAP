@@ -6,6 +6,7 @@ import java.util.List;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -69,10 +70,17 @@ public class SaltoTrial extends CssLayout {
 		if(ronda==0)
 			grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
 	        	"id", "dorsal", "orden", "nombre", "apellidos");
-		else
+		else{
 			grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
-		        "id", "dorsal", "orden", "nombre", "apellidos", "altura", "salto1", "salto2", "salto3");
-		
+		        "id", "dorsal", "orden", "nombre", "apellidos", "altura", 
+		        "salto1", "salto2", "salto3",
+		        "numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs", "totalSaltos");
+			grid.getColumn("numeroSaltos").setHidden(true);
+		    grid.getColumn("numeroFallos").setHidden(true);
+		    grid.getColumn("alturaPrimerFallo").setHidden(true);
+		    grid.getColumn("numeroOKs").setHidden(true);
+		    grid.getColumn("totalSaltos").setHidden(true);
+		}
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
@@ -106,10 +114,25 @@ public class SaltoTrial extends CssLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    //form.setEnabled(alturaNextRonda==0 && competiOpen);
+	    
 	}
 	
 	public HorizontalLayout createTopBar() {
+		
+		Button hidButton = new Button(/*Messages.get().getKey("prev")*/);
+		hidButton.setIcon(FontAwesome.COLUMNS);
+		hidButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                // Show/Hide details columns
+            	boolean hidden = !grid.getColumn("numeroSaltos").isHidden();
+            	grid.getColumn("numeroSaltos").setHidden(hidden);
+        	    grid.getColumn("numeroFallos").setHidden(hidden);
+        	    grid.getColumn("alturaPrimerFallo").setHidden(hidden);
+        	    grid.getColumn("numeroOKs").setHidden(hidden);
+        	    grid.getColumn("totalSaltos").setHidden(hidden);
+            }
+        });
 		
 		Button deleteRonda = new Button("");
 		deleteRonda.addStyleName(ValoTheme.BUTTON_DANGER);
@@ -236,8 +259,10 @@ public class SaltoTrial extends CssLayout {
         if(ronda==0 && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.ADMIN))
         	topLayout.addComponent(delete);
         topLayout.addComponent(competicionLabel);
-        if(ronda>0)
+        if(ronda>0){
         	topLayout.addComponent(deleteRonda);
+	        topLayout.addComponent(hidButton);
+		}
         topLayout.addComponent(newAltura);
         topLayout.addComponent(prevButton);
         topLayout.addComponent(nextButton);
@@ -317,6 +342,7 @@ public class SaltoTrial extends CssLayout {
     		if(col!=null)
     			col.setHidden(showOnly2Jumps);
     		//this.selectRow(records.get(0));
+    		grid.sort("orden", SortDirection.DESCENDING);
         }
         else{
         	showError("No existen inscripciones para esta prueba!");
