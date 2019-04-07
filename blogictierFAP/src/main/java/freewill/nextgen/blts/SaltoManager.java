@@ -193,6 +193,7 @@ public class SaltoManager {
 			res.setNumeroOKs(numeroOKs);
 			res.setNumeroSaltos(numeroSaltos);
 			res.setTotalSaltos(totalSaltos);
+			res.setGanaDesempate(rec.getGanaDesempate()); // Para desempate manual
 			res = repository.save(res);
 			System.out.println("Id = "+res.getId());
 			// Añado campos transient

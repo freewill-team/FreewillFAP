@@ -52,7 +52,8 @@ public class SaltoActaFinal extends CssLayout {
 		
 		grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
 		       "id", "dorsal", "clasificacion", "nombre", "apellidos", "mejorSalto", 
-		       "numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs", "totalSaltos");
+		       "numeroSaltos", "numeroFallos", "alturaPrimerFallo", 
+		       "numeroOKs", "totalSaltos", "ganaDesempate");
         
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -91,7 +92,8 @@ public class SaltoActaFinal extends CssLayout {
     				SaltoEntity.class,
     				("Resultados "+competicionStr+" / "+categoriaStr).toUpperCase(),
     				"dorsal", "clasificacion", "nombre", "apellidos", "mejorSalto", 
-    				"numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs");
+    				"numeroSaltos", "numeroFallos", "alturaPrimerFallo", 
+    			    "numeroOKs", "totalSaltos", "ganaDesempate");
     		if(file!=null){
     			FileResource resource = new FileResource(file);
     			Page.getCurrent().open(resource, "Export File", false);

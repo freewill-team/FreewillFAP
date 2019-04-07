@@ -74,12 +74,14 @@ public class SaltoTrial extends CssLayout {
 			grid = new GenericGrid<SaltoEntity>(SaltoEntity.class,
 		        "id", "dorsal", "orden", "nombre", "apellidos", "altura", 
 		        "salto1", "salto2", "salto3",
-		        "numeroSaltos", "numeroFallos", "alturaPrimerFallo", "numeroOKs", "totalSaltos");
+		        "numeroSaltos", "numeroFallos", "alturaPrimerFallo", 
+		        "numeroOKs", "totalSaltos", "ganaDesempate");
 			grid.getColumn("numeroSaltos").setHidden(true);
 		    grid.getColumn("numeroFallos").setHidden(true);
 		    grid.getColumn("alturaPrimerFallo").setHidden(true);
 		    grid.getColumn("numeroOKs").setHidden(true);
 		    grid.getColumn("totalSaltos").setHidden(true);
+		    grid.getColumn("ganaDesempate").setHidden(true);
 		}
         grid.addSelectionListener(new SelectionListener() {
             @Override
@@ -131,6 +133,7 @@ public class SaltoTrial extends CssLayout {
         	    grid.getColumn("alturaPrimerFallo").setHidden(hidden);
         	    grid.getColumn("numeroOKs").setHidden(hidden);
         	    grid.getColumn("totalSaltos").setHidden(hidden);
+        	    grid.getColumn("ganaDesempate").setHidden(hidden);
             }
         });
 		
