@@ -1,5 +1,6 @@
 package freewill.nextgen.competicion.salto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -191,12 +192,21 @@ public class SaltoTrial extends CssLayout {
 			@Override
             public void buttonClick(ClickEvent event) {
                 // Next screen
-            	if(ronda>0 && allPatinadoresOut((List<SaltoEntity>)grid.getContainerDataSource().getItemIds()))
+            	if(ronda>0 && grid.getContainerDataSource().size()==1)
             		gotoActaFinal(ronda+1);
-            	else if(ronda>0 && grid.getContainerDataSource().size()==1)
+            	else if(ronda>0 && allPatinadoresOut((List<SaltoEntity>)grid.getContainerDataSource().getItemIds())){
+            		if(hayEmpate((List<SaltoEntity>)grid.getContainerDataSource().getItemIds())){
+            			showError("No se puede continuar hasta deshacer el empate!");
+            			return;
+            		}
             		gotoActaFinal(ronda+1);
+            	}
             	else if(alturaNextRonda==0){
 	            	try{
+	            		if(ronda>0 && hayEmpate((List<SaltoEntity>)grid.getContainerDataSource().getItemIds())){
+	            			showError("No se puede continuar hasta deshacer el empate!");
+	            			return;
+	            		}
 	            		int alturaThisRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda);
 	            		int newaltura = Integer.parseInt(newAltura.getValue());
 	            		if(newaltura<=alturaThisRonda || newaltura==0){
@@ -275,6 +285,26 @@ public class SaltoTrial extends CssLayout {
         return topLayout;
     }
 	
+	protected boolean hayEmpate(List<SaltoEntity> recs) {
+		for(SaltoEntity rec1:recs){
+			for(SaltoEntity rec2:recs){
+				if( rec1.getId()!=rec2.getId() &&
+					rec1.getSalto1()!=ResultEnum.OK && rec1.getSalto1()!=ResultEnum.PASA &&
+					rec1.getSalto2()!=ResultEnum.OK && rec1.getSalto2()!=ResultEnum.PASA &&
+					rec1.getSalto3()!=ResultEnum.OK && rec1.getSalto3()!=ResultEnum.PASA &&
+					rec2.getSalto1()!=ResultEnum.OK && rec2.getSalto1()!=ResultEnum.PASA &&
+					rec2.getSalto2()!=ResultEnum.OK && rec2.getSalto2()!=ResultEnum.PASA &&
+					rec2.getSalto3()!=ResultEnum.OK && rec2.getSalto3()!=ResultEnum.PASA &&
+					rec1.getNumeroSaltos()==rec2.getNumeroSaltos() &&
+					rec1.getNumeroFallos()==rec2.getNumeroFallos() &&
+					rec1.getAlturaPrimerFallo()==rec2.getAlturaPrimerFallo() &&
+					rec1.getGanaDesempate()==rec2.getGanaDesempate())
+					return true;
+			}
+		}
+		return false;
+	}
+
 	protected void gotoActaFinal(int i) {
 		// Next screen
     	ConfirmDialog cd = new ConfirmDialog(
