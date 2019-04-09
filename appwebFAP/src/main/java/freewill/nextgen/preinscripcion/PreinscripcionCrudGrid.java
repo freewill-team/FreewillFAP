@@ -112,14 +112,16 @@ public class PreinscripcionCrudGrid extends CssLayout {
     		grid.getColumn("jam").setHidden(!competi.getJam());
     	}
     	
-    	inscripcion = viewLogic.getFichaInscripcion(competicion);
-    	if(inscripcion!=null){
-    		this.editRecord(inscripcion, competi, preinscripcionAbierta);
-    		if(inscripcion.getEnviado())
-    			preinscripcionAbierta = false;
-    	}
-    	else{
-    		preinscripcionAbierta = false;
+    	if(tipoForm==InscripcionEnum.PREINSCRIPCION){
+	    	inscripcion = viewLogic.getFichaInscripcion(competicion);
+	    	if(inscripcion!=null){
+	    		this.editRecord(inscripcion, competi, preinscripcionAbierta);
+	    		if(inscripcion.getEnviado())
+	    			preinscripcionAbierta = false;
+	    	}
+	    	else{
+	    		preinscripcionAbierta = false;
+	    	}
     	}
     	
     }
@@ -179,7 +181,8 @@ public class PreinscripcionCrudGrid extends CssLayout {
         topLayout.addComponent(competicionLabel);
         topLayout.addComponent(filter);
         topLayout.addComponent(printButton);
-        topLayout.addComponent(sendButton);
+        if(tipoForm==InscripcionEnum.PREINSCRIPCION)
+        	topLayout.addComponent(sendButton);
         topLayout.setComponentAlignment(competicionLabel, Alignment.MIDDLE_LEFT);
         topLayout.setExpandRatio(competicionLabel, 1);
         topLayout.setStyleName("top-bar");

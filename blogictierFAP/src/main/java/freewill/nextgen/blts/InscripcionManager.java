@@ -173,7 +173,7 @@ public class InscripcionManager {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			UserEntity user = userrepo.findByLoginname(auth.getName());
 			// envio definitivo de inscripcion, generar correo resumen
-			CompeticionEntity competi = competirepo.findById(rec.getId());
+			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
 			if(competi!=null){
 				String title = "Inscripción '"+competi.getNombre()+"' confirmada";
 				String message = 
