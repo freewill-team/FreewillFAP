@@ -164,10 +164,12 @@ public class SaltoTrial extends CssLayout {
 		
 		newAltura = new TextField();
 		newAltura.setValue(""+alturaNextRonda);
-		if(alturaNextRonda!=0){
+		/*if(alturaNextRonda!=0){
 			newAltura.setEnabled(false);
 			deleteRonda.setEnabled(false);
-		}
+		}*/
+		newAltura.setEnabled(alturaNextRonda==0 && competiOpen);
+		deleteRonda.setEnabled(alturaNextRonda==0 && competiOpen);
 		
 		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
