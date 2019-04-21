@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.EventLogRepository;
 import freewill.nextgen.blts.daos.UserRepository;
-import freewill.nextgen.blts.data.JamShowEntity;
 import freewill.nextgen.blts.entities.EventEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
