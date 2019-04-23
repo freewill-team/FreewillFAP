@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.UserRepository;
-import freewill.nextgen.blts.data.FeatureEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 import freewill.nextgen.common.Messages;
 import freewill.nextgen.common.entities.EmailEntity;
@@ -218,21 +217,21 @@ public class UserManager {
 	}
 	
 	@RequestMapping("/countActiveUsers")
-	public FeatureEntity countActiveUsers() throws Exception {
+	public UserEntity countActiveUsers() throws Exception {
 		System.out.println("Getting countActiveUsers...");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = repository.findByLoginname(auth.getName());
-		FeatureEntity rec = new FeatureEntity();
+		UserEntity rec = new UserEntity();
 		rec.setID(repository.countByCompanyAndActive(user.getCompany(), true));
 		return rec;
 	}
 	
 	@RequestMapping("/countNoActiveUsers")
-	public FeatureEntity countNoActiveUsers() throws Exception {
+	public UserEntity countNoActiveUsers() throws Exception {
 		System.out.println("Getting countNoActiveUsers...");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = repository.findByLoginname(auth.getName());
-		FeatureEntity rec = new FeatureEntity();
+		UserEntity rec = new UserEntity();
 		rec.setID(repository.countByCompanyAndActive(user.getCompany(), false));
 		return rec;
 	}
