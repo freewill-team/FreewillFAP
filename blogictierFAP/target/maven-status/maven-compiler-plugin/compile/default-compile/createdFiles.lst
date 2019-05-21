@@ -32,6 +32,7 @@ freewill\nextgen\blts\data\ConfigEntity.class
 freewill\nextgen\blts\SpeedTimeTrialManager$1.class
 freewill\nextgen\blts\CircuitoManager.class
 freewill\nextgen\blts\RankingManager.class
+freewill\nextgen\blts\daos\SlalomTrickRepository.class
 freewill\nextgen\blts\BltLoader$ControlThread.class
 freewill\nextgen\blts\DerrapesManager$2.class
 freewill\nextgen\blts\SpeedKOSystemManager.class
@@ -54,6 +55,7 @@ freewill\nextgen\blts\DerrapesManager$1.class
 freewill\nextgen\blts\CompeticionManager$CalculateRankingThread.class
 freewill\nextgen\blts\entities\UserEntity.class
 freewill\nextgen\blts\daos\StyleRepository.class
+freewill\nextgen\blts\SlalomTrickManager.class
 freewill\nextgen\blts\PuntuacionesManager.class
 freewill\nextgen\blts\data\DerrapesRondaEntity$EliminatoriaEnum.class
 freewill\nextgen\blts\daos\SpeedKOSystemRepository.class
@@ -91,6 +93,7 @@ freewill\nextgen\blts\CategoriaManager.class
 freewill\nextgen\blts\ClassicShowManager.class
 freewill\nextgen\blts\data\ClubEntity.class
 freewill\nextgen\blts\entities\JobScheduled.class
+freewill\nextgen\blts\data\SlalomTrickEntity$TrickFamilyEnum.class
 freewill\nextgen\blts\daos\BattleRepository.class
 freewill\nextgen\blts\SupportManager.class
 freewill\nextgen\blts\data\BattleRondaEntity.class
@@ -103,6 +106,7 @@ freewill\nextgen\blts\data\PatinadorEntity$GenderEnum.class
 freewill\nextgen\blts\data\CategoriaEntity$ModalidadEnum.class
 freewill\nextgen\blts\CategoriaManager$1.class
 freewill\nextgen\blts\daos\UserRepository.class
+freewill\nextgen\blts\data\SlalomTrickEntity.class
 freewill\nextgen\blts\daos\ConfigRepository.class
 freewill\nextgen\blts\daos\PatinadorRepository.class
 freewill\nextgen\blts\daos\SaltoRepository.class

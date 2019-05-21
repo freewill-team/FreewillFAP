@@ -28,6 +28,7 @@ import freewill.nextgen.data.ConfigEntity;
 import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
+import freewill.nextgen.data.SlalomTrickEntity;
 import freewill.nextgen.dorsal.DorsalCrudView;
 import freewill.nextgen.genericCrud.GenericCrudView;
 import freewill.nextgen.gestioncategorias.GestionCrudView;
@@ -126,6 +127,13 @@ public class MainScreen extends HorizontalLayout {
 		       		"PERMISSION", puntuaciones, PuntuacionesEntity.class,
 		       		"id", "clasificacion", "puntosCampeonato", "puntosCopa", "puntosTrofeo");
 		    menu.addView(puntuacionesCrud, puntuaciones, FontAwesome.LINE_CHART);
+		    
+		    String matrizslalom = Messages.get().getKey("matrizslalom");
+		    GenericCrudView<SlalomTrickEntity> matrizslalomCrud = 
+		    		new GenericCrudView<SlalomTrickEntity>(
+		       		"PERMISSION", matrizslalom, SlalomTrickEntity.class,
+		       		"id", "nombre", "familia", "valor");
+		    menu.addView(matrizslalomCrud, matrizslalom, FontAwesome.MAGIC);
         	
         }
         
