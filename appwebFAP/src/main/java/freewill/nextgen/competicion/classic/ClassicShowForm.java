@@ -7,6 +7,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -186,6 +187,16 @@ public class ClassicShowForm extends ClassicShowFormDesign {
 	                n.setDelayMsec(500);
 	                n.show(getUI().getPage());
 	            }
+            }
+        });
+        
+        calculadora.setIcon(FontAwesome.CALCULATOR);
+        calculadora.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
+            	if(viewLogic!=null)
+            		viewLogic.showCalculadora(rec);
             }
         });
         

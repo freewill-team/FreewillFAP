@@ -271,5 +271,10 @@ public class ClassicCrudLogic implements Serializable {
 		}
     	return null;
 	}
+
+	public void showCalculadora(ClassicShowEntity rec) {
+		if (activeView != null)
+			activeView.openCalculadora(rec);
+	}
 		
 }

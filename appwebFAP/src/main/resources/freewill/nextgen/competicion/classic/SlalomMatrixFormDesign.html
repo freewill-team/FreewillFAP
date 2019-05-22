@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:com.app.freewill.company" />
+</head>
+<body>
+<v-css-layout id="slalom-matrix-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout" >
+    	<v-horizontal-layout width-full spacing>
+       		<v-text-field caption="puntuacion" _id="puntuacion" width-full />
+       	</v-horizontal-layout>	
+        
+        <vaadin-tab-sheet _id="tabSheet" >
+        	<tab caption="Elasticidad" _id="tabElasticidad">
+	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing>
+		       		<v-combo-box caption="" _id="elasticidad" width-full null-selection-allowed=false text-input-allowed=false />
+			    	<v-button _id="addElasticidad" :bottom >Add</v-button>
+			    	</v-horizontal-layout>
+			    </v-vertical-layout>	
+	       	</tab>
+	       	<tab caption="Sentados" _id="tabSentados">
+	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing>
+		       		<v-combo-box caption="" _id="sentados" width-full null-selection-allowed=false text-input-allowed=false />
+			    	<v-button _id="addSentados" :bottom >Add</v-button>
+			    	</v-horizontal-layout>
+			    </v-vertical-layout>	
+	       	</tab>
+	       	<tab caption="Saltos" _id="tabSaltos">
+	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing />
+		       		
+			    </v-vertical-layout>	
+	       	</tab>
+	       	<tab caption="Lineales" _id="tabLineales">
+	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing />
+		       		
+			    </v-vertical-layout>	
+	       	</tab>
+	       		<tab caption="Giros" _id="tabGiros">
+	       		<v-vertical-layout height-full spacing>
+	       			<v-horizontal-layout width-full spacing />
+		       		
+			    </v-vertical-layout>	
+	       	</tab>
+	    </vaadin-tab-sheet> 
+	    <v-css-layout :expand style-name="expander" />
+	    <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancelar</v-button>
+	    <v-button style-name="primary" _id="save">Salvar</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

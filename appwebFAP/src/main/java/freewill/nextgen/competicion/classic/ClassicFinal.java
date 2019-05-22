@@ -40,6 +40,7 @@ public class ClassicFinal extends CssLayout {
 	private String categoriaStr = "";
 	private GenericGrid<ClassicShowEntity> grid;
 	private ClassicShowForm form;
+	private SlalomMatrixForm formCalc;
 	private ClassicCrudLogic viewLogic;
 	private ClassicCrudView parent = null;
 	private boolean competiOpen = false;
@@ -75,6 +76,7 @@ public class ClassicFinal extends CssLayout {
         });
         
         form = new ClassicShowForm(viewLogic);
+        formCalc = new SlalomMatrixForm(viewLogic);
         
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -87,6 +89,7 @@ public class ClassicFinal extends CssLayout {
         
         addComponent(barAndGridLayout);
         addComponent(form);
+        addComponent(formCalc);
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
 	    
@@ -277,4 +280,20 @@ public class ClassicFinal extends CssLayout {
     	}
 	}
     
+	public void openCalculadora(ClassicShowEntity rec) {
+		System.out.println("Entrando en openCalculadora "+rec);
+    	if (rec != null) {
+    		formCalc.addStyleName("visible");
+    		formCalc.setEnabled(true);
+        } else {
+        	formCalc.removeStyleName("visible");
+        	formCalc.setEnabled(false);
+        }
+		formCalc.editRecord(rec);
+	}
+	
+	public void closeCalculadora() {
+		formCalc.close();
+	}
+
 }
