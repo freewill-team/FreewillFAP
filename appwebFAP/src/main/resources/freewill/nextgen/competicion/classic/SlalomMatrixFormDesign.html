@@ -13,42 +13,63 @@
         <vaadin-tab-sheet _id="tabSheet" >
         	<tab caption="Elasticidad" _id="tabElasticidad">
 	       		<v-vertical-layout height-full spacing>
-	       			<v-horizontal-layout width-full spacing>
-		       		<v-combo-box caption="" _id="elasticidad" width-full null-selection-allowed=false text-input-allowed=false />
-			    	<v-button _id="addElasticidad" :bottom >Add</v-button>
+		       		<v-combo-box caption="" _id="elasticidad" width-full null-selection-allowed=true text-input-allowed=false />
+			    	<v-horizontal-layout width-full spacing>
+			    	<v-check-box :middle caption="Continuidad" _id="continuidadElasticidad"></v-check-box>
+			    	<v-check-box :middle caption="Ritmo" _id="ritmoElasticidad"></v-check-box>
+			    	<v-check-box :middle caption="Footwork" _id="footworkElasticidad"></v-check-box>
+			    	<v-check-box :middle caption="Limpieza" _id="limpiezaElasticidad"></v-check-box>
 			    	</v-horizontal-layout>
 			    </v-vertical-layout>	
 	       	</tab>
 	       	<tab caption="Sentados" _id="tabSentados">
 	       		<v-vertical-layout height-full spacing>
 	       			<v-horizontal-layout width-full spacing>
-		       		<v-combo-box caption="" _id="sentados" width-full null-selection-allowed=false text-input-allowed=false />
-			    	<v-button _id="addSentados" :bottom >Add</v-button>
+		       		<v-combo-box caption="" _id="sentados" width-full null-selection-allowed=true text-input-allowed=false />
 			    	</v-horizontal-layout>
+			    	<v-check-box :middle caption="Continuidad" _id="continuidadSentados"></v-check-box>
+			    	<v-check-box :middle caption="Ritmo" _id="ritmoSentados"></v-check-box>
+			    	<v-check-box :middle caption="Footwork" _id="footworkSentados"></v-check-box>
+			    	<v-check-box :middle caption="Limpieza" _id="limpiezaSentados"></v-check-box>
 			    </v-vertical-layout>	
 	       	</tab>
 	       	<tab caption="Saltos" _id="tabSaltos">
 	       		<v-vertical-layout height-full spacing>
-	       			<v-horizontal-layout width-full spacing />
-		       		
+	       			<v-horizontal-layout width-full spacing>
+		       		<v-combo-box caption="" _id="saltos" width-full null-selection-allowed=true text-input-allowed=false />
+			    	</v-horizontal-layout>
+			    	<v-check-box :middle caption="Continuidad" _id="continuidadSaltos"></v-check-box>
+			    	<v-check-box :middle caption="Ritmo" _id="ritmoSaltos"></v-check-box>
+			    	<v-check-box :middle caption="Footwork" _id="footworkSaltos"></v-check-box>
+			    	<v-check-box :middle caption="Limpieza" _id="limpiezaSaltos"></v-check-box>
 			    </v-vertical-layout>	
 	       	</tab>
 	       	<tab caption="Lineales" _id="tabLineales">
 	       		<v-vertical-layout height-full spacing>
-	       			<v-horizontal-layout width-full spacing />
-		       		
+	       			<v-horizontal-layout width-full spacing>
+		       		<v-combo-box caption="" _id="lineales" width-full null-selection-allowed=true text-input-allowed=false />
+			    	</v-horizontal-layout>
+			    	<v-check-box :middle caption="Continuidad" _id="continuidadLineales"></v-check-box>
+			    	<v-check-box :middle caption="Ritmo" _id="ritmoLineales"></v-check-box>
+			    	<v-check-box :middle caption="Footwork" _id="footworkLineales"></v-check-box>
+			    	<v-check-box :middle caption="Limpieza" _id="limpiezaLineales"></v-check-box>
 			    </v-vertical-layout>	
 	       	</tab>
 	       		<tab caption="Giros" _id="tabGiros">
 	       		<v-vertical-layout height-full spacing>
-	       			<v-horizontal-layout width-full spacing />
-		       		
+	       			<v-horizontal-layout width-full spacing>
+		       		<v-combo-box caption="" _id="giros" width-full null-selection-allowed=true text-input-allowed=false />
+			    	</v-horizontal-layout>
+			    	<v-check-box :middle caption="Continuidad" _id="continuidadGiros"></v-check-box>
+			    	<v-check-box :middle caption="Ritmo" _id="ritmoGiros"></v-check-box>
+			    	<v-check-box :middle caption="Footwork" _id="footworkGiros"></v-check-box>
+			    	<v-check-box :middle caption="Limpieza" _id="limpiezaGiros"></v-check-box>
 			    </v-vertical-layout>	
 	       	</tab>
 	    </vaadin-tab-sheet> 
 	    <v-css-layout :expand style-name="expander" />
 	    <v-button style-name="cancel" _id="cancel" click-shortcut="escape">Cancelar</v-button>
-	    <v-button style-name="primary" _id="save">Salvar</v-button>
+	    <v-button style-name="primary" _id="save">Calcular</v-button>
     </v-vertical-layout>
 </v-css-layout>
 </body>
