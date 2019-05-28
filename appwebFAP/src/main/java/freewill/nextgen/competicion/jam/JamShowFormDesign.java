@@ -36,6 +36,7 @@ public class JamShowFormDesign extends CssLayout {
 	
     protected Button save;
     protected Button cancel;
+    protected Button calculadora;
     
     protected TabSheet tabSheet;
     protected Tab tabTodo;

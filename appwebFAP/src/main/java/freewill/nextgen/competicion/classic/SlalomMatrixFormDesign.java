@@ -6,6 +6,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.TextField;
@@ -24,9 +25,11 @@ import com.vaadin.ui.declarative.Design;
 @SuppressWarnings("serial")
 public class SlalomMatrixFormDesign extends CssLayout {
 	protected TextField puntuacion;
+	protected HorizontalLayout gridTricks;
 	
     protected Button cancel;
     protected Button save;
+    protected Button delete;
     
     protected TabSheet tabSheet;
     protected Tab tabElasticidad;
@@ -36,30 +39,35 @@ public class SlalomMatrixFormDesign extends CssLayout {
     protected Tab tabGiros;
     
     protected ComboBox elasticidad;
+    protected Button addElasticidad;
     protected CheckBox continuidadElasticidad;
     protected CheckBox ritmoElasticidad;
     protected CheckBox footworkElasticidad;
     protected CheckBox limpiezaElasticidad;
     
     protected ComboBox sentados;
+    protected Button addSentados;
     protected CheckBox continuidadSentados;
     protected CheckBox ritmoSentados;
     protected CheckBox footworkSentados;
     protected CheckBox limpiezaSentados;
     
     protected ComboBox saltos;
+    protected Button addSaltos;
     protected CheckBox continuidadSaltos;
     protected CheckBox ritmoSaltos;
     protected CheckBox footworkSaltos;
     protected CheckBox limpiezaSaltos;
     
     protected ComboBox lineales;
+    protected Button addLineales;
     protected CheckBox continuidadLineales;
     protected CheckBox ritmoLineales;
     protected CheckBox footworkLineales;
     protected CheckBox limpiezaLineales;
     
     protected ComboBox giros;
+    protected Button addGiros;
     protected CheckBox continuidadGiros;
     protected CheckBox ritmoGiros;
     protected CheckBox footworkGiros;

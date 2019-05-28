@@ -7,6 +7,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -19,6 +20,7 @@ import com.vaadin.ui.TabSheet.Tab;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.JamShowEntity;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -186,6 +188,17 @@ public class JamShowForm extends JamShowFormDesign {
 	                n.setDelayMsec(500);
 	                n.show(getUI().getPage());
 	            }
+            }
+        });
+        
+        calculadora.setIcon(FontAwesome.CALCULATOR);
+        calculadora.setWidth("100px");
+        calculadora.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	JamShowEntity rec = fieldGroup.getItemDataSource().getBean();
+            	if(viewLogic!=null)
+            		viewLogic.showCalculadora(rec);
             }
         });
         

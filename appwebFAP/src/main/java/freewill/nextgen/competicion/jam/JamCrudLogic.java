@@ -271,5 +271,10 @@ public class JamCrudLogic implements Serializable {
 		}
     	return null;
 	}
+
+	public void showCalculadora(JamShowEntity rec) {
+		if (activeView != null)
+			activeView.openCalculadora(rec);
+	}
 	
 }

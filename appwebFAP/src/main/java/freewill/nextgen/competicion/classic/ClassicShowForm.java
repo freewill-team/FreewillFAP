@@ -191,6 +191,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
         });
         
         calculadora.setIcon(FontAwesome.CALCULATOR);
+        calculadora.setWidth("100px");
         calculadora.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {

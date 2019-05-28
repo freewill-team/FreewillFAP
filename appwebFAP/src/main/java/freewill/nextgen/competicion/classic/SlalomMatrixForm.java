@@ -2,31 +2,18 @@ package freewill.nextgen.competicion.classic;
 
 import java.util.Collection;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
-import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
-import com.vaadin.ui.TabSheet.Tab;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.ClassicShowEntity;
-import freewill.nextgen.data.ClubEntity;
 import freewill.nextgen.data.SlalomTrickEntity;
 import freewill.nextgen.data.SlalomTrickEntity.TrickFamilyEnum;
-import freewill.nextgen.hmi.utils.Messages;
+import freewill.nextgen.genericCrud.GenericGrid;
 
 /**
  * A form for editing a single record.
@@ -38,69 +25,25 @@ import freewill.nextgen.hmi.utils.Messages;
 @SuppressWarnings("serial")
 public class SlalomMatrixForm extends SlalomMatrixFormDesign {
 	
-    private ClassicCrudLogic viewLogic;
-    //private BeanFieldGroup<ClassicShowEntity> fieldGroup;
-    private ClassicShowEntity classicShow = null;
+    //private ClassicCrudLogic viewLogic;
+    //private ClassicShowEntity classicShow = null;
+    private GenericGrid<SlalomTrickEntity> grid = null;
     private int points = 0;
     
-    @SuppressWarnings("rawtypes")
-    public SlalomMatrixForm(ClassicCrudLogic logic) {
+    public SlalomMatrixForm(/*ClassicCrudLogic logic*/) {
         super();
         addStyleName("product-form");
-        this.viewLogic = logic;
-        
-        
-        //fieldGroup = new BeanFieldGroup<ClassicShowEntity>(ClassicShowEntity.class);
-        //fieldGroup.bindMemberFields(this);
+        //this.viewLogic = logic;
 
-        // perform validation and enable/disable buttons while editing
-        /*ValueChangeListener valueListener = new ValueChangeListener() {
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                formHasChanged();
-            }
-        };
-        for (Field f : fieldGroup.getFields()) {
-            f.addValueChangeListener(valueListener);
-            f.setCaption(Messages.get().getKey(f.getCaption())); // Translations
-        }*/
-
-        /*fieldGroup.addCommitHandler(new CommitHandler() {
-
-            @Override
-            public void preCommit(CommitEvent commitEvent)
-                    throws CommitException {
-            	//System.out.println("Entrando en Commit...");
-            }
-
-            @Override
-            public void postCommit(CommitEvent commitEvent)
-                    throws CommitException {
-            	//System.out.println("Entrando en Update Record...");
-            	ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
-            	if(viewLogic!=null){
-            		viewLogic.saveRecord(rec);
-            	}
-            }
-        });*/
-
-        save.addClickListener(new ClickListener() {
+        delete.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	points = calculaPuntuacion();
-            	puntuacion.setValue(""+points);
-                /*try {
-                    fieldGroup.commit();
-                    ClassicShowEntity rec = fieldGroup.getItemDataSource().getBean();
-                	classicShow.setYotalJuezX(....);
-                    // only if validation succeeds
-                } catch (CommitException e) {
-                	System.out.println(e.getMessage());
-                    Notification n = new Notification(
-                            "Please re-check the fields", Type.ERROR_MESSAGE);
-                    n.setDelayMsec(500);
-                    n.show(getUI().getPage());
-                }*/
+            	SlalomTrickEntity rec = grid.getSelectedRow();
+            	if(rec!=null){
+            		points -= rec.getValor();
+            		grid.remove(rec);
+            		puntuacion.setValue(""+points);
+            	}
             }
         });
         
@@ -110,17 +53,6 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             	close();
             }
         });
-        
-        /*tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener(){
-        	@Override
-			public void selectedTabChange(SelectedTabChangeEvent e) {
-        		if(viewLogic==null || tabSheet.getSelectedTab()==null) return;
-        		Tab tab = tabSheet.getTab(tabSheet.getSelectedTab());
-        		int pos = tabSheet.getTabPosition(tab);
-            	//System.out.println("Selected Tab = "+pos);
-            	viewLogic.setGridColumns(pos);
-        	}
-		});*/
         
         try{
         	// Rellenar ComboBox elasticidad
@@ -174,8 +106,8 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
         }
         
         try{
-        	// Rellenar ComboBox linealess
-        	linealess.removeAllItems();
+        	// Rellenar ComboBox lineales
+        	lineales.removeAllItems();
             Collection<SlalomTrickEntity> recs = BltClient.get().executeQuery(
             		"/getbyfamily/"+TrickFamilyEnum.LINEALES.name(),
             		SlalomTrickEntity.class,
@@ -207,17 +139,114 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
         	Notification.show("Error: "+e.getMessage(), Type.ERROR_MESSAGE);
         }
         
+        grid = new GenericGrid<SlalomTrickEntity>(
+        		SlalomTrickEntity.class, "id", "nombre", "familia", "valor");
+        grid.setHeight("240px");
+        gridTricks.addComponent(grid);
+        
+        addElasticidad.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	SlalomTrickEntity rec = (SlalomTrickEntity) elasticidad.getValue();
+            	if(rec!=null){
+            		int pnts = rec.getValor();
+            		if(continuidadElasticidad.getValue()) pnts++;
+            		if(ritmoElasticidad.getValue()) pnts++;
+            		if(footworkElasticidad.getValue()) pnts++;
+            		if(limpiezaElasticidad.getValue()) pnts++;
+            		rec.setValor(pnts);
+            		grid.refresh(rec);
+            		points += pnts;
+            		puntuacion.setValue(""+points);
+            	}
+            }
+        });
+        
+        addSentados.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	SlalomTrickEntity rec = (SlalomTrickEntity) sentados.getValue();
+            	if(rec!=null){
+            		int pnts = rec.getValor();
+            		if(continuidadSentados.getValue()) pnts++;
+            		if(ritmoSentados.getValue()) pnts++;
+            		if(footworkSentados.getValue()) pnts++;
+            		if(limpiezaSentados.getValue()) pnts++;
+            		rec.setValor(pnts);
+            		grid.refresh(rec);
+            		points += pnts;
+            		puntuacion.setValue(""+points);
+            	}
+            }
+        });
+        
+        addSaltos.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	SlalomTrickEntity rec = (SlalomTrickEntity) saltos.getValue();
+            	if(rec!=null){
+            		int pnts = rec.getValor();
+            		if(continuidadSaltos.getValue()) pnts++;
+            		if(ritmoSaltos.getValue()) pnts++;
+            		if(footworkSaltos.getValue()) pnts++;
+            		if(limpiezaSaltos.getValue()) pnts++;
+            		rec.setValor(pnts);
+            		grid.refresh(rec);
+            		points += pnts;
+            		puntuacion.setValue(""+points);
+            	}
+            }
+        });
+        
+        addLineales.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	SlalomTrickEntity rec = (SlalomTrickEntity) lineales.getValue();
+            	if(rec!=null){
+            		int pnts = rec.getValor();
+            		if(continuidadLineales.getValue()) pnts++;
+            		if(ritmoLineales.getValue()) pnts++;
+            		if(footworkLineales.getValue()) pnts++;
+            		if(limpiezaLineales.getValue()) pnts++;
+            		rec.setValor(pnts);
+            		grid.refresh(rec);
+            		points += pnts;
+            		puntuacion.setValue(""+points);
+            	}
+            }
+        });
+        
+        addGiros.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	SlalomTrickEntity rec = (SlalomTrickEntity) giros.getValue();
+            	if(rec!=null){
+            		int pnts = rec.getValor();
+            		if(continuidadGiros.getValue()) pnts++;
+            		if(ritmoGiros.getValue()) pnts++;
+            		if(footworkGiros.getValue()) pnts++;
+            		if(limpiezaGiros.getValue()) pnts++;
+            		rec.setValor(pnts);
+            		grid.refresh(rec);
+            		points += pnts;
+            		puntuacion.setValue(""+points);
+            	}
+            }
+        });
+        
     }
     
-    public void editRecord(ClassicShowEntity rec) {
-        if (rec == null) {
+    public void editRecord(/*ClassicShowEntity rec*/) {
+        /*if (rec == null) {
             rec = new ClassicShowEntity();
-            //fieldGroup.setItemDataSource(new BeanItem<ClassicShowEntity>(rec));
-            //save.setEnabled(false);
+            save.setEnabled(false);
             return;
-        }
+        }*/
         //fieldGroup.setItemDataSource(new BeanItem<ClassicShowEntity>(rec));
-        classicShow = rec;
+        //classicShow = rec;
+        points = 0;
+		puntuacion.setValue(""+points);
+		grid.setRecords(null);
 
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
@@ -244,6 +273,7 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
         }
         */
     	puntuacion.setEnabled(false);
+    	save.setVisible(false);
         //save.setEnabled(editable && EntryPoint.get().getAccessControl().isUserInRole(UserRoleEnum.COORD));
     }
 
@@ -252,54 +282,4 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
 		setEnabled(false);
 	}
 	
-	private int calculaPuntuacion(){
-		int points = 0;
-		
-		SlalomTrickEntity rec = (SlalomTrickEntity) sentados.getValue();
-    	if(rec!=null){
-    		points += rec.getValor();
-    		if(continuidadSentados.getValue()) points++;
-    		if(ritmoSentados.getValue()) points++;
-    		if(footworkSentados.getValue()) points++;
-    		if(limpiezaSentados.getValue()) points++;
-    	}
-    	rec = (SlalomTrickEntity) elasticidad.getValue();
-    	if(rec!=null){
-    		points += rec.getValor();
-    		if(continuidadElasticidad.getValue()) points++;
-    		if(ritmoElasticidad.getValue()) points++;
-    		if(footworkElasticidad.getValue()) points++;
-    		if(limpiezaElasticidad.getValue()) points++;
-    	}
-    	
-    	rec = (SlalomTrickEntity) saltos.getValue();
-    	if(rec!=null){
-    		points += rec.getValor();
-    		if(continuidadSaltos.getValue()) points++;
-    		if(ritmoSaltos.getValue()) points++;
-    		if(footworkSaltos.getValue()) points++;
-    		if(limpiezaSaltos.getValue()) points++;
-    	}
-    	
-    	rec = (SlalomTrickEntity) lineales.getValue();
-    	if(rec!=null){
-    		points += rec.getValor();
-    		if(continuidadLineales.getValue()) points++;
-    		if(ritmoLineales.getValue()) points++;
-    		if(footworkLineales.getValue()) points++;
-    		if(limpiezaLineales.getValue()) points++;
-    	}
-    	
-    	rec = (SlalomTrickEntity) giros.getValue();
-    	if(rec!=null){
-    		points += rec.getValor();
-    		if(continuidadGiros.getValue()) points++;
-    		if(ritmoGiros.getValue()) points++;
-    		if(footworkGiros.getValue()) points++;
-    		if(limpiezaGiros.getValue()) points++;
-    	}
-    	
-    	return points;
-	}
-    		
 }

@@ -76,7 +76,7 @@ public class ClassicFinal extends CssLayout {
         });
         
         form = new ClassicShowForm(viewLogic);
-        formCalc = new SlalomMatrixForm(viewLogic);
+        formCalc = new SlalomMatrixForm();
         
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -289,7 +289,7 @@ public class ClassicFinal extends CssLayout {
         	formCalc.removeStyleName("visible");
         	formCalc.setEnabled(false);
         }
-		formCalc.editRecord(rec);
+		formCalc.editRecord(/*rec*/);
 	}
 	
 	public void closeCalculadora() {

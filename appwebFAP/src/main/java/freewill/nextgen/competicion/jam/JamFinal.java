@@ -22,8 +22,10 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
+import freewill.nextgen.competicion.classic.SlalomMatrixForm;
 import freewill.nextgen.competicion.jam.JamShowForm;
 import freewill.nextgen.data.JamShowEntity;
+import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -40,6 +42,7 @@ public class JamFinal extends CssLayout {
 	private String categoriaStr = "";
 	private GenericGrid<JamShowEntity> grid;
 	private JamShowForm form;
+	private SlalomMatrixForm formCalc;
 	private JamCrudLogic viewLogic;
 	private JamCrudView parent = null;
 	private boolean competiOpen = false;
@@ -75,6 +78,7 @@ public class JamFinal extends CssLayout {
         });
         
         form = new JamShowForm(viewLogic);
+        formCalc = new SlalomMatrixForm();
           
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
@@ -87,6 +91,7 @@ public class JamFinal extends CssLayout {
         
         addComponent(barAndGridLayout);
         addComponent(form);
+        addComponent(formCalc);
 	    
 	    viewLogic.initGrid(this.competicion, this.categoria);
 	    
@@ -285,5 +290,20 @@ public class JamFinal extends CssLayout {
     		break;
     	}
 	}
+
+	public void openCalculadora(JamShowEntity rec) {
+		System.out.println("Entrando en openCalculadora "+rec);
+    	if (rec != null) {
+    		formCalc.addStyleName("visible");
+    		formCalc.setEnabled(true);
+        } else {
+        	formCalc.removeStyleName("visible");
+        	formCalc.setEnabled(false);
+        }
+		formCalc.editRecord(/*rec*/);
+	}
 	
+	public void closeCalculadora() {
+		formCalc.close();
+	}
 }
