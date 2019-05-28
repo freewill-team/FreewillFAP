@@ -1,7 +1,10 @@
 package freewill.nextgen.competicion.classic;
 
 import java.util.Collection;
+import java.util.List;
 
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -10,7 +13,6 @@ import com.vaadin.ui.Notification.Type;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.SlalomTrickEntity;
 import freewill.nextgen.data.SlalomTrickEntity.TrickFamilyEnum;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -142,6 +144,12 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
         grid = new GenericGrid<SlalomTrickEntity>(
         		SlalomTrickEntity.class, "id", "nombre", "familia", "valor");
         grid.setHeight("240px");
+        grid.addSelectionListener(new SelectionListener() {
+            @Override
+            public void select(SelectionEvent event) {
+                delete.setEnabled(grid.getSelectedRow()!=null);
+            }
+        });
         gridTricks.addComponent(grid);
         
         addElasticidad.addClickListener(new ClickListener() {
@@ -154,10 +162,15 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             		if(ritmoElasticidad.getValue()) pnts++;
             		if(footworkElasticidad.getValue()) pnts++;
             		if(limpiezaElasticidad.getValue()) pnts++;
-            		rec.setValor(pnts);
-            		grid.refresh(rec);
-            		points += pnts;
-            		puntuacion.setValue(""+points);
+            		try {
+            			SlalomTrickEntity rec2 = rec.clone();
+            			rec2.setValor(pnts);
+						grid.refresh(rec2);
+						points = calcula();
+	            		puntuacion.setValue(""+points);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
@@ -172,10 +185,15 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             		if(ritmoSentados.getValue()) pnts++;
             		if(footworkSentados.getValue()) pnts++;
             		if(limpiezaSentados.getValue()) pnts++;
-            		rec.setValor(pnts);
-            		grid.refresh(rec);
-            		points += pnts;
-            		puntuacion.setValue(""+points);
+            		try {
+            			SlalomTrickEntity rec2 = rec.clone();
+            			rec2.setValor(pnts);
+						grid.refresh(rec2);
+						points = calcula();
+	            		puntuacion.setValue(""+points);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
@@ -190,10 +208,15 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             		if(ritmoSaltos.getValue()) pnts++;
             		if(footworkSaltos.getValue()) pnts++;
             		if(limpiezaSaltos.getValue()) pnts++;
-            		rec.setValor(pnts);
-            		grid.refresh(rec);
-            		points += pnts;
-            		puntuacion.setValue(""+points);
+            		try {
+            			SlalomTrickEntity rec2 = rec.clone();
+            			rec2.setValor(pnts);
+						grid.refresh(rec2);
+						points = calcula();
+	            		puntuacion.setValue(""+points);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
@@ -208,10 +231,15 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             		if(ritmoLineales.getValue()) pnts++;
             		if(footworkLineales.getValue()) pnts++;
             		if(limpiezaLineales.getValue()) pnts++;
-            		rec.setValor(pnts);
-            		grid.refresh(rec);
-            		points += pnts;
-            		puntuacion.setValue(""+points);
+            		try {
+            			SlalomTrickEntity rec2 = rec.clone();
+            			rec2.setValor(pnts);
+						grid.refresh(rec2);
+						points = calcula();
+	            		puntuacion.setValue(""+points);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
@@ -226,17 +254,33 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
             		if(ritmoGiros.getValue()) pnts++;
             		if(footworkGiros.getValue()) pnts++;
             		if(limpiezaGiros.getValue()) pnts++;
-            		rec.setValor(pnts);
-            		grid.refresh(rec);
-            		points += pnts;
-            		puntuacion.setValue(""+points);
+            		try {
+            			SlalomTrickEntity rec2 = rec.clone();
+            			rec2.setValor(pnts);
+						grid.refresh(rec2);
+						points = calcula();
+	            		puntuacion.setValue(""+points);
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
             	}
             }
         });
         
     }
     
-    public void editRecord(/*ClassicShowEntity rec*/) {
+    @SuppressWarnings("unchecked")
+	private int calcula() {
+		int pnts = 0;
+		List<SlalomTrickEntity> list = (List<SlalomTrickEntity>) 
+				grid.getContainerDataSource().getItemIds();
+		for(SlalomTrickEntity rec:list){
+			pnts += rec.getValor();
+		}
+		return pnts;
+	}
+
+	public void editRecord(/*ClassicShowEntity rec*/) {
         /*if (rec == null) {
             rec = new ClassicShowEntity();
             save.setEnabled(false);
@@ -256,6 +300,7 @@ public class SlalomMatrixForm extends SlalomMatrixFormDesign {
         // As this is not a Panel, using JavaScript
         String scrollScript = "window.document.getElementById('" + getId() + "').scrollTop = 0;";
         Page.getCurrent().getJavaScript().execute(scrollScript);
+        delete.setEnabled(false);
         
         formHasChanged();
     }
