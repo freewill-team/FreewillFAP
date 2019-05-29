@@ -1,4 +1,4 @@
-package freewill.nextgen.podiums;
+package freewill.nextgen.podiumscircuito;
 
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -15,16 +15,16 @@ import freewill.nextgen.hmi.utils.Messages;
  * UI content when the user is not logged in yet.
  */
 @SuppressWarnings("serial")
-public class AnonymousLoginPodium extends CssLayout {
+public class AnonymousLoginPodiumCircuito extends CssLayout {
 
     //private AccessControl accessControl;
     VerticalLayout centeringLayout = null;
     Label loginInfoText = null;
 
-    public AnonymousLoginPodium(AccessControl accessControl) {
+    public AnonymousLoginPodiumCircuito(AccessControl accessControl) {
         //this.accessControl = accessControl;       
         if (accessControl.signIn("anonimo", "Anonimo9!", VaadinService.getCurrentRequest().getRemoteHost())) {      	
-        	PodiumsView results = new PodiumsView();
+        	PodiumsCircuitoView results = new PodiumsCircuitoView();
         	results.addStyleName("login-screen");
         	buildUI(results);
         	results.setInfoPanel(this);
@@ -67,10 +67,10 @@ public class AnonymousLoginPodium extends CssLayout {
         return loginInformation;
     }
     
-    public void setCompeticion(String competicionStr){
-    	String competicion = "<h1> Resultados <b>" + competicionStr +"</b></h1>";
+    public void setCircuito(String circuitoStr){
+    	String circuito = "<h1> Resultados <b>" + circuitoStr +"</b></h1>";
     	loginInfoText.setValue( 
-    			"<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +competicion);
+    			"<h1>"+ Messages.get().getKey("apptitle") +"</h1>" +circuito);
     }
     
 }

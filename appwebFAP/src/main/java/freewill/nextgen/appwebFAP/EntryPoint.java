@@ -39,6 +39,7 @@ import freewill.nextgen.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.hmi.common.ConfirmUseTermsDialog;
 import freewill.nextgen.hmi.common.NoPermissionView;
 import freewill.nextgen.podiums.AnonymousLoginPodium;
+import freewill.nextgen.podiumscircuito.AnonymousLoginPodiumCircuito;
 
 /**
  * Main UI class of the application that shows either the login screen or the
@@ -73,6 +74,16 @@ public class EntryPoint extends UI {
             setContent(new NewCompanyWizard());
         	return;
         }*/
+        
+        if(vaadinRequest.getParameter("circuito")!=null 
+           || vaadinRequest.getPathInfo().contains("circuito")){
+            System.out.println("Invoking Resultados Circuito Page...");
+            addStyleName(ValoTheme.UI_WITH_MENU);
+            // wrapper a ResultadosCrudView para mostrar marco y configurar usuario Anónimo
+            AnonymousLoginPodiumCircuito results = new AnonymousLoginPodiumCircuito(accessControl);
+            setContent(results);
+            return;
+        }
         
         if(vaadinRequest.getParameter("resultados")!=null 
            || vaadinRequest.getPathInfo().contains("resultados")){
