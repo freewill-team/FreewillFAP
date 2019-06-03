@@ -271,7 +271,7 @@ public class PatinadorManager {
 			else
 				removeInscripcion(ModalidadEnum.JUMP, inscripciones);
 			
-			if(rec.getJam() && rec.getIdPareja()!=null)
+			if(rec.getJam() && rec.getIdPareja()!=null && rec.getParejaJam()!=null)
 				updateInscripcion(ModalidadEnum.JAM, rec.getCatJam(), rec, competicion, inscripciones);
 			else
 				removeInscripcion(ModalidadEnum.JAM, inscripciones);
@@ -327,6 +327,7 @@ public class PatinadorManager {
     	inscripcion.setClubStr(rec.getClubStr());
     	inscripcion.setCompany(rec.getCompany());
     	inscripcion.setCompeticion(competicion);
+    	inscripcion.setParejaJam(rec.getParejaJam());
     	inscripcion.setPatinadorPareja(rec.getIdPareja());
     	inscripcion.setNombrePareja(rec.getNombrePareja());
     	inscripcion.setApellidosPareja(rec.getApellidosPareja());
@@ -375,7 +376,7 @@ public class PatinadorManager {
 			// Revisa si ya está inscrito como pareja anteriormente
 			List<ParticipanteEntity> otros = participanterepo.findByPatinadorParejaAndCompeticion(
 				rec.getPatinador(), rec.getCompeticion());
-			if(otros!=null & otros.size()>0)
+			if(otros!=null && otros.size()>0)
 				throw new IllegalArgumentException("El patinador ya está inscrito en otra pareja de JAM.");
 		}
 		else{
@@ -383,6 +384,7 @@ public class PatinadorManager {
 			rec.setPatinadorPareja(null);
 			rec.setNombrePareja("");
 			rec.setApellidosPareja("");
+			rec.setParejaJam(null);
 		}
 			
 		// Injects the new record

@@ -80,7 +80,9 @@ public class PatinadorEntity implements Serializable, Cloneable {
 	@Transient
 	private Long idCatSalto;
 	@Transient
-	private Long idPareja; 				// Id de la pareja de Jam
+	private Long idPareja; 				// Id del patinador pareja Jam
+	@Transient
+	private Long parejaJam; 			// Id de la pareja de Jam
 	
 	public enum GenderEnum{ 
 		MALE("Masculino"),
@@ -467,6 +469,14 @@ public class PatinadorEntity implements Serializable, Cloneable {
 
 	public void setIdCatSalto(Long idCatSalto) {
 		this.idCatSalto = idCatSalto;
+	}
+
+	public Long getParejaJam() {
+		return parejaJam;
+	}
+
+	public void setParejaJam(Long parejaJam) {
+		this.parejaJam = parejaJam;
 	}
     
 }
