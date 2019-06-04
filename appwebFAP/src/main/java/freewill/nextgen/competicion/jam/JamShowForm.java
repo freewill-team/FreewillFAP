@@ -206,7 +206,6 @@ public class JamShowForm extends JamShowFormDesign {
     
     public void editRecord(JamShowEntity rec, boolean editable) {
         if (rec == null) {
-        	//TODO MMFL esto no deberia ocurrir borrar
             rec = new JamShowEntity();
             fieldGroup.setItemDataSource(new BeanItem<JamShowEntity>(rec));
             save.setEnabled(false);
@@ -233,6 +232,11 @@ public class JamShowForm extends JamShowFormDesign {
     	artisticaJuez3b.setValue(""+rec.getArtisticaJuez3());
     	tecnicaJuez3b.setValue(""+rec.getTecnicaJuez3());
     	sincronizacionJuez3b.setValue(""+rec.getSincronizacionJuez3());
+    	
+    	nombreDuo.setValue(rec.getNombreDuo());
+    	dorsalDuo.setValue(rec.getDorsalDuo());
+    	nombreDuo.setEnabled(false);
+    	dorsalDuo.setEnabled(false);
         
         formHasChanged();
     }

@@ -336,7 +336,7 @@ public class ParticipanteManager {
 			if(competi!=null){
 				if(rec.getClasificacion()==0 || rec.getClasificacion()==999
 						|| competi.getFechaInicio().after(now)
-						|| rec.getMejorMarca()==0)
+						|| rec.getMejorMarca()==0 || rec.getMejorMarca()>99999)
 					continue;
 				rec.setCompeticionStr(competi.getNombre());
 				rec.setFecha(competi.getFechaInicio());

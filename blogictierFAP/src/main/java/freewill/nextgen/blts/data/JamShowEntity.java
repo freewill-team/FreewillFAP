@@ -238,6 +238,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	public void setTotalJuez1(float total) {
 		totalJuez1 = total;
 	}
+	
 	public float getTotalJuez2() {
 		return totalJuez2;
 	}

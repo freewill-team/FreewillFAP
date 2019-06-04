@@ -230,6 +230,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	public void setTotalJuez1(float total) {
 		totalJuez1 = total;
 	}
+	
 	public float getTotalJuez2() {
 		return totalJuez2;
 	}
@@ -237,6 +238,7 @@ public class JamShowEntity implements Serializable, Cloneable {
 	public void setTotalJuez2(float total) {
 		totalJuez2 = total;
 	}
+	
 	public float getTotalJuez3() {
 		return totalJuez3;
 	}
