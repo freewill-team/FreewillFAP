@@ -93,7 +93,7 @@ public class GestionForm extends GestionFormDesign {
         patines.setStyleName(ValoTheme.TABLE_SMALL);
         patinLayout.addComponent(patines);
         patinLayout.setCaption(Messages.get().getKey("participantes"));
-        patinLayout.setHeight("280px");
+        patinLayout.setHeight("300px");
         
     }
 
