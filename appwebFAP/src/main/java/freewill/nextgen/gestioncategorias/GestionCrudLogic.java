@@ -180,5 +180,9 @@ public class GestionCrudLogic implements Serializable {
 		}
 		return false;
 	}
+
+	public void rowSelected(CategoriaEntity rec) {
+		view.editRecord(rec);
+	}
 	
 }

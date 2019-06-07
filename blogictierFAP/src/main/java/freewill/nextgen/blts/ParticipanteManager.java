@@ -270,10 +270,28 @@ public class ParticipanteManager {
 			@PathVariable Long competicion, @PathVariable Long categoria) throws Exception {
 		System.out.println("Getting Participantes List By competicion y categoria..."
 			+competicion+","+categoria);
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		CategoriaEntity catego = categoriarepo.findById(categoria);
+		if(catego==null)
+			throw new IllegalArgumentException("Error: La categoria indicada no existe");
 		List<ParticipanteEntity> recs = repository.findByCompeticionAndCategoria(
 				competicion, categoria);
+		// Annade la categoria Estandard/Teorica
+		for(ParticipanteEntity rec:recs){
+			rec.setCategoriaStr(catego.getNombre());
+			//System.out.println("Rec="+rec.getNombre()+" "+rec.getApellidos());
+			PatinadorEntity patin = patinrepo.findById(rec.getPatinador());
+			if(patin!=null){
+				CategoriaEntity defaultcat = categoriarepo.getDefaultCategoria(
+					patin.getFechaNacimiento(), patin.getGenero(),
+					catego.getModalidad(), user.getCompany());
+				if(defaultcat!=null){
+					rec.setCategoriaStr(defaultcat.getNombre());
+					rec.setCategoria(defaultcat.getId());
+				}
+			}
+		}
 		return recs;
 	}
 	
@@ -338,6 +356,7 @@ public class ParticipanteManager {
 						|| competi.getFechaInicio().after(now)
 						|| rec.getMejorMarca()==0 || rec.getMejorMarca()>99999)
 					continue;
+				rec.setCategoriaStr(catego.getNombre());
 				rec.setCompeticionStr(competi.getNombre());
 				rec.setFecha(competi.getFechaInicio());
 				PatinadorEntity patin = patinrepo.findById(rec.getPatinador());
@@ -350,8 +369,6 @@ public class ParticipanteManager {
 						rec.setCategoria(defaultcat.getId());
 					}
 				}
-				else
-					rec.setCategoriaStr(catego.getNombre());
 				output.add(rec);
 			}
 		}

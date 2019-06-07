@@ -54,6 +54,7 @@ public class GestionCrudGrid extends CssLayout {
     private boolean edicionAbierta = true;
     //private GestionCrudView parent = null;
     private ContextMenu menu = null;
+    private GestionForm form = null;
     
     public GestionCrudGrid(Long competicion, GestionCrudView parent) {
     	this.competicion = competicion;
@@ -67,9 +68,11 @@ public class GestionCrudGrid extends CssLayout {
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
-                //viewLogic.rowSelected(grid.getSelectedRow(), competi, preinscripcionAbierta);
+                viewLogic.rowSelected(grid.getSelectedRow());
             }
         });
+        
+        form = new GestionForm(viewLogic);
         
         // Menu contextual con acciones disponibles
         menu = new ContextMenu(grid, true);
@@ -104,6 +107,7 @@ public class GestionCrudGrid extends CssLayout {
         barAndGridLayout.setStyleName("crud-main-layout");
         
         addComponent(barAndGridLayout);
+        addComponent(form);
         
         edicionAbierta = true;
     	competi = viewLogic.getCompeticion(this.competicion);
@@ -204,6 +208,17 @@ public class GestionCrudGrid extends CssLayout {
 
 	public void setEdicionAbierta(boolean b) {
 		edicionAbierta = b;
+	}
+
+	public void editRecord(CategoriaEntity rec) {
+		if (rec != null) {
+            form.addStyleName("visible");
+            form.setEnabled(true);
+        } else {
+            form.removeStyleName("visible");
+            form.setEnabled(false);
+        }
+        form.editRecord(this.competicion, rec);
 	}
 	
 }

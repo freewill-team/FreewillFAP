@@ -1,7 +1,6 @@
 package freewill.nextgen.appwebFAP;
 
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
@@ -25,6 +24,7 @@ import freewill.nextgen.data.CircuitoEntity;
 import freewill.nextgen.data.ClubEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ConfigEntity;
+import freewill.nextgen.data.InscripcionEntity;
 import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.data.PuntuacionesEntity;
@@ -173,7 +173,17 @@ public class MainScreen extends HorizontalLayout {
 		    // Inscripciones
 		    PreinscripcionCrudView inscripcionView = new PreinscripcionCrudView(InscripcionEnum.INSCRIPCION);
         	menu.addView(inscripcionView, inscripcionView.VIEW_NAME, FontAwesome.PAPERCLIP);
-		    
+        	
+        	// Solicitudes
+        	String solicitudes = Messages.get().getKey("solicitudes");
+ 		    GenericCrudView<InscripcionEntity> solicitudesCrud = 
+ 		    		new GenericCrudView<InscripcionEntity>(
+ 		       		"PERMISSION", solicitudes, InscripcionEntity.class,
+ 		       		"id", "competicion", "coordinador", "clubStr", "email",
+ 		       		"telefono", "enviado", "fechaEnvio");
+ 		    menu.addView(solicitudesCrud, solicitudes, FontAwesome.HAND_PAPER_O);
+ 		    
+ 		    // Informes
         	InformesView informesCrud = new InformesView();
 		    menu.addView(informesCrud, informesCrud.VIEW_NAME, FontAwesome.FILES_O);
         	
