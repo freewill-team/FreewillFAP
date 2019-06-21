@@ -1,6 +1,5 @@
 package freewill.nextgen.competicion.salto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +47,7 @@ public class SaltoTrial extends CssLayout {
 	private int alturaNextRonda = 0;
 	private SaltoCrudView parent = null;
 	private TextField newAltura;
+	private Button deleteRonda;
 	private boolean showOnly2Jumps = false;
 	private boolean competiOpen = false;
 	private Button nextButton = null;
@@ -63,6 +63,8 @@ public class SaltoTrial extends CssLayout {
 		viewLogic = new SaltoCrudLogic(this);
 		
 		alturaNextRonda = viewLogic.existenDatosRonda(competicion, categoria, ronda+1);
+		
+		System.out.println("alturanextronda="+alturaNextRonda);
 		
 		setSizeFull();
         addStyleName("crud-view");
@@ -117,7 +119,10 @@ public class SaltoTrial extends CssLayout {
     		competiOpen = false;
     		nextButton.setEnabled(false);
     	}
-	    
+	    newAltura.setEnabled(alturaNextRonda==0 && competiOpen);
+	    deleteRonda.setEnabled(alturaNextRonda==0 && competiOpen);
+	    System.out.println("alturanextronda="+alturaNextRonda);
+	    System.out.println("competicion Open ="+competiOpen);
 	}
 	
 	public HorizontalLayout createTopBar() {
@@ -138,7 +143,7 @@ public class SaltoTrial extends CssLayout {
             }
         });
 		
-		Button deleteRonda = new Button("");
+		deleteRonda = new Button("");
 		deleteRonda.addStyleName(ValoTheme.BUTTON_DANGER);
 		deleteRonda.setIcon(FontAwesome.REMOVE);
 		deleteRonda.setDescription("Elimina datos de esta ronda");
@@ -168,8 +173,6 @@ public class SaltoTrial extends CssLayout {
 			newAltura.setEnabled(false);
 			deleteRonda.setEnabled(false);
 		}*/
-		newAltura.setEnabled(alturaNextRonda==0 && competiOpen);
-		deleteRonda.setEnabled(alturaNextRonda==0 && competiOpen);
 		
 		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
