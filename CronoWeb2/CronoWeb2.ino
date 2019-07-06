@@ -10,7 +10,7 @@
 #define TRIGGERPIN D2
 #define ECHOPIN    D3
 #define SENSORPIN  D1
-#define GATE       1    // 1 o 2 para Gate1 y Gate2 respectivamente
+#define GATE       2    // 1 o 2 para Gate1 y Gate2 respectivamente
 
 // Your WiFi credentials
 char ssid[] = "dlink-E090";
