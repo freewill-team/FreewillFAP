@@ -4,11 +4,11 @@ const char INDEX_HTML[] PROGMEM = R"=====(
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CronoWeb</title>
+<title>CronoWeb (Time Trial)</title>
 
 <script>
-  var connection1 = new WebSocket('ws://192.168.1.115:81/', ['arduino']);
-  var connection2 = new WebSocket('ws://192.168.1.118:81/', ['arduino']);
+  var connection1 = new WebSocket('ws://192.168.4.115:81/', ['arduino']);
+  var connection2 = new WebSocket('ws://192.168.4.118:81/', ['arduino']);
   var starttime = null;
   var timer = null;
   var audioContext = AudioContext && new AudioContext();
@@ -30,10 +30,6 @@ const char INDEX_HTML[] PROGMEM = R"=====(
     var now = millis();
     var n = (now - starttime) / 1000;
     bio.innerHTML = parseFloat(n).toFixed(3);
-    /*if(now.getMilliseconds()>=starttime.getMilliseconds())
-      bio.innerHTML = (now.getSeconds()-starttime.getSeconds())+'.'+(now.getMilliseconds()-starttime.getMilliseconds());
-    else
-      bio.innerHTML = (now.getSeconds()-starttime.getSeconds())+'.'+(1000-starttime.getMilliseconds()+now.getMilliseconds());*/
     //console.log('Into showTime()');
   }
 
@@ -70,7 +66,7 @@ const char INDEX_HTML[] PROGMEM = R"=====(
       starttime = millis();
       beep(100, 3000, 300); // 300 msec beep
       timer = window.setInterval(showCronoTime, 50);
-      console.log('Startime0 = '+starttime);
+      //console.log('Startime0 = '+starttime);
     }
   }
 	
@@ -81,13 +77,16 @@ const char INDEX_HTML[] PROGMEM = R"=====(
       timer = null;
       beep(100, 3000, 300); // 300 msec beep
     }
-    else
-      resetTime(crono);
     console.log('Startime1 = '+starttime);
 	}
 
   function detenerAll(){
-    detener('crono');
+    if(timer==null){
+      resetTime('crono');
+      console.log('All reset');
+    }
+    else
+      detener('crono');
   }
 
   function start(){
@@ -145,7 +144,9 @@ const char INDEX_HTML[] PROGMEM = R"=====(
             
 </head>
 <body onload="javascript:start();">
- 
+
+  <h3>CronoWeb (Time Trial)</h3>
+  <hr>
 	<div class="crono_wrapper">
 		<h1 id='crono'>0.000</h1>
 	</div>
@@ -163,6 +164,7 @@ const char INDEX_HTML[] PROGMEM = R"=====(
     </tr>
   </table>
   <hr>
+  <a href="./ko">Go to KO System</a>
 
 </body>
 </html>

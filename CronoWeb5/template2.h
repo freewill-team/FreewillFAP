@@ -4,11 +4,11 @@ const char KO_HTML[] PROGMEM = R"=====(
 <head>
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CronoWeb</title>
+<title>CronoWeb (KO System)</title>
 
 <script>
-  var connection1 = new WebSocket('ws://192.168.1.115:81/', ['arduino']);
-  var connection2 = new WebSocket('ws://192.168.1.118:81/', ['arduino']);
+  var connection1 = new WebSocket('ws://192.168.4.115:81/', ['arduino']);
+  var connection2 = new WebSocket('ws://192.168.4.118:81/', ['arduino']);
   var starttime = null;
   var timer1 = null;
   var timer2 = null;
@@ -31,10 +31,6 @@ const char KO_HTML[] PROGMEM = R"=====(
     var now = millis();
     var n = (now - starttime) / 1000;
     bio.innerHTML = parseFloat(n).toFixed(3);
-    /*if(now.getMilliseconds()>=starttime.getMilliseconds())
-      bio.innerHTML = (now.getSeconds()-starttime.getSeconds())+'.'+(now.getMilliseconds()-starttime.getMilliseconds());
-    else
-      bio.innerHTML = (now.getSeconds()-starttime.getSeconds())+'.'+(1000-starttime.getMilliseconds()+now.getMilliseconds());*/
     //console.log('Into showTime()');
   }
 
@@ -77,12 +73,12 @@ const char KO_HTML[] PROGMEM = R"=====(
         beep(100, 1200, 500); // 1 sec beep
         }, 1500);
       setTimeout(function(){
+        beep(100, 3000, 300); // 300 msec beep
+        beep(100, 3000, 300); // 300 msec beep
         starttime = millis();
-        beep(100, 3000, 300); // 300 msec beep
-        beep(100, 3000, 300); // 300 msec beep
         timer1 = window.setInterval(showCrono1Time, 50);
         timer2 = window.setInterval(showCrono2Time, 50);
-        console.log('Startime0 = '+starttime);
+        //console.log('Startime0 = '+starttime);
         }, 2600+Math.random()*300);
     }
   }
@@ -162,7 +158,7 @@ const char KO_HTML[] PROGMEM = R"=====(
 	</script>
 	
 	<style>
-	.crono_wrapper {text-decoration: none; font-size: 28px; margin: 2px; text-align:center; width:100%; min-width: 300px;}
+	.crono_wrapper {text-decoration: none; font-size: 28px; margin: 2px; text-align:center; width:100%; min-width: 150px;}
 	html {font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}
   .button { background-color: #195B6A; border: none; color: white; padding: 16px 30px; width:100%;
     text-decoration: none; font-size: 22px; margin: 2px; cursor: pointer;}
@@ -175,11 +171,16 @@ const char KO_HTML[] PROGMEM = R"=====(
             
 </head>
 <body onload="javascript:start();">
- 
-	<div class="crono_wrapper">
-		<h1 id='crono1'>0.000</h1>
-    <h1 id='crono2'>0.000</h1>
-	</div>
+
+  <h3>CronoWeb (KO System)</h3>
+  <hr>
+  <table>
+    <tr>
+      <td><div class="crono_wrapper"><h1 id='crono1'>0.000</h1></div></td>
+      <td><div class="crono_wrapper"><h1 id='crono2'>0.000</h1></div></td> 
+    </tr>
+  </table>
+	
 	<p><button class="button" onclick="detenerAll();">STOP</button></p>
 	<p><button id="butStart" class="button" onclick="empezar();">START</button></p>
 	<hr>	
@@ -194,6 +195,7 @@ const char KO_HTML[] PROGMEM = R"=====(
     </tr>
   </table>
   <hr>
+  <a href="./">Go to Time Trial</a>
 
 </body>
 </html>

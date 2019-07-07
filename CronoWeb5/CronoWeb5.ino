@@ -9,15 +9,15 @@
 #define TRIGGERPIN D2
 #define ECHOPIN    D3
 #define SENSORPIN  D1
-#define GATE       1    // 1 o 2 para Gate1 y Gate2 respectivamente
+#define GATE       2    // 1 o 2 para Gate1 y Gate2 respectivamente
 
 // Your WiFi credentials
-char ssid[] = "dlink-E090";
+char ssid[] = "CronoAP"; // "dlink-E090";
 char pass[] = "wxdai25760";
-IPAddress ip1(192, 168, 1, 115);
-IPAddress ip2(192, 168, 1, 118);
-//IPAddress gateway(192, 168, 1, 39);  // IP Address of your WiFi Router (Gateway)
-//IPAddress subnet(255, 255, 255, 0); // Subnet mask
+IPAddress ip1(192, 168, 4, 115);
+IPAddress ip2(192, 168, 4, 118);
+IPAddress gateway(192, 168, 4, 1);  // IP Address of your WiFi Router (Gateway)
+IPAddress subnet(255, 255, 255, 0); // Subnet mask
 String gate1 = "CronoGate1";
 String gate2 = "CronoGate2";
 String hostName = "";
@@ -45,42 +45,57 @@ void setup()
   pinMode(ECHOPIN, INPUT);
   pinMode(SENSORPIN, INPUT_PULLUP);
   
-  // Fijamos nombre de red
-  if(GATE==1)
+  if(GATE==1){
+    // Fijamos nombre de red
     hostName = gate1;
-  else
-    hostName = gate2;
-  WiFi.hostname(hostName);  
-   
-  // Conectamos a la red WiFi
-  Serial.println();
-  Serial.print(hostName);
-  Serial.print(" connecting to ");
-  Serial.println(ssid);
- 
-  /* Configuramos el ESP8266 como cliente WiFi. Si no lo hacemos 
-     se configurará como cliente y punto de acceso al mismo tiempo */
-  WiFi.mode(WIFI_STA); // Modo cliente WiFi
-  WiFi.begin(ssid, pass);
-
-  // Esperamos a que estemos conectados a la red WiFi
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(600);
-    blink = !blink;
-    digitalWrite(LED_BUILTIN, blink);
-    Serial.print(".");
+    WiFi.hostname(hostName);
+    
+    // Activamos el Wifi Access Point solo en Gate 1
+    Serial.print("Creating Access Point ");
+    Serial.println(ssid);
+    
+    WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(ip1, gateway, subnet);
+    while(!WiFi.softAP(ssid, pass)){
+      delay(600);
+      blink = !blink;
+      digitalWrite(LED_BUILTIN, blink);
+      Serial.print(".");
+    }
+    Serial.println("Ready");
+    
+    Serial.println("");
+    Serial.print("Access Point IP address: ");
+    Serial.println(WiFi.softAPIP());
   }
-
-  /*/ Fijamos direccion IP estatica
-  if(GATE==1)
-    WiFi.config(ip1, WiFi.subnetMask(), WiFi.gatewayIP());
-  else
-    WiFi.config(ip2, WiFi.subnetMask(), WiFi.gatewayIP());*/
-
-  Serial.println("");
-  Serial.println("WiFi connected"); 
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP()); // Mostramos la IP
+  else{
+    // Fijamos nombre de red
+    hostName = gate2;
+    WiFi.hostname(hostName);
+    
+    // Conectamos a la red WiFi
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    /* Configuramos el ESP8266 como cliente WiFi. Si no lo hacemos 
+       se configurará como cliente y punto de acceso al mismo tiempo */
+    WiFi.mode(WIFI_STA); // Modo cliente WiFi
+    WiFi.config(ip2, gateway, subnet);
+    WiFi.begin(ssid, pass);
+    
+    // Esperamos a que estemos conectados a la red WiFi
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(600);
+      blink = !blink;
+      digitalWrite(LED_BUILTIN, blink);
+      Serial.print(".");
+    }
+    //WiFi.config(ip2, WiFi.gatewayIP(), WiFi.subnetMask());
+    WiFi.setAutoReconnect(true);
+    Serial.println("");
+    Serial.println("WiFi connected"); 
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP()); // Mostramos la IP
+  }
 
   // Activamos web server
   server.on("/", handleRoot);
@@ -109,8 +124,8 @@ void loop()
     // Envia Open inmediatamente
     sendStatus(gateOpen);
     Serial.println("Object detected into Gate");
-    delay(500); // To avoid spoureous
     digitalWrite(LED_BUILTIN, HIGH);
+    delay(500); // To avoid spoureous
   }
   else{
     digitalWrite(LED_BUILTIN, LOW);
