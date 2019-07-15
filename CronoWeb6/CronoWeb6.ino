@@ -6,12 +6,13 @@
 #include "template.h"
 #include "template2.h"
 #include "template3.h"
+#include "worker_js.h"
 
 #define LED_BUILTIN 2
 #define TRIGGERPIN D2
 #define ECHOPIN    D3
 #define SENSORPIN  D1
-#define GATE       2    // 1 o 2 para Gate1 y Gate2 respectivamente
+#define GATE       1    // 1 o 2 para Gate1 y Gate2 respectivamente
 #define ENTRADA    1    // 1 o 2 para entrada Digital o Analogica respectivamente
 
 // Your WiFi credentials
@@ -108,6 +109,7 @@ void setup()
   server.on("/", handleRoot);
   server.on("/ko", handleKo);
   server.on("/config", handleConfig);
+  server.on("/worker.js", handleWorker);
   server.onNotFound(handleNotFound);
   server.begin();
   Serial.println("HTTP server started");
@@ -188,6 +190,12 @@ void handleConfig(){
   Serial.println("Into handleConfig()...");
   // Returns Web Application to manage the chrono - Configuration
   server.send(200, "text/html", CONFIG_HTML);
+}
+
+void handleWorker(){
+  Serial.println("Into handleWorker()...");
+  // Returns Web Application to manage the chrono - Web Worker
+  server.send(200, "text/plain", WORKER_JS);
 }
 
 void handleNotFound() {

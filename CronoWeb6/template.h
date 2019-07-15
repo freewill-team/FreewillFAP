@@ -10,11 +10,11 @@ const char INDEX_HTML[] PROGMEM = R"=====(
   var connection1 = new WebSocket('ws://192.168.4.115:81/', ['arduino']);
   var connection2 = new WebSocket('ws://192.168.4.118:81/', ['arduino']);
   var starttime = null;
-  var timer = null;
   var audioContext = AudioContext && new AudioContext();
   
   function beep(amp, freq, ms){//amp:0..100, freq in Hz, ms
     if (!audioContext) return;
+    audioContext.resume();
     var osc = audioContext.createOscillator();
     var gain = audioContext.createGain();
     osc.connect(gain);
@@ -25,37 +25,24 @@ const char INDEX_HTML[] PROGMEM = R"=====(
     osc.stop(audioContext.currentTime+ms/1000);
   }
   
-  function showTime(crono){
+  function showTime(crono, now){
     var bio = document.getElementById(crono);
-    var now = millis();
-    var n = (now - starttime) / 1000;
+    var n = now / 1000;
     bio.innerHTML = parseFloat(n).toFixed(3);
     //console.log('Into showTime()');
   }
-
-  function showCronoTime(){
-    showTime('crono');
-  }
-
-  function resetTime(crono){
-    var bio = document.getElementById(crono);
-    bio.innerHTML = '0.000';
-    starttime = null;
-    console.log('Into resetTime()');
-  }
   
   function showGateStatus(element, state){
-    if(state.includes('g1KO'))
-      empezar();
-    else if(state.includes('g2KO'))
-      detener('crono');
+    //console.log('Into showGateStatus() '+state+' '+element);
     var gate = document.getElementById(element);
     if(state.includes('OK'))
       gate.style.background = 'orange';
     else if(state.includes('KO'))
       gate.style.background = 'red';
     else if(state.includes('blue'))
-      gate.style.background = 'blue'; 
+      gate.style.background = 'blue';
+    else if(state.includes('beep'))
+      beep(100, 3000, 300); // 300 msec beep
   }
 
   function millis(){
@@ -64,70 +51,43 @@ const char INDEX_HTML[] PROGMEM = R"=====(
   }
   
   function empezar(){
-    if(timer==null && starttime==null){
+    if(worker1!=null && worker2!=null && starttime==null){
       starttime = millis();
+      worker2.postMessage(starttime);
       beep(100, 3000, 300); // 300 msec beep
-      timer = window.setInterval(showCronoTime, 50);
       //console.log('Startime0 = '+starttime);
     }
   }
-	
-	function detener(crono){
-    if(timer!=null){
-      clearInterval(timer);
-      showTime(crono);
-      timer = null;
-      beep(100, 3000, 300); // 300 msec beep
-    }
-    console.log('Startime1 = '+starttime);
-	}
 
   function detenerAll(){
-    if(timer==null){
-      resetTime('crono');
-      console.log('All reset');
+    console.log('Into detenerAll()');
+    if(starttime!=null){
+      if(worker2!=null) 
+        worker2.postMessage('stop');
+      showTime('crono', 0);
+      starttime=null;
     }
-    else
-      detener('crono');
   }
 
   function start(){
-    //connection = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
-    connection1.onopen = function(){
-      console.log('Connect ' + new Date());
-      var but = document.getElementById('butStart');
-      but.style.display='block';
-    };
-    connection1.onerror = function(error){
-      console.log('WebSocket1 Error ', error);
-      showGateStatus('g1status', 'blue');
-    };
-    connection1.onmessage = function(e){
-      showGateStatus('g1status', e.data);
-      console.log('WebSocket1: ', e.data);
-    };
-    connection1.onclose = function(){
-      console.log('WebSocket1 connection closed');
-      showGateStatus('g1status', 'blue');
-    };
-
-    connection2.onopen = function(){
-      console.log('Connect ' + new Date());
-      var but = document.getElementById('butStart');
-      but.style.display='block';
-    };
-    connection2.onerror = function(error){
-      console.log('WebSocket2 Error ', error);
-      showGateStatus('g2status', 'blue');
-    };
-    connection2.onmessage = function(e){
-      showGateStatus('g2status', e.data);
-      console.log('WebSocket2: ', e.data);
-    };
-    connection2.onclose = function(){
-      console.log('WebSocket2 connection closed');
-      showGateStatus('g2status', 'blue');
-    };
+    worker1 = new Worker("./worker.js");
+    worker1.postMessage('192.168.4.115');
+    worker1.onmessage = function(e){
+      if(isNaN(e.data)){
+        if(e.data.includes('KO'))
+          empezar();
+        showGateStatus('g1status', e.data);
+      }
+    }
+    
+    worker2 = new Worker("./worker.js");
+    worker2.postMessage('192.168.4.118');
+    worker2.onmessage = function(e){
+      if(isNaN(e.data))
+        showGateStatus('g2status', e.data);
+      else
+        showTime('crono', e.data);
+    }
   }
   
 	</script>

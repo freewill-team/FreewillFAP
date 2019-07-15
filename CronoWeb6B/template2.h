@@ -7,15 +7,16 @@ const char KO_HTML[] PROGMEM = R"=====(
 <title>CronoWeb (KO System)</title>
 
 <script>
-  var connection1 = new WebSocket('ws://192.168.4.115:81/', ['arduino']);
-  var connection2 = new WebSocket('ws://192.168.4.118:81/', ['arduino']);
+  var connection1 = '192.168.43.115';
+  var connection2 = '192.168.43.118';
+  var worker1 = null;
+  var worker2 = null;
   var starttime = null;
-  var timer1 = null;
-  var timer2 = null;
   var audioContext = AudioContext && new AudioContext();
   
   function beep(amp, freq, ms){//amp:0..100, freq in Hz, ms
     if (!audioContext) return;
+    audioContext.resume();
     var osc = audioContext.createOscillator();
     var gain = audioContext.createGain();
     osc.connect(gain);
@@ -26,41 +27,24 @@ const char KO_HTML[] PROGMEM = R"=====(
     osc.stop(audioContext.currentTime+ms/1000);
   }
   
-  function showTime(crono){
+  function showTime(crono, now){
     var bio = document.getElementById(crono);
-    var now = millis();
-    var n = (now - starttime) / 1000;
+    var n = now / 1000;
     bio.innerHTML = parseFloat(n).toFixed(3);
     //console.log('Into showTime()');
   }
-
-  function showCrono1Time(){
-    showTime('crono1');
-  }
-
-  function showCrono2Time(){
-    showTime('crono2');
-  }
-  
-  function resetTime(crono){
-    var bio = document.getElementById(crono);
-    bio.innerHTML = '0.000';
-    starttime = null;
-    //console.log('Into resetTime()');
-  }
   
   function showGateStatus(element, state){
-    if(state.includes('g1KO'))
-      detener('crono1', timer1);
-    else if(state.includes('g2KO'))
-      detener('crono2', timer2);
+    //console.log('Into showGateStatus() '+state+' '+element);
     var gate = document.getElementById(element);
     if(state.includes('OK'))
       gate.style.background = 'orange';
     else if(state.includes('KO'))
       gate.style.background = 'red';
     else if(state.includes('blue'))
-      gate.style.background = 'blue'; 
+      gate.style.background = 'blue';
+    else if(state.includes('beep'))
+      beep(100, 3000, 300); // 300 msec beep
   }
 
   function millis(){
@@ -69,7 +53,8 @@ const char KO_HTML[] PROGMEM = R"=====(
   }
   
   function empezar(){
-    if(timer1==null && timer2==null && starttime==null){
+    console.log('Into empezar() '+starttime);
+    if(worker1!=null && worker2!=null && starttime==null){
       beep(100, 800, 1000); // 1,5 sec beep
       setTimeout(function(){
         beep(100, 1200, 500); // 1 sec beep
@@ -78,83 +63,44 @@ const char KO_HTML[] PROGMEM = R"=====(
         beep(100, 3000, 300); // 300 msec beep
         beep(100, 3000, 300); // 300 msec beep
         starttime = millis();
-        timer1 = window.setInterval(showCrono1Time, 50);
-        timer2 = window.setInterval(showCrono2Time, 50);
+        worker1.postMessage(starttime);
+        worker2.postMessage(starttime);
         //console.log('Startime0 = '+starttime);
         }, 2600+Math.random()*300);
     }
   }
-  
-  function detener(crono, timer){
-    if(timer!=null){
-      if(crono.includes('crono1')){
-        clearInterval(timer1);
-        showTime(crono);
-        timer1 = null;
-      }
-      else{
-        clearInterval(timer2);
-        showTime(crono);
-        timer2 = null;
-      }
-      beep(100, 3000, 300); // 300 msec beep
-      console.log('Detenido timer para '+crono);
-    }
-    console.log('Startime1 = '+starttime);
-  }
 
   function detenerAll(){
     console.log('Into detenerAll()');
-    if(timer1==null && timer2==null){
-      resetTime('crono1');
-      resetTime('crono2');
-      console.log('All reset');
-    }
-    else{
-      if(timer1!=null)
-        detener('crono1', timer1);
-      if(timer2!=null) 
-        detener('crono2', timer2);
+    if(starttime!=null){
+      if(worker1!=null)
+        worker1.postMessage('stop');
+      if(worker2!=null) 
+        worker2.postMessage('stop');
+      showTime('crono1', 0);
+      showTime('crono2', 0);
+      starttime=null;
     }
   }
 
   function start(){
-    //connection = new WebSocket('ws://' + location.hostname + ':81/', ['arduino']);
-    connection1.onopen = function(){
-      console.log('Connect ' + new Date());
-      var but = document.getElementById('butStart');
-      but.style.display='block';
-    };
-    connection1.onerror = function(error){
-      console.log('WebSocket1 Error ', error);
-      showGateStatus('g1status', 'blue');
-    };
-    connection1.onmessage = function(e){
-      showGateStatus('g1status', e.data);
-      console.log('WebSocket1: ', e.data);
-    };
-    connection1.onclose = function(){
-      console.log('WebSocket1 connection closed');
-      showGateStatus('g1status', 'blue');
-    };
-
-    connection2.onopen = function(){
-      console.log('Connect ' + new Date());
-      var but = document.getElementById('butStart');
-      but.style.display='block';
-    };
-    connection2.onerror = function(error){
-      console.log('WebSocket2 Error ', error);
-      showGateStatus('g2status', 'blue');
-    };
-    connection2.onmessage = function(e){
-      showGateStatus('g2status', e.data);
-      console.log('WebSocket2: ', e.data);
-    };
-    connection2.onclose = function(){
-      console.log('WebSocket2 connection closed');
-      showGateStatus('g2status', 'blue');
-    };
+    worker1 = new Worker("./worker.js");
+    worker1.postMessage(connection1);
+    worker1.onmessage = function(e){
+      if(isNaN(e.data))
+        showGateStatus('g1status', e.data);
+      else
+        showTime('crono1', e.data);
+    }
+    
+    worker2 = new Worker("./worker.js");
+    worker2.postMessage(connection2);
+    worker2.onmessage = function(e){
+      if(isNaN(e.data))
+        showGateStatus('g2status', e.data);
+      else
+        showTime('crono2', e.data);
+    }
   }
   
 	</script>
