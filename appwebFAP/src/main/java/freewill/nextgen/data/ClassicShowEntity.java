@@ -2,8 +2,6 @@ package freewill.nextgen.data;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * Session Bean implementation class ClassicShowEntity
  */

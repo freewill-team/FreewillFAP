@@ -759,4 +759,17 @@ public class ClassicShowManager {
 		return false;	
 	}
 	
+	
+	@RequestMapping("/getResultadosRT/{competicion}/{categoria}")
+	public List<ClassicShowEntity> getResultadosRT(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting ClassicShow Results RT By competicion and categoria..." 
+			+ competicion + "," + categoria);
+		
+		List<ClassicShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+	
+		return recs;	
+	}
+	
 }

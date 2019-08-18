@@ -769,5 +769,16 @@ public class JamShowManager {
 		return false;
 	}
 	
+	@RequestMapping("/getResultadosRT/{competicion}/{categoria}")
+	public List<JamShowEntity> getResultadosRT(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting JamShow Results RT By competicion and categoria..." 
+			+ competicion + "," + categoria);
+		
+		List<JamShowEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByClasificacionFinalAsc(competicion, categoria);
+	
+		return recs;	
+	}	
 	
 }

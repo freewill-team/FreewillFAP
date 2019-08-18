@@ -579,4 +579,17 @@ public class SaltoManager {
 		return true;
 	}
 	
+	@RequestMapping("/getResultadosRT/{competicion}/{categoria}")
+	public List<SaltoEntity> getResultadosRT(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting Saltos Results RT By competicion y categoria..."
+			+competicion+","+categoria);
+		
+		// Obtiene lista con la clasificacion final
+		List<SaltoEntity> recs = repository.findByCompeticionAndCategoriaOrderByClasificacionAsc(
+				competicion, categoria);
+		
+		return recs;
+	}
+	
 }

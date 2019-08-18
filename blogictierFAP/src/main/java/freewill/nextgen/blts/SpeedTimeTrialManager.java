@@ -558,4 +558,18 @@ public class SpeedTimeTrialManager {
 		return true;
 	}
 	
+	@RequestMapping("/getResultadosRT/{competicion}/{categoria}")
+	public List<SpeedTimeTrialEntity> getResultadosRT(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		System.out.println("Getting SpeedTimeTrials Results RT TimeTrial By competicion y categoria..."
+			+competicion+","+categoria);
+		
+		// Obtiene lista con la clasificacion del timetrial por tiempos
+		List<SpeedTimeTrialEntity> recs = 
+				repository.findByCompeticionAndCategoriaOrderByMejorTiempoAsc(
+				competicion, categoria);
+		
+		return recs;
+	}
+	
 }
