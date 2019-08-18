@@ -1,0 +1,57 @@
+2019-08-18 20:18:30 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 20:18:38 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 20:18:38 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 20:28:13 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 20:28:23 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 20:28:23 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 20:30:08 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 20:30:16 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 20:30:16 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 20:36:15 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 20:36:22 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 20:36:22 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 21:59:18 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 21:59:32 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 21:59:32 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 22:02:14 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 22:02:21 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 22:02:21 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 22:06:26 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 22:06:33 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 22:06:33 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 22:10:53 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 22:10:58 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 22:10:58 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 22:31:12 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 22:31:16 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 22:31:16 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-18 22:31:18 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-18 22:31:18 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-18 23:30:40 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-18 23:30:45 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-18 23:30:45 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:03:42 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:04:01 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:04:01 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:04:05 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [summersunshine/192.168.1.42, summersunshine/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-19 00:04:36 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-19 00:04:40 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-19 00:04:42 ERROR MonitoredProcess:131 - I/O error on POST request for "https://SUMMERSUNSHINE:8447/oauth/token": Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect; nested exception is org.apache.http.conn.HttpHostConnectException: Connect to SUMMERSUNSHINE:8447 [SUMMERSUNSHINE/192.168.1.42, SUMMERSUNSHINE/fe80:0:0:0:d152:e97f:9986:1f45%14] failed: Connection refused: connect
+2019-08-19 00:06:45 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:06:54 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:06:54 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:15:20 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:15:30 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:15:30 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:22:03 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:22:14 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:22:14 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:29:16 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:29:23 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:29:23 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:40:08 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:40:15 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:40:15 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-19 00:52:35 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\Documents\frewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-19 00:52:49 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-19 00:52:49 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP

@@ -1,0 +1,11 @@
+.celda {
+	border: 1px solid blue;
+	border-left: 5px solid blue;
+	flex-grow: 0.25;
+}
+
+@media (max-width: 800px) { 
+	.celda{
+		width: calc(50%-2px)
+	}
+}
