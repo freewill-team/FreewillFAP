@@ -6,6 +6,7 @@ import com.vaadin.flow.component.applayout.AppLayoutMenu;
 import com.vaadin.flow.component.applayout.AppLayoutMenuItem;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.Route;
@@ -93,6 +94,9 @@ public class MainView extends Div {
 				);
 		
 		menu.addMenuItems(route1, route2, route3, route4, route5, route6/*, route0*/);
+		
+		layout.setContent(new Label("Seleccione una Modalidad en el Menú para ver los Resultados..."));
+		
 		return layout;
 	}
 

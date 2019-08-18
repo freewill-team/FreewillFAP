@@ -34,6 +34,7 @@ public class SpeedView extends VerticalLayout {
 	private CategoriaEntity categoria = null;
 	private SelectCategoria selectCategoria = null;
 	private String currentToken = "";
+	private VerticalLayout barAndGridLayout = null;
 
 	public SpeedView(){
 		this.setSizeFull();
@@ -78,21 +79,33 @@ public class SpeedView extends VerticalLayout {
         title.setWidth("100%");
         
         Tab tab1 = new Tab("Time Trial");
-        tab1.add(grid1);
         Tab tab2 = new Tab("KO System");
-        tab2.add(grid2);
         Tabs tabs = new Tabs();
 	    tabs.add(tab1, tab2);
 	    tabs.setSelectedTab(tab1);
         
-        VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(title);
         barAndGridLayout.add(tabs);
+        barAndGridLayout.add(grid1);
         barAndGridLayout.setMargin(false);
         barAndGridLayout.setSpacing(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setWidth("100%");
-        barAndGridLayout.setFlexGrow(1, tabs);
+        barAndGridLayout.setFlexGrow(1, grid1);
+        
+        tabs.addSelectedChangeListener(event -> {
+	        if(tabs.getSelectedTab()==tab1){
+	        	barAndGridLayout.remove(grid2);
+	        	barAndGridLayout.add(grid1);
+	        	barAndGridLayout.setFlexGrow(1, grid1);
+	        }
+	        else{
+	        	barAndGridLayout.remove(grid1);
+	        	barAndGridLayout.add(grid2);
+	        	barAndGridLayout.setFlexGrow(1, grid2);
+	        }
+	    });
         
 		return barAndGridLayout;
 	}
