@@ -18,7 +18,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.SpeedTimeTrialEntity;
 import fwt.apppubfap.dtos.CompeticionEntity;
-import fwt.apppubfap.dtos.ParticipanteEntity;
+import fwt.apppubfap.dtos.SpeedKOSystemEntity;
+import fwt.apppubfap.dtos.SpeedKOSystemEntity.EliminatoriaEnum;
 import fwt.apppubfap.SelectCategoria;
 import fwt.apppubfap.authentication.CurrentUser;
 import fwt.apppubfap.dtos.CategoriaEntity;
@@ -29,17 +30,20 @@ public class SpeedView extends VerticalLayout {
 	
 	private FeederThread thread;
 	private Grid<SpeedTimeTrialEntity> grid1 = null;
-	private Grid<ParticipanteEntity> grid2 = null;
+	//private Grid<ParticipanteEntity> grid2 = null;
+	private ArbolKOSystem grid2 = null;
 	private CompeticionEntity competicion = null;
 	private CategoriaEntity categoria = null;
 	private SelectCategoria selectCategoria = null;
 	private String currentToken = "";
 	private VerticalLayout barAndGridLayout = null;
+	private EliminatoriaEnum eliminatoria = null;
 
 	public SpeedView(){
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
+		this.setPadding(false);
         
         selectCategoria = new SelectCategoria(
         		ModalidadEnum.SPEED, e -> {
@@ -66,9 +70,13 @@ public class SpeedView extends VerticalLayout {
         grid1.setColumns("dorsal", "nombre", "apellidos", "tiempoAjustado1", "tiempoAjustado2", "mejorTiempo", "clasificacion");
         //grid.getColumnByKey("id").setWidth("40px");
         
-        grid2 = new Grid<>(ParticipanteEntity.class);
-        grid2.setWidth("100%");
-        grid2.setColumns("dorsal", "nombre", "apellidos", "clasificacion");
+        //grid2 = new Grid<>(ParticipanteEntity.class);
+        //grid2.setWidth("100%");
+        //grid2.setColumns("dorsal", "nombre", "apellidos", "clasificacion");
+        
+        eliminatoria = existeKO(competicion.getId(), categoria.getId());
+        if(eliminatoria!=null)
+        	grid2 = new ArbolKOSystem(eliminatoria);
         
         Image icon = new Image("images/speed.png", "Speed");
 		icon.setHeight("20px");
@@ -96,14 +104,19 @@ public class SpeedView extends VerticalLayout {
         
         tabs.addSelectedChangeListener(event -> {
 	        if(tabs.getSelectedTab()==tab1){
-	        	barAndGridLayout.remove(grid2);
+	        	if(grid2!=null)
+	        		barAndGridLayout.remove(grid2);
 	        	barAndGridLayout.add(grid1);
 	        	barAndGridLayout.setFlexGrow(1, grid1);
 	        }
 	        else{
 	        	barAndGridLayout.remove(grid1);
-	        	barAndGridLayout.add(grid2);
-	        	barAndGridLayout.setFlexGrow(1, grid2);
+	        	//eliminatoria = existeKO(competicion.getId(), categoria.getId());
+	            if(eliminatoria!=null && grid2!=null){
+	            	//grid2 = new ArbolKOSystem(eliminatoria);
+	            	barAndGridLayout.add(grid2);
+	            	barAndGridLayout.setFlexGrow(1, grid2);
+	            }
 	        }
 	    });
         
@@ -119,11 +132,14 @@ public class SpeedView extends VerticalLayout {
         			currentToken);
 	    	grid1.setItems(recs1);
 	    	
-	    	List<ParticipanteEntity> recs2 = BltClient.get().executeQuery(
-        			"/getResultados/"+competicion.getId()+"/"+categoria.getId(),
-        			ParticipanteEntity.class,
-        			currentToken);
-	    	grid2.setItems(recs2);
+	    	if(eliminatoria!=null && grid2!=null){
+	    		List<SpeedKOSystemEntity> recs2 = BltClient.get().executeQuery(
+		    		"/findByCompeticionAndCategoriaAndEliminatoria/"+
+		    				competicion.getId()+"/"+categoria.getId()+"/"+eliminatoria.name(),
+					SpeedKOSystemEntity.class,
+		    		currentToken);
+	    		grid2.setItems(recs2);
+	    	}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -166,5 +182,20 @@ public class SpeedView extends VerticalLayout {
             }
         }
     }
+	
+	private EliminatoriaEnum existeKO(Long competicion, Long categoria) {
+		try{
+			SpeedKOSystemEntity rec = (SpeedKOSystemEntity) BltClient.get().executeCommand(
+		    		"/existByCompeticionAndCategoria/"+competicion+"/"+categoria,
+					SpeedKOSystemEntity.class,
+					currentToken);
+			return rec.getEliminatoria();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			showNotification(e.getMessage());
+		}
+		return null;
+	}
 	
 }

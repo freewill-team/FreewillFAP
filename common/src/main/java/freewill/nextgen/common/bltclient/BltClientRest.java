@@ -359,8 +359,8 @@ public class BltClientRest extends BltClient {
 				url=url+"&access_token="+token.getAccess_token();
 			else
 				url=url+BLTTOKEN+token.getAccess_token();
- 			
- 			String json  = restTemplate.getForObject(url, String.class);
+			
+ 			String json = restTemplate.getForObject(url, String.class);
  			List<T> list = jsonToObjectList(json, myentity);
 	    	return list;
 		}
