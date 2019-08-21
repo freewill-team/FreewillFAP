@@ -2,6 +2,7 @@ package fwt.apppubfap.speed;
 
 import java.util.List;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -21,10 +22,9 @@ public class ArbolKOSystem extends VerticalLayout {
 
 	public ArbolKOSystem(EliminatoriaEnum levels){
         this.setSizeFull();
-        this.setSpacing(false);
-		this.setPadding(false);
-        this.getElement().getStyle().set("overflow", "auto");
-        //this.getElement().getStyle().set("background-color", "yellow");
+        this.setPadding(false);
+		this.setSpacing(false);
+        //this.getElement().getStyle().set("overflow", "auto");
         
         //consolacion = EntryPoint.get().getConfigBoolean(ConfigItemEnum.FINALCONSOLACIONSPEED);
         additionalrow = (consolacion?1:0);
@@ -37,71 +37,54 @@ public class ArbolKOSystem extends VerticalLayout {
 		HorizontalLayout hlayout = new HorizontalLayout();
 		hlayout.setSizeFull();
 		hlayout.setPadding(false);
-		hlayout.setSpacing(true);
-		//hlayout.getElement().getStyle().set("background-color", "green");
+		hlayout.setSpacing(false);
+		//hlayout.getElement().getStyle().set("background-color", "yellow");
+		hlayout.getElement().getStyle().set("width", "auto");
+		hlayout.getElement().getStyle().set("height", "auto");
 		hlayout.setDefaultVerticalComponentAlignment(Alignment.STRETCH);
 		this.add(hlayout);
 		
-		//for(int i=0;i<numLevels;i++){
 		for(int i=numLevels-1;i>=0;i--){
 			
-			VerticalLayout vlayout = new VerticalLayout();
-			vlayout.setSizeFull();
-			vlayout.setPadding(false);
-			vlayout.setSpacing(true);
-			vlayout.setAlignItems(Alignment.STRETCH);
-			//vlayout.getElement().getStyle().set("background-color", "orange");
+			Celda vlayout = new Celda();
+			//vlayout.setColors("orange", "green");
 			hlayout.add(vlayout);
 			
 			int n = (int)(Math.pow(2.0, i));
 			for(int j=0; j<n;j++){
+				Celda celda = new Celda();
+				celda.setColors("#F0F0F0", "white");
 				
-				VerticalLayout layout = new VerticalLayout();
-				layout.setWidth("100%");
-				layout.setPadding(false);
-				layout.setSpacing(false);
-				layout.setAlignItems(Alignment.CENTER);
-				//layout.getElement().getStyle().set("background-color", "blue");
 				Button label1 = new Button("Grupo "+i+","+j);
 				label1.setWidth("100%");
 				Button label2 = new Button("Grupo "+i+","+j);
 				label2.setWidth("100%");
-				layout.add(label1, label2);
-				
-				//int m = (int)(Math.pow(2.0, numLevels-i-1));
-				//grid.addComponent(layout, numLevels-i-1, j*m, numLevels-i-1, (j+1)*m-1);
-				
-				vlayout.add(layout);
-				vlayout.setFlexGrow(1, layout);
+				celda.addCelda(label1);
+				celda.addCelda(label2);
+				vlayout.addCelda(celda);
 				
 				container1[i][j] = label1;
 				container2[i][j] = label2;
+				
+				if(i==0 && j==0 && consolacion){ 
+					// Final de consolacion - celda 0,1
+					Celda celda2 = new Celda();
+					celda2.setColors("#F0F0F0", "white");
+					
+					Button label12 = new Button("Grupo "+0+","+1);
+					label12.setWidth("100%");
+					Button label22 = new Button("Grupo "+0+","+1);
+					label22.setWidth("100%");
+					celda2.addCelda(label12);
+					celda2.addCelda(label22);
+					vlayout.add(celda2);
+					vlayout.setVerticalComponentAlignment(Alignment.END, celda2);
+					
+					container1[0][1] = label12;
+					container2[0][1] = label22;
+				}
 			}
 		}
-		
-		if(consolacion){
-			// Final de consolacion
-			VerticalLayout layout = new VerticalLayout();
-			layout.setWidth("100%");
-			layout.setPadding(false);
-			layout.setSpacing(false);
-			layout.setAlignItems(Alignment.CENTER);
-			//layout.getElement().getStyle().set("background-color", "blue");
-			Button label1 = new Button("Grupo "+0+","+1);
-			label1.setWidth("100%");
-			Button label2 = new Button("Grupo "+0+","+1);
-			label2.setWidth("100%");
-			layout.add(label1, label2);
-			
-			//grid.addComponent(layout, numLevels-1, rows, numLevels-1, rows);
-			
-			this.add(layout);
-			this.setHorizontalComponentAlignment(Alignment.END, layout);
-			
-			container1[0][1] = label1;
-			container2[0][1] = label2;
-		}
-		
 	}
 	
 	public void setItems(List<SpeedKOSystemEntity> records) {
@@ -128,4 +111,33 @@ public class ArbolKOSystem extends VerticalLayout {
         }
     }
 	
+	private class Celda extends HorizontalLayout {
+		
+		VerticalLayout panel = new VerticalLayout();
+		
+		public Celda() {
+			this.setPadding(false);
+			this.setSpacing(false);
+			this.getElement().getStyle().set("width", "100%");
+			this.getElement().getStyle().set("height", "auto");
+			this.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+			
+			panel.setPadding(true);
+			panel.setSpacing(true);
+			panel.getElement().getStyle().set("width", "100%");
+			panel.getElement().getStyle().set("height", "auto");
+			this.add(panel);
+		}
+		
+		public void addCelda(Component component){
+			panel.add(component);
+		}
+		
+		public void setColors(String dentro, String fuera){
+			this.getElement().getStyle().set("background-color", fuera);
+			panel.getElement().getStyle().set("background-color", dentro);
+		}
+		
+	}
+
 }

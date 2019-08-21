@@ -163,3 +163,124 @@
 2019-08-21 01:18:11 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
 2019-08-21 01:18:14 ERROR MonitoredProcess:115 - Unexpected exception while processing command
 2019-08-21 01:18:14 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 01:25:07 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 01:25:11 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 01:25:11 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 01:27:27 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 01:27:31 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 01:27:31 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:03:34 ERROR MonitoredProcess:131 - 401 
+2019-08-21 18:03:34 ERROR MonitoredProcess:131 - Error - Cannot find or renew a token for anonimo:51FBB29A9966C4F2DFC830F97FF96F68:RealtimeFAP
+2019-08-21 18:03:34 ERROR MonitoredProcess:131 - Fail into executeQuery - Missing token
+2019-08-21 18:10:34 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:10:42 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:10:42 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:13:05 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:13:15 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:13:15 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:17:30 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:17:39 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:17:39 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:22:20 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:22:26 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:22:26 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:28:26 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:28:44 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:28:44 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:32:33 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:32:44 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:32:44 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:38:33 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:38:42 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:38:42 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:42:36 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:42:45 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:42:45 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:53:43 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:53:51 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:53:51 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 18:57:00 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 18:57:07 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 18:57:07 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:05:27 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:05:36 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:05:36 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:15:35 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:15:41 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:15:41 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:27:13 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:27:19 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:27:19 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:32:13 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:32:20 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:32:20 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:34:52 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:35:01 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:35:01 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:42:44 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:42:54 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:42:54 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:45:47 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:45:55 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:45:55 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:49:15 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:49:22 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:49:22 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:54:22 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:54:28 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:54:28 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 19:58:55 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 19:59:03 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 19:59:03 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 20:01:57 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 20:02:05 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 20:02:05 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 20:08:03 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 20:08:10 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 20:08:10 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 20:10:18 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 20:10:28 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 20:10:28 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 20:11:21 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 20:11:28 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 20:11:28 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 20:16:42 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 20:16:49 ERROR MonitoredProcess:115 - Unexpected exception while processing command
+2019-08-21 20:16:49 ERROR MonitoredProcess:292 - Fail searching record in processesList - No-System:SUMMERSUNSHINE:HMI:AppPublicFAP
+2019-08-21 21:56:53 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 21:58:22 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 21:58:38 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 22:00:10 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:00:22 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 22:00:34 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 22:01:39 ERROR MonitoredProcess:131 - bound must be positive
+2019-08-21 22:11:49 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:27:16 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:27:35 ERROR MonitoredProcess:131 - 
+2019-08-21 22:31:53 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:36:42 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:39:59 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:44:43 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:47:01 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:49:28 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:53:06 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:55:16 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:56:13 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 22:58:49 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:01:42 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:04:32 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:06:29 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:15:40 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:17:36 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:20:12 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:22:25 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:25:22 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:27:32 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:29:38 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:39:23 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:41:30 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:43:22 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:46:23 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:49:47 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-21 23:55:18 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-22 00:02:02 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
