@@ -53,17 +53,17 @@ public class MainView extends Div {
 		layout.setBranding(logo);
 		
 		Image speedIcon = new Image("images/speed.png", "Speed");
-		speedIcon.setHeight("34px");
+		speedIcon.setHeight("32px");
 		Image saltoIcon = new Image("images/salto.png", "Salto");
-		saltoIcon.setHeight("34px");
+		saltoIcon.setHeight("32px");
 		Image derrapesIcon = new Image("images/derrapes.png", "Derrapes");
-		derrapesIcon.setHeight("34px");
+		derrapesIcon.setHeight("32px");
 		Image classicIcon = new Image("images/classic.png", "Classic");
-		classicIcon.setHeight("34px");
+		classicIcon.setHeight("32px");
 		Image battleIcon = new Image("images/battle.png", "Battle");
-		battleIcon.setHeight("34px");
+		battleIcon.setHeight("32px");
 		Image jamIcon = new Image("images/jam.png", "Jam");
-		jamIcon.setHeight("34px");
+		jamIcon.setHeight("32px");
 		
 		AppLayoutMenu menu = layout.createMenu();
 		/*AppLayoutMenuItem route0 = new AppLayoutMenuItem(

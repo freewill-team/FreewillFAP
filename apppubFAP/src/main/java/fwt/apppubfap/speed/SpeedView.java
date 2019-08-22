@@ -88,6 +88,7 @@ public class SpeedView extends VerticalLayout {
         
         Tab tab1 = new Tab("Time Trial");
         Tab tab2 = new Tab("KO System");
+        // TODO Tab 3 con clasificacion final
         Tabs tabs = new Tabs();
 	    tabs.add(tab1, tab2);
 	    tabs.setSelectedTab(tab1);
