@@ -10,10 +10,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.CompeticionEntity;
@@ -41,6 +43,7 @@ public class DerrapesView extends VerticalLayout {
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
+		this.setPadding(false);
         
         selectCategoria = new SelectCategoria(
         		ModalidadEnum.SLIDE, e -> {
@@ -64,7 +67,13 @@ public class DerrapesView extends VerticalLayout {
 		
 		grid1 = new Grid<>(ParticipanteEntity.class);
         grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos", "clasificacion");
+        grid1.setColumns("dorsal", "nombre", "apellidos");
+        grid1.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getClasificacion()>990)
+            	return new Label("No Presentado");
+            else
+            	return new Label(""+rec.getClasificacion());
+        })).setHeader("Clasificación");
 		
 		eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
@@ -89,7 +98,8 @@ public class DerrapesView extends VerticalLayout {
         barAndGridLayout.add(tabs);
         barAndGridLayout.add(grid1);
         barAndGridLayout.setMargin(false);
-        barAndGridLayout.setSpacing(false);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setPadding(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setWidth("100%");
         barAndGridLayout.setFlexGrow(1, grid1);

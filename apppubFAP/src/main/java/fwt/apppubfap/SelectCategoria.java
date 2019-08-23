@@ -30,6 +30,7 @@ public class SelectCategoria extends VerticalLayout {
 		this.setSizeFull();
 		this.setMargin(false);
 		this.setSpacing(true);
+		this.setPadding(false);
 		this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		
 		this.modalidad = modalidad;
@@ -41,6 +42,12 @@ public class SelectCategoria extends VerticalLayout {
 			add(new Label("Ultima competición no disponible."));
 			return;
 		}
+		
+		Button title = new Button(competicion.getNombre());
+        title.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        //title.setIcon(icon);
+        title.setWidth("100%");
+        add(title);
 		
 		try{
 			// Crea un boton por cada categoria	

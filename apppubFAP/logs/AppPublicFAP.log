@@ -296,3 +296,16 @@
 2019-08-22 23:37:05 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
 2019-08-22 23:46:23 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
 2019-08-23 00:09:58 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 18:20:44 ERROR MonitoredProcess:131 - 401 
+2019-08-23 18:20:44 ERROR MonitoredProcess:131 - Error - Cannot find or renew a token for anonimo:51FBB29A9966C4F2DFC830F97FF96F68:RealtimeFAP
+2019-08-23 18:20:44 ERROR MonitoredProcess:131 - Fail into executeQuery - Missing token
+2019-08-23 18:22:46 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 18:37:04 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 18:39:59 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 18:57:31 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 19:05:47 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 19:11:36 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 19:17:43 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 19:21:06 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 20:05:12 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)
+2019-08-23 20:14:37 ERROR MonitoredProcess:418 - createConfigReader error:C:\Users\marfa_000\git\FreewillFAP\FreewillFAP\apppubFAP\properties\config.properties (El sistema no puede encontrar la ruta especificada)

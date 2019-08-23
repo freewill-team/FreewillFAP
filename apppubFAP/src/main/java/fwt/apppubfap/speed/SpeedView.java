@@ -10,14 +10,17 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.SpeedTimeTrialEntity;
 import fwt.apppubfap.dtos.CompeticionEntity;
+import fwt.apppubfap.dtos.ParticipanteEntity;
 import fwt.apppubfap.dtos.SpeedKOSystemEntity;
 import fwt.apppubfap.dtos.SpeedKOSystemEntity.EliminatoriaEnum;
 import fwt.apppubfap.SelectCategoria;
@@ -30,8 +33,8 @@ public class SpeedView extends VerticalLayout {
 	
 	private FeederThread thread;
 	private Grid<SpeedTimeTrialEntity> grid1 = null;
-	//private Grid<ParticipanteEntity> grid2 = null;
 	private ArbolKOSystem grid2 = null;
+	private Grid<ParticipanteEntity> grid3 = null;
 	private CompeticionEntity competicion = null;
 	private CategoriaEntity categoria = null;
 	private SelectCategoria selectCategoria = null;
@@ -67,12 +70,40 @@ public class SpeedView extends VerticalLayout {
 		
 		grid1 = new Grid<>(SpeedTimeTrialEntity.class);
         grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos", "tiempoAjustado1", "tiempoAjustado2", "mejorTiempo", "clasificacion");
-        //grid.getColumnByKey("id").setWidth("40px");
+        grid1.setColumns("dorsal", "nombre", "apellidos");
         
-        //grid2 = new Grid<>(ParticipanteEntity.class);
-        //grid2.setWidth("100%");
-        //grid2.setColumns("dorsal", "nombre", "apellidos", "clasificacion");
+        grid1.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getTiempoAjustado1()>99999)
+            	return new Label("Nulo");
+            else
+            	return new Label(""+rec.getTiempoAjustado1());
+        })).setHeader("Tiempo R#1");
+        
+        grid1.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getTiempoAjustado2()>99999)
+            	return new Label("Nulo");
+            else
+            	return new Label(""+rec.getTiempoAjustado2());
+        })).setHeader("Tiempo R#2");
+        
+        grid1.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getMejorTiempo()>99999)
+            	return new Label("Nulo");
+            else
+            	return new Label(""+rec.getMejorTiempo());
+        })).setHeader("Mejor Tiempo");
+        
+        grid1.addColumn("clasificacion");
+        
+        grid3 = new Grid<>(ParticipanteEntity.class);
+        grid3.setWidth("100%");
+        grid3.setColumns("dorsal", "nombre", "apellidos", "mejorMarca");
+        grid3.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getClasificacion()>990)
+            	return new Label("No Presentado");
+            else
+            	return new Label(""+rec.getClasificacion());
+        })).setHeader("Clasificación");
         
         eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
@@ -88,9 +119,9 @@ public class SpeedView extends VerticalLayout {
         
         Tab tab1 = new Tab("Time Trial");
         Tab tab2 = new Tab("KO System");
-        // TODO Tab 3 con clasificacion final
+        Tab tab3 = new Tab("Clasificación");
         Tabs tabs = new Tabs();
-	    tabs.add(tab1, tab2);
+	    tabs.add(tab1, tab2, tab3);
 	    tabs.setSelectedTab(tab1);
         
         barAndGridLayout = new VerticalLayout();
@@ -98,23 +129,35 @@ public class SpeedView extends VerticalLayout {
         barAndGridLayout.add(tabs);
         barAndGridLayout.add(grid1);
         barAndGridLayout.setMargin(false);
-        barAndGridLayout.setSpacing(false);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setPadding(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setWidth("100%");
         barAndGridLayout.setFlexGrow(1, grid1);
         
         tabs.addSelectedChangeListener(event -> {
 	        if(tabs.getSelectedTab()==tab1){
-	        	if(grid2!=null)
+	        	if(grid2!=null && barAndGridLayout.indexOf(grid2)>-1)
 	        		barAndGridLayout.remove(grid2);
+	        	if(barAndGridLayout.indexOf(grid3)>-1)
+	        		barAndGridLayout.remove(grid3);
 	        	barAndGridLayout.add(grid1);
 	        	barAndGridLayout.setFlexGrow(1, grid1);
 	        }
+	        else if(tabs.getSelectedTab()==tab3){
+	        	if(grid2!=null && barAndGridLayout.indexOf(grid2)>-1)
+	        		barAndGridLayout.remove(grid2);
+	        	if(barAndGridLayout.indexOf(grid1)>-1)
+	        		barAndGridLayout.remove(grid1);
+	        	barAndGridLayout.add(grid3);
+	        	barAndGridLayout.setFlexGrow(1, grid3);
+	        }
 	        else{
-	        	barAndGridLayout.remove(grid1);
-	        	//eliminatoria = existeKO(competicion.getId(), categoria.getId());
-	            if(eliminatoria!=null && grid2!=null){
-	            	//grid2 = new ArbolKOSystem(eliminatoria);
+	        	if(barAndGridLayout.indexOf(grid1)>-1)
+	        		barAndGridLayout.remove(grid1);
+	        	if(barAndGridLayout.indexOf(grid3)>-1)
+	        		barAndGridLayout.remove(grid3);
+	        	if(eliminatoria!=null && grid2!=null){
 	            	barAndGridLayout.add(grid2);
 	            	barAndGridLayout.setFlexGrow(1, grid2);
 	            }
@@ -141,6 +184,12 @@ public class SpeedView extends VerticalLayout {
 		    		currentToken);
 	    		grid2.setItems(recs2);
 	    	}
+	    	
+	    	List<ParticipanteEntity> recs3 = BltClient.get().executeQuery(
+        			"/getResultados/"+competicion.getId()+"/"+categoria.getId(),
+        			ParticipanteEntity.class,
+        			currentToken);
+	    	grid3.setItems(recs3);
 		}
 		catch(Exception e){
 			e.printStackTrace();

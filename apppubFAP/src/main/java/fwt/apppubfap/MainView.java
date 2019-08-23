@@ -40,8 +40,13 @@ public class MainView extends Div {
 		if (accessControl.signIn("anonimo", "Anonimo9!", 
 				VaadinService.getCurrentRequest().getRemoteHost()))    	
 			this.add(showMainView());
-		//else
-		//	this.add(new ErrorView());
+		else{
+			VerticalLayout texto = new VerticalLayout();
+			texto.add(new Label("Upss, se ha producido un error al acceder a los datos!!!"));
+			texto.setSizeFull();
+			texto.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+			this.add(texto);
+		}	
 	}
 	
 	private AppLayout showMainView() {
@@ -64,6 +69,8 @@ public class MainView extends Div {
 		battleIcon.setHeight("32px");
 		Image jamIcon = new Image("images/jam.png", "Jam");
 		jamIcon.setHeight("32px");
+		
+		// TODO añadir opcion para cambiar de campeonato
 		
 		AppLayoutMenu menu = layout.createMenu();
 		/*AppLayoutMenuItem route0 = new AppLayoutMenuItem(
@@ -100,7 +107,9 @@ public class MainView extends Div {
 		VerticalLayout texto = new VerticalLayout();
 		texto.add(new Label("Seleccione una Modalidad en el Menú para ver los Resultados..."));
 		texto.setSizeFull();
+		texto.setSpacing(true);
 		texto.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		texto.add(new Image("images/LogoFAP550x160.png", "FAP")); // TODO tomar imagen de Company
 		layout.setContent(texto);
 		
 		return layout;

@@ -10,10 +10,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.SaltoEntity;
@@ -39,6 +41,7 @@ public class SaltoView extends VerticalLayout {
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
+		this.setPadding(false);
         
         selectCategoria = new SelectCategoria(
         		ModalidadEnum.JUMP, e -> {
@@ -62,7 +65,13 @@ public class SaltoView extends VerticalLayout {
 		
 		grid1 = new Grid<>(ParticipanteEntity.class);
         grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos", "mejorMarca", "clasificacion");
+        grid1.setColumns("dorsal", "nombre", "apellidos", "mejorMarca");
+        grid1.addColumn(new ComponentRenderer<>(rec -> {
+        	if(rec.getClasificacion()>990)
+            	return new Label("No Presentado");
+            else
+            	return new Label(""+rec.getClasificacion());
+        })).setHeader("Clasificación");
 		
 		grid2 = new Grid<>(SaltoEntity.class);
         grid2.setWidth("100%");
@@ -80,15 +89,16 @@ public class SaltoView extends VerticalLayout {
         Tab tab1 = new Tab("Clasificación");
         Tab tab2 = new Tab("Estadísticas");
         Tabs tabs = new Tabs();
-	    tabs.add(tab1, tab2);
-	    tabs.setSelectedTab(tab1);
+	    tabs.add(tab2, tab1);
+	    tabs.setSelectedTab(tab2);
         
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(title);
         barAndGridLayout.add(tabs);
         barAndGridLayout.add(grid1);
         barAndGridLayout.setMargin(false);
-        barAndGridLayout.setSpacing(false);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setPadding(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setWidth("100%");
         barAndGridLayout.setFlexGrow(1, grid1);
