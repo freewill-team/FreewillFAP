@@ -37,18 +37,17 @@ public class SaltoView extends VerticalLayout {
 	private SelectCategoria selectCategoria = null;
 	private String currentToken = "";
 
-	public SaltoView(){
+	public SaltoView(CompeticionEntity competicion){
+		this.competicion = competicion;
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
 		this.setPadding(false);
         
-        selectCategoria = new SelectCategoria(
+        selectCategoria = new SelectCategoria(competicion,
         		ModalidadEnum.JUMP, e -> {
         			Optional<String> id = e.getSource().getId();
-        			//Long catId = Long.parseLong(id.get());
         			categoria = selectCategoria.getCategoria(id.get());
-        			competicion = selectCategoria.getCompeticion();
         			removeAll();
         			add(showResults());
         	        Refresh();

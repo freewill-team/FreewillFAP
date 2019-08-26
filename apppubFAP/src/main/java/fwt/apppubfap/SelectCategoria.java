@@ -25,7 +25,7 @@ public class SelectCategoria extends VerticalLayout {
 	private CompeticionEntity competicion = null;
 	private HashMap<String, CategoriaEntity> map = new HashMap<String, CategoriaEntity>();
 	
-	public SelectCategoria(ModalidadEnum modalidad,
+	public SelectCategoria(CompeticionEntity competicion, ModalidadEnum modalidad,
 			 ComponentEventListener<ClickEvent<Button>> listener){
 		this.setSizeFull();
 		this.setMargin(false);
@@ -37,7 +37,8 @@ public class SelectCategoria extends VerticalLayout {
 		this.listener = listener;
 		
 		// Obtiene ultima competicion correspondiente al año actual
-		competicion = findCompeticion();
+		if(competicion==null)
+			competicion = findCompeticion();
 		if(competicion==null){
 			add(new Label("Ultima competición no disponible."));
 			return;

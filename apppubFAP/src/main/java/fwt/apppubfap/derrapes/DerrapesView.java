@@ -39,18 +39,17 @@ public class DerrapesView extends VerticalLayout {
 	private String currentToken = "";
 	private EliminatoriaEnum eliminatoria = null;
 
-	public DerrapesView(){
+	public DerrapesView(CompeticionEntity competicion){
+		this.competicion = competicion;
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
 		this.setPadding(false);
         
-        selectCategoria = new SelectCategoria(
+        selectCategoria = new SelectCategoria(competicion,
         		ModalidadEnum.SLIDE, e -> {
         			Optional<String> id = e.getSource().getId();
-        			//Long catId = Long.parseLong(id.get());
         			categoria = selectCategoria.getCategoria(id.get());
-        			competicion = selectCategoria.getCompeticion();
         			removeAll();
         			add(showResults());
         	        Refresh();

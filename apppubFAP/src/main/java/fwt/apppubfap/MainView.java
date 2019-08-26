@@ -30,6 +30,7 @@ import fwt.apppubfap.jam.JamView;
 public class MainView extends Div {
 	
 	private static AccessControl accessControl = new AccessControl();
+	private SelectCompeticion competicion = null;
 	    
 	public String getPrincipalName(){
 	    return accessControl.getPrincipalName();
@@ -53,8 +54,12 @@ public class MainView extends Div {
 		
 		AppLayout layout = new AppLayout();
 		
+		VerticalLayout defaultView = createDefaultView();
+		layout.setContent(defaultView);
+		
 		Image logo = new Image("images/freewill-logo-small.png", "CronoWeb");
 		logo.setHeight("40px");
+		logo.addClickListener(e -> layout.setContent(defaultView));
 		layout.setBranding(logo);
 		
 		Image speedIcon = new Image("images/speed.png", "Speed");
@@ -70,8 +75,6 @@ public class MainView extends Div {
 		Image jamIcon = new Image("images/jam.png", "Jam");
 		jamIcon.setHeight("32px");
 		
-		// TODO añadir opcion para cambiar de campeonato
-		
 		AppLayoutMenu menu = layout.createMenu();
 		/*AppLayoutMenuItem route0 = new AppLayoutMenuItem(
 				VaadinIcon.SIGN_OUT.create(), "Salir", 
@@ -79,42 +82,47 @@ public class MainView extends Div {
 				);*/
 		AppLayoutMenuItem route1 = new AppLayoutMenuItem(
 				speedIcon, " Speed", 
-				e -> layout.setContent(new SpeedView())
+				e -> layout.setContent(new SpeedView(competicion.getCompeticion()))
 				);
 		AppLayoutMenuItem route2 = new AppLayoutMenuItem(
 				saltoIcon, " Salto",
-				e -> layout.setContent(new SaltoView())
+				e -> layout.setContent(new SaltoView(competicion.getCompeticion()))
 				);
 		AppLayoutMenuItem route3 = new AppLayoutMenuItem(
 				derrapesIcon, " Derrapes",
-				e -> layout.setContent(new DerrapesView())
+				e -> layout.setContent(new DerrapesView(competicion.getCompeticion()))
 				);
 		AppLayoutMenuItem route4 = new AppLayoutMenuItem(
 				classicIcon, " Classic",
-				e -> layout.setContent(new ClassicView())
+				e -> layout.setContent(new ClassicView(competicion.getCompeticion()))
 				);
 		AppLayoutMenuItem route5 = new AppLayoutMenuItem(
 				battleIcon, " Battle",
-				e -> layout.setContent(new BattleView())
+				e -> layout.setContent(new BattleView(competicion.getCompeticion()))
 				);
 		AppLayoutMenuItem route6 = new AppLayoutMenuItem(
 				jamIcon, " Jam",
-				e -> layout.setContent(new JamView())
+				e -> layout.setContent(new JamView(competicion.getCompeticion()))
 				);
 		
 		menu.addMenuItems(route1, route2, route3, route4, route5, route6/*, route0*/);
-		
+			
+		return layout;
+	}
+
+	protected VerticalLayout createDefaultView() {
+		competicion = new SelectCompeticion("Seleccione una Competición...");
+		competicion.setWidth("80%");
 		VerticalLayout texto = new VerticalLayout();
-		texto.add(new Label("Seleccione una Modalidad en el Menú para ver los Resultados..."));
+		texto.add(competicion);
+		texto.add(new Label("Y una Modalidad en el Menú para ver los Resultados..."));
 		texto.setSizeFull();
 		texto.setSpacing(true);
 		texto.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		texto.add(new Image("images/LogoFAP550x160.png", "FAP")); // TODO tomar imagen de Company
-		layout.setContent(texto);
-		
-		return layout;
+		return texto;
 	}
-
+	
 	/*private void logout() {
 		VaadinSession.getCurrent().getSession().invalidate();
 		UI.getCurrent().getPage().reload();

@@ -42,18 +42,17 @@ public class SpeedView extends VerticalLayout {
 	private VerticalLayout barAndGridLayout = null;
 	private EliminatoriaEnum eliminatoria = null;
 
-	public SpeedView(){
+	public SpeedView(CompeticionEntity competicion){
+		this.competicion = competicion;
 		this.setSizeFull();
 		this.setSpacing(false);
 		this.setMargin(false);
 		this.setPadding(false);
         
-        selectCategoria = new SelectCategoria(
+        selectCategoria = new SelectCategoria(competicion,
         		ModalidadEnum.SPEED, e -> {
         			Optional<String> id = e.getSource().getId();
-        			//Long catId = Long.parseLong(id.get());
         			categoria = selectCategoria.getCategoria(id.get());
-        			competicion = selectCategoria.getCompeticion();
         			removeAll();
         			add(showResults());
         	        Refresh();
@@ -91,7 +90,7 @@ public class SpeedView extends VerticalLayout {
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getMejorTiempo());
-        })).setHeader("Mejor Tiempo").setSortable(true); // TODO añadir ordenacion
+        })).setHeader("Mejor Tiempo").setSortable(true);
         
         grid1.addColumn("clasificacion");
         
@@ -103,7 +102,7 @@ public class SpeedView extends VerticalLayout {
             	return new Label("No Presentado");
             else
             	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación");
+        })).setHeader("Clasificación").setSortable(true);
         
         eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
