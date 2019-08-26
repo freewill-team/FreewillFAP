@@ -71,7 +71,7 @@ public class SaltoView extends VerticalLayout {
             	return new Label("No Presentado");
             else
             	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación");
+        })).setHeader("Clasificación").setSortable(true);;
 		
 		grid2 = new Grid<>(SaltoEntity.class);
         grid2.setWidth("100%");

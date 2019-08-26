@@ -77,21 +77,21 @@ public class SpeedView extends VerticalLayout {
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getTiempoAjustado1());
-        })).setHeader("Tiempo R#1");
+        })).setHeader("Tiempo R#1").setSortable(true);
         
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getTiempoAjustado2()>99999)
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getTiempoAjustado2());
-        })).setHeader("Tiempo R#2");
+        })).setHeader("Tiempo R#2").setSortable(true);
         
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getMejorTiempo()>99999)
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getMejorTiempo());
-        })).setHeader("Mejor Tiempo");
+        })).setHeader("Mejor Tiempo").setSortable(true); // TODO añadir ordenacion
         
         grid1.addColumn("clasificacion");
         

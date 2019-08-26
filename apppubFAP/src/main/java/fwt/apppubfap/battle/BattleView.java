@@ -73,7 +73,7 @@ public class BattleView extends VerticalLayout {
             	return new Label("No Presentado");
             else
             	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación");
+        })).setHeader("Clasificación").setSortable(true);
 		
 		eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
