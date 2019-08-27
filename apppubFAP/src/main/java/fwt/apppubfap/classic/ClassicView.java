@@ -74,8 +74,10 @@ public class ClassicView extends VerticalLayout {
         
 		grid2 = new Grid<>(ClassicShowEntity.class);
         grid2.setWidth("100%");
-        grid2.setColumns("dorsal", "nombre", "apellidos", "totalTecnica", "penalizaciones", 
-        		"puntuacionTotal", "clasificacionFinal");
+        grid2.setColumns("dorsal", "nombre", "apellidos",
+        		"totalTecnica", "penalizaciones", 
+        		"sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal",
+        		"clasificacionFinal");
         
         Image icon = new Image("images/classic.png", "Classic");
 		icon.setHeight("20px");

@@ -75,9 +75,12 @@ public class JamView extends VerticalLayout {
 		
 		grid2 = new Grid<>(JamShowEntity.class);
         grid2.setWidth("100%");
-        grid2.setColumns("dorsal", "nombre", "apellidos", 
-        		"dorsalPareja", "nombrePareja", "apellidosPareja", 
-        		"totalTecnica", "penalizaciones", "puntuacionTotal", "clasificacionFinal");
+        grid2.setColumns("dorsalDuo", "nombreDuo", 
+        		//"dorsal", "nombre", "apellidos", 
+        		//"dorsalPareja", "nombrePareja", "apellidosPareja", 
+        		"totalTecnica", "penalizaciones", 
+        		"sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal",
+        		"clasificacionFinal");
         
         Image icon = new Image("images/jam.png", "Jam");
 		icon.setHeight("20px");
