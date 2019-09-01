@@ -27,6 +27,8 @@ import fwt.apppubfap.jam.JamView;
 @Push
 @Route
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no")
+//@PWA(name = "Freestyle FAP", shortName="FAP", iconPath = "images/freewill-logo-small.png",
+//offlineResources = {"images/freewill-logo-small.png"})
 public class MainView extends Div {
 	
 	private static AccessControl accessControl = new AccessControl();

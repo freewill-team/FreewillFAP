@@ -70,13 +70,15 @@ public class SaltoView extends VerticalLayout {
             	return new Label("No Presentado");
             else
             	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación").setSortable(true);;
+        })).setHeader("Clasificación").setSortable(true);
+        grid1.getColumnByKey("apellidos").setWidth("160px");
 		
 		grid2 = new Grid<>(SaltoEntity.class);
         grid2.setWidth("100%");
         grid2.setColumns("dorsal", "nombre", "apellidos", "mejorSalto", 
         		"numeroSaltos", "numeroFallos", "alturaPrimerFallo", "clasificacion");
-    	
+        grid2.getColumnByKey("apellidos").setWidth("160px");
+        
         Image icon = new Image("images/salto.png", "Salto");
 		icon.setHeight("20px");
         

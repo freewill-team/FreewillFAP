@@ -64,23 +64,28 @@ public class JamView extends VerticalLayout {
 		
 		grid1 = new Grid<>(ParticipanteEntity.class);
         grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos", 
-        		"dorsalPareja", "nombrePareja", "apellidosPareja");
+        grid1.setColumns("dorsalDuo", "nombreDuo");
+        		//"dorsal", "nombre", "apellidos", 
+        		//"dorsalPareja", "nombrePareja", "apellidosPareja");
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getClasificacion()>990)
             	return new Label("No Presentado");
             else
             	return new Label(""+rec.getClasificacion());
         })).setHeader("Clasificación").setSortable(true);
+        grid1.getColumnByKey("dorsalDuo").setWidth("100px");
+        grid1.getColumnByKey("nombreDuo").setWidth("480px");
+        //grid1.getColumnByKey("apellidos").setWidth("140px");
+        //grid1.getColumnByKey("apellidosPareja").setWidth("140px");
 		
 		grid2 = new Grid<>(JamShowEntity.class);
         grid2.setWidth("100%");
         grid2.setColumns("dorsalDuo", "nombreDuo", 
-        		//"dorsal", "nombre", "apellidos", 
-        		//"dorsalPareja", "nombrePareja", "apellidosPareja", 
         		"totalTecnica", "penalizaciones", 
-        		"sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal",
+        		"sumaPV", "PVLocales", "PVTotal", "puntuacionTotal",
         		"clasificacionFinal");
+        grid2.getColumnByKey("dorsalDuo").setWidth("100px");
+        grid2.getColumnByKey("nombreDuo").setWidth("440px");
         
         Image icon = new Image("images/jam.png", "Jam");
 		icon.setHeight("20px");

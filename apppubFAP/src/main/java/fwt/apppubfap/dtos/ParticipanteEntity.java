@@ -267,4 +267,12 @@ public class ParticipanteEntity implements Serializable, Cloneable {
 		this.parejaJam = parejaJam;
 	}
 	
+	public String getNombreDuo() {
+		return (this.nombre + " " + this.apellidos + '/' + this.nombrePareja + " " + this.apellidosPareja);
+	}
+
+	public String getDorsalDuo() {
+		return (this.dorsal + "/" + this.dorsalPareja);
+	}
+	
 }

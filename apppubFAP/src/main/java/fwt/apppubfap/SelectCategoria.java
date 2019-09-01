@@ -64,7 +64,8 @@ public class SelectCategoria extends VerticalLayout {
 		        
 		        if(rec.getId()>0){
 		        	Button btn = new Button(cat.getNombre());
-		        	btn.setWidthFull();
+		        	//btn.setWidthFull();
+		        	btn.setWidth("80%");
 		        	btn.addThemeVariants(ButtonVariant.LUMO_LARGE);
 		        	btn.setId(""+cat.getId());
 					btn.addClickListener(this.listener);

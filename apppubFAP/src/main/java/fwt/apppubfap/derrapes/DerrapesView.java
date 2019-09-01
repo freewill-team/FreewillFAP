@@ -73,6 +73,7 @@ public class DerrapesView extends VerticalLayout {
             else
             	return new Label(""+rec.getClasificacion());
         })).setHeader("Clasificación").setSortable(true);
+        grid1.getColumnByKey("apellidos").setWidth("160px");
 		
 		eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)

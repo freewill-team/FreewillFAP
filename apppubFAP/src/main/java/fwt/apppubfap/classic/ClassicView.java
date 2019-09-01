@@ -71,13 +71,15 @@ public class ClassicView extends VerticalLayout {
             else
             	return new Label(""+rec.getClasificacion());
         })).setHeader("Clasificación").setSortable(true);
+        grid1.getColumnByKey("apellidos").setWidth("160px");
         
 		grid2 = new Grid<>(ClassicShowEntity.class);
         grid2.setWidth("100%");
         grid2.setColumns("dorsal", "nombre", "apellidos",
         		"totalTecnica", "penalizaciones", 
-        		"sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal",
+        		"sumaPV", "PVLocales", "PVTotal", "puntuacionTotal",
         		"clasificacionFinal");
+        grid2.getColumnByKey("apellidos").setWidth("160px");
         
         Image icon = new Image("images/classic.png", "Classic");
 		icon.setHeight("20px");

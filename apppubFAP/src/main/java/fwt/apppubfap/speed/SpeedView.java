@@ -93,6 +93,7 @@ public class SpeedView extends VerticalLayout {
         })).setHeader("Mejor Tiempo").setSortable(true);
         
         grid1.addColumn("clasificacion");
+        grid1.getColumnByKey("apellidos").setWidth("160px");
         
         grid3 = new Grid<>(ParticipanteEntity.class);
         grid3.setWidth("100%");
@@ -103,6 +104,8 @@ public class SpeedView extends VerticalLayout {
             else
             	return new Label(""+rec.getClasificacion());
         })).setHeader("Clasificación").setSortable(true);
+        
+        grid3.getColumnByKey("apellidos").setWidth("160px");
         
         eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
