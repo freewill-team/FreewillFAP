@@ -1,5 +1,8 @@
 package freewill.nextgen.common;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /** 
  * File:   Utils.java
  * Date:   01/09/2017
@@ -43,6 +46,8 @@ public class Utils {
 	{
         String hostname = "";
 		String osname = findOSName().toLowerCase();
+		
+		System.out.println("os.name: "+osname);
 
         if (osname.indexOf("win") >= 0) 
         {
@@ -52,10 +57,18 @@ public class Utils {
         {
             hostname = System.getenv("HOSTNAME");
         }
-        else
+        
+        if(hostname==null || hostname.isEmpty())
         {
-        	hostname = "Undetermine";
+        	try {
+				hostname = InetAddress.getLocalHost().getHostName();
+			} catch (UnknownHostException e) {
+				hostname = "Undetermine";
+			}
         }
+        
+        System.out.println("hostname: "+hostname);
+        
         return hostname;
     }
 	

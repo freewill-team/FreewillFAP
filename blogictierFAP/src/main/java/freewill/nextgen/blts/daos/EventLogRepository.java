@@ -23,4 +23,6 @@ public interface EventLogRepository extends CrudRepository<EventEntity, Long> {
 	@Query("SELECT coalesce(max(m.id), 0) FROM EventEntity m")
 	Long getMaxId();
 	
+	void deleteByTimestampBefore(Date limdate);
+	
 }

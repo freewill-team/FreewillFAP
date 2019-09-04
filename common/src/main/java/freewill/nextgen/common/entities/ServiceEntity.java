@@ -26,7 +26,7 @@ public class ServiceEntity implements Serializable {
 			ServiceStatusEnum.FAILED; 		// State of the Service
 	private String server = "unknown";		// name of the server where the Service is running
 	private String site = "unknown";		// name of the Site where the Service is running
-	private int port = 8445;				// port of the Blogictier process
+	private int port = 8447;				// port of the Blogictier process
 	private boolean stopProcess = false;	// Indicates whether the service needs to be shouted down
 	
 	/*
@@ -53,6 +53,7 @@ public class ServiceEntity implements Serializable {
 				getName() +"\t"+
 				getServer() + "\t" +
 				getSite() +"\t"+
+				getPort() +"\t"+
 				getStatus() +"\t" +
 				getStopProcess() +"\t"+
 				getTimestamp();

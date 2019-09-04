@@ -67,8 +67,8 @@ public class Application {
         			process.getProcess().getServer()+":"+process.getProcess().getService();
         	ServiceEntity service = (ServiceEntity) 
         			RtdbDataService.get().getEntityById(serviceId, ServiceEntity.class);
-        	service.setPort(port);
-        	RtdbDataService.get().updateEntity(service, ServiceEntity.class);
+        	/*service.setPort(port);
+        	RtdbDataService.get().updateEntity(service, ServiceEntity.class);*/
         	
         	// Main loop
     		while(process.getProcess().getStopProcess()==false) // near-Infinite loop

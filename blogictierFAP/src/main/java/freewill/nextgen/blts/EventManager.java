@@ -86,4 +86,15 @@ public class EventManager {
 		return (List<EventEntity>) repository.findByTimestampBetween(user.getCompany(), sdate, edate, top1000);
 	}
 	
+	@RequestMapping("/deleteByPeriod/{days}")
+	public boolean deleteByCompeticionAndCategoria(@PathVariable int days) throws Exception {
+		System.out.println("Deleting EventEntity By Period..."+days);
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//UserEntity user = userrepo.findByLoginname(auth.getName());
+		Date limdate = new Date();
+		limdate.setTime(limdate.getTime()-days*86100);
+		repository.deleteByTimestampBefore(limdate);
+		return true;
+	}
+	
 }

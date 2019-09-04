@@ -77,10 +77,10 @@ public class Mytoken {
 		// Calculates expiration date/time in milliseconds - 10 minutes before token expiration
 		Long expdate = token_date.getTime() + (this.expires_in - 60*10L)*1000L;
 		
-		System.out.println("Token date = " + token_date.getTime());
+		/*System.out.println("Token date = " + token_date.getTime());
 		System.out.println("Expires in = " + this.expires_in*1000L);
 		System.out.println("Expir.date = " + expdate);
-		System.out.println("Now        = " + now);
+		System.out.println("Now        = " + now);*/
 		
 		if(now>expdate){
 			System.out.println("RENEW NOW !!!");
