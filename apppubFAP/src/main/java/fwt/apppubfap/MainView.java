@@ -1,5 +1,8 @@
 package fwt.apppubfap;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 //import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.AppLayoutMenu;
@@ -12,12 +15,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.InputStreamFactory;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinService;
 //import com.vaadin.flow.server.VaadinSession;
 
 import fwt.apppubfap.authentication.AccessControl;
 import fwt.apppubfap.classic.ClassicView;
 import fwt.apppubfap.derrapes.DerrapesView;
+import fwt.apppubfap.dtos.CompanyEntity;
 import fwt.apppubfap.speed.SpeedView;
 import fwt.apppubfap.salto.SaltoView;
 import fwt.apppubfap.battle.BattleView;
@@ -113,15 +119,32 @@ public class MainView extends Div {
 	}
 
 	protected VerticalLayout createDefaultView() {
-		competicion = new SelectCompeticion("Seleccione una Competición...");
-		competicion.setWidth("80%");
 		VerticalLayout texto = new VerticalLayout();
-		texto.add(competicion);
-		texto.add(new Label("Y una Modalidad en el Menú para ver los Resultados..."));
 		texto.setSizeFull();
 		texto.setSpacing(true);
 		texto.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-		texto.add(new Image("images/LogoFAP550x160.png", "FAP")); // TODO tomar imagen de Company
+		
+		competicion = new SelectCompeticion("Seleccione una Competición...");
+		competicion.setWidth("80%");
+		texto.add(competicion);
+		
+		Label label = new Label("Y una Modalidad en el Menú para ver los Resultados...");
+		label.setWidth("80%");
+		texto.add(label);
+		
+		// Toma imagen de Company
+		Image image = new Image("images/LogoFAP550x160.png", "FAP");
+		//image.setWidth("80%");
+		image.setMaxWidth("80%");
+		CompanyEntity company = accessControl.getCompany();
+		if(company!=null){
+			StreamResource src = creaResource(company.getImage(), company.getImagename());
+			if(src!=null){
+				image.setSrc(src);
+			}
+		}
+		texto.add(image);
+		
 		return texto;
 	}
 	
@@ -129,5 +152,22 @@ public class MainView extends Div {
 		VaadinSession.getCurrent().getSession().invalidate();
 		UI.getCurrent().getPage().reload();
 	}*/
+	
+	private StreamResource creaResource(byte[] data, String filename) {
+    	if(data!=null && data.length>0){
+        	StreamResource src = new StreamResource(
+        			filename, 
+        			new InputStreamFactory(){
+						@Override
+						public InputStream createInputStream() {
+							return new ByteArrayInputStream(data);
+						}
+        				
+        			});
+        	return src;
+    	}
+    	else 
+    		return null;
+	}
 	
 }
