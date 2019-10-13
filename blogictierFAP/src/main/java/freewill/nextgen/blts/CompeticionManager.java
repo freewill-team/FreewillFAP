@@ -22,6 +22,7 @@ import freewill.nextgen.blts.daos.RankingRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
@@ -180,8 +181,10 @@ public class CompeticionManager {
         @Override
         public void run() {
             try {
-            	//CircuitoEntity circuito = circuitorepo.findById(circuitoId);
             	System.out.println("CalculateRankingThread thread started for circuito..."+circuito);
+            	// Obtiene objeto Circuito
+            	CircuitoEntity circuitoObj = circuitorepo.findById(circuito);
+            	
             	// Inicializa los valores ya existentes
         		List<RankingEntity> recs = rankingrepo.findByCircuito(circuito);
         		for(RankingEntity rec:recs){
@@ -202,7 +205,7 @@ public class CompeticionManager {
         		}
             	// Procesa valores para cada modalidad
             	for(ModalidadEnum modalidad:ModalidadEnum.values()){
-            		generateByModalidad(modalidad, circuito);
+            		generateByModalidad(modalidad, circuitoObj);
             	}
             	
             	System.out.println("CalculateRankingThread thread finished.");
@@ -211,7 +214,7 @@ public class CompeticionManager {
             }
         }
         
-        private void generateByModalidad(ModalidadEnum modalidad, Long circuito) 
+        private void generateByModalidad(ModalidadEnum modalidad, CircuitoEntity circuito) 
         		throws Exception {
     		System.out.println("Generating Ranking By modalidad..."+modalidad);
     		// Obtiene categorias para la modalidad
@@ -224,22 +227,22 @@ public class CompeticionManager {
     		Date now = new Date();
     		switch(modalidad){
     			case SPEED:
-    				campeonatos = repository.findTop4ByCircuitoAndSpeedAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndSpeedAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(),true, now);
     				break;
     			case BATTLE:
-    				campeonatos = repository.findTop4ByCircuitoAndBattleAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndBattleAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(),true, now);
     				break;
     			case CLASSIC:
-    				campeonatos = repository.findTop4ByCircuitoAndClassicAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndClassicAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(),true, now);
     				break;
     			case JAM:
-    				campeonatos = repository.findTop4ByCircuitoAndJamAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndJamAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(),true, now);
     				break;
     			case SLIDE:
-    				campeonatos = repository.findTop4ByCircuitoAndDerrapesAndFechaInicioBeforeOrderByFechaFinDesc(circuito,true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndDerrapesAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(),true, now);
     				break;
     			case JUMP:
-    				campeonatos = repository.findTop4ByCircuitoAndSaltoAndFechaInicioBeforeOrderByFechaFinDesc(circuito, true, now);
+    				campeonatos = repository.findTop4ByCircuitoAndSaltoAndFechaInicioBeforeOrderByFechaFinDesc(circuito.getId(), true, now);
     				break;
     		}
     		
@@ -249,13 +252,13 @@ public class CompeticionManager {
     			System.out.println("  Procesando Competicion "+rec);
     			for(CategoriaEntity categoria:categorias){
     				System.out.println("    Procesando Categoria "+categoria);
-        			saveRankingByCompeticionAndCategoria(i, rec, categoria, categorias);
+        			saveRankingByCompeticionAndCategoria(circuito.getTemporada(), i, rec, categoria, categorias);
         		}
     			i++;
     		}	
     	}
         
-        private void saveRankingByCompeticionAndCategoria(int i,
+        private void saveRankingByCompeticionAndCategoria(int yearCircuito, int i,
         		CompeticionEntity competi, CategoriaEntity categoria, 
         		List<CategoriaEntity> categorias) {
 			List<ParticipanteEntity> inscripciones = 
@@ -269,11 +272,11 @@ public class CompeticionManager {
     			}
     			else{
 	    			// Obtiene la categoria estandard para este patinador
-	    			categoriaStd = getCategoriaStd(categorias,
+	    			categoriaStd = getCategoriaStdCircuito(yearCircuito, categorias,
 	    					inscripcion.getPatinador(), categoria.getModalidad());
     			}
     			if(categoriaStd==null){
-    				System.out.println("Hay un registro huerfano = "+inscripcion);
+    				System.out.println("*** Hay un registro huerfano = "+inscripcion);
     				continue;
     			}
     			RankingEntity rec = null;
@@ -352,6 +355,17 @@ public class CompeticionManager {
     			suma = suma - minimo;
     		//System.out.println("    Minimo = "+minimo);
     		//System.out.println("    Best3of4 = "+suma);
+    		int numCompeticiones = 0; // minimo 2 para entrar en el ranking circuito
+			if(rec.getPuntos1()>0)
+				numCompeticiones++;
+			if(rec.getPuntos2()>0)
+				numCompeticiones++;
+			if(rec.getPuntos3()>0)
+				numCompeticiones++;
+			if(rec.getPuntos4()>0)
+				numCompeticiones++;
+			if(numCompeticiones<2)
+				suma = 0;
     		return suma;
     	}
         
@@ -536,6 +550,38 @@ public class CompeticionManager {
 		// A partir de la edad del niño inferirá su posible categoria
     	Date now = new Date();
     	int edad = now.getYear() - patin.getFechaNacimiento().getYear();
+    	//System.out.println("Edad = "+edad);
+    	
+    	for(CategoriaEntity cat:categorias){
+    		//System.out.println("Checking ParticipanteEntity..."+cat.getNombre()+" "+
+    		//		cat.getEdadMinima()+"-"+cat.getEdadMaxima());
+    		if(cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima() &&
+    				patin.getGenero()==cat.getGenero()){
+    			return cat;
+    		}
+    		// caso especifico de Jam, pueden ir a mixtos
+    		else if(modalidad==ModalidadEnum.JAM && 
+    				cat.getEdadMinima()<=edad && edad<=cat.getEdadMaxima()){
+    			return cat;
+    		}
+    	}
+		return null;
+	}
+	
+	private CategoriaEntity getCategoriaStdCircuito(int yearCircuito, 
+			List<CategoriaEntity> categorias,
+			Long patinador, ModalidadEnum modalidad) {
+		if(categorias==null){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			UserEntity user = userrepo.findByLoginname(auth.getName());
+			categorias = categorepo.findByModalidadAndCompany(
+	    			modalidad, user.getCompany());
+		}
+		PatinadorEntity patin = patinrepo.findById(patinador);
+		if(patin==null) return null;
+		// A partir de la edad del niño inferirá su posible categoria para el circuito
+    	Date now = new Date();
+    	int edad = yearCircuito - patin.getFechaNacimiento().getYear() - 1900;
     	//System.out.println("Edad = "+edad);
     	
     	for(CategoriaEntity cat:categorias){

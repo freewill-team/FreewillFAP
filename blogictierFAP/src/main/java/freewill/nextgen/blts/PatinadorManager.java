@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import freewill.nextgen.blts.daos.CategoriaRepository;
+import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.ClubRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
@@ -21,6 +22,7 @@ import freewill.nextgen.blts.daos.PatinadorRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
 import freewill.nextgen.blts.data.PatinadorEntity.GenderEnum;
@@ -63,6 +65,9 @@ public class PatinadorManager {
 	
 	@Autowired
 	CompeticionRepository competirepo;
+	
+	@Autowired
+	CircuitoRepository circuitorepo;
 
 	@RequestMapping("/create")
 	public PatinadorEntity add(@RequestBody PatinadorEntity rec) throws Exception {
@@ -240,6 +245,15 @@ public class PatinadorManager {
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	//UserEntity user = userrepo.findByLoginname(auth.getName());
 		if(rec!=null){
+			// Obtiene datos de la competicion
+			CompeticionEntity competi = competirepo.findById(competicion);
+			if(competi==null)
+				throw new IllegalArgumentException("Error: La competición no existe.");
+			// Obtiene circuito para esta competicion
+			CircuitoEntity circuito = circuitorepo.findById(competi.getCircuito());
+			if(circuito==null)
+				throw new IllegalArgumentException("Error: El circuito no existe.");	
+					
 			// Inscripciones ya existentes para este campeonato
 			List<ParticipanteEntity> inscripciones = 
 					participanterepo.findByPatinadorAndCompeticion(rec.getId(), competicion);
@@ -248,36 +262,42 @@ public class PatinadorManager {
 			inscripciones.addAll(inscripciones2);
 			
 			if(rec.getSpeed())
-				updateInscripcion(ModalidadEnum.SPEED, rec.getCatSpeed(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.SPEED, rec.getCatSpeed(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.SPEED, inscripciones);
 			
 			if(rec.getBattle())
-				updateInscripcion(ModalidadEnum.BATTLE, rec.getCatBattle(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.BATTLE, rec.getCatBattle(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.BATTLE, inscripciones);
 			
 			if(rec.getClassic())
-				updateInscripcion(ModalidadEnum.CLASSIC, rec.getCatClassic(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.CLASSIC, rec.getCatClassic(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.CLASSIC, inscripciones);
 			
 			if(rec.getDerrapes())
-				updateInscripcion(ModalidadEnum.SLIDE, rec.getCatDerrapes(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.SLIDE, rec.getCatDerrapes(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.SLIDE, inscripciones);
 			if(rec.getSalto())
-				updateInscripcion(ModalidadEnum.JUMP, rec.getCatSalto(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.JUMP, rec.getCatSalto(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.JUMP, inscripciones);
 			
 			if(rec.getJam() && rec.getIdPareja()!=null && rec.getParejaJam()!=null)
-				updateInscripcion(ModalidadEnum.JAM, rec.getCatJam(), rec, competicion, inscripciones);
+				updateInscripcion(ModalidadEnum.JAM, rec.getCatJam(), rec, 
+						competi, inscripciones, circuito.getTemporada());
 			else
 				removeInscripcion(ModalidadEnum.JAM, inscripciones);
 		}
 		else
-			throw new IllegalArgumentException("El patinador indicado no existe.");
+			throw new IllegalArgumentException("Error: El patinador indicado no existe.");
 		return true;
 	}
 
@@ -294,8 +314,9 @@ public class PatinadorManager {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void updateInscripcion(ModalidadEnum modalidad, String categoria, PatinadorEntity rec, 
-			Long competicion, List<ParticipanteEntity> inscripciones) throws Exception {
+	private void updateInscripcion(ModalidadEnum modalidad, String categoria, 
+			PatinadorEntity rec, CompeticionEntity competi, 
+			List<ParticipanteEntity> inscripciones, int yearCircuito) throws Exception {
 		// TODO usar el idcategoria en lugar del nombre
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	UserEntity user = userrepo.findByLoginname(auth.getName());
@@ -326,16 +347,17 @@ public class PatinadorManager {
     	inscripcion.setClub(rec.getClub());
     	inscripcion.setClubStr(rec.getClubStr());
     	inscripcion.setCompany(rec.getCompany());
-    	inscripcion.setCompeticion(competicion);
+    	inscripcion.setCompeticion(competi.getId());
     	inscripcion.setParejaJam(rec.getParejaJam());
     	inscripcion.setPatinadorPareja(rec.getIdPareja());
     	inscripcion.setNombrePareja(rec.getNombrePareja());
     	inscripcion.setApellidosPareja(rec.getApellidosPareja());
-    	CompeticionEntity competi = competirepo.findById(competicion);
     	inscripcion.setCircuito(competi.getCircuito());
-    	// A partir de la edad del niño inferirá su posible categoria
-    	Date now = new Date();
-    	int edad = now.getYear() - rec.getFechaNacimiento().getYear();
+    	//// A partir de la edad del niño inferirá su posible categoria
+    	//// Date now = new Date();
+    	//// int edad = now.getYear() - rec.getFechaNacimiento().getYear();
+    	// A partir de la edad del niño para el año del circuito inferirá su posible categoria
+    	int edad = yearCircuito - rec.getFechaNacimiento().getYear() - 1900;
     	System.out.println("Edad = "+edad);
     	if(categoria!=null && !categoria.isEmpty() && !categoria.equals("")){
     		CategoriaEntity cat = categorepo.findByNombreAndCompany(categoria, user.getCompany());
