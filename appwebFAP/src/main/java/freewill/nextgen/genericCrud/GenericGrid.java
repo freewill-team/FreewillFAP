@@ -276,7 +276,7 @@ public class GenericGrid<T> extends Grid {
         	for(String filter:filtros){
 	        	SimpleStringFilter[] filters = new SimpleStringFilter[fields.length];
 	        	for(int i=0; i<fields.length; i++) {
-	        		filters[i] = new SimpleStringFilter(fields[i], filter/*filterString*/, true, false);
+	        		filters[i] = new SimpleStringFilter(fields[i], filter, true, false);
 	        	}
 	        	getContainer().addContainerFilter(new Or(filters));
         	}

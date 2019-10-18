@@ -12,6 +12,7 @@ public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
 
 	StudentEntity findById(Long id);
 	List<StudentEntity> findByCompany(Long id);
+	List<StudentEntity> findByCompanyAndActive(Long company, boolean active);
 	
 	@Modifying
 	@Query("DELETE FROM StudentEntity u where u.company = ?1")

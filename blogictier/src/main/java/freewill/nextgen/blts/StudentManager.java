@@ -91,6 +91,15 @@ public class StudentManager {
 		return recs;
 	}
 	
+	@RequestMapping("/getActiveStudents")
+	public List<StudentEntity> getActiveStudents() throws Exception {
+		System.out.println("Getting Active Student List...");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		List<StudentEntity> recs = repository.findByCompanyAndActive(user.getCompany(), true);
+		return recs;
+	}
+	
 	@RequestMapping("/get/{recId}")
 	public StudentEntity get(@PathVariable Long recId) throws Exception {
 		System.out.println("Retrieving Student..."+recId);

@@ -29,6 +29,7 @@ public class ProposalStudio {
     	// It reads properties
     	MainCycle = service.readConfigPropInt("MainCycle", 5000);
     	int tomcatPort = service.readConfigPropInt("TomcatPort", 8892);
+    	int dohearbeat = service.readConfigPropInt("DoHearbeat", 1);
     	
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(tomcatPort);
@@ -53,8 +54,8 @@ public class ProposalStudio {
     		while(service.getProcess().getStopProcess()==false) // near-Infinite loop
     		{
     			// Refresh status in processMonitor
-    			// TODO during debug 
-    			service.checkin();
+    			// disabled during testing  
+    			if(dohearbeat>0) service.checkin();
     			
     			// Actually it does nothing, as all the work is done by Tomcat
     			// Wait until next cycle
