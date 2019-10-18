@@ -119,6 +119,20 @@ public class CheckinManager {
 			return (List<CheckinEntity>) repository.findByCompanyAndTeacher(user.getCompany(), user.getName());
 	}
 	
+	@RequestMapping("/getbydateandlocation/{lsdate}/{ledate}/{location}")
+	public List<CheckinEntity> getbydateandlocation(
+			@PathVariable Long lsdate, @PathVariable Long ledate,
+			@PathVariable String location) throws Exception {
+		System.out.println("Getting CheckinEntity List by date and location..."
+				+lsdate+","+location);
+		Date sdate = new Date(lsdate);
+		Date edate = new Date(ledate);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		return (List<CheckinEntity>) repository.findByTimestampBetween(
+				user.getCompany(), location, sdate, edate);
+	}
+	
 	@RequestMapping("/get/{recId}")
 	public CheckinEntity get(@PathVariable Long recId) throws Exception {
 		System.out.println("Retrieving CheckinEntity..."+recId);
