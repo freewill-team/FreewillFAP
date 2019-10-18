@@ -113,7 +113,7 @@ public class SendAlarmsByMail extends MonitoredProcess {
 								// Reports that SendMail has failed
 								RtdbDataService.get().pushEvent(new EventEntity(
 									new Date(), 
-									String.format(AlarmDic.ALM0041.toString(), rec.getId(), rec.getEmail()),
+									String.format(AlarmDic.ALM0041.toString(), rec.getEmail(), rec.getSubject()),
 									PROCESSID,
 									SERVICEID,
 									Utils.PROCESSES,
