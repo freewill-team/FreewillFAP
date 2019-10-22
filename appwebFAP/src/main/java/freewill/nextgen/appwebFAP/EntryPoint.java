@@ -226,7 +226,8 @@ public class EntryPoint extends UI {
 				));
         
         // Unregister user from Logins table
-        heartbeat.interrupt();
+        if(heartbeat.isAlive())
+        	heartbeat.interrupt();
         VaadinSession.getCurrent().getSession().invalidate();
         Page.getCurrent().reload();
         RtdbDataService.get().userCheckout(username, 

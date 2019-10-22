@@ -2,11 +2,8 @@ package freewill.nextgen.rankingabsoluto;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.Responsive;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.themes.ValoTheme;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;

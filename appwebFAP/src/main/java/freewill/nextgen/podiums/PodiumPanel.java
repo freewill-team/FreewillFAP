@@ -1,17 +1,12 @@
 package freewill.nextgen.podiums;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.data.ParticipanteEntity;

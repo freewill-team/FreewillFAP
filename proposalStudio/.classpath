@@ -34,9 +34,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ueben/Documents/Proyectos/adms.nextgen/lib/flute-1.3.0.gg2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ueben/Documents/Proyectos/adms.nextgen/lib/googlemaps-1.0.2.CUBA.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ueben/Documents/Proyectos/adms.nextgen/lib/gwt-ajaxloader-1.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ueben/Documents/Proyectos/adms.nextgen/lib/gwt-maps-api-3.10.0-alpha-7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

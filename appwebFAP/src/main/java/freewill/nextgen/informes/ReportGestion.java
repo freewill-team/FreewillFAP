@@ -33,7 +33,6 @@ public class ReportGestion extends Report {
 		return styleList;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public ReportGestion(Long circuito, String circuitoStr, InformesLogic viewLogic){
 		try{
 			if(viewLogic==null) return;

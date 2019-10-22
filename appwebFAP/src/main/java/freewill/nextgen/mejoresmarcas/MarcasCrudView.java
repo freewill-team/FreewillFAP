@@ -1,18 +1,11 @@
 package freewill.nextgen.mejoresmarcas;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
-import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.hmi.utils.Messages;
 
 /**

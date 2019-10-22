@@ -10,7 +10,6 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Button.ClickListener;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;

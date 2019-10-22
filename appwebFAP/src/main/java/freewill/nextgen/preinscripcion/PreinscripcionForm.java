@@ -25,7 +25,6 @@ import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.hmi.utils.Messages;
 import freewill.nextgen.parejajam.SelectParejaJamDialog;
-import freewill.nextgen.patinador.SelectPatinadorDialog;
 import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
 /**

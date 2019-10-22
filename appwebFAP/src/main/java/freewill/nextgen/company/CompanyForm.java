@@ -28,7 +28,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.company.CompanyForm.TemplateEnum;
 import freewill.nextgen.data.CompanyEntity;
 import freewill.nextgen.data.Style;
 import freewill.nextgen.data.CompanyEntity.PlanEnum;

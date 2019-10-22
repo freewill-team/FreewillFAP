@@ -4,13 +4,9 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -24,19 +20,13 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-import freewill.nextgen.circuito.SelectCircuito;
-import freewill.nextgen.competicion.SelectCompeticionSpark;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.GenericGrid;
 import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
-import freewill.nextgen.preinscripcion.PreinscripcionCrudView;
-import freewill.nextgen.preinscripcion.PreinscripcionCrudView.InscripcionEnum;
 
 /**
  * A view for performing create-read-update-delete operations on records.

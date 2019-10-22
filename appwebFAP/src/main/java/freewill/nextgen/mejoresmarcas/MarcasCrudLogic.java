@@ -67,7 +67,8 @@ public class MarcasCrudLogic implements Serializable {
     /**
      * Update the fragment without causing navigator to change view
      */
-    private void setFragmentParameter(String recId) {
+    @SuppressWarnings("unused")
+	private void setFragmentParameter(String recId) {
         String fragmentParameter;
         if (recId == null || recId.isEmpty()) {
             fragmentParameter = "";
@@ -88,9 +89,7 @@ public class MarcasCrudLogic implements Serializable {
                 // Ensure this is selected even if coming directly here from
                 // login
                 try {
-                    //int pid = Integer.parseInt(recId);
-                    //ParticipanteEntity rec = findRecord(pid);
-                	ParticipanteEntity rec = findRecord(recId);
+                	//ParticipanteEntity rec = findRecord(recId);
                     
                 } catch (NumberFormatException e) {
                 }
@@ -98,7 +97,8 @@ public class MarcasCrudLogic implements Serializable {
         }
     }
 
-    private ParticipanteEntity findRecord(String recId) {
+    @SuppressWarnings("unused")
+	private ParticipanteEntity findRecord(String recId) {
     	try{
     		ParticipanteEntity rec = (ParticipanteEntity) BltClient.get().getEntityById(
     				recId, ParticipanteEntity.class,

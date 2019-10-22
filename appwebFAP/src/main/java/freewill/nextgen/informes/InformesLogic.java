@@ -2,19 +2,16 @@ package freewill.nextgen.informes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.hmi.common.Sparkline;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
@@ -42,7 +39,8 @@ public class InformesLogic implements Serializable {
     /**
      * Update the fragment without causing navigator to change view
      */
-    private void setFragmentParameter(String recId) {
+    @SuppressWarnings("unused")
+	private void setFragmentParameter(String recId) {
         String fragmentParameter;
         if (recId == null || recId.isEmpty()) {
             fragmentParameter = "";
@@ -63,8 +61,6 @@ public class InformesLogic implements Serializable {
                 // Ensure this is selected even if coming directly here from
                 // login
                 try {
-                    //int pid = Integer.parseInt(recId);
-                    //ParticipanteEntity rec = findRecord(pid);
                 	//ParticipanteEntity rec = findRecord(recId);
                     //if(view!=null)
                     //	view.selectRow(rec);
@@ -134,6 +130,7 @@ public class InformesLogic implements Serializable {
 		try{
 			List<CategoriaEntity> categorias = getCategorias();
 			int count = categorias.size();
+			@SuppressWarnings("unchecked")
 			List<ParticipanteEntity>[] data = new ArrayList[count];
 			
 			int i = 0;

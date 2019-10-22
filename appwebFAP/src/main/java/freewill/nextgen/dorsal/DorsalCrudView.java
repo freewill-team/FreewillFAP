@@ -1,40 +1,18 @@
 package freewill.nextgen.dorsal;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.SelectionEvent;
-import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Grid.SelectionModel;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.circuito.SelectCircuito;
 import freewill.nextgen.competicion.SelectCompeticionSpark;
-import freewill.nextgen.data.PatinadorEntity;
-import freewill.nextgen.genericCrud.GenericGrid;
-import freewill.nextgen.gestioncategorias.GestionCrudGrid;
-import freewill.nextgen.gestioncategorias.GestionCrudView;
-import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
 
 /**

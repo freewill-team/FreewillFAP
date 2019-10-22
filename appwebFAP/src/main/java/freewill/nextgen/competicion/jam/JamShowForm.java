@@ -20,7 +20,6 @@ import com.vaadin.ui.TabSheet.Tab;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.JamShowEntity;
 import freewill.nextgen.hmi.utils.Messages;
 

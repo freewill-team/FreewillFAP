@@ -1,11 +1,8 @@
 package freewill.nextgen.informes;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 
-import com.vaadin.event.SelectionEvent;
-import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -14,29 +11,18 @@ import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.themes.ValoTheme;
 
 import freewill.nextgen.circuito.SelectCircuito;
 import freewill.nextgen.competicion.SelectCompeticion;
 import freewill.nextgen.data.ParticipanteEntity;
-import freewill.nextgen.data.PatinadorEntity;
-import freewill.nextgen.data.RankingEntity;
-import freewill.nextgen.genericCrud.GenericGrid;
-import freewill.nextgen.hmi.utils.Export2Xls;
 import freewill.nextgen.hmi.utils.Messages;
-import freewill.nextgen.patinador.SelectPatinadorDialog;
 
 /**
  * A view for performing create-read-update-delete operations on records.

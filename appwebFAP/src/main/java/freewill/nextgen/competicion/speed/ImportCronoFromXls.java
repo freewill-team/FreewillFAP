@@ -1,9 +1,7 @@
 package freewill.nextgen.competicion.speed;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
-import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.data.SpeedTimeTrialEntity;
 import freewill.nextgen.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.hmi.utils.ApoiXlsImport;
@@ -45,7 +42,6 @@ public class ImportCronoFromXls {
         return INSTANCE;
     }
 	
-	@SuppressWarnings("deprecation")
 	public List<SpeedTimeTrialEntity> getList(File file) throws Exception{
 		List<SpeedTimeTrialEntity> list = new ArrayList<SpeedTimeTrialEntity>();
 		try{
@@ -61,11 +57,11 @@ public class ImportCronoFromXls {
 	            // I get the number of rows occupied on the sheet
 	            int rows = sheet.getLastRowNum();
 	            // I get the number of columns occupied on the sheet
-	            int cols = 0;            
+	            //int cols = 0;            
 	            // A string used to store the reading cell
 	            String cellValue;
 	            // This array contains the headings/fields
-	            String[] headings = null;
+	            //String[] headings = null;
 	            // For this example we'll loop through the rows getting the data we want
 	            for (int r = 0; r < rows; r++) {
 	            	if(r<3) continue; // Saltamos lad tres primeras filas

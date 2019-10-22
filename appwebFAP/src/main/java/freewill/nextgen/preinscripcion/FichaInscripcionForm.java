@@ -16,7 +16,6 @@ import com.vaadin.ui.Notification;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
-import freewill.nextgen.data.ClubEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.InscripcionEntity;
 import freewill.nextgen.hmi.common.ConfirmDialog;

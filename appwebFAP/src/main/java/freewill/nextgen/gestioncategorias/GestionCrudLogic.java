@@ -14,7 +14,6 @@ import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.AccionEnum;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
-import freewill.nextgen.data.SaltoEntity;
 
 /**
  * This class provides an interface for the logical operations between the CRUD

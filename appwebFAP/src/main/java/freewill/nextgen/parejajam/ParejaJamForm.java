@@ -26,7 +26,6 @@ import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.data.ClubEntity;
-import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.PatinadorEntity;
 import freewill.nextgen.genericCrud.CustomFormInterface;

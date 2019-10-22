@@ -10,14 +10,12 @@ import com.vaadin.server.Responsive;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Button.ClickListener;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.hmi.common.Sparkline;
 import freewill.nextgen.data.CategoriaEntity;
 import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
-import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.RankingEntity;
 
 @SuppressWarnings("serial")

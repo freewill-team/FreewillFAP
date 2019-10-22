@@ -15,7 +15,6 @@ import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParejaJamEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
-import freewill.nextgen.data.RankingEntity;
 
 /**
  * This class provides an interface for the logical operations between the CRUD

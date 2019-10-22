@@ -6,7 +6,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.declarative.Design;
 
