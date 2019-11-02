@@ -88,7 +88,7 @@ public class EventManager {
 	}
 	
 	@RequestMapping("/deleteByPeriod/{days}")
-	public boolean deleteByCompeticionAndCategoria(int days) throws Exception {
+	public boolean deleteByCompeticionAndCategoria(@PathVariable int days) throws Exception {
 		System.out.println("Deleting EventEntity By Period..."+days);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
