@@ -8,8 +8,8 @@ public class Hello {
 	}
 
 	// this method is mandatory so the Job Scheduler works properly
-	public void Run(String args){
-		System.out.print("Executing Hello with args="+args);
+	public void Run(String token, String args){
+		System.out.print("Executing Hello with args="+args+" token="+token);
 	}
 	
 }

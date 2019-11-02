@@ -12,44 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import freewill.nextgen.blts.daos.TeacherRepository;
+import freewill.nextgen.blts.daos.LocationRepository;
 import freewill.nextgen.blts.daos.UserRepository;
-import freewill.nextgen.blts.data.TeacherEntity;
+import freewill.nextgen.blts.data.LocationEntity;
 import freewill.nextgen.blts.entities.UserEntity;
 
 /** 
- * File:   TeacherManager.java
+ * File:   LocationManager.java
  * Date:   21/09/2018
  * Author: Benito Vela
  * Refs:   None
  * 
- * This static class provides the business logic to manage Teacher
+ * This static class provides the business logic to manage Location
  * (create, update, remove, getlist).
  * 
 **/
 
 @RestController
-@RequestMapping("/TeacherEntity")
-public class TeacherManager {
+@RequestMapping("/LocationEntity")
+public class LocationManager {
 	
 	@Autowired
-	TeacherRepository repository;
+	LocationRepository repository;
 	
 	@Autowired
 	UserRepository userrepo;
 
 	@RequestMapping("/create")
-	public TeacherEntity add(@RequestBody TeacherEntity rec) throws Exception {
+	public LocationEntity add(@RequestBody LocationEntity rec) throws Exception {
 		if(rec!=null){
 			// Injects the new record
-			System.out.println("Saving Teacher..."+rec.toString());
+			System.out.println("Saving Location..."+rec.toString());
 			rec.setCreated(new Date());
 			rec.setTimestamp(new Date());
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		UserEntity user = userrepo.findByLoginname(auth.getName());
     		rec.setCompany(user.getCompany());
     		
-			TeacherEntity res = repository.save(rec);
+			LocationEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			return res;
 		}
@@ -57,11 +57,11 @@ public class TeacherManager {
 	}
 	
 	@RequestMapping("/update")
-	public TeacherEntity update(@RequestBody TeacherEntity rec) throws Exception {
+	public LocationEntity update(@RequestBody LocationEntity rec) throws Exception {
 		if(rec!=null){
-			System.out.println("Updating Teacher..."+rec);
+			System.out.println("Updating Location..."+rec);
 			rec.setTimestamp(new Date());
-			TeacherEntity res = repository.save(rec);
+			LocationEntity res = repository.save(rec);
 			System.out.println("Id = "+res.getId());
 			return res;
 		}
@@ -72,8 +72,8 @@ public class TeacherManager {
 	@RequestMapping("/delete/{recId}")
 	public boolean remove(@PathVariable Long recId) throws Exception {
 		if(recId!=null){
-			System.out.println("Deleting Teacher..."+recId);
-			TeacherEntity rec = repository.findById(recId);
+			System.out.println("Deleting Location..."+recId);
+			LocationEntity rec = repository.findById(recId);
 			if(rec!=null){
 				repository.delete(rec);
 				return true;
@@ -83,36 +83,36 @@ public class TeacherManager {
 	}
 	
 	@RequestMapping("/getlist")
-	public List<TeacherEntity> getlist() throws Exception {
-		System.out.println("Getting Entire Teacher List...");
+	public List<LocationEntity> getlist() throws Exception {
+		System.out.println("Getting Entire Location List...");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
-		List<TeacherEntity> recs = repository.findByCompany(user.getCompany());
+		List<LocationEntity> recs = repository.findByCompany(user.getCompany());
 		return recs;
 	}
 	
 	@RequestMapping("/get/{recId}")
-	public TeacherEntity get(@PathVariable Long recId) throws Exception {
-		System.out.println("Retrieving Teacher..."+recId);
+	public LocationEntity get(@PathVariable Long recId) throws Exception {
+		System.out.println("Retrieving Location..."+recId);
 		return repository.findById(recId);
 	}
 	
-	@RequestMapping("/countActiveTeachers")
-	public TeacherEntity countActiveTeachers() throws Exception {
-		System.out.println("Getting countActiveTeachers...");
+	@RequestMapping("/countActiveLocations")
+	public LocationEntity countActiveLocations() throws Exception {
+		System.out.println("Getting countActiveLocations...");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
-		TeacherEntity rec = new TeacherEntity();
+		LocationEntity rec = new LocationEntity();
 		rec.setId(repository.countByCompanyAndActive(user.getCompany(), true));
 		return rec;
 	}
 	
-	@RequestMapping("/countNoActiveTeachers")
-	public TeacherEntity countNoActiveTeachers() throws Exception {
-		System.out.println("Getting countNoActiveTeachers...");
+	@RequestMapping("/countNoActiveLocations")
+	public LocationEntity countNoActiveLocations() throws Exception {
+		System.out.println("Getting countNoActiveLocations...");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserEntity user = userrepo.findByLoginname(auth.getName());
-		TeacherEntity rec = new TeacherEntity();
+		LocationEntity rec = new LocationEntity();
 		rec.setId(repository.countByCompanyAndActive(user.getCompany(), false));
 		return rec;
 	}

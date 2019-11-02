@@ -1,15 +1,11 @@
 package freewill.nextgen.blts;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import freewill.nextgen.blts.daos.EventLogRepository;
 import freewill.nextgen.common.MonitoredProcess;
 import freewill.nextgen.common.Utils.ADMSservice;
-import freewill.nextgen.common.bltclient.BltClient;
 import freewill.nextgen.common.entities.ServiceEntity;
 import freewill.nextgen.common.rtdbclient.RtdbDataService;
 
@@ -25,7 +20,6 @@ import freewill.nextgen.common.rtdbclient.RtdbDataService;
 @EnableResourceServer
 @RestController
 @EnableJpaAuditing
-@EnableScheduling
 public class BltLoader {
 	
 	// Global variables to this class
@@ -35,7 +29,7 @@ public class BltLoader {
 	private static ConfigurableApplicationContext context = null;	// to stop the Rest services
 	@Value("${server.port:8445}")
 	private int port;												// Blogictier process https port
-	@Value("${historicalwindow:15}")
+	@Value("${historicalwindow:30}")
 	private int historicalwindow;									// Events kept in historical, in days
 	
 	@Autowired
@@ -99,13 +93,5 @@ public class BltLoader {
     		System.out.println("Everything stopped");
         }
     }
-	
-	@Scheduled(fixedRate = 43200000, initialDelay = 43200000) // ejecucion cada 12 horas
-	public void scheduleTaskWithInitialDelay() {
-	    //logger.info("Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-		Date limdate = new Date();
-		limdate.setTime(limdate.getTime()-historicalwindow*86100);
-		repoevent.deleteByTimestampBefore(limdate);
-	}
 	
 }

@@ -67,7 +67,7 @@ public class JobScheduler extends MonitoredProcess {
 		this.addKpi(MSECPERCYCLE);
 		
 		// Active restart on failure for this process
-		this.setRestartOnFailure(true);
+		this.setRestartOnFailure(false);
 		
 		// Main loop
 		while(this.getProcess().getStopProcess()==false) // near-Infinite loop
@@ -127,7 +127,7 @@ public class JobScheduler extends MonitoredProcess {
 					long now = nowDate.getTime();
 					if(now>=nextexec){
 						// Executes this Jobs now
-						if(executeCommand(job.getCommand(), job.getParams())==false){
+						if(executeCommand(job.getCommand(), token, job.getParams())==false){
 							// if fails, set state to Fail and injects alarm
 							job.setState(JobStatusEnum.FAILED);
 							RtdbDataService.get().createAlarm(new AlarmEntity(null,
@@ -206,17 +206,18 @@ public class JobScheduler extends MonitoredProcess {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private boolean executeCommand(String command, String params) {
+	private boolean executeCommand(String command, String token, String params) {
 		// Executes the command
 		try{
 			// Creates an instance of the command
 			Object obj = (Object) this.LoadClass(command);
 			// Gets the Run(String) method
-	        Class[] cArg = new Class[1];
-	        cArg[0] = String.class; 
+	        Class[] cArg = new Class[2];
+	        cArg[0] = String.class;
+	        cArg[1] = String.class;
 			Method method = obj.getClass().getMethod("Run", cArg);
 			// Executes the Run(String args) method
-			method.invoke(obj, params);
+			method.invoke(obj, token, params);
 			
 			return true; // everything OK
 		}

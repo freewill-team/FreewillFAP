@@ -11,42 +11,34 @@ import freewill.nextgen.blts.BltAuditingEntityListener;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "TEACHERENTITY")
+@Table(name = "LOCATIONENTITY")
 @EntityListeners(BltAuditingEntityListener.class)
-public class TeacherEntity implements Serializable, Cloneable {
+public class LocationEntity implements Serializable, Cloneable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;				// ID
 	private Date created;			// Date the project was created
 	private Date timestamp;			// Last Time stamp when the record was updated
-	private String name;			// Teacher Name
-	private String imei;			// Teacher IMEI
-	private boolean active;			// Teacher status
+	private String name;			// Location Name
+	private Double latitude;		// Location Gps latitude
+	private Double longitude;		// Location Gps longitude
+	private boolean active;			// status
 	private Long company;			// Company the project belongs to
 	
     /**
      * Default constructor. 
      */
-	public TeacherEntity(){
+	public LocationEntity(){
     	// Void with no-args as requested for non-enhanced JPA entities
     	//id = 0;
     	timestamp = new Date();
     	name = "";
     	active = true;
     	created = new Date();
-    	imei = "";
+    	latitude = 37.3755307;
+    	longitude = -6.0022902;
     	//company = null;
-    }
-	
-    public TeacherEntity(String fn, String as, Long cp){
-    	//id = 0;
-    	timestamp = new Date();
-    	created = new Date();
-    	name = fn;
-    	active = true;
-    	company = cp;
-    	imei = as;
     }
     
     public String toString()
@@ -66,8 +58,8 @@ public class TeacherEntity implements Serializable, Cloneable {
 			return false;
 		}
 
-		if (obj instanceof TeacherEntity && obj.getClass().equals(getClass())) {
-			return this.id.equals(((TeacherEntity) obj).id);
+		if (obj instanceof LocationEntity && obj.getClass().equals(getClass())) {
+			return this.id.equals(((LocationEntity) obj).id);
 		}
 
 		return false;
@@ -81,8 +73,8 @@ public class TeacherEntity implements Serializable, Cloneable {
 	}
 
 	@Override
-	public TeacherEntity clone() throws CloneNotSupportedException {
-		return (TeacherEntity) super.clone();
+	public LocationEntity clone() throws CloneNotSupportedException {
+		return (LocationEntity) super.clone();
 	}
     
     public void setId(long id)
@@ -141,12 +133,20 @@ public class TeacherEntity implements Serializable, Cloneable {
 		this.created = created;
 	}
 
-	public String getImei() {
-		return imei;
+	public Double getLatitude() {
+		return latitude;
 	}
 
-	public void setImei(String imei) {
-		this.imei = imei;
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
     
 }
