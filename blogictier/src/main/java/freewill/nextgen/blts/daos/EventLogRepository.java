@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -23,6 +24,8 @@ public interface EventLogRepository extends CrudRepository<EventEntity, Long> {
 	@Query("SELECT coalesce(max(m.id), 0) FROM EventEntity m")
 	Long getMaxId();
 
-	void deleteByTimestampBefore(Date limdate);
+	@Modifying
+	@Query(value = "delete from EventEntity e where e.timestamp < ?1")
+	void deleteByTimestamp(Date limdate);
 	
 }

@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,14 +87,15 @@ public class EventManager {
 		return (List<EventEntity>) repository.findByTimestampBetween(user.getCompany(), sdate, edate, top1000);
 	}
 	
+	@Transactional
 	@RequestMapping("/deleteByPeriod/{days}")
-	public boolean deleteByCompeticionAndCategoria(@PathVariable int days) throws Exception {
+	public boolean deleteByPeriod(@PathVariable int days) throws Exception {
 		System.out.println("Deleting EventEntity By Period..."+days);
 		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//UserEntity user = userrepo.findByLoginname(auth.getName());
 		Date limdate = new Date();
-		limdate.setTime(limdate.getTime()-days*86100);
-		repository.deleteByTimestampBefore(limdate);
+		limdate.setTime(limdate.getTime()-days*86100000L);
+		repository.deleteByTimestamp(limdate);
 		return true;
 	}
 	
