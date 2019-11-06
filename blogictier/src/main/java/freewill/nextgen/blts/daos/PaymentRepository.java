@@ -19,6 +19,12 @@ public interface PaymentRepository extends CrudRepository<PaymentEntity, Long> {
 			+ " order by e.created asc")
 	List<PaymentEntity> findByTimestampBetween(Long company, Date sdate, Date edate);
 	
+	@Query(value = "select e from PaymentEntity e where e.company=?1"
+			+ " and e.student = ?2"
+			+ " and e.created between ?3 and ?4"
+			+ " order by e.created asc")
+	List<PaymentEntity> findByStudentAndTimestampBetween(Long company, String student, Date sdate, Date edate);
+	
 	@Query("SELECT coalesce(max(m.id), 0) FROM PaymentEntity m")
 	Long getMaxId();
 	

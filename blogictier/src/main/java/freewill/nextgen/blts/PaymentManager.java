@@ -97,10 +97,10 @@ public class PaymentManager {
 	}
 	
 	@RequestMapping("/getbydate/{lsdate}/{ledate}")
-	public List<PaymentEntity> getbydateandlocation(
+	public List<PaymentEntity> getbydate(
 			@PathVariable Long lsdate, @PathVariable Long ledate
 			) throws Exception {
-		System.out.println("Getting PaymentEntity List by date and location..."
+		System.out.println("Getting PaymentEntity List by date..."
 				+lsdate+","+ledate);
 		Date sdate = new Date(lsdate);
 		Date edate = new Date(ledate);
@@ -108,6 +108,20 @@ public class PaymentManager {
 		UserEntity user = userrepo.findByLoginname(auth.getName());
 		return (List<PaymentEntity>) repository.findByTimestampBetween(
 				user.getCompany(), sdate, edate);
+	}
+	
+	@RequestMapping("/getbydateandstudent/{lsdate}/{ledate}/{student}")
+	public List<PaymentEntity> getbydateandstudent(
+			@PathVariable Long lsdate, @PathVariable Long ledate,
+			@PathVariable String student) throws Exception {
+		System.out.println("Getting PaymentEntity List by date and student..."
+				+lsdate+","+ledate+","+student);
+		Date sdate = new Date(lsdate);
+		Date edate = new Date(ledate);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		return (List<PaymentEntity>) repository.findByStudentAndTimestampBetween(
+				user.getCompany(), student, sdate, edate);
 	}
 	
 	@RequestMapping("/get/{recId}")
