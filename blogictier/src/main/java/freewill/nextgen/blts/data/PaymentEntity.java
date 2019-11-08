@@ -26,6 +26,7 @@ public class PaymentEntity implements Serializable, Cloneable {
 	private String student;			// Event student
 	private Double amount;			// Event payment
 	private Long company;			// Company Id
+	private Long student_id;		// Student ID
 	
     /**
      * Default constructor. 
@@ -111,6 +112,15 @@ public class PaymentEntity implements Serializable, Cloneable {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public Long getStudent_id() {
+		if(student_id==null) student_id = 0L;
+		return student_id;
+	}
+
+	public void setStudent_id(Long student_id) {
+		this.student_id = student_id;
 	}
 	
 }
