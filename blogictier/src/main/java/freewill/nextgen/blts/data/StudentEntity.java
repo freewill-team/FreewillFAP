@@ -24,6 +24,11 @@ public class StudentEntity implements Serializable, Cloneable {
 	private String email;			// Student IMEI
 	private boolean active;			// Student status
 	private Long company;			// Company the project belongs to
+	private String phone;
+	private Date dateofbirth;
+	private String address;
+	private String postalcode;
+	private String city;
 	
     /**
      * Default constructor. 
@@ -36,6 +41,11 @@ public class StudentEntity implements Serializable, Cloneable {
     	active = true;
     	created = new Date();
     	email = "";
+    	phone = "";
+    	dateofbirth = new Date();
+    	address = "";
+    	postalcode = "";
+    	city = "";
     	//company = null;
     }
 	
@@ -147,6 +157,46 @@ public class StudentEntity implements Serializable, Cloneable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Date getDateofbirth() {
+		return dateofbirth;
+	}
+
+	public void setDateofbirth(Date dateofbirth) {
+		this.dateofbirth = dateofbirth;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostalcode() {
+		return postalcode;
+	}
+
+	public void setPostalcode(String postalcode) {
+		this.postalcode = postalcode;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
     
 }
