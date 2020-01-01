@@ -37,7 +37,7 @@ public class ClassicShowEntity implements Serializable, Cloneable {
     private float PVTotal=0;
     private float puntuacionTotal=0;
 	private int clasificacionFinal=0; //Puesto en el que quedó el patinador en resultado final
-	private float sumaPonderada = 0;
+	private double sumaPonderada = 0;
 	
     /**
      * Default constructor. 
@@ -307,11 +307,11 @@ public class ClassicShowEntity implements Serializable, Cloneable {
 		this.puntuacionTotal = puntuacionTotal;
 	}
 
-	public float getSumaPonderada() {
+	public double getSumaPonderada() {
 		return sumaPonderada;
 	}
 
-	public void setSumaPonderada(float sumaPonderada) {
+	public void setSumaPonderada(double sumaPonderada) {
 		this.sumaPonderada = sumaPonderada;
 	}
 }

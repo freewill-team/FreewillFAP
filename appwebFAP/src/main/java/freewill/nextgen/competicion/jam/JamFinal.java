@@ -25,7 +25,6 @@ import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.competicion.classic.SlalomMatrixForm;
 import freewill.nextgen.competicion.jam.JamShowForm;
 import freewill.nextgen.data.JamShowEntity;
-import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -67,7 +66,8 @@ public class JamFinal extends CssLayout {
         		"penalizaciones",
         		"tecnicaJuez1", "artisticaJuez1", "sincronizacionJuez1", "totalJuez1", "rankingJuez1", 
         		"tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
-        		"tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3");
+        		"tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3"
+        		);
 
 		//grid.setFrozenColumnCount(2);
 		grid.addSelectionListener(new SelectionListener() {

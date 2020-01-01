@@ -9,7 +9,6 @@ import com.vaadin.server.Page;
 
 import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.bltclient.BltClient;
-import freewill.nextgen.data.ClassicShowEntity;
 import freewill.nextgen.data.JamShowEntity;
 
 /**

@@ -50,6 +50,10 @@ public class JamActaFinal extends CssLayout {
 		
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
 		       "id", "dorsalDuo", "clasificacionFinal", "nombreDuo", 
+		       "penalizaciones",
+       		   "tecnicaJuez1", "artisticaJuez1", "sincronizacionJuez1", "totalJuez1", "rankingJuez1", 
+       		   "tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
+       		   "tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
         

@@ -52,6 +52,7 @@ public class JamResultados extends CssLayout {
 		grid = new GenericGrid<JamShowEntity>(JamShowEntity.class,
 		       "id", "dorsalDuo", "clasificacionFinal", "nombreDuo", 
 		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
+		       "penalizaciones",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
         
