@@ -10,17 +10,16 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.ClassicShowEntity;
 import fwt.apppubfap.dtos.CompeticionEntity;
 import fwt.apppubfap.dtos.ParticipanteEntity;
+import fwt.apppubfap.GridResults;
 import fwt.apppubfap.SelectCategoria;
 import fwt.apppubfap.authentication.CurrentUser;
 import fwt.apppubfap.dtos.CategoriaEntity;
@@ -31,7 +30,7 @@ public class ClassicView extends VerticalLayout {
 	
 	private FeederThread thread;
 	private Grid<ClassicShowEntity> grid2 = null;
-	private Grid<ParticipanteEntity> grid1 = null;
+	private GridResults grid1 = null;
 	private CompeticionEntity competicion = null;
 	private CategoriaEntity categoria = null;
 	private SelectCategoria selectCategoria = null;
@@ -62,24 +61,18 @@ public class ClassicView extends VerticalLayout {
 
 	private Component showResults() {
 		
-		grid1 = new Grid<>(ParticipanteEntity.class);
-        grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos");
-        grid1.addColumn(new ComponentRenderer<>(rec -> {
-        	if(rec.getClasificacion()>990)
-            	return new Label("No Presentado");
-            else
-            	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación").setSortable(true);
-        grid1.getColumnByKey("apellidos").setWidth("160px");
+		grid1 = new GridResults();
         
 		grid2 = new Grid<>(ClassicShowEntity.class);
         grid2.setWidth("100%");
-        grid2.setColumns("dorsal", "nombre", "apellidos",
-        		"totalTecnica", "penalizaciones", 
-        		"sumaPV", "PVLocales", "PVTotal", "puntuacionTotal",
-        		"clasificacionFinal");
+        grid2.setColumns("dorsal", "clasificacionFinal", "nombre", "apellidos",
+  		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
+  		       "penalizaciones",
+  		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal"/*, "puntuacionTotal"*/);
         grid2.getColumnByKey("apellidos").setWidth("160px");
+        grid2.getColumnByKey("rankingJuez1").setHeader("Rank#1");
+        grid2.getColumnByKey("rankingJuez2").setHeader("Rank#2");
+        grid2.getColumnByKey("rankingJuez3").setHeader("Rank#3");
         
         Image icon = new Image("images/classic.png", "Classic");
 		icon.setHeight("20px");

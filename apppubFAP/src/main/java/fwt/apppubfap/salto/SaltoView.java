@@ -10,17 +10,16 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import freewill.nextgen.common.bltclient.BltClient;
 import fwt.apppubfap.dtos.SaltoEntity;
 import fwt.apppubfap.dtos.CompeticionEntity;
 import fwt.apppubfap.dtos.ParticipanteEntity;
+import fwt.apppubfap.GridResults;
 import fwt.apppubfap.SelectCategoria;
 import fwt.apppubfap.authentication.CurrentUser;
 import fwt.apppubfap.dtos.CategoriaEntity;
@@ -30,7 +29,7 @@ import fwt.apppubfap.dtos.CategoriaEntity.ModalidadEnum;
 public class SaltoView extends VerticalLayout {
 	
 	private FeederThread thread;
-	private Grid<ParticipanteEntity> grid1 = null;
+	private GridResults grid1 = null;
 	private Grid<SaltoEntity> grid2 = null;
 	private CompeticionEntity competicion = null;
 	private CategoriaEntity categoria = null;
@@ -62,16 +61,7 @@ public class SaltoView extends VerticalLayout {
 
 	private Component showResults() {
 		
-		grid1 = new Grid<>(ParticipanteEntity.class);
-        grid1.setWidth("100%");
-        grid1.setColumns("dorsal", "nombre", "apellidos", "mejorMarca");
-        grid1.addColumn(new ComponentRenderer<>(rec -> {
-        	if(rec.getClasificacion()>990)
-            	return new Label("No Presentado");
-            else
-            	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación").setSortable(true);
-        grid1.getColumnByKey("apellidos").setWidth("160px");
+		grid1 = new GridResults();
 		
 		grid2 = new Grid<>(SaltoEntity.class);
         grid2.setWidth("100%");
@@ -90,8 +80,8 @@ public class SaltoView extends VerticalLayout {
         Tab tab1 = new Tab("Clasificación");
         Tab tab2 = new Tab("Estadísticas");
         Tabs tabs = new Tabs();
-	    tabs.add(tab2, tab1);
-	    tabs.setSelectedTab(tab2);
+	    tabs.add(tab1, tab2);
+	    tabs.setSelectedTab(tab1);
         
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(title);

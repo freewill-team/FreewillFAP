@@ -64,28 +64,31 @@ public class JamView extends VerticalLayout {
 		
 		grid1 = new Grid<>(ParticipanteEntity.class);
         grid1.setWidth("100%");
-        grid1.setColumns("dorsalDuo", "nombreDuo");
-        		//"dorsal", "nombre", "apellidos", 
-        		//"dorsalPareja", "nombrePareja", "apellidosPareja");
+        grid1.setColumns("dorsal");
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getClasificacion()>990)
-            	return new Label("No Presentado");
+            	return new Label("");
             else
             	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación").setSortable(true);
+        })).setHeader("Clasificación").setSortable(true);  
+        grid1.addColumns("nombreDuo", "dorsalDuo");
         grid1.getColumnByKey("dorsalDuo").setWidth("100px");
         grid1.getColumnByKey("nombreDuo").setWidth("480px");
-        //grid1.getColumnByKey("apellidos").setWidth("140px");
-        //grid1.getColumnByKey("apellidosPareja").setWidth("140px");
+        grid1.getColumnByKey("dorsalDuo").setSortable(false);
+        grid1.getColumnByKey("nombreDuo").setSortable(false);
+        grid1.getColumnByKey("dorsal").setVisible(false);
 		
 		grid2 = new Grid<>(JamShowEntity.class);
         grid2.setWidth("100%");
-        grid2.setColumns("dorsalDuo", "nombreDuo", 
-        		"totalTecnica", "penalizaciones", 
-        		"sumaPV", "PVLocales", "PVTotal", "puntuacionTotal",
-        		"clasificacionFinal");
+        grid2.setColumns("dorsalDuo", "clasificacionFinal", "nombreDuo", 
+ 		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
+ 		       "penalizaciones",
+ 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal"/*, "puntuacionTotal"*/);
         grid2.getColumnByKey("dorsalDuo").setWidth("100px");
         grid2.getColumnByKey("nombreDuo").setWidth("440px");
+        grid2.getColumnByKey("rankingJuez1").setHeader("Rank#1");
+        grid2.getColumnByKey("rankingJuez2").setHeader("Rank#2");
+        grid2.getColumnByKey("rankingJuez3").setHeader("Rank#3");
         
         Image icon = new Image("images/jam.png", "Jam");
 		icon.setHeight("20px");

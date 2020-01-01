@@ -203,12 +203,14 @@ public class ArbolBattle extends VerticalLayout {
 		public Celda() {
 			this.setPadding(false);
 			this.setSpacing(false);
+			this.setMargin(false); //
 			this.getElement().getStyle().set("width", "100%");
 			this.getElement().getStyle().set("height", "auto");
 			this.setDefaultVerticalComponentAlignment(Alignment.CENTER);
 			
 			panel.setPadding(true);
 			panel.setSpacing(true);
+			panel.setMargin(false); //
 			panel.getElement().getStyle().set("width", "100%");
 			panel.getElement().getStyle().set("height", "auto");
 			this.add(panel);

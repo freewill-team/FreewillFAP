@@ -23,6 +23,7 @@ import fwt.apppubfap.dtos.CompeticionEntity;
 import fwt.apppubfap.dtos.ParticipanteEntity;
 import fwt.apppubfap.dtos.SpeedKOSystemEntity;
 import fwt.apppubfap.dtos.SpeedKOSystemEntity.EliminatoriaEnum;
+import fwt.apppubfap.GridResults;
 import fwt.apppubfap.SelectCategoria;
 import fwt.apppubfap.authentication.CurrentUser;
 import fwt.apppubfap.dtos.CategoriaEntity;
@@ -34,7 +35,7 @@ public class SpeedView extends VerticalLayout {
 	private FeederThread thread;
 	private Grid<SpeedTimeTrialEntity> grid1 = null;
 	private ArbolKOSystem grid2 = null;
-	private Grid<ParticipanteEntity> grid3 = null;
+	private GridResults grid3 = null;
 	private CompeticionEntity competicion = null;
 	private CategoriaEntity categoria = null;
 	private SelectCategoria selectCategoria = null;
@@ -76,14 +77,14 @@ public class SpeedView extends VerticalLayout {
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getTiempoAjustado1());
-        })).setHeader("Tiempo R#1").setSortable(true);
+        })).setHeader("Tiempo#1").setSortable(true);
         
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getTiempoAjustado2()>99999)
             	return new Label("Nulo");
             else
             	return new Label(""+rec.getTiempoAjustado2());
-        })).setHeader("Tiempo R#2").setSortable(true);
+        })).setHeader("Tiempo#2").setSortable(true);
         
         grid1.addColumn(new ComponentRenderer<>(rec -> {
         	if(rec.getMejorTiempo()>99999)
@@ -95,17 +96,7 @@ public class SpeedView extends VerticalLayout {
         grid1.addColumn("clasificacion");
         grid1.getColumnByKey("apellidos").setWidth("160px");
         
-        grid3 = new Grid<>(ParticipanteEntity.class);
-        grid3.setWidth("100%");
-        grid3.setColumns("dorsal", "nombre", "apellidos", "mejorMarca");
-        grid3.addColumn(new ComponentRenderer<>(rec -> {
-        	if(rec.getClasificacion()>990)
-            	return new Label("No Presentado");
-            else
-            	return new Label(""+rec.getClasificacion());
-        })).setHeader("Clasificación").setSortable(true);
-        
-        grid3.getColumnByKey("apellidos").setWidth("160px");
+        grid3 = new GridResults();
         
         eliminatoria = existeKO(competicion.getId(), categoria.getId());
         if(eliminatoria!=null)
@@ -123,19 +114,19 @@ public class SpeedView extends VerticalLayout {
         Tab tab2 = new Tab("KO System");
         Tab tab3 = new Tab("Clasificación");
         Tabs tabs = new Tabs();
-	    tabs.add(tab1, tab2, tab3);
-	    tabs.setSelectedTab(tab1);
+	    tabs.add(tab3, tab1, tab2);
+	    tabs.setSelectedTab(tab3);
         
         barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(title);
         barAndGridLayout.add(tabs);
-        barAndGridLayout.add(grid1);
+        barAndGridLayout.add(grid3);
         barAndGridLayout.setMargin(false);
         barAndGridLayout.setSpacing(true);
         barAndGridLayout.setPadding(false);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setWidth("100%");
-        barAndGridLayout.setFlexGrow(1, grid1);
+        barAndGridLayout.setFlexGrow(1, grid3);
         
         tabs.addSelectedChangeListener(event -> {
 	        if(tabs.getSelectedTab()==tab1){
