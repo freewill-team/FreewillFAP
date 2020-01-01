@@ -28,7 +28,6 @@ import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.DerrapesRondaEntity;
 import freewill.nextgen.blts.data.DerrapesRondaEntity.EliminatoriaEnum;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.DerrapesEntity;
 import freewill.nextgen.blts.entities.UserEntity;

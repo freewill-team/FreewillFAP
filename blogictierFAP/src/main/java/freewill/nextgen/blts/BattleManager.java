@@ -26,7 +26,6 @@ import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PuntuacionesEntity;
 import freewill.nextgen.blts.data.BattleRondaEntity;
-import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.BattleRondaEntity.EliminatoriaEnum;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.CompeticionEntity;

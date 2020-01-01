@@ -10,6 +10,7 @@ import com.vaadin.flow.component.applayout.AppLayoutMenuItem;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
@@ -112,8 +113,12 @@ public class MainView extends Div {
 				jamIcon, " Jam",
 				e -> layout.setContent(new JamView(competicion.getCompeticion()))
 				);
+		AppLayoutMenuItem route0 = new AppLayoutMenuItem(
+				VaadinIcon.ARROW_LEFT.create(), " Inicio",
+				e -> layout.setContent(defaultView)
+				);
 		
-		menu.addMenuItems(route1, route2, route3, route4, route5, route6/*, route0*/);
+		menu.addMenuItems(route1, route2, route3, route4, route5, route6, route0);
 			
 		return layout;
 	}

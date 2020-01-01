@@ -616,22 +616,38 @@ public class ClassicShowManager {
 			// Criterio4 : suma de puntos de la victoria (totalPV)
 			// Criterio5 : suma de puntuacion total (recI.getPuntuacionTotal)
 			
-			recI.setSumaPonderada(  recI.getSumaPV()           * 100000000000F +
+			recI.setSumaPonderada(
+					recI.getSumaPV() * 1000000000000.0 +
+					recI.getPVLocales() * 1000000000.0 + 
+					recI.getTotalTecnica() * 1000000.0 + 
+					recI.getPVTotal()         * 1000.0 +
+					recI.getPuntuacionTotal());
+			
+			/*recI.setSumaPonderada(  
+			 		recI.getSumaPV() * 100000000000F +
 					puntosLocales       * 1000000000 + 
 					recI.getTotalTecnica() * 1000000 + 
 					recI.getPVTotal()         * 1000 +
-					recI.getPuntuacionTotal());	
+					recI.getPuntuacionTotal());*/
 			
 			repository.save(recI);
-			//System.out.println(recI.getNombre() + " " + recI.getSumaPonderada());
+			System.out.println(recI.getNombre() + " " + recI.getSumaPonderada());
+			System.out.printf(" %.2f-%.2f-%d-%.2f-%.2f = %.2f\n",
+					recI.getSumaPV(),
+					recI.getPVLocales(),
+					recI.getTotalTecnica(),
+					recI.getPVTotal(),
+					recI.getPuntuacionTotal(),
+					recI.getSumaPonderada());
+			
 		}
 		//System.out.println();
 		//System.out.println("Calculando Clasificacion");
 		
 		//Calcular clasificacion final en funcion de suma ponderada
 		int posicion = 0; 
-		float lastTotal = Float.MAX_VALUE;
-		float currentTotal = 0;
+		double lastTotal = Float.MAX_VALUE;
+		double currentTotal = 0;
 		
 		// Ordeno a los participantes de mejor a peor
 		recs = repository.findByCompeticionAndCategoriaOrderBySumaPonderadaDesc(competicion, categoria);
