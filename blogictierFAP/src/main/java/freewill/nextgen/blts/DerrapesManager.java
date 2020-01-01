@@ -117,7 +117,6 @@ public class DerrapesManager {
 		return repository.findById(recId);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/getByCompeticionAndCategoria/{competicion}/{categoria}")
 	public List<DerrapesEntity> getByCompeticionAndCategoria(@PathVariable Long competicion,
 			@PathVariable Long categoria) throws Exception {
@@ -186,7 +185,6 @@ public class DerrapesManager {
 		return recs;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<DerrapesEntity> mockByCompeticionAndCategoria(Long competicion, Long categoria) {
 		// Simula la ordenacion por Ranking, pero no la persiste
 		List<DerrapesEntity> recs = new ArrayList<DerrapesEntity>();
@@ -374,7 +372,9 @@ public class DerrapesManager {
 				DerrapesEntity prev = repository.findByCompeticionAndCategoriaAndOrden(
 						rec.getCompeticion(), rec.getCategoria(), rec.getOrden()-1);
 				prev.setOrden(rec.getOrden());
+				prev.setClasificacion(rec.getOrden()); // para caso 9 patinadores
 				repository.save(prev);
+				rec.setClasificacion(rec.getOrden()-1); // para caso 9 patinadores
 				rec.setOrden(rec.getOrden()-1);
 				return repository.save(rec);
 			}
@@ -394,11 +394,14 @@ public class DerrapesManager {
 				DerrapesEntity post = repository.findByCompeticionAndCategoriaAndOrden(
 						rec.getCompeticion(), rec.getCategoria(), rec.getOrden()+1);
 				post.setOrden(rec.getOrden());
+				post.setClasificacion(rec.getOrden()); // para caso 9 patinadores
 				repository.save(post);
+				rec.setClasificacion(rec.getOrden()+1); // para caso 9 patinadores
 				rec.setOrden(rec.getOrden()+1);
 				return repository.save(rec);
 			}
 		}
+		
 		return null;	
 	}
 	
