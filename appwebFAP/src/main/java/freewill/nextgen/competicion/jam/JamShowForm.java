@@ -200,6 +200,7 @@ public class JamShowForm extends JamShowFormDesign {
             		viewLogic.showCalculadora(rec);
             }
         });
+        calculadora.setVisible(false);
         
     }
     

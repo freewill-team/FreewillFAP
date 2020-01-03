@@ -86,6 +86,8 @@ public class SaltoTrial extends CssLayout {
 		    grid.getColumn("totalSaltos").setHidden(true);
 		    grid.getColumn("ganaDesempate").setHidden(true);
 		}
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("orden").setWidth(80);
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
@@ -176,6 +178,7 @@ public class SaltoTrial extends CssLayout {
 		
 		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		prevButton.setDisableOnClick(true);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
             @Override
@@ -191,6 +194,7 @@ public class SaltoTrial extends CssLayout {
 		
 		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		nextButton.setDisableOnClick(true);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @SuppressWarnings("unchecked")
@@ -216,6 +220,7 @@ public class SaltoTrial extends CssLayout {
 	            		int newaltura = Integer.parseInt(newAltura.getValue());
 	            		if(newaltura<=alturaThisRonda || newaltura==0){
 	            			showError("La nueva Altura no es válida!");
+	            			nextButton.setEnabled(true);
 	            			return;
 	            		}
 	            		ConfirmDialog cd = new ConfirmDialog(

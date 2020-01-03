@@ -60,6 +60,8 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 		
 		grid = new GenericGrid<DerrapesEntity>(DerrapesEntity.class,
         		"id", "dorsal", "orden", "nombre", "apellidos");
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("orden").setWidth(80);
 		grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
@@ -80,11 +82,11 @@ public class DerrapesPreclasificacion extends VerticalLayout {
         gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
-        gridLayout.setSpacing(true);
+        gridLayout.setSpacing(false); //true
         gridLayout.addComponents(grid, form, arbol);
-        gridLayout.setExpandRatio(grid, 10);
+        gridLayout.setExpandRatio(grid, 4);
         gridLayout.setExpandRatio(form, 1);
-        gridLayout.setExpandRatio(arbol, 8);
+        gridLayout.setExpandRatio(arbol, 4);
         
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -112,6 +114,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 		
 		Button upButton = new Button();
 		upButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		upButton.addStyleName(ValoTheme.BUTTON_SMALL);
 		upButton.setIcon(FontAwesome.ARROW_UP);
 		upButton.addClickListener(new ClickListener() {
             @Override
@@ -127,6 +130,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 		
 		Button downButton = new Button();
 		downButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		downButton.addStyleName(ValoTheme.BUTTON_SMALL);
 		downButton.setIcon(FontAwesome.ARROW_DOWN);
 		downButton.addClickListener(new ClickListener() {
             @Override
@@ -142,7 +146,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 		
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
-	    layout.setMargin(false);
+	    layout.setMargin(true);
 	    layout.addComponents(upButton, downButton);
 		return layout;
 	}
@@ -163,6 +167,7 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 		
 		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		nextButton.setDisableOnClick(true);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
@@ -287,10 +292,10 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 
 	public void createArbol(EliminatoriaEnum rondaMock, List<DerrapesRondaEntity> recs) {
 		gridLayout.removeComponent(arbol);
-		arbol = new ArbolDerrapes(rondaMock, e->{});
+		arbol = new ArbolDerrapes(rondaMock, null);//e->{});
 		arbol.setRecords(recs);
 		gridLayout.addComponent(arbol);
-		gridLayout.setExpandRatio(arbol, 8);
+		gridLayout.setExpandRatio(arbol, 4);
 	}
     
 }

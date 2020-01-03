@@ -55,7 +55,8 @@ public class ClassicResultados extends CssLayout {
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       //"rankingJuez1","rankingJuez2", "rankingJuez3", "orden1"
 		       );
-        
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("clasificacionFinal").setWidth(80);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
 	    barAndGridLayout.addComponent(topLayout);
 	    barAndGridLayout.addComponent(grid);

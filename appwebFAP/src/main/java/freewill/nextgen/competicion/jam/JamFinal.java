@@ -68,7 +68,8 @@ public class JamFinal extends CssLayout {
         		"tecnicaJuez2", "artisticaJuez2", "sincronizacionJuez2", "totalJuez2", "rankingJuez2", 
         		"tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3"
         		);
-
+		grid.getColumn("dorsalDuo").setWidth(140);
+		grid.getColumn("orden1").setWidth(80);
 		//grid.setFrozenColumnCount(2);
 		grid.addSelectionListener(new SelectionListener() {
             @Override
@@ -124,7 +125,7 @@ public class JamFinal extends CssLayout {
 		
 		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		//nextButton.addStyleName("toggle-label");
+		nextButton.setDisableOnClick(true);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override

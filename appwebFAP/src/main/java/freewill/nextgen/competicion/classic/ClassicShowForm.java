@@ -200,6 +200,7 @@ public class ClassicShowForm extends ClassicShowFormDesign {
             		viewLogic.showCalculadora(rec);
             }
         });
+        calculadora.setVisible(false);
         
     }
     

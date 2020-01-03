@@ -80,13 +80,17 @@ public class ArbolBattle extends Panel {
 				button.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 				button.addStyleName(ValoTheme.BUTTON_LARGE);
 				button.setIcon(FontAwesome.FORWARD);
-				button.addClickListener(action);
+				if(action!=null)
+					button.addClickListener(action);
 				
 				HorizontalLayout celda = new HorizontalLayout();
 				//celda.setStyleName(ValoTheme.LAYOUT_CARD); // temporal
 				celda.setWidth("100%");
 				celda.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-				celda.addComponents(layout, button);
+				if(action!=null)
+					celda.addComponents(layout, button);
+				else
+					celda.addComponents(layout);
 				celda.setExpandRatio(layout, 1);
 				
 				int m = (int)(Math.pow(2.0, numLevels-i-1)); 

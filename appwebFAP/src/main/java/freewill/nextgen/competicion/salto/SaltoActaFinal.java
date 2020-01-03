@@ -54,7 +54,8 @@ public class SaltoActaFinal extends CssLayout {
 		       "id", "dorsal", "clasificacion", "nombre", "apellidos", "mejorSalto", 
 		       "numeroSaltos", "numeroFallos", "alturaPrimerFallo", 
 		       "numeroOKs", "totalSaltos", "ganaDesempate");
-        
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("clasificacion").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

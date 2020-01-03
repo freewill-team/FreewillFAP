@@ -50,7 +50,8 @@ public class BattleActaFinal extends CssLayout {
 		
 		grid = new GenericGrid<BattleEntity>(BattleEntity.class,
 		       "id", "dorsal", "clasificacion", "nombre", "apellidos");
-        
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("clasificacion").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

@@ -66,7 +66,8 @@ public class ClassicFinal extends CssLayout {
         		"tecnicaJuez1", "artisticaJuez1", "totalJuez1", "rankingJuez1",
         		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",
         		"tecnicaJuez3", "artisticaJuez3", "totalJuez3", "rankingJuez3");
-		
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("orden1").setWidth(80);
 		//grid.setFrozenColumnCount(3);
 		grid.addSelectionListener(new SelectionListener() {
             @Override
@@ -122,7 +123,7 @@ public class ClassicFinal extends CssLayout {
 		
 		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		//nextButton.addStyleName("toggle-label");
+		nextButton.setDisableOnClick(true);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override

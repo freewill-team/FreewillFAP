@@ -147,6 +147,7 @@ public class SpeedTimeTrial extends CssLayout {
 		
 		Button prevButton = new Button(/*Messages.get().getKey("prev")*/);
 		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		prevButton.setDisableOnClick(true);
 		prevButton.setIcon(FontAwesome.ARROW_LEFT);
 		prevButton.addClickListener(new ClickListener() {
             @Override
@@ -164,6 +165,7 @@ public class SpeedTimeTrial extends CssLayout {
 		
 		nextButton = new Button(/*Messages.get().getKey("next")*/);
 		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		nextButton.setDisableOnClick(true);
 		nextButton.setIcon(FontAwesome.ARROW_RIGHT);
 		nextButton.addClickListener(new ClickListener() {
             @Override
