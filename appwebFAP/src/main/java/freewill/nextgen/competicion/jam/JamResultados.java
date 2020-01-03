@@ -55,7 +55,7 @@ public class JamResultados extends CssLayout {
 		       "penalizaciones",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
-		grid.getColumn("dorsalDuo").setWidth(140);
+		grid.getColumn("dorsalDuo").setWidth(120);
 		grid.getColumn("clasificacionFinal").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
 	    barAndGridLayout.addComponent(topLayout);

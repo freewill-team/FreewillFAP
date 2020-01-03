@@ -56,7 +56,7 @@ public class JamActaFinal extends CssLayout {
        		   "tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3",
 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal"
 		       );
-		grid.getColumn("dorsalDuo").setWidth(140);
+		grid.getColumn("dorsalDuo").setWidth(120);
 		grid.getColumn("clasificacionFinal").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);

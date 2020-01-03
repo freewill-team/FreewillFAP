@@ -83,7 +83,7 @@ public class JamView extends VerticalLayout {
         grid2.setColumns("dorsalDuo", "clasificacionFinal", "nombreDuo", 
  		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
  		       "penalizaciones",
- 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal"/*, "puntuacionTotal"*/);
+ 		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
         grid2.getColumnByKey("dorsalDuo").setWidth("100px");
         grid2.getColumnByKey("nombreDuo").setWidth("440px");
         grid2.getColumnByKey("rankingJuez1").setHeader("Rank#1");

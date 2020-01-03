@@ -68,7 +68,7 @@ public class ClassicView extends VerticalLayout {
         grid2.setColumns("dorsal", "clasificacionFinal", "nombre", "apellidos",
   		       "rankingJuez1", "rankingJuez2", "rankingJuez3",
   		       "penalizaciones",
-  		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal"/*, "puntuacionTotal"*/);
+  		       "sumaPV", "PVLocales", "totalTecnica", "PVTotal", "puntuacionTotal");
         grid2.getColumnByKey("apellidos").setWidth("160px");
         grid2.getColumnByKey("rankingJuez1").setHeader("Rank#1");
         grid2.getColumnByKey("rankingJuez2").setHeader("Rank#2");
