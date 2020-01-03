@@ -69,7 +69,7 @@ public class JamFinal extends CssLayout {
         		"tecnicaJuez3", "artisticaJuez3", "sincronizacionJuez3", "totalJuez3", "rankingJuez3"
         		);
 		grid.getColumn("dorsalDuo").setWidth(140);
-		grid.getColumn("orden1").setWidth(80);
+		grid.getColumn("orden1").setWidth(100);
 		//grid.setFrozenColumnCount(2);
 		grid.addSelectionListener(new SelectionListener() {
             @Override

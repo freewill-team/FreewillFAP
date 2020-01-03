@@ -50,7 +50,8 @@ public class SpeedActaFinal extends CssLayout {
 		
 		grid = new GenericGrid<SpeedTimeTrialEntity>(SpeedTimeTrialEntity.class,
 		       "id", "dorsal", "clasificacionFinal", "nombre", "apellidos", "mejorTiempo");
-        
+		grid.getColumn("dorsal").setWidth(80);
+		grid.getColumn("clasificacionFinal").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

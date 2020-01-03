@@ -67,7 +67,7 @@ public class ClassicFinal extends CssLayout {
         		"tecnicaJuez2", "artisticaJuez2", "totalJuez2", "rankingJuez2",
         		"tecnicaJuez3", "artisticaJuez3", "totalJuez3", "rankingJuez3");
 		grid.getColumn("dorsal").setWidth(80);
-		grid.getColumn("orden1").setWidth(80);
+		grid.getColumn("orden1").setWidth(100);
 		//grid.setFrozenColumnCount(3);
 		grid.addSelectionListener(new SelectionListener() {
             @Override

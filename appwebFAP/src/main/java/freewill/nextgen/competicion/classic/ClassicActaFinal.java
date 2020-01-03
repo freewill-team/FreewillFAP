@@ -54,7 +54,7 @@ public class ClassicActaFinal extends CssLayout {
 		       //"rankingJuez1","rankingJuez2", "rankingJuez3", "orden1"
 		       );
 		grid.getColumn("dorsal").setWidth(80);
-		grid.getColumn("clasificacionFinal").setWidth(80);
+		grid.getColumn("clasificacionFinal").setWidth(120);
 		VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

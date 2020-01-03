@@ -78,16 +78,25 @@ public class SpeedTimeTrial extends CssLayout {
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar();
 		
-		if(ronda==RondaEnum.PRIMERA)
+		if(ronda==RondaEnum.PRIMERA){
 			grid = new GenericGrid<SpeedTimeTrialEntity>(SpeedTimeTrialEntity.class,
         		"id", "dorsal", "orden1", "nombre", "apellidos", "tiempoAjustado1", "valido1");
-		else if(ronda==RondaEnum.SEGUNDA)
+			grid.getColumn("dorsal").setWidth(80);
+			grid.getColumn("orden1").setWidth(100);
+		}
+		else if(ronda==RondaEnum.SEGUNDA){
 			grid = new GenericGrid<SpeedTimeTrialEntity>(SpeedTimeTrialEntity.class,
         		"id", "dorsal", "orden2", "nombre", "apellidos", "tiempoAjustado2", "valido2");
-		else
+			grid.getColumn("dorsal").setWidth(80);
+			grid.getColumn("orden2").setWidth(100);
+		}
+		else{
 			grid = new GenericGrid<SpeedTimeTrialEntity>(SpeedTimeTrialEntity.class,
 	        	"id", "dorsal", "clasificacion", "nombre", "apellidos", "tiempoAjustado1", "valido1", "tiempoAjustado2", "valido2", "mejorTiempo");
-        grid.addSelectionListener(new SelectionListener() {
+			grid.getColumn("dorsal").setWidth(80);
+			grid.getColumn("clasificacion").setWidth(120);
+		}
+		grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
             	viewLogic.rowSelected(grid.getSelectedRow());

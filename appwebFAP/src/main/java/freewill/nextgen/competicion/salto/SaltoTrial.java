@@ -87,7 +87,7 @@ public class SaltoTrial extends CssLayout {
 		    grid.getColumn("ganaDesempate").setHidden(true);
 		}
 		grid.getColumn("dorsal").setWidth(80);
-		grid.getColumn("orden").setWidth(80);
+		grid.getColumn("orden").setWidth(100);
         grid.addSelectionListener(new SelectionListener() {
             @Override
             public void select(SelectionEvent event) {
