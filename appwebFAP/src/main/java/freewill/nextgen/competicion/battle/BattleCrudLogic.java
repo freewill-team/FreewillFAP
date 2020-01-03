@@ -47,6 +47,15 @@ public class BattleCrudLogic implements Serializable {
 	        			BattleEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());
 	        	view.showRecords(records);
+	        	
+	        	List<BattleRondaEntity> recs = BltClient.get().executeQuery(
+			    		"/mockByCompeticionAndCategoria/"+
+			    				competicion+"/"+categoria,
+			    				BattleRondaEntity.class,
+			    		EntryPoint.get().getAccessControl().getTokenKey());
+	        	
+	        	EliminatoriaEnum rondaMock = mockRondaKO(recs);
+	            view.createArbol(rondaMock, recs);
 	        }
     	}
 		catch(Exception e){
@@ -326,6 +335,15 @@ public class BattleCrudLogic implements Serializable {
 				view.showError(e.getMessage());
 		}
 		return false;
+	}
+	
+	private EliminatoriaEnum mockRondaKO(List<BattleRondaEntity> recs){
+		EliminatoriaEnum out = EliminatoriaEnum.FINAL;
+		for(BattleRondaEntity rec:recs){
+			if(rec.getEliminatoria().ordinal()>out.ordinal())
+				out = rec.getEliminatoria();
+		}
+		return out;
 	}
 	
 }

@@ -47,6 +47,15 @@ public class DerrapesCrudLogic implements Serializable {
 	        			DerrapesEntity.class,
 	        			EntryPoint.get().getAccessControl().getTokenKey());
 	        	view.showRecords(records);
+	        	
+	        	List<DerrapesRondaEntity> recs = BltClient.get().executeQuery(
+			    		"/mockByCompeticionAndCategoria/"+
+			    				competicion+"/"+categoria,
+						DerrapesRondaEntity.class,
+			    		EntryPoint.get().getAccessControl().getTokenKey());
+	        	
+	        	EliminatoriaEnum rondaMock = mockRondaKO(recs);
+	            view.createArbol(rondaMock, recs);
 	        }
     	}
 		catch(Exception e){
@@ -326,6 +335,15 @@ public class DerrapesCrudLogic implements Serializable {
 				view.showError(e.getMessage());
 		}
 		return false;
+	}
+	
+	private EliminatoriaEnum mockRondaKO(List<DerrapesRondaEntity> recs){
+		EliminatoriaEnum out = EliminatoriaEnum.FINAL;
+		for(DerrapesRondaEntity rec:recs){
+			if(rec.getEliminatoria().ordinal()>out.ordinal())
+				out = rec.getEliminatoria();
+		}
+		return out;
 	}
 	
 }

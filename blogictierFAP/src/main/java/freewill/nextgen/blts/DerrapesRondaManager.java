@@ -1,5 +1,6 @@
 package freewill.nextgen.blts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -259,6 +260,98 @@ public class DerrapesRondaManager {
 		repository.deleteByCompeticionAndCategoria(competicion, categoria);
 		derrapesrepo.deleteByCompeticionAndCategoria(competicion, categoria);
 		return true;
+	}
+	
+	@RequestMapping("/mockByCompeticionAndCategoria/{competicion}/{categoria}")
+	public List<DerrapesRondaEntity> mockByCompeticionAndCategoriaAndRonda(@PathVariable Long competicion,
+			@PathVariable Long categoria) throws Exception {
+		int posicion[] = null;
+		int posFinal[] = {1,2,3,4};
+		int posSemis[] = {1,8,4,5, 3,6,2,7};
+		int posSemisFD[] = {1,2,7,8, 3,4,5,6};
+		int posCuartos[] = {1,16,8,9, 5,12,4,13, 3,14,6,11, 7,10,2,15};
+		System.out.println("Getting Mock DerrapesRondas List By competicion y categoria..."
+			+competicion+","+categoria);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserEntity user = userrepo.findByLoginname(auth.getName());
+		
+		List<DerrapesRondaEntity> recs = repository.findByCompeticionAndCategoria(competicion, categoria);
+		if(recs==null || recs.size()==0){
+			recs = new ArrayList<DerrapesRondaEntity>();
+			// Needs to create records
+			DerrapesRondaEntity rec = null;
+			
+			// calcula eliminatoria inicial en funcion del numero de participantes
+			EliminatoriaEnum ronda = EliminatoriaEnum.CUARTOS;
+			int numpatines = derrapesrepo.findByCompeticionAndCategoriaOrderByOrdenAsc(
+					competicion, categoria).size();
+			if(numpatines<5)
+				ronda = EliminatoriaEnum.FINAL;
+			else if(numpatines<11) // TODO con 9 patinadores, hacer 3 grupos de 3
+				ronda = EliminatoriaEnum.SEMIS;
+			// Si hay 17 o mas, entonces debe haber una pre-clasificatoria
+			
+			int numLevels = ronda.ordinal()+1;
+			if(ronda==EliminatoriaEnum.FINAL)
+				posicion = posFinal;
+			else if(ronda==EliminatoriaEnum.SEMIS)
+				posicion = posSemis;
+			else if(ronda==EliminatoriaEnum.CUARTOS)
+				posicion = posCuartos;
+			if(numpatines==5)
+				posicion = posSemisFD;
+			
+			for(int i=0;i<numLevels;i++){ // Cada i es una eliminatoria: final, semis, cuartos, ...
+				int n = (int)(Math.pow(2.0, i));
+				int k = 0;
+				for(int j=0; j<n;j++){ // Cada n es una caja donde se enfrentan 4 patinadores
+					rec = new DerrapesRondaEntity();
+					rec.setCategoria(categoria);
+					rec.setCompeticion(competicion);
+					rec.setGrupo(j);
+					rec.setEliminatoria(EliminatoriaEnum.values()[i]);
+					rec.setCompany(user.getCompany());
+					if(i==numLevels-1){ // en el último nivel asignamos los primeros enfrentamientos
+						for(int l=0, ll=0;l<4;l++){ // Hay 4 patinadores en cada caja
+							System.out.println("Retrieving k,pos = "+k+","+posicion[k]);
+							DerrapesEntity resultado =
+									derrapesrepo.findByCompeticionAndCategoriaAndOrden(
+											competicion, categoria, posicion[k++]);
+							System.out.println("Retrieving Resultado = "+resultado);
+							if(resultado==null) continue;
+							switch(ll++){
+								case 0:
+									rec.setApellidos1(resultado.getApellidos());
+									rec.setNombre1(resultado.getNombre());
+									rec.setPatinador1(resultado.getPatinador());
+									rec.setDorsal1(resultado.getDorsal());
+									break;
+								case 1:
+									rec.setApellidos2(resultado.getApellidos());
+									rec.setNombre2(resultado.getNombre());
+									rec.setPatinador2(resultado.getPatinador());
+									rec.setDorsal2(resultado.getDorsal());
+									break;
+								case 2:
+									rec.setApellidos3(resultado.getApellidos());
+									rec.setNombre3(resultado.getNombre());
+									rec.setPatinador3(resultado.getPatinador());
+									rec.setDorsal3(resultado.getDorsal());
+									break;
+								case 3:
+									rec.setApellidos4(resultado.getApellidos());
+									rec.setNombre4(resultado.getNombre());
+									rec.setPatinador4(resultado.getPatinador());
+									rec.setDorsal4(resultado.getDorsal());
+									break;
+							}
+						}
+					}
+					recs.add(rec);
+				}
+			}
+		}
+		return recs;
 	}
 	
 }

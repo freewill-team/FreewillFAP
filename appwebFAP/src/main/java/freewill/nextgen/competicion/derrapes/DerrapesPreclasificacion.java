@@ -22,6 +22,7 @@ import freewill.nextgen.appwebFAP.EntryPoint;
 import freewill.nextgen.common.entities.UserEntity.UserRoleEnum;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.DerrapesEntity;
+import freewill.nextgen.data.DerrapesRondaEntity;
 import freewill.nextgen.data.DerrapesRondaEntity.EliminatoriaEnum;
 import freewill.nextgen.genericCrud.GenericCrudLogic;
 import freewill.nextgen.genericCrud.GenericGrid;
@@ -44,6 +45,8 @@ public class DerrapesPreclasificacion extends VerticalLayout {
 	private DerrapesEntity selectedRec = null;
 	private boolean competiOpen = false;
 	private Button nextButton = null;
+	private ArbolDerrapes arbol;
+	private HorizontalLayout gridLayout;
 
 	public DerrapesPreclasificacion(Long categoria, String labelcategoria, Long competicion, 
 			String label, DerrapesCrudView parent){
@@ -72,13 +75,16 @@ public class DerrapesPreclasificacion extends VerticalLayout {
         	form.setEnabled(false);
         }
         
-        HorizontalLayout gridLayout = new HorizontalLayout();
+        arbol = new ArbolDerrapes(EliminatoriaEnum.FINAL, e->{});
+        
+        gridLayout = new HorizontalLayout();
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
         gridLayout.setSpacing(true);
-        gridLayout.addComponents(grid, form);
+        gridLayout.addComponents(grid, form, arbol);
         gridLayout.setExpandRatio(grid, 10);
         gridLayout.setExpandRatio(form, 1);
+        gridLayout.setExpandRatio(arbol, 8);
         
 		HorizontalLayout topLayout = createTopBar();
 	    //addComponent(new GenericHeader(VIEW_NAME, FontAwesome.FOLDER));
@@ -278,5 +284,13 @@ public class DerrapesPreclasificacion extends VerticalLayout {
     public void removeRecord(DerrapesEntity rec) {
         // Not allowed here grid.remove(rec);
     }
+
+	public void createArbol(EliminatoriaEnum rondaMock, List<DerrapesRondaEntity> recs) {
+		gridLayout.removeComponent(arbol);
+		arbol = new ArbolDerrapes(rondaMock, e->{});
+		arbol.setRecords(recs);
+		gridLayout.addComponent(arbol);
+		gridLayout.setExpandRatio(arbol, 8);
+	}
     
 }
