@@ -2,6 +2,7 @@ package freewill.nextgen.preinscripcion;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.event.FieldEvents;
@@ -52,7 +53,7 @@ public class PreinscripcionCrudGrid extends CssLayout {
     private Label competicionLabel = null;
     private VerticalLayout barAndGridLayout = null;
     private PreinscripcionForm form;
-    private boolean preinscripcionAbierta = true;
+    private boolean preinscripcionAbierta = false; //true
     private InscripcionEnum tipoForm = InscripcionEnum.INSCRIPCION;
     //private PreinscripcionCrudView parent = null;
     private FichaInscripcionForm ficha;
@@ -95,14 +96,19 @@ public class PreinscripcionCrudGrid extends CssLayout {
         addComponent(form);
         addComponent(ficha);
         
-        preinscripcionAbierta = true;
+        preinscripcionAbierta = false;
        
     	competi = viewLogic.getCompeticion(this.competicion);
     	if(competi!=null){
-    		if(tipoForm == InscripcionEnum.PREINSCRIPCION)
+    		if(tipoForm == InscripcionEnum.PREINSCRIPCION){
     			competicionLabel.setValue("Pre-Inscripciones "+competi.getNombre());
-    	    else
+    			preinscripcionAbierta = (competi.getActive() 
+    				&& competi.getFechaFinInscripcion().after(new Date()));
+    		}
+    	    else{
     	    	competicionLabel.setValue("Inscripciones "+competi.getNombre());
+    	    	preinscripcionAbierta = competi.getActive();
+    	    }
     		viewLogic.init(competi, tipoForm);
     		grid.getColumn("speed").setHidden(!competi.getSpeed());
     		grid.getColumn("salto").setHidden(!competi.getSalto());
@@ -115,9 +121,9 @@ public class PreinscripcionCrudGrid extends CssLayout {
     	if(tipoForm==InscripcionEnum.PREINSCRIPCION){
 	    	inscripcion = viewLogic.getFichaInscripcion(competicion);
 	    	if(inscripcion!=null){
-	    		this.editRecord(inscripcion, competi, preinscripcionAbierta);
 	    		if(inscripcion.getEnviado())
 	    			preinscripcionAbierta = false;
+	    		this.editRecord(inscripcion, competi, preinscripcionAbierta);
 	    	}
 	    	else{
 	    		preinscripcionAbierta = false;

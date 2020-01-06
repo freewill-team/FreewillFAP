@@ -160,7 +160,10 @@ public class InscripcionManager {
 			res.setEmail(user.getEmail());
 			res.setTelefono(club.getTelefono());
 			res.setEnviado(false);
-			res = repository.save(res);
+			CompeticionEntity competi = competirepo.findById(competicion);
+			if(competi!=null && competi.getActive() 
+				&& competi.getFechaFinInscripcion().after(new Date()))
+				res = repository.save(res);
 		}
 		return res;
 	}
