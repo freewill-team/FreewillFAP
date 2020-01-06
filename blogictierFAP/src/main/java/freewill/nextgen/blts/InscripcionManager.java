@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import freewill.nextgen.blts.daos.CategoriaRepository;
 import freewill.nextgen.blts.daos.ClubRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
+import freewill.nextgen.blts.daos.ConfigRepository;
 import freewill.nextgen.blts.daos.InscripcionRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PatinadorRepository;
@@ -27,6 +28,7 @@ import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.AccionEnum;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.blts.entities.UserEntity;
 import freewill.nextgen.common.entities.EmailEntity;
 import freewill.nextgen.common.rtdbclient.RtdbDataService;
@@ -66,6 +68,9 @@ public class InscripcionManager {
 	
 	@Autowired
 	CategoriaRepository categorepo;
+	
+	@Autowired
+	ConfigRepository configrepo;
 
 	@RequestMapping("/create")
 	public InscripcionEntity add(@RequestBody InscripcionEntity rec) throws Exception {
@@ -175,6 +180,10 @@ public class InscripcionManager {
 			System.out.println("sendInscripcion for "+rec);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			UserEntity user = userrepo.findByLoginname(auth.getName());
+			// Obtiene correo del comite para reenvío inscripciones
+			String emailReenvio = configrepo.getConfigString(
+					ConfigItemEnum.EMAILREENVIOINSCRIPCION, 
+					user.getCompany());
 			// envio definitivo de inscripcion, generar correo resumen
 			CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
 			if(competi!=null){
@@ -210,6 +219,16 @@ public class InscripcionManager {
 						title, message,
 			    		0L // user.getCompany() Para que el correo salga aunque esta Company no tenga configurado ningun servidor
 			    		));
+				if(emailReenvio!=null && !emailReenvio.equals("")){
+					title += " - "+rec.getClubStr();
+					message = "REENVIO INSCRIPCION Remitida a "+ rec.getEmail() +":\n\n"
+						+ message;
+					RtdbDataService.get().pushEmail(new EmailEntity(
+						emailReenvio,
+						title, message,
+				    	0L // user.getCompany() Para que el correo salga aunque esta Company no tenga configurado ningun servidor
+				    	));
+				}
 			}
 			// actualiza registro
 			rec.setEnviado(true);

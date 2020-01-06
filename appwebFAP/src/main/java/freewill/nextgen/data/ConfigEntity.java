@@ -19,7 +19,8 @@ public class ConfigEntity implements Serializable, Cloneable {
 		FINALCONSOLACIONSPEED("Final de Consolación (3 y 4 puestos) en Speed", "true"),
 		KOSYSTEMITALIANA("KO System a la Italiana", "false"),
 		PENALIZAZIONCONOS("Penalización por cono derribado (ms)", "200"),
-		PARTICIPANTESMINIMO("Participantes mínimo por categoría", "3");
+		PARTICIPANTESMINIMO("Participantes mínimo por categoría", "3"),
+		EMAILREENVIOINSCRIPCION("Email reenvío inscripciones", "freewilltechnologies@gmail.com");
 		private final String type;
 		private final String defval;
 		ConfigItemEnum(String t, String v){ type = t; defval=v;}
