@@ -306,7 +306,8 @@ public class PreinscripcionCrudLogic implements Serializable {
         				EntryPoint.get().getAccessControl().getTokenKey());
 	    		
 	    		view.setFichaInscripcion(res);
-	    		
+	    		if(res.getEnviado())
+	    			view.setPreinscripcionAbierta(false);
 		        view.showSaveNotification(res.getClubStr() + " (" + res.getId() + ") enviada");
 		        return res;
 	    	}

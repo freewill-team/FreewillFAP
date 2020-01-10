@@ -15,5 +15,6 @@ public interface InscripcionRepository extends CrudRepository<InscripcionEntity,
 	@Query("SELECT coalesce(max(m.id), 0) FROM CompanyEntity m")
 	Long getMaxId();
 	InscripcionEntity findByClubAndCompeticion(Long club, Long competicion);
+	List<InscripcionEntity> findByEnviado(boolean enviado);
 	
 }

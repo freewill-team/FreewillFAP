@@ -39,6 +39,9 @@ public class BltLoader {
 	@Autowired
 	EventLogRepository repoevent;
 	
+	@Autowired
+	InscripcionManager inscrMngr;
+	
 	public static void main(String[] args) throws Exception {
 		// Starts The Rest services
 		SpringApplication app = new SpringApplication(BltLoader.class);
@@ -107,11 +110,23 @@ public class BltLoader {
     }
 	
 	@Scheduled(fixedRate = 43200000, initialDelay = 20000) // ejecucion cada 12 horas
-	public void scheduleTaskWithInitialDelay() {
-	    //logger.info("Fixed Rate Task with Initial Delay :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+	public void scheduleTaskWithInitialDelay1() {
+	    //logger.info("Fixed Rate Task with Initial Delay #1 :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+		System.out.println("Cleaning up old events...");
+		// Limpia eventos antiguos
 		Date limdate = new Date();
 		limdate.setTime(limdate.getTime()-historicalwindow*86100);
 		repoevent.deleteByTimestampBefore(limdate);
+		System.out.println("Done");
+	}
+	
+	@Scheduled(fixedRate = 7200000, initialDelay = 30000) // ejecucion cada 2 horas
+	public void scheduleTaskWithInitialDelay2() {
+	    //logger.info("Fixed Rate Task with Initial Delay #2 :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+		System.out.println("Cierra Inscripciones Expiradas...");
+		// cierra Inscripciones Expiradas
+		inscrMngr.cierraInscripcionesExpiradas();
+		System.out.println("Done");
 	}
 	
 }

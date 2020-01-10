@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,6 @@ import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.InscripcionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
 import freewill.nextgen.blts.data.PatinadorEntity;
-import freewill.nextgen.blts.data.CategoriaEntity.AccionEnum;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.blts.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.blts.entities.UserEntity;
@@ -176,10 +176,14 @@ public class InscripcionManager {
 	@RequestMapping("/sendInscripcion/{recId}")
 	public InscripcionEntity sendInscripcion(@PathVariable Long recId) throws Exception {
 		InscripcionEntity rec = repository.findById(recId);
-		if(rec!=null){
+		if(rec!=null && !rec.getEnviado()){
 			System.out.println("sendInscripcion for "+rec);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			UserEntity user = userrepo.findByLoginname(auth.getName());
+			UserEntity user = null;
+			if(auth!=null)
+				user = userrepo.findByLoginname(auth.getName());
+			else
+				user = userrepo.findByLoginname("anonimo");
 			// Obtiene correo del comite para reenvío inscripciones
 			String emailReenvio = configrepo.getConfigString(
 					ConfigItemEnum.EMAILREENVIOINSCRIPCION, 
@@ -237,7 +241,7 @@ public class InscripcionManager {
 			System.out.println("Id = "+res.getId());
 			return res;
 		}
-		return null;
+		return rec;
 	}
 	
 	// Copia de la funcion en PatinadorManager
@@ -308,4 +312,23 @@ public class InscripcionManager {
 		}
 	}
 	
-}
+	public void cierraInscripcionesExpiradas(){
+		System.out.println("Into cierraInscripcionesExpiradas...");
+		List<InscripcionEntity> recs = repository.findByEnviado(false);
+		Date now = new Date();
+		
+		for(InscripcionEntity rec:recs){
+			try {
+				CompeticionEntity competi = competirepo.findById(rec.getCompeticion());
+				if(competi!=null){
+					//System.out.println("Inscripcion = "+rec);
+					if(competi.getFechaFinInscripcion().before(now))
+						sendInscripcion(rec.getId());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}//
