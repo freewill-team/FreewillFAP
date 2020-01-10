@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import freewill.nextgen.blts.daos.CategoriaRepository;
 import freewill.nextgen.blts.daos.CircuitoRepository;
 import freewill.nextgen.blts.daos.CompeticionRepository;
+import freewill.nextgen.blts.daos.ConfigRepository;
 import freewill.nextgen.blts.daos.ParticipanteRepository;
 import freewill.nextgen.blts.daos.PatinadorRepository;
 import freewill.nextgen.blts.daos.RankingAbsRepository;
@@ -22,6 +23,7 @@ import freewill.nextgen.blts.daos.RankingRepository;
 import freewill.nextgen.blts.daos.UserRepository;
 import freewill.nextgen.blts.data.CategoriaEntity;
 import freewill.nextgen.blts.data.CategoriaEntity.ModalidadEnum;
+import freewill.nextgen.blts.data.ConfigEntity.ConfigItemEnum;
 import freewill.nextgen.blts.data.CircuitoEntity;
 import freewill.nextgen.blts.data.CompeticionEntity;
 import freewill.nextgen.blts.data.ParticipanteEntity;
@@ -68,6 +70,9 @@ public class CompeticionManager {
 	
 	@Autowired
 	PatinadorRepository patinrepo;
+	
+	@Autowired
+	ConfigRepository configrepo;
 
 	@RequestMapping("/create")
 	public CompeticionEntity add(@RequestBody CompeticionEntity rec) throws Exception {
@@ -263,6 +268,8 @@ public class CompeticionManager {
         		List<CategoriaEntity> categorias) {
 			List<ParticipanteEntity> inscripciones = 
 					inscripcionesrepo.findByCompeticionAndCategoria(competi.getId(), categoria.getId());
+			int minParticipaciones = configrepo.getConfigInteger(ConfigItemEnum.MINPARTICIPACIONESCIRCUITO, user.getCompany());
+			
 			// Acumula las puntuaciones conseguidas
     		for(ParticipanteEntity inscripcion:inscripciones){
     			CategoriaEntity categoriaStd = null;
@@ -332,14 +339,14 @@ public class CompeticionManager {
     				rec.setCompeticion4(competi.getNombre());
     				break;
 				}
-    			rec.setPuntuacion(getBest3Of4(rec));
+    			rec.setPuntuacion(getBest3Of4(rec, minParticipaciones));
 				rec.setCategoriaStr(categoriaStd.getNombre());
     			rankingrepo.save(rec);
 				System.out.println("      Saving..."+rec);
     		}
 		}
     	
-        private int getBest3Of4(RankingEntity rec) {
+        private int getBest3Of4(RankingEntity rec, int minParticipaciones) {
     		int minimo = 20000;
     		int suma = rec.getPuntos1()+rec.getPuntos2()+rec.getPuntos3()+rec.getPuntos4();
     		//System.out.println("    Suma = "+suma);
@@ -364,7 +371,7 @@ public class CompeticionManager {
 				numCompeticiones++;
 			if(rec.getPuntos4()>0)
 				numCompeticiones++;
-			if(numCompeticiones<2)
+			if(numCompeticiones<minParticipaciones)
 				suma = 0;
     		return suma;
     	}

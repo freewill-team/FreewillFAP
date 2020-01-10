@@ -20,7 +20,8 @@ public class ConfigEntity implements Serializable, Cloneable {
 		KOSYSTEMITALIANA("KO System a la Italiana", "false"),
 		PENALIZAZIONCONOS("Penalización por cono derribado (ms)", "200"),
 		PARTICIPANTESMINIMO("Participantes mínimo por categoría", "3"),
-		EMAILREENVIOINSCRIPCION("Email reenvío inscripciones", "freewilltechnologies@gmail.com");
+		EMAILREENVIOINSCRIPCION("Email reenvío inscripciones", "freewilltechnologies@gmail.com"),
+		MINPARTICIPACIONESCIRCUITO("Mínimo participaciones para cálculo ranking circuito", "1");
 		private final String type;
 		private final String defval;
 		ConfigItemEnum(String t, String v){ type = t; defval=v;}
