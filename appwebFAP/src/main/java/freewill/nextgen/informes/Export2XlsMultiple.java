@@ -61,8 +61,15 @@ public class Export2XlsMultiple {
     				String jam[] = {"clasificacion", "dorsal", "nombre", "apellidos",
     						"dorsalPareja", "nombrePareja", "apellidosPareja",
     						"clubStr", "puntuacion"};
-    				if(title[i].toLowerCase().contains("jam")) // Pedazo de parche cutre
+    				String jam2[] = {"orden", "nombre", "apellidos",
+    						"nombrePareja", "apellidosPareja",
+    						"clubStr", "puntuacion",
+    						"puntos1", "puntos2", "puntos3", "puntos4"};
+    				if(title[i].toLowerCase().contains("jam ")){ // Pedazo de parche cutre
     					campos = jam;
+    					if(entity.getSimpleName().contains("RankingEntity"))
+    						campos = jam2;
+    				}
     				printSheet(file, title[i], collection, entity, doc, campos);
     			}
     			i++;

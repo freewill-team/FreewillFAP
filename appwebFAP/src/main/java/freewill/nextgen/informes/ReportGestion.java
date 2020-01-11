@@ -15,6 +15,7 @@ import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.data.CompanyEntity;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
+import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.data.Style;
 import freewill.nextgen.hmi.utils.Messages;
 
@@ -60,15 +61,16 @@ public class ReportGestion extends Report {
 			
 			doc.AddTitle("Resultados "+circuitoStr, 1);
 			doc.AddParagraph("A continuación relacionaremos los resultados obtenidos en las "
-					+ "diferentes pruebas celebradas durante el trascurso del circuito."
-					);
-			printResultadosCategorias(circuito, viewLogic, doc);
+					+ "diferentes pruebas celebradas durante el trascurso del circuito.");
+			doc.AddParagraph("Además, el último apartado proporciona los resultados finales "
+					+ "para el global del circuito por cada categoría.");
+			printResultadosCompeticiones(circuito, viewLogic, doc);
+			printResultadosCircuito(circuito, viewLogic, doc);
 			
 			doc.AddTitle("Mejores Marcas", 1);
 			doc.AddParagraph("En este apartado procederemos a destacar las mejores marcas "
 					+ "obtenidas por los deportistas en el presente año, para las modalidades "
-					+ "Speed y Salto."
-					);
+					+ "Speed y Salto.");
 			printMejoresMarcas(ModalidadEnum.SPEED, "ASC", viewLogic, doc);
 			printMejoresMarcas(ModalidadEnum.JUMP, "DESC", viewLogic, doc);
 					
@@ -206,7 +208,7 @@ public class ReportGestion extends Report {
 		}
 	}
 
-	private void printResultadosCategorias(Long circuito, InformesLogic viewLogic, 
+	private void printResultadosCompeticiones(Long circuito, InformesLogic viewLogic, 
 			ApoiDocExport doc) {
 		try{
 			List<CategoriaEntity> categorias = viewLogic.getCategorias();
@@ -242,6 +244,60 @@ public class ReportGestion extends Report {
 				table[j][0]=""+rec.getClasificacion();
 		    	table[j][1]=""+rec.getNombre() + " " + rec.getApellidos();
 		    	table[j][2]=""+rec.getClubStr();
+	    		j++;
+			}
+    		doc.AddTable(table);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	private void printResultadosCircuito(Long circuito, InformesLogic viewLogic, 
+			ApoiDocExport doc) {
+		try{
+			doc.AddTitle("Resultados Globales del Circuito", 2);
+			List<CategoriaEntity> categorias = viewLogic.getCategorias();
+			for(CategoriaEntity categoria:categorias){
+				String text = categoria.getNombre();
+				List<RankingEntity> collection = 
+						viewLogic.getRankingCircuito(circuito, categoria.getId());
+				if(collection!=null && collection.size()>0){
+					printResultadosCircuito(text, collection, doc);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}	
+	}
+	
+	private void printResultadosCircuito(String title, 
+			List<RankingEntity> collection, ApoiDocExport doc) {
+		try{
+			doc.AddTitle(title, 3);
+			String table[][] = new String[collection.size()+1][8];
+    		table[0][0]=Messages.get().getKey("clasificacion");
+    		table[0][1]=Messages.get().getKey("patinador");
+    		table[0][2]=Messages.get().getKey("club");
+    		table[0][3]=Messages.get().getKey("puntuacion");
+    		table[0][4]=Messages.get().getKey("puntos1");
+    		table[0][5]=Messages.get().getKey("puntos2");
+    		table[0][6]=Messages.get().getKey("puntos3");
+    		table[0][7]=Messages.get().getKey("puntos4");
+    		int j=1;
+			// Process the List item
+			for(RankingEntity rec:collection){
+				table[j][0]=""+rec.getOrden();
+				table[j][1]=""+rec.getNombre() + " " + rec.getApellidos();
+				if(title.toUpperCase().contains("JAM"))
+					table[j][1]+="/"+rec.getNombrePareja() + " " + rec.getApellidosPareja();
+		    	table[j][2]=""+rec.getClubStr();
+		    	table[j][3]=""+rec.getPuntuacion();
+	    		table[j][4]=""+rec.getPuntos1();
+	    		table[j][5]=""+rec.getPuntos2();
+	    		table[j][6]=""+rec.getPuntos3();
+	    		table[j][7]=""+rec.getPuntos4();
 	    		j++;
 			}
     		doc.AddTable(table);

@@ -15,6 +15,7 @@ import freewill.nextgen.data.CategoriaEntity.ModalidadEnum;
 import freewill.nextgen.data.CompeticionEntity;
 import freewill.nextgen.data.ParticipanteEntity;
 import freewill.nextgen.data.PatinadorEntity;
+import freewill.nextgen.data.RankingEntity;
 
 /**
  * This class provides an interface for the logical operations between the CRUD
@@ -233,5 +234,43 @@ public class InformesLogic implements Serializable {
 		}
 		return null;
     }
+
+	public List<RankingEntity> getRankingCircuito(Long circuito, Long categoria) {
+		try{
+			return BltClient.get().executeQuery(
+        			"/getByCircuitoAndCategoria/"+circuito+"/"+categoria,
+        			RankingEntity.class,
+        			EntryPoint.get().getAccessControl().getTokenKey());
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<RankingEntity>[] getRankingCircuito(Long circuito) {
+		try{
+			List<CategoriaEntity> categorias = getCategorias();
+			int count = categorias.size();
+			@SuppressWarnings("unchecked")
+			List<RankingEntity>[] data = new ArrayList[count];
+			
+			int i = 0;
+			for(CategoriaEntity categoria:categorias){
+				List<RankingEntity> recs = BltClient.get().executeQuery(
+			        	"/getByCircuitoAndCategoria/"+circuito+"/"+categoria.getId(),
+			        	RankingEntity.class,
+			        	EntryPoint.get().getAccessControl().getTokenKey());
+				data[i++] = recs;
+			}
+			return data;
+    	}
+		catch(Exception e){
+			log.error(e.getMessage());
+			view.showError(e.getMessage());
+		}
+		return null;
+	}
 	
 }

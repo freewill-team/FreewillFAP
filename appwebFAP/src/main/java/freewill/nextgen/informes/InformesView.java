@@ -22,6 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import freewill.nextgen.circuito.SelectCircuito;
 import freewill.nextgen.competicion.SelectCompeticion;
 import freewill.nextgen.data.ParticipanteEntity;
+import freewill.nextgen.data.RankingEntity;
 import freewill.nextgen.hmi.utils.Messages;
 
 /**
@@ -65,6 +66,7 @@ public class InformesView extends Panel implements View {
         content.setExpandRatio(selectionarea, 1);
     	
         selectionarea.addComponent(createReport1());
+        selectionarea.addComponent(createReport3());
         selectionarea.addComponent(createReport2());
     }
 
@@ -141,6 +143,57 @@ public class InformesView extends Panel implements View {
 	    	if(report.isSuccess() && file!=null){
 	    		FileResource resource = new FileResource(file);
 	    		Page.getCurrent().open(resource, "Report File", false);
+	    		// Finally, removes the temporal file
+	    		// file.delete();
+	    	}
+	    	else
+	    		showError("Error durante la generación del informe.");
+	    });
+		//printButton.setEnabled(false);
+		
+		HorizontalLayout hlayout = new HorizontalLayout();
+        hlayout.setWidth("100%");
+        hlayout.setMargin(false);
+        hlayout.setSpacing(true);
+        hlayout.addComponents(new Label(), title, printButton);
+        hlayout.setExpandRatio(title, 1);
+		
+		VerticalLayout layout = new VerticalLayout();
+		layout.setStyleName(ValoTheme.LAYOUT_CARD);
+		layout.setSpacing(false);
+	    layout.setMargin(false);
+	    layout.setWidth("100%");
+	    layout.addComponent(hlayout);
+	    layout.addComponent(selectcircuito);
+		return layout;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private VerticalLayout createReport3() {
+		
+		Label title = new Label("Actas del Circuito (XLSX)");
+	    title.setStyleName(ValoTheme.LABEL_LARGE);
+	    title.addStyleName(ValoTheme.LABEL_COLORED);
+	    
+	    SelectCircuito selectcircuito = new SelectCircuito();
+		
+		Button printButton = new Button(Messages.get().getKey("generar"));
+		//printButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		printButton.setIcon(FontAwesome.DOWNLOAD);
+		printButton.addClickListener(e -> {
+			List<RankingEntity>[] data = 
+					viewLogic.getRankingCircuito(selectcircuito.getValue());
+			
+	    	File file = Export2XlsMultiple.get().createXLS(
+	    			selectcircuito.getCaption(),
+	    			data, RankingEntity.class,
+	    			viewLogic.getCategoriasStr(),
+	    			"orden", "nombre", "apellidos", 
+	    			"clubStr", "puntuacion", 
+					"puntos1", "puntos2", "puntos3", "puntos4");
+	    	if(file!=null){
+	    		FileResource resource = new FileResource(file);
+	    		Page.getCurrent().open(resource, "Export File", false);
 	    		// Finally, removes the temporal file
 	    		// file.delete();
 	    	}
